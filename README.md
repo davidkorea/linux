@@ -27,3 +27,11 @@
   - ```systemctl disable firewalld```     #开机自动关闭   //RHLE7
   - ```chkconfig --list|grep network```    #查看开机是否启动   //RHLE6
   - ```systemctl enable firewalld```     #开机自动启动
+
+5. 设置系统光盘开机自动挂载
+  - ```vim  /etc/fstab```  #在文档最后，添加以一下红色内容：
+/dev/cdrom 			      /mnt			  iso9660 defaults        0 0
+  - ```mount -a```
+mount: /dev/sr0 写保护，将以只读方式挂载
+  - ```ls /mnt/```   #可以查看到此目录下有内容，说明挂载成功
+CentOS_BuildTag  GPL       LiveOS    RPM-GPG-KEY-CentOS-7
