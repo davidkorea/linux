@@ -16,4 +16,6 @@
 
   ```cat /etc/hostname```, #设置主机名
 
-3. ```nmtui```, 使用nmtui文本框方式修改IP
+3. 修改ip地址
+  - 方法1: ```nmtui```, 使用nmtui文本框方式修改IP，重启网卡服务生效：```systemctl restart network``` ---重启服务
+  - 方法2: ```vim /etc/sysconfig/network-scripts/ifcfg-ens33```
