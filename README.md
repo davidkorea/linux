@@ -1,4 +1,4 @@
-# linux
+# linux - centos7
 
 # 1. linux baiscs
 
