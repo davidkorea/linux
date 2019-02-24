@@ -51,3 +51,4 @@ yum的一切配置信息都储存在一个叫yum.repos.d的配置文件中，通
   - ```yum list```						#生成缓存列表
   - ```yum -y install httpd``` # 验证一下
 
+7. 
