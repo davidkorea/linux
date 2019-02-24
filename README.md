@@ -41,7 +41,6 @@ yum的一切配置信息都储存在一个叫yum.repos.d的配置文件中，通
   - ```rm -rf  /etc/yum.repos.d/*```, 删除原有的文件, 也可以不删除 
   - ```vim  CentOS7.repo```  #创建一个新的yum源配置文件，yum源配置文件的结尾必须是.repo, 写入以下内容
         
-        参数说明：
         [CentOS7]        # --->yum的ID，必须唯一 
         name=CentOS-server    #  ----->描述信息
         baseurl=file:///mnt    # -------> /mnt表示的是光盘的挂载点  . file:后面有3个///
