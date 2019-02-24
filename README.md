@@ -19,3 +19,11 @@
 3. 修改ip地址
   - 方法1: ```nmtui```, 使用nmtui文本框方式修改IP，重启网卡服务生效：```systemctl restart network``` ---重启服务
   - 方法2: ```vim /etc/sysconfig/network-scripts/ifcfg-ens33```
+
+4. 关闭防火墙并设置开机开不启动
+  - ```systemctl status firewalld.service```    #查看firewalld状态
+  - ```systemctl stop firewalld```       #关闭
+  - ```systemctl start firewalld```       #开启
+  - ```systemctl disable firewalld```     #开机自动关闭   //RHLE7
+  - ```chkconfig --list|grep network```    #查看开机是否启动   //RHLE6
+  - ```systemctl enable firewalld```     #开机自动启动
