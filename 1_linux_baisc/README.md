@@ -30,6 +30,13 @@
 		[root@localhost ~]# tail -1 /etc/passwd
 		david:x:1001:1001::/home/david:/bin/bash
 		```
+		- david：用户名
+		- x：密码占位符
+		- 1001：用户的UID，它都是用数字来表示的
+		- 1001：用户所属组的GID，它都是用数字来表示的
+		- [BLANK]用户描述信息：对用户的功能或其它来进行一个简要的描述
+		- /home/david：用户主目录（shell提示符中“~”代表的那个）
+		- /bin/bash：用户登录系统后使用的shell
 
 
 
