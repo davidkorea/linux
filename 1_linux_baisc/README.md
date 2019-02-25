@@ -2,7 +2,7 @@
 
 17. 用户管理
 
-**直接修改 ```vim /etc/passwd``` **
+**直接修改 vim /etc/passwd**
 
 - Linux用户三种角色
 	- 超级用户： root  拥有对系统的最高的管理权限  ID=0
