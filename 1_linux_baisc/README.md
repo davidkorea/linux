@@ -13,6 +13,46 @@ xfsdump的备份级别有以下两种，默认为0（即完全备份）
 |0 级别| 完全备份，每次都把指定的备份目录完整的复制一遍，不管目录下的文件有没有变化|
 |1 到9级别|增量备份，每次将之前（第一次、第二次、直到前一次）做过备份之后有变化的文件进行备份|
 
+- fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda，新硬盘识别为sdb
+  - ```fdisk sdb```
+    ```
+    [root@localhost b]# cat /etc/fstab 
+
+    #
+    # /etc/fstab
+    # Created by anaconda on Fri Feb 22 12:49:16 2019
+    #
+    # Accessible filesystems, by reference, are maintained under '/dev/disk'
+    # See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+    #
+    UUID=d867d9c8-17c2-4525-99a0-e3378175d205 /                       xfs     defaults        0 0
+    UUID=eaf6f95f-7b35-431a-8f1f-a4216b6be0a3 /boot                   xfs     defaults        0 0
+    UUID=8bef4f07-7c51-4a5d-9398-9f2b5d6e6c50 swap                    swap    defaults        0 0
+    [root@localhost b]# fdisk /dev/sdb
+    Welcome to fdisk (util-linux 2.23.2).
+
+    Changes will remain in memory only, until you decide to write them.
+    Be careful before using the write command.
+
+
+    Command (m for help): n
+    Partition type:
+       p   primary (1 primary, 0 extended, 3 free)
+       e   extended
+    Select (default p): 
+    Using default response p
+    Partition number (2-4, default 2): 
+    First sector (2099200-41943039, default 2099200): 
+    Using default value 2099200
+    Last sector, +sectors or +size{K,M,G} (2099200-41943039, default 41943039): +1G
+    Partition 2 of type Linux and of size 1 GiB is set
+
+    Command (m for help): w
+    The partition table has been altered!
+
+    Calling ioctl() to re-read partition table.
+    Syncing disks.
+    ```
 
 14. 查看文件
   - ```cat /etc/passwd```
