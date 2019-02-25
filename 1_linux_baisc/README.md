@@ -43,7 +43,20 @@
 		[root@localhost ~]# id frank
 		uid=1111(frank) gid=1111(frank) groups=1111(frank)
 		```
-
+	- 指定用户主目录
+		```
+		[root@xuegod63 ~]# useradd  -d /opt/frank frank
+		[root@xuegod63 ~]# tail -1 /etc/passwd
+		frank:x:1102:1102::/opt/frank:/bin/bash
+		```
+	- 指定用户组
+		```
+		useradd  -g david frank
+		[root@xuegod63 ~]# id frank
+		uid=1104(frank) gid=1103(david) 组=1103(david)
+		```
+- 删除用户
+	- ```userdel -r frank```, -r 删除的时候，会同时删除用户的家目录和/var/mail下的目录
 
 
 
