@@ -1,5 +1,17 @@
 # linux - centos7 baiscs
 
+15. xfs文件系统的备份和恢复，xfsdump xfsrestore
+
+XFS提供了 xfsdump 和 xfsrestore 工具协助备份XFS文件系统中的数据。xfsdump 按inode顺序备份一个XFS文件系统。centos7选择xfs格式作为默认文件系统，而且不再使用以前的ext，仍然支持ext4，xfs专为大数据产生，每个单个文件系统最大可以支持8eb，单个文件可以支持16tb，不仅数据量大，而且扩展性高。还可以通过xfsdump，xfsrestore来备份和恢复。
+
+与传统的UNIX文件系统不同，XFS不需要在备份前被卸载；对使用中的XFS文件系统做备份就可以保证镜像的一致性。XFS的备份和恢复的过程是可以被中断然后继续，无须冻结文件系统。xfsdump 甚至提供了高性能的多线程备份操作——它把一次dump拆分成多个数据流，每个数据流可以被发往不同的目的地。
+
+xfsdump的备份级别有以下两种，默认为0（即完全备份）
+|-|-|
+|0 级别| 完全备份|
+|1 到9级别|增量备份|
+
+
 14. 查看文件
   - ```cat /etc/passwd```
   - ```more /etc/passwd```, 按下回车刷新一行，按下空格刷新一屏，输入q键退出。不支持后退
