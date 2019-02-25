@@ -24,7 +24,12 @@
 
 
 - 创建用户 ```useradd -d "用户主目录路径，家目录" -u “UID” -g "初始组" -G "附加组" -s "登陆的shell” 用户名```
-
+	- 创建一个新用户```useradd david```
+		```
+		[root@localhost ~]# useradd david
+		[root@localhost ~]# tail -1 /etc/passwd
+		david:x:1001:1001::/home/david:/bin/bash
+		```
 
 
 
