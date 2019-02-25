@@ -1,5 +1,12 @@
 # linux - centos7 baiscs
 
+10. mkdir
+- ```mkdir -p /tmp/a/b/c```,在创建一个目录的时候，如果这个目录的上一级不存在的话，要加参数-p = parent父目录
+
+9. touch
+- ```touch file{1..8}.txt```, file1, file2, ...file8
+
+
 8. 查看文件状态
 - ```ll /etc/passwd```, -rw-r--r--. 1 root root 2307 Feb 22 13:21 /etc/passwd
 - ```stat /etc/passwd```
