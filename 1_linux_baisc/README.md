@@ -116,7 +116,39 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
     ```
   - ```[root@xuegod63 sdb1]# xfsdump -f /opt/dump_passwd /sdb1 -L dump_passwd -M media1```,指定备份时免交互操作，方便后期做定时备份, -L  ：xfsdump  纪录每次备份的 session 标头，这里可以填写针对此文件系统的简易说明。 -M  ：xfsdump 可以纪录储存媒体的标头，这里可以填写此媒体的简易说明
 
-   
+- 查看备份信息与内容
+  - ```xfsdump -I```，大写字母i
+    ```
+    [root@localhost ~]# xfsdump -I
+    file system 0:
+      fs id:		f0071f64-9967-4848-a3af-08232e5ee4aa
+      session 0:
+        mount point:	localhost.localdomain:/sdb3
+        device:		localhost.localdomain:/dev/sdb3
+        time:		Mon Feb 25 11:23:45 2019
+        session label:	"dump_sdb3"
+        session id:	05b2aeb0-8426-4850-8078-e09cdbf50212
+        level:		0
+        resumed:	NO
+        subtree:	NO
+        streams:	1
+        stream 0:
+          pathname:	/opt/sdb3_dump
+          start:		ino 0 offset 0
+          end:		ino 1 offset 0
+          interrupted:	NO
+          media files:	1
+          media file 0:
+            mfile index:	0
+            mfile type:	data
+            mfile size:	21016
+            mfile start:	ino 0 offset 0
+            mfile end:	ino 1 offset 0
+            media label:	"media"
+            media id:	8297b6b5-d9f8-4c54-bc33-a1c97eb7c92d
+    xfsdump: Dump Status: SUCCESS    
+    ```
+  - ```ls /var/lib/xfsdump/inventory/```，可以查到上述fs id f0071f64-9967-4848-a3af-08232e5ee4aa.InvIndex
    
 14. 查看文件
   - ```cat /etc/passwd```
