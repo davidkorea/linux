@@ -1,5 +1,13 @@
 # linux - centos7 baiscs
 
+14. 查看文件
+  - ```cat /etc/passwd```
+  - ```more /etc/passwd```, 按下回车刷新一行，按下空格刷新一屏，输入q键退出。不支持后退
+  - ```less /etc/passwd```, 支持前后翻滚，既可以向上翻页（pageup按键），也可以向下翻页（pagedown按键）
+  - ```head -n 3 /etc/passwd```, 只看前三行 默认不加-n时显示前十行
+  - ```tail -n 3 /var/log/secure```, 查看最后3行记录
+  - ```tail -f /var/log/secure```, 动态查看文件内容, 不关闭
+  
 13. ```mv a.txt dir1/abc.txt```, 在移动文件的时候支持改名操作,a->abc
 
 12. cp 源文件/目录  目录文件/目录
