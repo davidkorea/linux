@@ -46,8 +46,23 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
 
     Calling ioctl() to re-read partition table.
     Syncing disks.
-
     ```
+  - 查看计算机已有硬盘分区
+    - ```df -h```
+      ```
+      [root@localhost sdb2]# df -h
+      Filesystem      Size  Used Avail Use% Mounted on
+      /dev/sda2        10G  4.1G  6.0G  41% /
+      devtmpfs        3.9G     0  3.9G   0% /dev
+      tmpfs           3.9G     0  3.9G   0% /dev/shm
+      tmpfs           3.9G   13M  3.9G   1% /run
+      tmpfs           3.9G     0  3.9G   0% /sys/fs/cgroup
+      /dev/sda1       197M  141M   56M  72% /boot
+      tmpfs           798M  8.0K  798M   1% /run/user/42
+      tmpfs           798M     0  798M   0% /run/user/0
+      /dev/sdb3      1014M   33M  982M   4% /root/sdb3
+      ```
+   
 - 使用新分区前，先进行格式化
   - ```mkfs.xfs /dev/sdb3```
     ```
