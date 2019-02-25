@@ -1,6 +1,9 @@
 # linux - centos7 baiscs
 
 17. 用户管理
+
+**直接修改 ```vim /etc/passwd``` **
+
 - Linux用户三种角色
 	- 超级用户： root  拥有对系统的最高的管理权限  ID=0
 	- 普通用户：包括系统用户，本地用户
