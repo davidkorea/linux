@@ -5,15 +5,15 @@
 - ```stat /etc/passwd```
 
   ```
-        File: '/etc/passwd'
-      Size: 2307      	Blocks: 8          IO Block: 4096   regular file
-    Device: 802h/2050d	Inode: 8443595     Links: 1
-    Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
-    Context: system_u:object_r:passwd_file_t:s0
-    Access: 2019-02-24 13:30:01.853163925 +0800
-    Modify: 2019-02-22 13:21:28.562334692 +0800
-    Change: 2019-02-22 13:21:28.563334692 +0800
-     Birth: -
+      File: '/etc/passwd'
+    Size: 2307      	Blocks: 8          IO Block: 4096   regular file
+  Device: 802h/2050d	Inode: 8443595     Links: 1
+  Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+  Context: system_u:object_r:passwd_file_t:s0
+  Access: 2019-02-24 13:30:01.853163925 +0800
+  Modify: 2019-02-22 13:21:28.562334692 +0800
+  Change: 2019-02-22 13:21:28.563334692 +0800
+   Birth: -
   ```
 
 
