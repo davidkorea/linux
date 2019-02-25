@@ -114,10 +114,7 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
     xfsdump:   stream 0 /opt/sdb3_dump OK (success)
     xfsdump: Dump Status: SUCCESS
     ```
-  - 指定备份时免交互操作，方便后期做定时备份
-    - ```[root@xuegod63 sdb1]# xfsdump -f /opt/dump_passwd /sdb1 -L dump_passwd -M media1```
-    -L  ：xfsdump  纪录每次备份的 session 标头，这里可以填写针对此文件系统的简易说明
-    -M  ：xfsdump 可以纪录储存媒体的标头，这里可以填写此媒体的简易说明
+  - ```[root@xuegod63 sdb1]# xfsdump -f /opt/dump_passwd /sdb1 -L dump_passwd -M media1```,指定备份时免交互操作，方便后期做定时备份, -L  ：xfsdump  纪录每次备份的 session 标头，这里可以填写针对此文件系统的简易说明。 -M  ：xfsdump 可以纪录储存媒体的标头，这里可以填写此媒体的简易说明
 
    
    
