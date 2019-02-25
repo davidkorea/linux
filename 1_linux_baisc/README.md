@@ -66,5 +66,9 @@ yum的一切配置信息都储存在一个叫yum.repos.d的配置文件中，通
 |/boot|存放的系统启动相关的文件，例如：kernel.grub(引导装载程序)|
 |/dev | dev是Device的缩写。设备文件目录，比如声卡、磁盘...在Linux中一切都被看做文件。终端设备、磁盘等等都被看做文件。设备文件:/dev/sda,/dev/sda1,/dev/tty1,/dev/tty2,/dev/pts/1, /dev/zero, /dev/null, /dev/cdrom |
 |/etc|常用系统及二进制安装包配置文件默认路径和服务器启动命令目录。passwd 用户信息文件，shadow  用户密码文件，group 存储用户组信息，fstab 系统开机启动自动挂载分区列表，hosts 设定用户自己的IP与主机名对应的信息。|
+|/home|普通用户的家目录默认存放目录 |
+|/lib|库文件存放目录,函数库目录|
+|/mnt, /media|一般用来临时挂载存储设备的挂载目录，比如有cdrom、U盘等目录,在CENTOS7中会挂载到/run下面,/run目录默认不为空|
+
 
 
