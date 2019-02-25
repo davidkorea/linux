@@ -57,7 +57,7 @@
 	- ```userdel -r frank```, -r 删除的时候，会同时删除用户的家目录和/var/mail下的目录
 
 - 更改用户 ```usermod```
-	- ```usermod -m -d /mnt/market market```, -m选项会自动创建新目录并且移动内容到新目录里面
+	- ```usermod -m -d /mnt/frank frank```, -m选项会自动创建新目录并且移动内容到新目录里面
 
 	|参数|说明|
 	|-|-|
