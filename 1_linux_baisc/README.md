@@ -1,5 +1,7 @@
 # linux - centos7 baiscs
 
+13. ```mv a.txt dir1/abc.txt```, 在移动文件的时候支持改名操作,a->abc
+
 12. cp 源文件/目录  目录文件/目录
 - ```cp -r /boot/grup /opt```, -R/r：递归处理，将指定目录下的所有文件与子目录一并处理
 
