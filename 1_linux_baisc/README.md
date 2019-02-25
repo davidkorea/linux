@@ -1,5 +1,8 @@
 # linux - centos7 baiscs
 
+11. ```rm -rf```, -f 强制删除没有提示, -r 删除目录
+
+
 10. mkdir
 - ```mkdir -p /tmp/a/b/c```,在创建一个目录的时候，如果这个目录的上一级不存在的话，要加参数-p = parent父目录
 
