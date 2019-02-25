@@ -34,9 +34,15 @@
 		- x：密码占位符
 		- 1001：用户的UID，它都是用数字来表示的
 		- 1001：用户所属组的GID，它都是用数字来表示的
-		- [BLANK]用户描述信息：对用户的功能或其它来进行一个简要的描述
+		- [BLANK]：用户描述信息：对用户的功能或其它来进行一个简要的描述
 		- /home/david：用户主目录（shell提示符中“~”代表的那个）
 		- /bin/bash：用户登录系统后使用的shell
+	- 指定用户id ```useradd -u 1111 frank```
+		```
+		[root@localhost ~]# useradd -u 1111 frank
+		[root@localhost ~]# id frank
+		uid=1111(frank) gid=1111(frank) groups=1111(frank)
+		```
 
 
 
