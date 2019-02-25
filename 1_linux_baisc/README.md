@@ -149,7 +149,43 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
     xfsdump: Dump Status: SUCCESS    
     ```
   - ```ls /var/lib/xfsdump/inventory/```，可以查到上述fs id f0071f64-9967-4848-a3af-08232e5ee4aa.InvIndex
-   
+
+- 恢复备份
+  - 先删除原有文件
+    - ```cd sdb3```
+    - ```rm -rf ./*```
+  - xfsrestore -f 指定备份文件的存放位置 指定存放恢复后的文件的路径
+    - ```xfsrestore -f /opt/sdb3_dump /sdb3```
+      ```
+      [root@localhost ~]# xfsrestore -f /opt/sdb3_dump /sdb3
+      xfsrestore: using file dump (drive_simple) strategy
+      xfsrestore: version 3.1.7 (dump format 3.0) - type ^C for status and control
+      xfsrestore: searching media for dump
+      xfsrestore: examining media file 0
+      xfsrestore: dump description: 
+      xfsrestore: hostname: localhost.localdomain
+      xfsrestore: mount point: /sdb3
+      xfsrestore: volume: /dev/sdb3
+      xfsrestore: session time: Mon Feb 25 11:23:45 2019
+      xfsrestore: level: 0
+      xfsrestore: session label: "dump_sdb3"
+      xfsrestore: media label: "media"
+      xfsrestore: file system id: f0071f64-9967-4848-a3af-08232e5ee4aa
+      xfsrestore: session id: 05b2aeb0-8426-4850-8078-e09cdbf50212
+      xfsrestore: media id: 8297b6b5-d9f8-4c54-bc33-a1c97eb7c92d
+      xfsrestore: using online session inventory
+      xfsrestore: searching media for directory dump
+      xfsrestore: reading directories
+      xfsrestore: 1 directories and 0 entries processed
+      xfsrestore: directory post-processing
+      xfsrestore: restore complete: 0 seconds elapsed
+      xfsrestore: Restore Summary:
+      xfsrestore:   stream 0 /opt/sdb3_dump OK (success)
+      xfsrestore: Restore Status: SUCCESS
+
+      
+      ```
+
 14. 查看文件
   - ```cat /etc/passwd```
   - ```more /etc/passwd```, 按下回车刷新一行，按下空格刷新一屏，输入q键退出。不支持后退
