@@ -34,8 +34,12 @@
 
 - :!ifconfig, 调用系统命令
 - :r /etc/hosts, 读取其他文件。（把其他文件中的内容追加到当前文档中）
-
-
+- :set nu  设置行号
+- :set nonu 取消设置行号
+- :noh   取消高亮显示
+- vim -o /etc/passwd /etc/hosts 上下分开
+- vim -O /etc/passwd /etc/hosts 左右分开，ctrl+ww  在两文档之间进行切换编辑
+- vimdiff /etc/passwd mima.txt 查看2个文档的不同，高亮表示
 
 -----
 15. xfs文件系统的备份和恢复，xfsdump xfsrestore
