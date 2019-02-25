@@ -13,7 +13,9 @@ xfsdump的备份级别有以下两种，默认为0（即完全备份）
 |0 级别| 完全备份，每次都把指定的备份目录完整的复制一遍，不管目录下的文件有没有变化|
 |1 到9级别|增量备份，每次将之前（第一次、第二次、直到前一次）做过备份之后有变化的文件进行备份|
 
-- fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda，新硬盘识别为sdb
+fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda，新硬盘识别为sdb
+
+- 创建新分区partition
   - ```fdisk sdb```
   - ```n```, enter, enter
   - ```+1G```
@@ -59,7 +61,9 @@ xfsdump的备份级别有以下两种，默认为0（即完全备份）
              =                       sectsz=512   sunit=0 blks, lazy-count=1
     realtime =none                   extsz=4096   blocks=0, rtextents=0
     ```
-
+- 挂载新分区至制定目录下
+  - ```mkdir /sdb2```
+  - ```mount /dev/sdb2 /sdb2```
 
 14. 查看文件
   - ```cat /etc/passwd```
