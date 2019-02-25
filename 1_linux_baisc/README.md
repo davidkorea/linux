@@ -1,5 +1,11 @@
 # linux - centos7 baiscs
 
+16. vim
+
+
+
+
+-----
 15. xfs文件系统的备份和恢复，xfsdump xfsrestore
 
 XFS提供了 xfsdump 和 xfsrestore 工具协助备份XFS文件系统中的数据。xfsdump 按inode顺序备份一个XFS文件系统。centos7选择xfs格式作为默认文件系统，而且不再使用以前的ext，仍然支持ext4，xfs专为大数据产生，每个单个文件系统最大可以支持8eb，单个文件可以支持16tb，不仅数据量大，而且扩展性高。还可以通过xfsdump，xfsrestore来备份和恢复。
@@ -200,6 +206,8 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
 
       
       ```
+
+-----
 
 14. 查看文件
   - ```cat /etc/passwd```
