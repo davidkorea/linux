@@ -15,19 +15,11 @@ xfsdump的备份级别有以下两种，默认为0（即完全备份）
 
 - fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda，新硬盘识别为sdb
   - ```fdisk sdb```
+  - ```n```, enter, enter
+  - ```+1G```
+  - ```w```,write for create a new partition. 
+  - ```fdisk /dev/sdb``` -> ```p```, 查看此硬盘下已有分区partition
     ```
-    [root@localhost b]# cat /etc/fstab 
-
-    #
-    # /etc/fstab
-    # Created by anaconda on Fri Feb 22 12:49:16 2019
-    #
-    # Accessible filesystems, by reference, are maintained under '/dev/disk'
-    # See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
-    #
-    UUID=d867d9c8-17c2-4525-99a0-e3378175d205 /                       xfs     defaults        0 0
-    UUID=eaf6f95f-7b35-431a-8f1f-a4216b6be0a3 /boot                   xfs     defaults        0 0
-    UUID=8bef4f07-7c51-4a5d-9398-9f2b5d6e6c50 swap                    swap    defaults        0 0
     [root@localhost b]# fdisk /dev/sdb
     Welcome to fdisk (util-linux 2.23.2).
 
@@ -53,6 +45,21 @@ xfsdump的备份级别有以下两种，默认为0（即完全备份）
     Calling ioctl() to re-read partition table.
     Syncing disks.
     ```
+- 使用新应哦按分区前，先进行格式化
+  - ```mkfs.xfs /dev/sdb2```
+    ```
+    [root@localhost b]# mkfs.xfs /dev/sdb2
+    meta-data=/dev/sdb2              isize=512    agcount=4, agsize=65536 blks
+             =                       sectsz=512   attr=2, projid32bit=1
+             =                       crc=1        finobt=0, sparse=0
+    data     =                       bsize=4096   blocks=262144, imaxpct=25
+             =                       sunit=0      swidth=0 blks
+    naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+    log      =internal log           bsize=4096   blocks=2560, version=2
+             =                       sectsz=512   sunit=0 blks, lazy-count=1
+    realtime =none                   extsz=4096   blocks=0, rtextents=0
+    ```
+
 
 14. 查看文件
   - ```cat /etc/passwd```
