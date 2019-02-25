@@ -31,27 +31,28 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
 
     Command (m for help): n
     Partition type:
-       p   primary (1 primary, 0 extended, 3 free)
+       p   primary (2 primary, 0 extended, 2 free)
        e   extended
     Select (default p): 
     Using default response p
-    Partition number (2-4, default 2): 
-    First sector (2099200-41943039, default 2099200): 
-    Using default value 2099200
-    Last sector, +sectors or +size{K,M,G} (2099200-41943039, default 41943039): +1G
-    Partition 2 of type Linux and of size 1 GiB is set
+    Partition number (3,4, default 3): 
+    First sector (4196352-41943039, default 4196352): 
+    Using default value 4196352
+    Last sector, +sectors or +size{K,M,G} (4196352-41943039, default 41943039): +1G
+    Partition 3 of type Linux and of size 1 GiB is set
 
     Command (m for help): w
     The partition table has been altered!
 
     Calling ioctl() to re-read partition table.
     Syncing disks.
+
     ```
-- 使用新应哦按分区前，先进行格式化
-  - ```mkfs.xfs /dev/sdb2```
+- 使用新分区前，先进行格式化
+  - ```mkfs.xfs /dev/sdb3```
     ```
-    [root@localhost b]# mkfs.xfs /dev/sdb2
-    meta-data=/dev/sdb2              isize=512    agcount=4, agsize=65536 blks
+    [root@localhost ~]# mkfs.xfs /dev/sdb3
+    meta-data=/dev/sdb3              isize=512    agcount=4, agsize=65536 blks
              =                       sectsz=512   attr=2, projid32bit=1
              =                       crc=1        finobt=0, sparse=0
     data     =                       bsize=4096   blocks=262144, imaxpct=25
@@ -61,10 +62,61 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
              =                       sectsz=512   sunit=0 blks, lazy-count=1
     realtime =none                   extsz=4096   blocks=0, rtextents=0
     ```
-- 挂载新分区至制定目录下
-  - ```mkdir /sdb2```
-  - ```mount /dev/sdb2 /sdb2```
+- 挂载新分区至制定目录下，新分区可以正常使用
+  - ```mkdir ./sdb3```
+  - ```mount /dev/sdb3 /sdb3```
 
+再新分区sdb2中创建一些文件，下面操作将sdb2进行备份。
+
+- xfsdump -f 备份存放位置 要备份路径或设备文件  
+  - ```xfsdump -f ```
+    ```
+    [root@localhost ~]# xfsdump -f /opt/sdb3_dump /sdb3
+    xfsdump: using file dump (drive_simple) strategy
+    xfsdump: version 3.1.7 (dump format 3.0) - type ^C for status and control
+
+     ============================= dump label dialog ==============================
+
+    please enter label for this dump session (timeout in 300 sec)
+     -> dump_sdb3
+    session label entered: "dump_sdb3"
+
+     --------------------------------- end dialog ---------------------------------
+
+    xfsdump: level 0 dump of localhost.localdomain:/sdb3
+    xfsdump: dump date: Mon Feb 25 11:23:45 2019
+    xfsdump: session id: 05b2aeb0-8426-4850-8078-e09cdbf50212
+    xfsdump: session label: "dump_sdb3"
+    xfsdump: ino map phase 1: constructing initial dump list
+    xfsdump: ino map phase 2: skipping (no pruning necessary)
+    xfsdump: ino map phase 3: skipping (only one dump stream)
+    xfsdump: ino map construction complete
+    xfsdump: estimated dump size: 20800 bytes
+    xfsdump: /var/lib/xfsdump/inventory created
+
+     ============================= media label dialog =============================
+
+    please enter label for media in drive 0 (timeout in 300 sec)
+     -> media
+    media label entered: "media"
+
+     --------------------------------- end dialog ---------------------------------
+
+    xfsdump: creating dump session media file 0 (media 0, file 0)
+    xfsdump: dumping ino map
+    xfsdump: dumping directories
+    xfsdump: dumping non-directory files
+    xfsdump: ending media file
+    xfsdump: media file size 21016 bytes
+    xfsdump: dump size (non-dir files) : 0 bytes
+    xfsdump: dump complete: 13 seconds elapsed
+    xfsdump: Dump Summary:
+    xfsdump:   stream 0 /opt/sdb3_dump OK (success)
+    xfsdump: Dump Status: SUCCESS
+    ```
+   
+   
+   
 14. 查看文件
   - ```cat /etc/passwd```
   - ```more /etc/passwd```, 按下回车刷新一行，按下空格刷新一屏，输入q键退出。不支持后退
