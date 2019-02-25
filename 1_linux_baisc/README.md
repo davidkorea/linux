@@ -61,4 +61,10 @@ yum的一切配置信息都储存在一个叫yum.repos.d的配置文件中，通
    
 |目录|说明|
 |-|-|
-|/|root|
+|/|root，处于linux系统树形结构的最顶端，它是linux文件系统的入口，所有的目录、文件、设备都在 / 之下|
+|/bin|bin是Binary的缩写。常用的二进制命令目录。比如 ls、cp、mkdir、cut等；和/usr/bin类似，一些用户级gnu工具|
+|/boot|存放的系统启动相关的文件，例如：kernel.grub(引导装载程序)|
+
+|/dev|dev是Device的缩写。设备文件目录，比如声卡、磁盘...在Linux中一切都被看做文件。终端设备、磁盘等等都被看做文件。设备文件:/dev/sda,/dev/sda1,/dev/tty1,/dev/tty2,/dev/pts/1, /dev/zero, /dev/null, /dev/cdrom|
+
+
