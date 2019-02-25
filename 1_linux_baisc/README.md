@@ -51,4 +51,11 @@ yum的一切配置信息都储存在一个叫yum.repos.d的配置文件中，通
   - ```yum list```						#生成缓存列表
   - ```yum -y install httpd``` # 验证一下
 
-7. 
+## 2019-02-25
+
+7. install tree package
+  - ```mount /dec/sr0 /media/```, # 挂在磁盘与media目录，mount: /dev/sr0 写保护，将以只读方式挂载
+  - ``` rpm -ivh /media/Packages/tree-1.6.0-10.el7.x86_64.rpm```
+  
+8. centos 各目录介绍
+   
