@@ -113,10 +113,23 @@
 			 * base: mirrors.aliyun.com
 			 * extras: mirrors.aliyun.com
 			 * updates: mirrors.aliyun.com
+			 
 			...
 			...
-
 			```
+- yum常用操作：
+	- yum install -y httpd   #安装软件包， -y 直接安装 
+	- yum -y update    #升级软件包，改变软件设置和系统设置,系统版本内核都升级
+	- yum -y upgrade   #升级软件包，不改变软件设置和系统设置，系统版本升级，内核不改变
+	- yum -y update  # 不加任何包，表示整个系统进行升级
+	- yum info  httpd    #查询rpm包作用  
+	- yum provides /usr/bin/find  #查看命令是哪个软件包安装的  
+	- yum -y remove  包名    #卸载包 
+	- yum search keyword   #按关键字搜索软件包
+
+- tar源码包安装
+
+
 
 
 
