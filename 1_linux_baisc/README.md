@@ -38,6 +38,27 @@
 	```
 	- load average系统负载，即任务队列的平均长度。 三个数值分别为  1分钟、5分钟、15分钟前到现在的平均值。经验：单核心，1分钟的系统平均负载不要超过3，就可以，这是个经验值
 
+- top
+	```
+	[root@localhost ~]# top
+	top - 15:15:11 up  1:33,  1 user,  load average: 0.04, 0.04, 0.05
+	Tasks: 242 total,   1 running, 241 sleeping,   0 stopped,   0 zombie
+	%Cpu0  :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+	%Cpu1  :  0.3 us,  0.0 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+	%Cpu2  :  0.3 us,  0.0 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.3 si,  0.0 st
+	%Cpu3  :  0.0 us,  0.3 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+	KiB Mem :  8164932 total,  7043560 free,   452312 used,   669060 buff/cache
+	KiB Swap:  4194300 total,  4194300 free,        0 used.  7392952 avail Mem 
+
+	  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND            
+	 8729 root      20   0  246576   6744   5184 S   1.7  0.1   0:24.49 vmtoolsd           
+	    9 root      20   0       0      0      0 S   1.0  0.0   0:17.93 rcu_sched     
+	```
+	- Cpu(s): 0.0% us		系统用户进程使用CPU百分比。 
+	- 0.0% sy		内核中的进程占用CPU百分比
+	- 0.0% ni		用户进程空间内改变过优先级的进程占用CPU百分比
+	- 98.7% id		空闲CPU百分比
+
 
 -----
 
