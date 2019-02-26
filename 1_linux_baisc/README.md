@@ -832,8 +832,13 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
 	Command (m for help): d
 	Partition number (1-3, default 3): 1
 	Partition 1 is deleted
+	
+	Command (m for help): w		# 只有执行w后才可以保存删除设置，真正删除sdb1
+	The partition table has been altered!
+
+	Calling ioctl() to re-read partition table.
+	Syncing disks.
 	```
-  
   
 
 再新分区sdb3中创建一些文件，下面操作将sdb3进行备份。
