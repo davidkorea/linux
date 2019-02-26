@@ -48,7 +48,11 @@
 		-rwsr-xr-x. 1 root root 27832 6月  10 2014 /usr/bin/passwd # s: SUID 用户修改密码是会临时获得所有权
 		```
 	- SGID：限定：既可以给二进制可执行程序设置，也可以对目录设置。功能：在设置了SGID权限的目录下建立文件时，新创建的文件的所属组会继承上级目录的所属组
-	- Stickybit：粘滞位权限是针对目录的，对文件无效，也叫防删除位	
+	- Stickybit：粘滞位权限是针对目录的，对文件无效，也叫防删除位。目录下创建的文件只有root、文件创建者、目录所有者才能删除。
+		```
+		[root@localhost ~]# ll -d /tmp/ # -d 仅查看目录情况，不查看目录下的内容
+		drwxrwxrwt. 18 root root 4096 2月  26 09:42 /tmp/ # t 粘滞位
+		```
 
 	|SUID|SGID|Stickybit|
 	|-|-|-|
