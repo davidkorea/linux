@@ -90,6 +90,33 @@
 			
 			"""
 			```
+		- ```yun clean all```
+		- ```yum list```
+			```
+			[root@localhost ~]# yum clean all
+			Failed to set locale, defaulting to C
+			Loaded plugins: fastestmirror, langpacks
+			Repository base is listed more than once in the configuration
+			Repository updates is listed more than once in the configuration
+			Repository extras is listed more than once in the configuration
+			Repository centosplus is listed more than once in the configuration
+			Cleaning repos: base extras updates
+			Cleaning up list of fastest mirrors
+			[root@localhost ~]# yum list
+			Failed to set locale, defaulting to C
+			Loaded plugins: fastestmirror, langpacks
+			Repository base is listed more than once in the configuration
+			Repository updates is listed more than once in the configuration
+			Repository extras is listed more than once in the configuration
+			Repository centosplus is listed more than once in the configuration
+			Determining fastest mirrors
+			 * base: mirrors.aliyun.com
+			 * extras: mirrors.aliyun.com
+			 * updates: mirrors.aliyun.com
+			...
+			...
+
+			```
 
 
 
