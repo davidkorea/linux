@@ -9,8 +9,14 @@
 	- f	--file指定备份文件
 	- t	--list 列出压缩包中包括哪些文件，不解包，查看包中的内容
 	- C （大写）--directory   指定解压位置
-
-
+- tar归档
+	- ```tar cvf share.tar ./windowsshare219```压缩
+	- ```tar xvf share.tar -C ./windowsshare219/```解压，-C制定解压位置
+	- ```tar tvf share.tar```不解压查看内容
+- tar压缩
+	- z, --gzip   以gzip方式压缩  扩展名： tar.gz
+	- j ：        以bz2方式压缩的  扩展名：tar.bz2
+	- J ：        以xz 方式压缩   扩展名：tar.xz
 
 
 
