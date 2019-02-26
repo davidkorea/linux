@@ -1,5 +1,48 @@
 # linux - centos7 baiscs
 
+
+20. 文件的归档和压缩
+- tar
+	-c	create创建文件
+	-x	-extract [ˈekstrækt]  提取 解压还原文件
+	-v	--verbose显示执行详细过程
+	-f	--file指定备份文件
+	-t	--list 列出压缩包中包括哪些文件，不解包，查看包中的内容
+	-C （大写）--directory   指定解压位置
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
+
 20. Centos7 挂载 windows 共享文件夹
 ```
 [root@localhost ~]# mkdir windowsshare219
