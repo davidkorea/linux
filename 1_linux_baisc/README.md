@@ -14,6 +14,13 @@
 - 更改文件的属主和属组 ```chown user:group filename```，可以单独使用```chown user filename```，或```chown :group filename```
 
 - 修改权限
+|命令|说明|
+|-|-|
+|u-w|user拥有者，减去写入权限|
+|g+x|group组，赋予执行权限|
+|o=r|other其他人，赋予读取权限|
+|a+x|all所有人，赋予执行权限|
+
 
 
 
