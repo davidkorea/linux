@@ -1,5 +1,17 @@
 # linux - centos7 baiscs
 
+20. Centos7 挂载 windows 共享文件夹
+```
+[root@localhost ~]# mkdir windowsshare219
+[root@localhost ~]# mount -t cifs -o username=xerox,password=PASSWORD1! //192.168.0.219/file ./windowsshare219
+[root@localhost ~]# cd windowsshare219/
+[root@localhost windowsshare219]# ls
+extundelete-0.2.4.tar.bz2       nginx-1.12.2.tar.gz
+lrzsz-0.12.20-27.1.el6.src.rpm  说明.txt
+```
+
+-----
+
 19. 软件包的的安装与管理 rpm, yum
 - 软件包的类型
 	- rpm二进制包，已经使用GCC编译后的
