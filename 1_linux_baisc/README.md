@@ -43,6 +43,10 @@
 
 - 文件的特殊权限：suid sgid sticky和文件扩展权限ACL
 	- SUID（set uid设置用户ID）：限定：只能设置在二进制可执行程序上面，对目录设置无效。功能：程序运行时的权限从执行者变更成程序所有者的权限
+		```
+		[root@localhost ~]# ll /usr/bin/passwd 
+		-rwsr-xr-x. 1 root root 27832 6月  10 2014 /usr/bin/passwd # s: SUID 用户修改密码是会临时获得所有权
+		```
 	- SGID：限定：既可以给二进制可执行程序设置，也可以对目录设置。功能：在设置了SGID权限的目录下建立文件时，新创建的文件的所属组会继承上级目录的所属组
 	- Stickybit：粘滞位权限是针对目录的，对文件无效，也叫防删除位	
 
