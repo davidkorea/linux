@@ -30,6 +30,24 @@
 	- ```rpm -qi lrzsz```，查询已经安装的rpm包的详细信息或作用  rpm -qi  rpm包名
 	- ```rpm -qpi /mnt/Packages/php-mysql-5.4.16-42.el7.x86_64.rpm ```，针对没有安装的RPM包，要加参数：-p
 
+- 查看软件包内容是否被修改```rpm -V包名```，```rpm -Vf 文件路径```
+	```
+	[root@localhost ~]# rpm -Vf /usr/bin/find   #检查具体文件
+	[root@localhost ~]# echo aaa >> /usr/bin/find
+	[root@localhost ~]# rpm -Vf /usr/bin/find
+	S.5....T.    /usr/bin/find
+	```
+	如果出现的全是点，表示测试通过,出现下面的字符代表某测试的失败:
+		- 5 — MD5 校验和是否改变，你也看成文件内容是否改变
+		- S — 文件长度，大小是否改变
+		- L — 符号链接，文件路径是否改变
+		- T — 文件修改日期是否改变
+		- D — 设备
+		- U — 用户，文件的属主
+		- G — 用户组
+		- M — 模式 (包含许可和文件类型)
+		- ? — 不可读文件
+
 
 
 
