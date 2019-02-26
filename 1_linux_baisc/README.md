@@ -153,6 +153,12 @@
 	14165 (process ID) old priority 0, new priority -10
 	```
 
+- screen
+	> 实战场景：公司晚上需要备份1T数据，我在xshell上直接执行备份脚本back.sh可以吗？ 或直接运行back.sh & 放到后台运行可以吗？   当关了xshell后，back.sh & 还在后台执行吗？
+	> 答：xshell长时间连接，如果本地网络偶尔断开或xshell不小心关闭，都会让后台运行的备份命令停止运行的。正确做法使用： srceen
+	- 安装screen软件包
+		- ```rpm -ivh /mnt/Packages/screen-4.1.0-0.23.20120314git3c2946.el7_2.x86_64.rpm```
+		- ```yum -y install screen```
 
 	
 	
