@@ -17,7 +17,12 @@
 	- z, --gzip   以gzip方式压缩  扩展名： tar.gz
 	- j ：        以bz2方式压缩的  扩展名：tar.bz2
 	- J ：        以xz 方式压缩   扩展名：tar.xz
+- ```tar zcvf gzshare.tar.gz ./windowsshare219/```
+- ```tar zxvf gzshare.tar.gz -C ./b```
 
+- zip, unzip
+	- ```zip pswd.zip /etc/passwd```
+	- ```unzip pswd.zip -d ./share```, -d制定解压路径
 
 
 
