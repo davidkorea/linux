@@ -24,8 +24,12 @@
 	- ```zip pswd.zip /etc/passwd```
 	- ```unzip pswd.zip -d ./share```, -d制定解压路径
 
+- 查看文件类型
+	- ```file /etc/passwd```, /etc/passwd: ASCII text
 
-
+- 按一定规则排序查看文件
+	- ```ll -tr```, -t按照时间，-r逆序查看文件。用于找到新创建的文件，显示于最后一行，方便查看。
+	- ```ll -Srh```, -S文件大小，-r逆序，-h文件大小按照kb，mb显示
 
 
 
