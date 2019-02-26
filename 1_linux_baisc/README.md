@@ -86,6 +86,7 @@
 			other::r--
 			```
 - 创建一个让root都无法删除的文件
+	- ```chattr```, ```lsattr```
 
 	```
 	[root@localhost ~]# touch hack.sh
@@ -94,9 +95,9 @@
 	[root@localhost ~]# chattr +i hack.sh 
 	[root@localhost ~]# rm -rf hack.sh 
 	rm: cannot remove 'hack.sh': Operation not permitted
-	[root@localhost ~]# ll hack.sh 
+	[root@localhost ~]# ll hack.sh # 普通命令查看不到扩展权限
 	-rw-r--r--. 1 root root 0 Feb 26 09:57 hack.sh
-	[root@localhost ~]# lsattr hack.sh 
+	[root@localhost ~]# lsattr hack.sh #只有专用命令可以查看到扩展权限
 	----i----------- hack.sh
 	```
 	
