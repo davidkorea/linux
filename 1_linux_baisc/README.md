@@ -802,11 +802,11 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
   
 - 解决卸载不了的问题
 	```
-	umount /sdb1
+	[root@localhost ~]# umount /sdb1
 	umount: /sdb1：目标忙。
 	```
 	```
-	[root@xuegod63 sdb1]# lsof /sdb1
+	[root@localhost ~]# lsof /sdb1
 	COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
 	bash    2823 root  cwd    DIR   8,17       20   64 /sdb1
 	lsof    2952 root  cwd    DIR   8,17       20   64 /sdb1
@@ -834,7 +834,7 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
   
   
 
-再新分区sdb2中创建一些文件，下面操作将sdb2进行备份。
+再新分区sdb3中创建一些文件，下面操作将sdb3进行备份。
 
 - xfsdump -f 备份存放位置 要备份路径或设备文件  
   - ```xfsdump -f ```
