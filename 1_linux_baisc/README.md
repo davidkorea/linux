@@ -1,5 +1,58 @@
 # linux - centos7 baiscs
 
+19. 软件包的的安装与管理 rpm, yum
+- 软件包的类型
+	- rpm二进制包，已经使用GCC编译后的
+	- tar源码包，需要编译
+	- RPM概述：RPM是RPM Package Manager（RPM软件包管理器）的缩写，这一文件格式名称虽然打上了RedHat的标志，但是其原始设计理念是开放式的，现在包括OpenLinux、SUSE以及Turbo Linux等Linux的分发版本都有采用，可以算是公认的行业标准了
+
+- rpm -ivh, ``` rpm -ivh /mnt/Packages/zsh-5.0.2-28.el7.x86_64.rpm```
+	-i  是install的意思， 安装软件包
+	-v  显示附加信息，提供更多详细信息
+	-V  校验，对已经安装的软件进行校验
+	-h  --hash  安装时输出####标记
+- 从网上下载直接安装centos epel扩展源
+	- ```rpm -ivh http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm ```，安装centos epel扩展yum源。 注：epel源是对centos7系统中自带的 base源的扩展。
+- rpm查询功能
+	- 用法：rpm -q（query） 常与下面参数组合使用
+		-a（all）  查询所有已安装的软件包
+		-f（file）系统文件名（查询系统文件所属哪个软件包），反向查询
+		-i  显示已经安装的rpm软件包信息，后面直接跟包名
+		-l（list）  查询软件包中文件安装的位置
+		-p  查询未安装软件包的相关信息，后面要跟软件的命名
+		-R 查询软件包的依赖性
+
+	- ```rpm -q zsh```，查询指定的包是否安装
+	- ```rpm -qa```，查询所有已安装包
+	- ```rpm -qa |  grep vim```，查询所有已安装包中带vim关键字的包
+	- ```which find```，查看find命令的路径/usr/bin/find
+	- ```rpm  -qf /usr/bin/find```，查询文件或命令属于哪个安装包
+	- ```rpm -qi lrzsz```，查询已经安装的rpm包的详细信息或作用  rpm -qi  rpm包名
+	- ```rpm -qpi /mnt/Packages/php-mysql-5.4.16-42.el7.x86_64.rpm ```，针对没有安装的RPM包，要加参数：-p
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
+
 18. 文件权限管理 rwx（UGO）
 
 - 文件类型
