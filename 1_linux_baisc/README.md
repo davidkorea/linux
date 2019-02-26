@@ -130,7 +130,7 @@ lrzsz-0.12.20-27.1.el6.src.rpm  说明.txt
 			...
 			```
 - yum常用操作：
-	- yum install -y httpd   #安装软件包， -y 直接安装 
+	- yum install -y httpd   #安装软件包， -y 直接安装，不在询问安装过程中的yes/no，全部默认同意安装 
 	- yum -y update    #升级软件包，改变软件设置和系统设置,系统版本内核都升级
 	- yum -y upgrade   #升级软件包，不改变软件设置和系统设置，系统版本升级，内核不改变
 	- yum -y update  # 不加任何包，表示整个系统进行升级
@@ -139,7 +139,60 @@ lrzsz-0.12.20-27.1.el6.src.rpm  说明.txt
 	- yum -y remove  包名    #卸载包 
 	- yum search keyword   #按关键字搜索软件包
 
-- tar源码包安装
+- tar源码包安装, 源码安装nginx
+	- 准备环境
+		- ```yum -y install gcc gcc-c++ make zlib-devel pcre pcre-devel openssl-devel```
+	- 源码编译3把斧：./configure, make, make install
+		- ```./configure --prefix=/usr/bin/local/nginx```, prefix指定安装路径
+		- ```make  -j 4```, 按Makefile文件编译，可以使用-j 4指定4核心CPU编译，提升速度
+		- ```make install```, 按Makefile定义的文件路径安装
+		- ```make clean```, 清除上次的make命令所产生的object和Makefile文件。使用场景：当需要重新执行configure时，需要执行make clean
+
+		```
+		[root@localhost nginx-1.12.2]# ./configure --prefix=/usr/local/nginx
+		checking for OS
+		 + Linux 3.10.0-957.el7.x86_64 x86_64
+		checking for C compiler ... found
+		 + using GNU C compiler
+		 + gcc version: 4.8.5 20150623 (Red Hat 4.8.5-36) (GCC) 
+		checking for gcc -pipe switch ... found
+		checking for -Wl,-E switch ... found
+		...
+		Configuration summary
+		  + using system PCRE library
+		  + OpenSSL library is not used
+		  + using system zlib library
+
+		  nginx path prefix: "/usr/local/nginx"
+		  nginx binary file: "/usr/local/nginx/sbin/nginx"
+		  nginx modules path: "/usr/local/nginx/modules"
+		  nginx configuration prefix: "/usr/local/nginx/conf"
+		  nginx configuration file: "/usr/local/nginx/conf/nginx.conf"
+		  nginx pid file: "/usr/local/nginx/logs/nginx.pid"
+		  nginx error log file: "/usr/local/nginx/logs/error.log"
+		  nginx http access log file: "/usr/local/nginx/logs/access.log"
+		  nginx http client request body temporary files: "client_body_temp"
+		  nginx http proxy temporary files: "proxy_temp"
+		  nginx http fastcgi temporary files: "fastcgi_temp"
+		  nginx http uwsgi temporary files: "uwsgi_temp"
+		  nginx http scgi temporary files: "scgi_temp"
+
+		[root@localhost nginx-1.12.2]# make -j 4
+		make -f objs/Makefile
+		make[1]: Entering directory `/root/nginx-1.12.2'
+		cc -c -pipe  -O -W -Wall -Wpointer-arith -Wno-unused-parameter -Werror -g  -I src/core -I src/event 
+		-I src/event/modules -I src/os/unix -I objs \		
+		make[1]: Leaving directory `/root/nginx-1.12.2'
+		
+		[root@localhost nginx-1.12.2]# make install
+		make -f objs/Makefile install
+		make[1]: Entering directory `/root/nginx-1.12.2'
+		test -d '/usr/local/nginx' || mkdir -p '/usr/local/nginx'		
+		make[1]: Leaving directory `/root/nginx-1.12.2'
+
+		```
+		- ```make uninstall``` ,有时删除不干净，所以建议大家安装时，在configure步骤添加一个： --prefix  参数。这样删除或备份时，直接对删除--prefix指定的安装目录操作就可以了。
+
 
 
 
