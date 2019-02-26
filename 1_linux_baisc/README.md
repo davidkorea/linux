@@ -88,7 +88,6 @@
 			$releasever = 7.6.1810
 			$basearch = x86_64
 			
-			sed -i  's/$releasever/7.4.1708/g' /etc/yum.repos.d/CentOS-Base.repo
 			"""
 			```
 
