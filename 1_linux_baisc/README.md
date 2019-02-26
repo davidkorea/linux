@@ -714,7 +714,15 @@ xfsdump的备份级别有以下两种，默认为0（即完全备份）
 |1 到9级别|增量备份，每次将之前（第一次、第二次、直到前一次）做过备份之后有变化的文件进行备份|
 
 fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda，新硬盘识别为sdb
-
+	- d   delete a partition   删除分区
+	- l   list known partition types   显示分区类型
+	- m   print this menu   打印帮助菜单
+	- n   add a new partition   添加新的分区
+	- p   print the partition table   显示分区表
+	- q   quit without saving changes   不保存，退出
+	- t   change a partition's system id   改变分区类型
+	- w   write table to disk and exit   写分区表信息到硬盘，保存操作并退出
+	
 - 创建新分区partition
   - ```fdisk sdb```
   - ```n```, enter, enter
@@ -762,6 +770,9 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
       tmpfs           798M     0  798M   0% /run/user/0
       /dev/sdb3      1014M   33M  982M   4% /root/sdb3
       ```
+- 让新生成的分区生效
+	- ```reboot```   #这个是最好的方法
+	- ```partx -a /dev/sdb3```  #获得新分区表
    
 - 使用新分区前，先进行格式化
   - ```mkfs.xfs /dev/sdb3```
@@ -778,8 +789,50 @@ fdisk挂载新硬盘，vm中创建新硬盘。安装系统时已默认挂载sda�
     realtime =none                   extsz=4096   blocks=0, rtextents=0
     ```
 - 挂载新分区至制定目录下，新分区可以正常使用
-  - ```mkdir ./sdb3```
-  - ```mount /dev/sdb3 /sdb3```
+	- 手动挂载	
+		- ```mkdir ./sdb3```
+		- ```mount /dev/sdb3 /sdb3```
+	- 自动挂载
+		```
+		[root@localhost ~]# vim /etc/fstab 
+		/dev/sdb3 /sdb3 xfs defaults 0 0 # 最后一行写入
+		
+		[root@localhost ~]# mount -a  #自动挂载/etc/fstab中没有挂载上的文件
+		```
+  
+- 解决卸载不了的问题
+	```
+	umount /sdb1
+	umount: /sdb1：目标忙。
+	```
+	```
+	[root@xuegod63 sdb1]# lsof /sdb1
+	COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+	bash    2823 root  cwd    DIR   8,17       20   64 /sdb1
+	lsof    2952 root  cwd    DIR   8,17       20   64 /sdb1
+	lsof    2953 root  cwd    DIR   8,17       20   64 /sdb1
+	```
+	- ```kill -9 2823```
+
+- 解除分区挂载
+	- ```umount /dev/sdb1```
+	- 注：umount 挂载点   或 umount 设备路径 
+  
+- 删除分区
+	```
+	[root@localhost ~]# fdisk /dev/sdb
+	Welcome to fdisk (util-linux 2.23.2).
+
+	Changes will remain in memory only, until you decide to write them.
+	Be careful before using the write command.
+
+
+	Command (m for help): d
+	Partition number (1-3, default 3): 1
+	Partition 1 is deleted
+	```
+  
+  
 
 再新分区sdb2中创建一些文件，下面操作将sdb2进行备份。
 
