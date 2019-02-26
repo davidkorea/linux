@@ -53,11 +53,35 @@
 		[root@localhost ~]# ll -d /tmp/ # -d 仅查看目录情况，不查看目录下的内容
 		drwxrwxrwt. 18 root root 4096 2月  26 09:42 /tmp/ # t 粘滞位
 		```
-
+	- 操作命令
+	
 	|SUID|SGID|Stickybit|
 	|-|-|-|
 	|u+s或u=4|g+s或g=2|o+t或o=1|
-
+	
+	- 文件扩展权限ACL(access control list)
+		- 设置用户xerox对文件1.txt拥有的rwx权限 ，xerox不属于a.txt的所属主和组，xerox是other。怎么做？
+			```
+			[root@localhost ~]# getfacl 2.txt
+			# file: 2.txt
+			# owner: root
+			# group: root
+			user::rw-
+			group::r--
+			other::r--
+			
+			[root@localhost ~]# setfacl -m u:xerox:rwx 2.txt # 只对other中的xerox用户赋予rwx权限
+			
+			[root@localhost ~]# getfacl 2.txt 
+			# file: 2.txt
+			# owner: root
+			# group: root
+			user::rw-
+			user:xerox:rwx
+			group::r--
+			mask::rwx
+			other::r--
+			```
 
 17. 用户管理, **直接修改 vim /etc/passwd**
 
