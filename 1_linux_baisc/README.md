@@ -159,6 +159,7 @@
 	- 安装screen软件包
 		- ```rpm -ivh /mnt/Packages/screen-4.1.0-0.23.20120314git3c2946.el7_2.x86_64.rpm```
 		- ```yum -y install screen```
+	- ```ctrl+a+d```
 	```
 	[root@localhost ~]# screen
 	[root@localhost ~]# vim 1.txt
