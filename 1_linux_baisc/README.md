@@ -159,7 +159,23 @@
 	- 安装screen软件包
 		- ```rpm -ivh /mnt/Packages/screen-4.1.0-0.23.20120314git3c2946.el7_2.x86_64.rpm```
 		- ```yum -y install screen```
+	```
+	[root@localhost ~]# screen
+	[root@localhost ~]# vim 1.txt
+	"""
+	ctrl+a+d
+	"""
+	[detached from 14733.pts-2.localhost]
+	
+	[root@localhost ~]# screen -ls		# 查看守护进程
+	There is a screen on:
+		14733.pts-2.localhost	(Detached)
 
+	[root@localhost ~]# screen -r 14733	# 恢复进程
+	
+	[root@localhost ~]# exit	# 退出screen模式
+	[screen is terminating]
+	```
 	
 	
 	
