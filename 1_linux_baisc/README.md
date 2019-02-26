@@ -61,6 +61,9 @@
 	
 	- 文件扩展权限ACL(access control list)
 		- 设置用户xerox对文件1.txt拥有的rwx权限 ，xerox不属于a.txt的所属主和组，xerox是other。怎么做？
+		- ```getfacl 2.txt```
+		- ```setfacl -m u:xerox:rwx 2.txt```, ```setfacl -m d:u:xerox:rwx /tmp/test```对目录有效，此目录下新建的目录或文件都继承此acl权限
+
 			```
 			[root@localhost ~]# getfacl 2.txt
 			# file: 2.txt
@@ -82,6 +85,18 @@
 			mask::rwx
 			other::r--
 			```
+
+
+
+
+
+
+
+
+
+
+
+-----
 
 17. 用户管理, **直接修改 vim /etc/passwd**
 
