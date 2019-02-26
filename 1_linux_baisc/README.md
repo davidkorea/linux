@@ -1,5 +1,27 @@
 # linux - centos7 baiscs
 
+18. 文件权限管理 rwx（UGO）
+
+- 文件类型
+	- p表示命名管道文件
+	- d表示目录文件
+	- l表示符号连接文件
+	- -表示普通文件
+	- s表示socket套接口文件，比如我们启用mysql时，会产生一个mysql.sock文件
+	- c表示字符设备文件，例： 虚拟控制台 或tty0
+	- b表示块设备文件   例： sda， cdrom
+	
+- 更改文件的属主和属组 ```chown user:group filename```，可以单独使用```chown user filename```，或```chown :group filename```
+
+- 修改权限
+
+
+
+
+
+
+-----
+
 17. 用户管理, **直接修改 vim /etc/passwd**
 
 - Linux用户三种角色
