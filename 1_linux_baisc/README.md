@@ -65,8 +65,32 @@
 			gpgcheck=0	#为1，使用公钥检验rpm包的正确性；0为不校验
 			gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7  #指定进行rpm校验的公钥文件地址
 			```
+	- 配置网络yum源
+		- ```wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo```, wget下载文件 ，-O 将wget下载的文件，保存到指定的位置，保存时可以重新起一个名字，或者直接写一个要保存的路径，这样还用原来的文件名。
 
+			```
+			[root@localhost ~]# wget -O /etc/yum.repos.d/CentOS-7-aliyun.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+			--2019-02-26 10:50:31--  http://mirrors.aliyun.com/repo/Centos-7.repo
+			Resolving mirrors.aliyun.com (mirrors.aliyun.com)... vim ^H^H^H47.246.59.226, 47.246.59.233, 47.246.29.16, ...
+			Connecting to mirrors.aliyun.com (mirrors.aliyun.com)|47.246.59.226|:80... connected.
+			HTTP request sent, awaiting response... ^H200 OK
+			Length: 2523 (2.5K) [application/octet-stream]
+			Saving to: '/etc/yum.repos.d/CentOS-7-aliyun.repo'
 
+			100%[==============================================>] 2,523       --.-K/s   in 0s      
+
+			2019-02-26 10:50:41 (70.9 MB/s) - '/etc/yum.repos.d/CentOS-7-aliyun.repo' saved [2523/2523]
+
+			[root@localhost ~]# vim /etc/yum.repos.d/CentOS-7-aliyun.repo 
+			
+			"""
+			vim界面中执行:!cat /etc/centos-release，找到CentOS Linux release 7.6.1810 (Core) 
+			$releasever = 7.6.1810
+			$basearch = x86_64
+			
+			sed -i  's/$releasever/7.4.1708/g' /etc/yum.repos.d/CentOS-Base.repo
+			"""
+			```
 
 
 
