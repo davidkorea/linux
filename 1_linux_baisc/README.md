@@ -120,6 +120,13 @@
 	
 	[root@localhost ~]# fg 1 # 再次进入vim编辑界面
 	```
+- 关闭进程3个命令：kill killall pkill 
+	- kill关闭进程：kill 进程号  关闭单个进程
+	- killall和pkill 命令用于杀死指定名字的进程
+		- ```kill -9 2342```, -9 SIGKILL 强制终止
+		- ```killall sshd```
+		- ```pkill sshd```
+
 
 
 	
