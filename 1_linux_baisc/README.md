@@ -1,6 +1,6 @@
 # linux - centos7 baiscs
 
-21. 系统进程管理ps, top, uptime, df,
+21. 系统进程管理ps, top, uptime, dh
 - ```ps -aux```, 用BSD的格式来显示进程
 	- USER: 启动这些进程的用户
 	- PID: 进程的ID
@@ -127,6 +127,30 @@
 		- ```killall sshd```
 		- ```pkill sshd```
 
+- 进程的优先级管理，优先级取值范围为（-20,19），越小优先级越高, 默认优先级是0
+	- 命令1：nice  指定程序的运行优先级, 格式：nice n command
+		- ```nice -n 5 vim a.txt```
+	- 命令2：renice   改变程序的运行优先级, 格式：renice -n pid
+		- ```renice -10 14165```
+		
+	```
+	[root@localhost ~]# ps -aux | grep vim
+	root     14165  0.3  0.0 151476  5172 pts/0    T    15:47   0:00 vim 1.txt
+	root     14176  0.0  0.0 112680   696 pts/0    S+   15:48   0:00 grep --color=auto vim
+	
+	[root@localhost ~]# top -p 14165
+	top - 15:48:57 up  2:07,  1 user,  load average: 0.02, 0.02, 0.05
+	Tasks:   1 total,   0 running,   0 sleeping,   1 stopped,   0 zombie
+	%Cpu(s):  0.0 us,  0.1 sy,  0.0 ni, 99.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+	KiB Mem :  8164932 total,  7030888 free,   454748 used,   679296 buff/cache
+	KiB Swap:  4194300 total,  4194300 free,        0 used.  7387476 avail Mem 
+
+	  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND            
+	14165 root      20   0  151476   5172   2596 T   0.0  0.1   0:00.09 vim    # 优先级NI为0
+	
+	[root@localhost ~]# renice -n -10 14165 # 或者renice -10 14165
+	14165 (process ID) old priority 0, new priority -10
+	```
 
 
 	
