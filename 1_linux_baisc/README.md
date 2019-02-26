@@ -85,8 +85,25 @@
 			mask::rwx
 			other::r--
 			```
+- 创建一个让root都无法删除的文件
 
-
+	```
+	[root@localhost ~]# touch hack.sh
+	[root@localhost ~]# ll hack.sh 
+	-rw-r--r--. 1 root root 0 Feb 26 09:57 hack.sh
+	[root@localhost ~]# chattr +i hack.sh 
+	[root@localhost ~]# rm -rf hack.sh 
+	rm: cannot remove 'hack.sh': Operation not permitted
+	[root@localhost ~]# ll hack.sh 
+	-rw-r--r--. 1 root root 0 Feb 26 09:57 hack.sh
+	[root@localhost ~]# lsattr hack.sh 
+	----i----------- hack.sh
+	```
+	
+	- 从REHL6 开始，新增加文件系统扩展属性：命令：chattr  参数：  a  只能追加内容   ；  i  不能被修改
+		- +a: 只能追加内容  如： echo aaa  >> hack.sh
+		- +i：即Immutable，系统不允许对这个文件进行任何的修改。如果目录具有这个属性，那么任何的进程只能修改目录之下的文件，不允许建立和删除文件。注：immutable  [ɪˈmju:təbl]  不可改变的  ；  Append [əˈpend] 追加
+		- -i ：移除i参数。  -a :移除a参数
 
 
 
