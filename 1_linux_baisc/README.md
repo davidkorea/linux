@@ -1,6 +1,8 @@
 # linux - centos7 baiscs
 
-21. 系统进程管理ps, top, uptime, dh
+21. 系统进程管理ps, top, uptime, df -h, free
+- ```df -h```，查看已使用硬盘分区使用量
+- ```free```, ```free -m```查看memory，swap使用量
 - ```ps -aux```, 用BSD的格式来显示进程
 	- USER: 启动这些进程的用户
 	- PID: 进程的ID
