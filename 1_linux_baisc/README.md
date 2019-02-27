@@ -6,8 +6,41 @@
 	> windows ： C盘安装最外，速度也是最快
 	> Linux ： boot分区和 swap分区，装最外面
 	> 磁盘写数据时，从外面往里。
-
-
+- 在win10系统，新一个文本文件“新建文本文档.txt”，只输入aa两个字符。文件大小为2字节，占用空间为4kb， 说明我的NTFS文件系统中默认的簇大小为4KB
+- Linux也一样
+	```
+	[root@localhost ~]# stat /etc/passwd
+  	File: '/etc/passwd'
+ 	Size: 2677      	Blocks: 8          IO Block: 4096   regular file
+	```
+-  文件系统结构
+	- Linux文件系统由三部分组成 ： 文件名，inode，block
+	- Linux文件系统： ext3,ext4，xfs
+	- windows文件系统： FAT32，NTFS
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+-----
 
 21. 系统进程管理ps, top, uptime, df -h, free
 - ```df -h```，查看已使用硬盘分区使用量
