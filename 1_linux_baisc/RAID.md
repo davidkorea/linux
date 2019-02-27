@@ -99,9 +99,63 @@
   工作中正常做raid全部是使用独立的磁盘来做的。为了节约资源，raid10以一块磁盘上多个分区来代替多个独立的磁盘做raid，但是这样做出来的raid没有备份数据的作用，因为一块磁盘坏了，这个磁盘上所做的raid也就都坏了。
     
 
+## 2.2 创建RAID0
+实验环境：
 
+|raid种类|磁盘|热备盘|
+|-|-|-|
+|raid0|sdb、sdc|
 
+1. 创建md0 ``````
+  ```
+  [root@localhost ~]# mdadm -C -v /dev/md0 -l 0 -n 2 /dev/sdb /dev/sdc
+  mdadm: chunk size defaults to 512K
+  mdadm: partition table exists on /dev/sdb
+  mdadm: partition table exists on /dev/sdb but will be lost or
+         meaningless after creating array
+  Continue creating array? y
+  mdadm: Defaulting to version 1.2 metadata
+  mdadm: array /dev/md0 started.
+  ```
+2. 查看病生产配置文件
+  ```
+  [root@localhost ~]# mdadm -Ds
+  ARRAY /dev/md0 metadata=1.2 name=localhost.localdomain:0 UUID=2d41722a:69ed39b5:59a1ef60:40635d1b
+  ```
+  
+  ```
+  [root@localhost ~]# mdadm -D /dev/md0 
+  /dev/md0:
+             Version : 1.2
+       Creation Time : Wed Feb 27 13:19:26 2019
+          Raid Level : raid0
+          Array Size : 41908224 (39.97 GiB 42.91 GB)
+        Raid Devices : 2
+       Total Devices : 2
+         Persistence : Superblock is persistent
 
+         Update Time : Wed Feb 27 13:19:26 2019
+               State : clean 
+      Active Devices : 2
+     Working Devices : 2
+      Failed Devices : 0
+       Spare Devices : 0
+
+          Chunk Size : 512K
+
+  Consistency Policy : none
+
+                Name : localhost.localdomain:0  (local to host localhost.localdomain)
+                UUID : 2d41722a:69ed39b5:59a1ef60:40635d1b
+              Events : 0
+
+      Number   Major   Minor   RaidDevice State
+         0       8       16        0      active sync   /dev/sdb
+         1       8       32        1      active sync   /dev/sdc
+  ```
+  ```
+  [root@localhost ~]# mdadm -Ds > /etc/mdadm.conf   # > 插入并表示覆盖文件原有内容， >>最后追加，不覆盖原有内容
+  ```
 
 
 
