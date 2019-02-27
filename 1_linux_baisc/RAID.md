@@ -275,7 +275,8 @@ realtime =none                   extsz=4096   blocks=0, rtextents=0
 Filesystem     Type  Size  Used Avail Use% Mounted on
 /dev/md1       xfs    20G   33M   20G   1% /raid1
 ```
-### 4. 模拟故障
+### 4. 故障
+1. 模拟故障
 ```
 [root@localhost ~]# touch /raid1/1.txt
 [root@localhost ~]# ls /raid1
@@ -322,8 +323,21 @@ Consistency Policy : resync
 
        1       8       64        -      faulty   /dev/sde
 """
+
+[root@localhost ~]# ls /raid1
+1.txt     # 数据未丢失
 ```
-  
+2. 移除故障硬盘
+```
+[root@localhost ~]# mdadm -r /dev/md1 /dev/sde
+mdadm: hot removed /dev/sde from /dev/md1
+[root@localhost ~]# mdadm -D /dev/md1
+...
+    Number   Major   Minor   RaidDevice State
+       0       8       48        0      active sync   /dev/sdd
+       2       8       80        1      active sync   /dev/sdf
+
+```
   
   
   
