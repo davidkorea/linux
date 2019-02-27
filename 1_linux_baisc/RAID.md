@@ -420,10 +420,67 @@ Consistency Policy : resync
 
        3       8      144        -      spare   /dev/sdj
 ```
-  
-  
-  
-  
+### 2. 停止RAID5
+停止前需确保已经保存配置文件至/ets/mdadm.conf，并且mdadm -D /dev/md5 sync完成
+```
+[root@localhost ~]# mdadm -Dsv > /etc/mdadm.conf 
+
+[root@localhost ~]# mdadm -S /dev/md5
+mdadm: stopped /dev/md5
+```
+### 3. 激活RAID5
+```
+[root@localhost ~]# mdadm -As
+mdadm: /dev/md5 has been started with 3 drives and 1 spare.
+```
+因为/etc/mdadm.conf存有配置信息，可以自动通过-s 扫描到停止的阵列并-A激活
+
+### 4. 扩展RAID5磁盘阵列
+将热备盘增加到md5中，使用md5中可以使用的磁盘数量为4块。
+
+阵列只有在正常状态下，才能扩容，降级及重构时不允许扩容。对于raid5来说，只能增加成员盘，不能减少。而对于raid1来说，可以增加成员盘，也可以减少。
+
+```
+[root@localhost ~]# mdadm -G /dev/md5 -n 4 -c 32
+
+[root@localhost ~]# mdadm -D /dev/md5
+/dev/md5:
+           Version : 1.2
+     Creation Time : Wed Feb 27 14:58:02 2019
+        Raid Level : raid5
+        Array Size : 41908224 (39.97 GiB 42.91 GB)    # 同步完成后会更新大小62865408 (59.95 GiB 64.37 GB) 
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 4
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Wed Feb 27 15:07:36 2019
+             State : clean, reshaping 
+    Active Devices : 4
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : left-symmetric
+        Chunk Size : 32K
+
+Consistency Policy : resync
+
+    Reshape Status : 2% complete
+     Delta Devices : 1, (3->4)
+
+              Name : localhost.localdomain:5  (local to host localhost.localdomain)
+              UUID : c3a3e47c:437cba77:af0206b8:256313bc
+            Events : 43
+
+    Number   Major   Minor   RaidDevice State
+       0       8       96        0      active sync   /dev/sdg
+       1       8      112        1      active sync   /dev/sdh
+       4       8      128        2      active sync   /dev/sdi
+       3       8      144        3      active sync   /dev/sdj
+
+[root@localhost ~]# mdadm -Dsv > /etc/mdadm.conf    #保存配置文件
+```
   
   
   
