@@ -18,6 +18,15 @@
 	- Linux文件系统： ext3,ext4，xfs
 	- windows文件系统： FAT32，NTFS
 	
+- inode包含文件的元信息，具体来说有以下内容：
+　　* 文件的字节数
+　　* 文件拥有者的User ID
+　　* 文件的Group ID
+　　* 文件的读、写、执行权限
+　　* 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。
+　　* 链接数，即有多少文件名指向这个inode
+　　* 文件数据block的位置
+ 
 	
 	
 	
