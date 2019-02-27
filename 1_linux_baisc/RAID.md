@@ -89,12 +89,14 @@
 
   - 实验环境：
   
-  |raid种类|磁盘热备盘|
+  |raid种类|磁盘|热备盘|
   |-|-|-|
   |raid0|sdb、sdc||
   |raid1|sdd、sde|sdf|
   |raid5|sdg、sdh、sdi|sdj|
   |raid10分区：sdk1,sdk2,sdk3.sdk4||
+  
+    - 工作中正常做raid全部是使用独立的磁盘来做的。为了节约资源，raid10以一块磁盘上多个分区来代替多个独立的磁盘做raid，但是这样做出来的raid没有备份数据的作用，因为一块磁盘坏了，这个磁盘上所做的raid也就都坏了。
 
 
 
