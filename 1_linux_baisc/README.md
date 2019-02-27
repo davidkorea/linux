@@ -1,5 +1,14 @@
 # linux - centos7 baiscs
 
+22.Linux文件系统结构
+- 使用ZBR(Zoned Bit Recording通过将更多的扇区放到磁盘的外部磁道而获取更多存储空间) 区位记录法做的磁盘有以下特点：读外圈的数据快，读内圈的数据慢，所以测试硬盘经常看到读取速度越来越慢的曲线图就很正常了
+	> windows安装系统的C盘或Linux boot分区一般安装在磁盘最外面还是最里面？
+	> windows ： C盘安装最外，速度也是最快
+	> Linux ： boot分区和 swap分区，装最外面
+	> 磁盘写数据时，从外面往里。
+
+
+
 21. 系统进程管理ps, top, uptime, df -h, free
 - ```df -h```，查看已使用硬盘分区使用量
 - ```free```, ```free -m```查看memory，swap使用量
