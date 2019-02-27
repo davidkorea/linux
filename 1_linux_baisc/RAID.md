@@ -366,9 +366,60 @@ mdadm: added /dev/sde
 
 ## 2.4 RAID5
 
+  |raid种类|磁盘|热备盘|
+  |-|-|-|
+  |raid5|sdg、sdh、sdi|sdj|
   
+- 创建RAID5, 添加1个热备盘，指定chunk大小为32K
+  - x或--spare-devicds=	指定阵列中备用盘的数量
+  - c或--chunk=	设定阵列的块chunk块大小 ，单位为KB
+- 停止阵列，重新激活阵列
+- 使用热备盘，扩展阵列容量，从3个磁盘扩展到4个
   
-  
+### 1. 创建RAID5
+```
+[root@localhost ~]# mdadm -C -v /dev/md5 -l 5 -n 3 -x 1 -c 32 /dev/sd[g,h,i,j]
+mdadm: layout defaults to left-symmetric
+mdadm: layout defaults to left-symmetric
+mdadm: size set to 20954112K
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md5 started.
+[root@localhost ~]# mdadm -D /dev/md5
+/dev/md5:
+           Version : 1.2
+     Creation Time : Wed Feb 27 14:58:02 2019
+        Raid Level : raid5
+        Array Size : 41908224 (39.97 GiB 42.91 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Wed Feb 27 14:58:17 2019
+             State : clean, degraded, recovering 
+    Active Devices : 2
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 2
+
+            Layout : left-symmetric
+        Chunk Size : 32K
+
+Consistency Policy : resync
+
+    Rebuild Status : 9% complete
+
+              Name : localhost.localdomain:5  (local to host localhost.localdomain)
+              UUID : c3a3e47c:437cba77:af0206b8:256313bc
+            Events : 2
+
+    Number   Major   Minor   RaidDevice State
+       0       8       96        0      active sync   /dev/sdg
+       1       8      112        1      active sync   /dev/sdh
+       4       8      128        2      spare rebuilding   /dev/sdi
+
+       3       8      144        -      spare   /dev/sdj
+```
   
   
   
