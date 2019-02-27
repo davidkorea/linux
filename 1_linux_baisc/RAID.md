@@ -555,7 +555,23 @@ unused devices: <none>
 [root@localhost ~]# mdadm -Dsv > /etc/mdadm.conf    # 写入配置文件
 ```
   
-  
+## 2.6 删除RAID所有信息及注意事项
+```
+[root@localhost ~]# umount /dev/md0   #如果已经挂载raid，先卸载
+[root@localhost ~]# mdadm -Ss
+mdadm: Cannot get exclusive access to /dev/md1:Perhaps a running process, mounted filesystem or active volume group?
+
+[root@localhost raid0]# umount /dev/md1   #如果已经挂载raid，先卸载
+
+[root@localhost raid0]# mdadm -Ss   #停止raid设备
+
+[root@localhost ~]# rm -rf /etc/mdadm.conf    #删除raid配置文件
+
+[root@localhost ~]# mdadm --zero-superblock /dev/sd[b,c,d,e,f]    #清除物理磁盘中的raid标识
+
+[root@localhost ~]# mdadm --zero-superblock /dev/sdb    #确认成功 清除物理磁盘中的raid标识
+mdadm: Unrecognised md component device - /dev/sdb
+```
   
   
   
