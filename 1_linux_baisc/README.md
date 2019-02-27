@@ -1,7 +1,6 @@
 # linux - centos7 baiscs
 
-23. RAID磁盘阵列的原理与搭建 https://github.com/davidkorea/linux_study/edit/master/1_linux_baisc/RAID.md
-
+23. RAID磁盘阵列的原理与搭建 https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/RAID.md
 -----
 
 22.Linux文件系统结构
