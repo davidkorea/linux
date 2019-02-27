@@ -275,7 +275,54 @@ realtime =none                   extsz=4096   blocks=0, rtextents=0
 Filesystem     Type  Size  Used Avail Use% Mounted on
 /dev/md1       xfs    20G   33M   20G   1% /raid1
 ```
-  
+### 4. 模拟故障
+```
+[root@localhost ~]# touch /raid1/1.txt
+[root@localhost ~]# ls /raid1
+1.txt         # 提前创建好文件，测试硬盘故障后是否有数据丢失
+
+[root@localhost ~]# mdadm /dev/md1 -f /dev/sde
+mdadm: set /dev/sde faulty in /dev/md1
+[root@localhost ~]# mdadm -D /dev/md1
+/dev/md1:
+           Version : 1.2
+     Creation Time : Wed Feb 27 14:08:23 2019
+        Raid Level : raid1
+        Array Size : 20954112 (19.98 GiB 21.46 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 2
+     Total Devices : 3
+       Persistence : Superblock is persistent
+
+       Update Time : Wed Feb 27 14:20:25 2019
+             State : clean, degraded, recovering 
+    Active Devices : 1
+   Working Devices : 2
+    Failed Devices : 1
+     Spare Devices : 1
+
+Consistency Policy : resync
+
+    Rebuild Status : 17% complete
+
+              Name : localhost.localdomain:1  (local to host localhost.localdomain)
+              UUID : 58c81516:761836f4:4c1d6f59:602b393c
+            Events : 21
+
+    Number   Major   Minor   RaidDevice State
+       0       8       48        0      active sync   /dev/sdd
+       2       8       80        1      spare rebuilding   /dev/sdf
+
+       1       8       64        -      faulty   /dev/sde
+       
+"""初始化完成后显示如下
+    Number   Major   Minor   RaidDevice State
+       0       8       48        0      active sync   /dev/sdd
+       2       8       80        1      active sync   /dev/sdf
+
+       1       8       64        -      faulty   /dev/sde
+"""
+```
   
   
   
