@@ -1,5 +1,9 @@
 # linux - centos7 baiscs
 
+23. RAID磁盘阵列的原理与搭建 https://github.com/davidkorea/linux_study/edit/master/1_linux_baisc/RAID.md
+
+-----
+
 22.Linux文件系统结构
 - 使用ZBR(Zoned Bit Recording通过将更多的扇区放到磁盘的外部磁道而获取更多存储空间) 区位记录法做的磁盘有以下特点：读外圈的数据快，读内圈的数据慢，所以测试硬盘经常看到读取速度越来越慢的曲线图就很正常了
 	> windows安装系统的C盘或Linux boot分区一般安装在磁盘最外面还是最里面？
