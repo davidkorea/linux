@@ -482,7 +482,78 @@ Consistency Policy : resync
 [root@localhost ~]# mdadm -Dsv > /etc/mdadm.conf    #保存配置文件
 ```
   
-  
+## 2.5 RAID10
+
+```
+[root@localhost ~]# fdisk /dev/sdk    
+# 创建主分区/dev/sdk1  /dev/sdk2  /dev/sdk3  /dev/sdk4
+# 创建完sdk3后，再n创建时默认为e分区，需要手动改为p主分区，否则无法配置RAID10
+
+[root@localhost ~]# mdadm -C -v /dev/md10 -l 10 -n 4 /dev/sdk[1-4]
+mdadm: layout defaults to n2
+mdadm: layout defaults to n2
+mdadm: chunk size defaults to 512K
+mdadm: partition table exists on /dev/sdk4
+mdadm: partition table exists on /dev/sdk4 but will be lost or
+       meaningless after creating array
+mdadm: size set to 1046528K
+Continue creating array? y
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md10 started.
+
+[root@localhost ~]# mdadm -D /dev/md10
+/dev/md10:
+           Version : 1.2
+     Creation Time : Wed Feb 27 15:20:10 2019
+        Raid Level : raid10
+        Array Size : 2093056 (2044.00 MiB 2143.29 MB)
+     Used Dev Size : 1046528 (1022.00 MiB 1071.64 MB)
+      Raid Devices : 4
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Wed Feb 27 15:20:19 2019
+             State : clean, resyncing 
+    Active Devices : 4
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : near=2
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+     Resync Status : 38% complete
+
+              Name : localhost.localdomain:10  (local to host localhost.localdomain)
+              UUID : a2d24047:b7d7cb27:deb41fa4:f4fb1113
+            Events : 6
+
+    Number   Major   Minor   RaidDevice State
+       0       8      161        0      active sync set-A   /dev/sdk1
+       1       8      162        1      active sync set-B   /dev/sdk2
+       2       8      163        2      active sync set-A   /dev/sdk3
+       3       8      164        3      active sync set-B   /dev/sdk4
+
+[root@localhost ~]# cat /proc/mdstat 
+Personalities : [raid0] [raid1] [raid6] [raid5] [raid4] [raid10] 
+md10 : active raid10 sdk4[3] sdk3[2] sdk2[1] sdk1[0]
+      2093056 blocks super 1.2 512K chunks 2 near-copies [4/4] [UUUU]
+      
+md5 : active raid5 sdg[0] sdj[3] sdi[4] sdh[1]
+      62862336 blocks super 1.2 level 5, 32k chunk, algorithm 2 [4/4] [UUUU]
+      
+md1 : active raid1 sde[3](S) sdf[2] sdd[0]
+      20954112 blocks super 1.2 [2/2] [UU]
+      
+md0 : active raid0 sdc[1] sdb[0]
+      41908224 blocks super 1.2 512k chunks
+      
+unused devices: <none>
+
+[root@localhost ~]# mdadm -Dsv > /etc/mdadm.conf    # 写入配置文件
+```
   
   
   
