@@ -106,7 +106,7 @@
 |-|-|-|
 |raid0|sdb、sdc|
 
-1. 创建md0 ``````
+### 1. 创建md0
   ```
   [root@localhost ~]# mdadm -C -v /dev/md0 -l 0 -n 2 /dev/sdb /dev/sdc
   mdadm: chunk size defaults to 512K
@@ -117,7 +117,7 @@
   mdadm: Defaulting to version 1.2 metadata
   mdadm: array /dev/md0 started.
   ```
-2. 查看并生成配置文件
+### 2. 查看并生成配置文件
   ```
   [root@localhost ~]# mdadm -Ds
   ARRAY /dev/md0 metadata=1.2 name=localhost.localdomain:0 UUID=2d41722a:69ed39b5:59a1ef60:40635d1b
@@ -157,40 +157,40 @@
   [root@localhost ~]# mdadm -Ds > /etc/mdadm.conf   # > 插入并表示覆盖文件原有内容， >>最后追加，不覆盖原有内容
   ```
 
-3. 对创建的RAID0进行文件系统创建并挂载
-  - 手动挂载
+### 3. 对创建的RAID0进行文件系统创建并挂载
+1. 手动挂载
 
-    ```
-    [root@localhost ~]# mkfs.xfs /dev/md0 
-    meta-data=/dev/md0               isize=512    agcount=16, agsize=654720 blks
-             =                       sectsz=512   attr=2, projid32bit=1
-             =                       crc=1        finobt=0, sparse=0
-    data     =                       bsize=4096   blocks=10475520, imaxpct=25
-             =                       sunit=128    swidth=256 blks
-    naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
-    log      =internal log           bsize=4096   blocks=5120, version=2
-             =                       sectsz=512   sunit=8 blks, lazy-count=1
-    realtime =none                   extsz=4096   blocks=0, rtextents=0
-    [root@localhost ~]# mkdir /raid0
-    [root@localhost ~]# mount /dev/md0 /raid0/
+  ```
+  [root@localhost ~]# mkfs.xfs /dev/md0 
+  meta-data=/dev/md0               isize=512    agcount=16, agsize=654720 blks
+           =                       sectsz=512   attr=2, projid32bit=1
+           =                       crc=1        finobt=0, sparse=0
+  data     =                       bsize=4096   blocks=10475520, imaxpct=25
+           =                       sunit=128    swidth=256 blks
+  naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+  log      =internal log           bsize=4096   blocks=5120, version=2
+           =                       sectsz=512   sunit=8 blks, lazy-count=1
+  realtime =none                   extsz=4096   blocks=0, rtextents=0
+  [root@localhost ~]# mkdir /raid0
+  [root@localhost ~]# mount /dev/md0 /raid0/
 
-    [root@localhost ~]# df -Th /raid0/    # -T 显示Type
-    Filesystem     Type  Size  Used Avail Use% Mounted on
-    /dev/md0       xfs    40G   33M   40G   1% /raid0
-    ```
-  - 开机自动挂载
-    ```
-    [root@localhost ~]# umount /dev/md0     
-    [root@localhost ~]# df -h   # 确认已解除挂载
-    
-    [root@localhost ~]# blkid /dev/md0    # 查询blockid
-    /dev/md0: UUID="198a4ecc-5d38-4469-bbe2-1aa1fef9f63d" TYPE="xfs" 
-    
-    [root@localhost ~]# echo "UUID=198a4ecc-5d38-4469-bbe2-1aa1fef9f63d /raid0 xfs defaults 0 0" >> /etc/fstab 
-    
-    [root@localhost ~]# mount -a
+  [root@localhost ~]# df -Th /raid0/    # -T 显示Type
+  Filesystem     Type  Size  Used Avail Use% Mounted on
+  /dev/md0       xfs    40G   33M   40G   1% /raid0
+  ```
+2. 开机自动挂载
+  ```
+  [root@localhost ~]# umount /dev/md0     
+  [root@localhost ~]# df -h   # 确认已解除挂载
 
-    [root@localhost ~]# df -Th /raid0/    # -T 显示Type
-    Filesystem      Size  Used Avail Use% Mounted on
-    /dev/md0         40G   33M   40G   1% /raid0
-    ```
+  [root@localhost ~]# blkid /dev/md0    # 查询blockid
+  /dev/md0: UUID="198a4ecc-5d38-4469-bbe2-1aa1fef9f63d" TYPE="xfs" 
+
+  [root@localhost ~]# echo "UUID=198a4ecc-5d38-4469-bbe2-1aa1fef9f63d /raid0 xfs defaults 0 0" >> /etc/fstab 
+
+  [root@localhost ~]# mount -a
+
+  [root@localhost ~]# df -Th /raid0/    # -T 显示Type
+  Filesystem      Size  Used Avail Use% Mounted on
+  /dev/md0         40G   33M   40G   1% /raid0
+  ```
