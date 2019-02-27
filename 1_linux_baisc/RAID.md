@@ -178,4 +178,19 @@
     Filesystem     Type  Size  Used Avail Use% Mounted on
     /dev/md0       xfs    40G   33M   40G   1% /raid0
     ```
+  - 开机自动挂载
+    ```
+    [root@localhost ~]# umount /dev/md0     
+    [root@localhost ~]# df -h   # 确认已解除挂载
+    
+    [root@localhost ~]# blkid /dev/md0    # 查询blockid
+    /dev/md0: UUID="198a4ecc-5d38-4469-bbe2-1aa1fef9f63d" TYPE="xfs" 
+    
+    [root@localhost ~]# echo "UUID=198a4ecc-5d38-4469-bbe2-1aa1fef9f63d /raid0 xfs defaults 0 0" >> /etc/fstab 
+    
+    [root@localhost ~]# mount -a
 
+    [root@localhost ~]# df -Th /raid0/    # -T 显示Type
+    Filesystem      Size  Used Avail Use% Mounted on
+    /dev/md0         40G   33M   40G   1% /raid0
+    ```
