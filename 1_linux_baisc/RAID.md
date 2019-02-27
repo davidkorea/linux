@@ -338,7 +338,18 @@ mdadm: hot removed /dev/sde from /dev/md1
        2       8       80        1      active sync   /dev/sdf
 
 ```
-  
+3. 添加新硬盘至raid1
+```
+[root@localhost ~]# mdadm -a /dev/md1 /dev/sde
+mdadm: added /dev/sde
+[root@localhost ~]# mdadm -D /dev/md1
+...
+    Number   Major   Minor   RaidDevice State
+       0       8       48        0      active sync   /dev/sdd
+       2       8       80        1      active sync   /dev/sdf
+
+       3       8       64        -      spare   /dev/sde
+```
   
   
   
