@@ -38,9 +38,18 @@
 		Change: 2019-02-26 11:05:01.668608872 +0800
 		 Birth: -
 		```
-	
-	
-	
+		- ctime指inode上一次文件属性变动的时间，change time 。 比如： chmod +x  a.sh 
+		- mtime指文件内容上一次变动的时间，modify time  。如：echo aa >> a.sh 或vim  a.sh 修改内容
+		- atime指文件上一次查看文件的时间，access time 。 如：  cat  a.sh
+
+	- inode也会消耗硬盘空间，所以硬盘格式化的时候，操作系统自动将硬盘分成两个区域。一个是数据区，存放文件数据；另一个是inode区（inode table），存放inode所包含的信息。每个inode节点的大小，一般是128字节或256字节。inode节点的总数，在格式化时就给定，假定在一块1GB的硬盘中，每个inode节点的大小为128字节，每1KB就设置一个inode，那么inode table的大小就会达到128MB，占整块硬盘的12.8%。	
+	- 每个inode都有一个号码，操作系统用inode号码来识别不同的文件。
+ Unix/Linux系统内部不使用文件名，而使用inode号码来识别文件。对于系统来说，文件名只是inode号码便于识别的别称或者绰号。表面上，用户通过文件名，打开文件。实际上，系统内部这个过程分成三步：首先，系统找到这个文件名对应的inode号码；其次，通过inode号码，获取inode信息；最后，根据inode信息，找到文件数据所在的block，读出数据。
+ 		```
+		[root@localhost ~]# ls -i /etc/passwd
+		8394017 /etc/passwd
+		```
+
 	
 	
 	
