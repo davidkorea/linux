@@ -89,12 +89,12 @@
 
   - 实验环境：
   
-    |raid种类|磁盘热备盘|
-    |-|-|-|
-    |raid0|sdb、sdc||
-    |raid1|sdd、sde|sdf|
-    |raid5|sdg、sdh、sdi|sdj|
-    |raid10分区：sdk1,sdk2,sdk3.sdk4||
+  |raid种类|磁盘热备盘|
+  |-|-|-|
+  |raid0|sdb、sdc||
+  |raid1|sdd、sde|sdf|
+  |raid5|sdg、sdh、sdi|sdj|
+  |raid10分区：sdk1,sdk2,sdk3.sdk4||
 
 
 
