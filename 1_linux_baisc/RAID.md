@@ -194,3 +194,152 @@
   Filesystem      Size  Used Avail Use% Mounted on
   /dev/md0         40G   33M   40G   1% /raid0
   ```
+  
+## 2.3 RAID1
+
+
+### 1. 创建
+```
+[root@localhost ~]# mdadm -C -v /dev/md1 -l 1 -n 2 -x 1 /dev/sd[d,e,f]
+mdadm: Note: this array has metadata at the start and
+    may not be suitable as a boot device.  If you plan to
+    store '/boot' on this device please ensure that
+    your boot-loader understands md/v1.x metadata, or use
+    --metadata=0.90
+mdadm: size set to 20954112K
+Continue creating array? 
+Continue creating array? (y/n) y
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md1 started.
+```
+### 2. 查看并生成配置文件
+```
+[root@localhost ~]# mdadm -D /dev/md1
+/dev/md1:
+           Version : 1.2
+     Creation Time : Wed Feb 27 14:08:23 2019
+        Raid Level : raid1
+        Array Size : 20954112 (19.98 GiB 21.46 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 2
+     Total Devices : 3
+       Persistence : Superblock is persistent
+
+       Update Time : Wed Feb 27 14:08:33 2019
+             State : clean, resyncing 
+    Active Devices : 2
+   Working Devices : 3
+    Failed Devices : 0
+     Spare Devices : 1
+
+Consistency Policy : resync
+
+     Resync Status : 8% complete    # 完成初始化后，此行会消失
+
+              Name : localhost.localdomain:1  (local to host localhost.localdomain)
+              UUID : 58c81516:761836f4:4c1d6f59:602b393c
+            Events : 1
+
+    Number   Major   Minor   RaidDevice State
+       0       8       48        0      active sync   /dev/sdd
+       1       8       64        1      active sync   /dev/sde
+
+       2       8       80        -      spare   /dev/sdf
+```
+
+```
+[root@localhost ~]# mdadm -Dsv
+ARRAY /dev/md0 level=raid0 num-devices=2 metadata=1.2 name=localhost.localdomain:0 UUID=2d41722a:69ed39b5:59a1ef60:40635d1b
+   devices=/dev/sdb,/dev/sdc
+ARRAY /dev/md1 level=raid1 num-devices=2 metadata=1.2 spares=1 name=localhost.localdomain:1 UUID=58c81516:761836f4:4c1d6f59:602b393c
+   devices=/dev/sdd,/dev/sde,/dev/sdf
+
+[root@localhost ~]# mdadm -Dsv > /etc/mdadm.conf    # mdadm -Dsv已经包含来之前创建的md0，所以可以使用>覆盖原有内容
+```
+### 3. 挂载  
+```
+[root@localhost ~]# mkfs.xfs /dev/md1
+meta-data=/dev/md1               isize=512    agcount=4, agsize=1309632 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=5238528, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@localhost ~]# mkdir /raid1
+[root@localhost ~]# mount /dev/md1 /raid1/
+
+[root@localhost ~]# df -Th /raid1
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/md1       xfs    20G   33M   20G   1% /raid1
+```
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
