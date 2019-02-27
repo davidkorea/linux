@@ -49,7 +49,19 @@
 		[root@localhost ~]# ls -i /etc/passwd
 		8394017 /etc/passwd
 		```
-
+	- 查看每个硬盘分区的inode总数和已经使用的数量
+		```
+		[root@localhost ~]# df -ih	# 或者df -i
+		Filesystem     Inodes IUsed IFree IUse% Mounted on
+		/dev/sda2        5.0M  157K  4.9M    4% /
+		devtmpfs         993K   411  993K    1% /dev
+		tmpfs            997K     1  997K    1% /dev/shm
+		tmpfs            997K  1.4K  996K    1% /run
+		tmpfs            997K    16  997K    1% /sys/fs/cgroup
+		/dev/sda1        100K   340  100K    1% /boot
+		tmpfs            997K     9  997K    1% /run/user/42
+		tmpfs            997K     1  997K    1% /run/user/0
+		```
 	
 	
 	
