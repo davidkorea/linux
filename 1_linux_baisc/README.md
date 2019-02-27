@@ -19,14 +19,25 @@
 	- windows文件系统： FAT32，NTFS
 	
 - inode包含文件的元信息，具体来说有以下内容：
-　　* 文件的字节数
-　　* 文件拥有者的User ID
-　　* 文件的Group ID
-　　* 文件的读、写、执行权限
-　　* 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。
-　　* 链接数，即有多少文件名指向这个inode
-　　* 文件数据block的位置
- 
+	- 文件的字节数
+	- 文件拥有者的User ID
+	- 文件的Group ID
+	- 文件的读、写、执行权限
+	- 文件的时间戳，共有三个：ctime指inode上一次变动的时间，mtime指文件内容上一次变动的时间，atime指文件上一次打开的时间。
+	- 链接数，即有多少文件名指向这个inode
+	- 文件数据block的位置
+		```
+		[root@localhost ~]# stat /etc/passwd
+		  File: '/etc/passwd'
+		  Size: 2677      	Blocks: 8          IO Block: 4096   regular file
+		Device: 802h/2050d	Inode: 8394017     Links: 1
+		Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+		Context: system_u:object_r:passwd_file_t:s0
+		Access: 2019-02-26 11:05:01.768610009 +0800
+		Modify: 2019-02-26 11:05:01.665608838 +0800
+		Change: 2019-02-26 11:05:01.668608872 +0800
+		 Birth: -
+		```
 	
 	
 	
