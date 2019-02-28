@@ -196,7 +196,41 @@ WARNING: dos signature detected on /dev/sdb4 at offset 510. Wipe it? [y/n]: y
   Allocated PE          4
   PV UUID               cAr4cb-kB11-HiqQ-W6oG-QK52-kqCc-xSaUXN
 ```
+### 4. 挂载
+```
+[root@localhost ~]# mkdir lv01      # mkdir /lv01
 
+[root@localhost ~]# mkfs.ext4 /dev/vg01/lv01 
+mke2fs 1.42.9 (28-Dec-2013)
+Filesystem label=
+OS type: Linux
+Block size=1024 (log=0)
+Fragment size=1024 (log=0)
+Stride=0 blocks, Stripe width=0 blocks
+4096 inodes, 16384 blocks
+819 blocks (5.00%) reserved for the super user
+First data block=1
+Maximum filesystem blocks=16777216
+2 block groups
+8192 blocks per group, 8192 fragments per group
+2048 inodes per group
+Superblock backups stored on blocks: 
+	8193
+
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (1024 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+[root@localhost ~]# mount /dev/vg01/lv01 /lv01    # 如果这样创建mkdir /lv01，不会报错
+mount: mount point /lv01 does not exist
+[root@localhost ~]# mount /dev/vg01/lv01 ./lv01
+
+[root@localhost ~]# df -h  lv01
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/vg01-lv01   15M  268K   14M   2% /root/lv01
+
+```
 
 
 
