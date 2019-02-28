@@ -1,6 +1,12 @@
 # linux - centos7 baiscs
 
+25. Linux计划任务与日志管理 https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/Scheduled_Activity_and_Log_Management.md
+
+-----
+
 24. LVM管理和ssm存储管理器使用 https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/LVM.md
+
+-----
 
 23. RAID磁盘阵列的原理与搭建 https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/RAID.md
 -----
