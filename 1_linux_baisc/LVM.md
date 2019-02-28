@@ -349,6 +349,8 @@ vg扩容的场景：vg卷组中的空间不了够，需要添加新的硬盘进�
 ```
 
 ## 2.6 LVM缩小
+
+### 1. 
 > 互动：LVM可以动态增加，可以动态缩小吗？
 > 
 > 答：LVM可以动态增加，也可以动态缩小，但是XFS不支持动态缩小，所以我们无法实现基于xfs的动态缩小。btrfs文件系统支持在线缩小。
@@ -369,13 +371,58 @@ Do you really want to reduce vg01/lv01? [y/n]: y
 Filesystem             Size  Used Avail Use% Mounted on
 /dev/mapper/vg01-lv01   77M  776K   73M   2% /root/lv01
 ```
+### 2. 
+> VG的缩减，要保证你的物理卷是否被使用，是因为它无法缩减一个正在使用的PV
 
+```
+[root@localhost ~]# cp /etc/passwd ./lv01	# 复制数据至逻辑卷lv01
+[root@localhost ~]# ls
+lost+found  passwd
 
+[root@localhost ~]# vgs
+  VG   #PV #LV #SN Attr   VSize    VFree   
+  vg01   2   1   0 wz--n-    1.99g    1.97g	# 此群组中有2个物理卷PV
+  vg02   1   0   0 wz--n- 1008.00m 1008.00m
 
+[root@localhost ~]# pvs
+  PV         VG   Fmt  Attr PSize    PFree   
+  /dev/sdb1  vg01 lvm2 a--  1020.00m 1000.00m	# 可以看到这个分区被占用
+  /dev/sdb2  vg02 lvm2 a--  1008.00m 1008.00m
+  /dev/sdb3  vg01 lvm2 a--  1020.00m 1020.00m
+  /dev/sdb4       lvm2 ---     1.00g    1.00g
 
+[root@localhost ~]# vgreduce vg01 /dev/sdb1	# sdb1移出失败，因sdb1正在被使用
+  Physical volume "/dev/sdb1" still in use
+```
 
+### 3. 
 
+> 如果sdb1是一个磁盘阵列，而这个磁盘阵列使用年代太久，我们必须移出怎么办？
 
+```
+[root@localhost ~]# pvs		# 必须移除sdb1. 此处可以查看adb1，sdb3同属vg01群组，
+				# 将sdb1的数据复制到sdb3，再移除sdb1
+  PV         VG   Fmt  Attr PSize    PFree   
+  /dev/sdb1  vg01 lvm2 a--  1020.00m 1000.00m
+  /dev/sdb2  vg02 lvm2 a--  1008.00m 1008.00m
+  /dev/sdb3  vg01 lvm2 a--  1020.00m 1020.00m
+  /dev/sdb4       lvm2 ---     1.00g    1.00g
+
+[root@localhost ~]# pvmove /dev/sdb1 /dev/sdb3
+  /dev/sdb1: Moved: 40.00%
+  /dev/sdb1: Moved: 100.00%
+  
+[root@localhost ~]# vgreduce vg01 /dev/sdb1
+  Removed "/dev/sdb1" from volume group "vg01"
+  
+[root@localhost ~]# pvs
+  PV         VG   Fmt  Attr PSize    PFree   
+  /dev/sdb1       lvm2 ---     1.00g    1.00g		# sdb1从vg01中移除成功
+  /dev/sdb2  vg02 lvm2 a--  1008.00m 1008.00m
+  /dev/sdb3  vg01 lvm2 a--  1020.00m 1000.00m
+  /dev/sdb4       lvm2 ---     1.00g    1.00g
+
+```
 
 
 
