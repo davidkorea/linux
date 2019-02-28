@@ -73,6 +73,7 @@
 - 查看命令
 
 |查看卷名|简单对应卷信息的查看|扫描相关的所有的对应卷|详细对应卷信息的查看|
+|-|-|-|-|
 |物理卷|pvs|pvscan|pvdisplay|
 |卷组|vgs|vgscan|vgdisplay|
 |逻辑卷|lvs|lvscan|lvdisplay|
