@@ -545,10 +545,25 @@ Pool  Type  Devices     Free     Used    Total
 ----------------------------------------------
 mail  lvm   4        2.98 GB  1.00 GB  3.98 GB  
 ----------------------------------------------
-
+```
+```
+[root@localhost ~]# pvs		# sdb1-4全部加入vg群组mail
+  PV         VG   Fmt  Attr PSize    PFree   
+  /dev/sdb1  mail lvm2 a--  1020.00m       0	# mail-lv大小为1G，占用sdb1
+  /dev/sdb2  mail lvm2 a--  1020.00m 1016.00m
+  /dev/sdb3  mail lvm2 a--  1020.00m 1020.00m
+  /dev/sdb4  mail lvm2 a--  1020.00m 1020.00m
+  
+[root@localhost ~]# vgs		# mail群组中有4个pv
+  VG   #PV #LV #SN Attr   VSize VFree
+  mail   4   1   0 wz--n- 3.98g 2.98g
+  
+[root@localhost ~]# lvs		# mail-lv大小为1G，占用sdb1
+  LV      VG   Attr       LSize Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  mail-lv mail -wi-ao---- 1.00g    
 ```
 
-
+ssm功能完全可以通过pv，vg，lv命令来出现。
 
 
 
