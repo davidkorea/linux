@@ -497,14 +497,49 @@ vg02  lvm   1        1008.00 MB  0.00 KB  1008.00 MB
 ----------------------------------------------------
 ```
 
+## 3.3 实战：为公司的邮件服务器创建基于LVM的邮件存储
+> 实战场景：公司要搭建一台邮件服务器，考虑到后期公司发展规模扩张，需要你创建一个名为mail 的LVM存储池，并在其上创建一个名为mail-lv，初始大小为1G的lvm卷，格式化为xfs文件系统，并将其挂载/mail-lv目录下。此存储池中的空间后期要可以动态扩容。
+
+### 1. 删除所有已创建lv，vg，pv
+```
+[root@localhost ~]# vgremove vg02 
+  Volume group "vg02" successfully removed
+  
+[root@localhost ~]# pvremove /dev/sdb{1,2,3,4}
+  No PV found on device /dev/sdb1.
+  Labels on physical volume "/dev/sdb2" successfully wiped.
+  Labels on physical volume "/dev/sdb3" successfully wiped.
+  Labels on physical volume "/dev/sdb4" successfully wiped.
+```
+### 2. 创建
+
+- ```ssm  create  -s  lv大小  -n  lv名称  --fstype  lv文件系统类型 -p 卷组名(vg,存储池)  设备  挂载点```
 
 
+```
+[root@localhost ~]# ssm create -s 1G -n mail-lv --fstype xfs -p mail /dev/sdb[1-4] /mail-lv
+  Physical volume "/dev/sdb1" successfully created.
+  Physical volume "/dev/sdb2" successfully created.
+  Physical volume "/dev/sdb3" successfully created.
+  Physical volume "/dev/sdb4" successfully created.
+  Volume group "mail" successfully created
+WARNING: ext4 signature detected on /dev/mail/mail-lv at offset 1080. Wipe it? [y/n]: y
+  Wiping ext4 signature on /dev/mail/mail-lv.
+  Logical volume "mail-lv" created.
+meta-data=/dev/mail/mail-lv      isize=512    agcount=4, agsize=65536 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=262144, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
 
-
-
-
-
-
+[root@localhost ~]# df -h /mail-lv/
+Filesystem                 Size  Used Avail Use% Mounted on
+/dev/mapper/mail-mail--lv 1014M   33M  982M   4% /mail-lv
+```
 
 
 
