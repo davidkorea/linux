@@ -78,9 +78,63 @@
 |卷组|vgs|vgscan|vgdisplay|
 |逻辑卷|lvs|lvscan|lvdisplay|
 
+## 2.2 创建并使用LVM逻辑卷
+
+### 1. 创建PV
+```
+[root@localhost ~]# fdisk /dev/sdb    # 划分分区sdb1~sdb4，主分区，扩展分区皆可
+
+[root@localhost ~]# pvcreate /dev/sdb[1,2,3,4]    # sdb{1,2,3,4}
+WARNING: xfs signature detected on /dev/sdb1 at offset 0. Wipe it? [y/n]: y
+  Wiping xfs signature on /dev/sdb1.
+WARNING: xfs signature detected on /dev/sdb2 at offset 0. Wipe it? [y/n]: y
+  Wiping xfs signature on /dev/sdb2.
+WARNING: xfs signature detected on /dev/sdb3 at offset 0. Wipe it? [y/n]: y
+  Wiping xfs signature on /dev/sdb3.
+WARNING: dos signature detected on /dev/sdb4 at offset 510. Wipe it? [y/n]: y
+  Wiping dos signature on /dev/sdb4.
+  Physical volume "/dev/sdb1" successfully created.
+  Physical volume "/dev/sdb2" successfully created.
+  Physical volume "/dev/sdb3" successfully created.
+  Physical volume "/dev/sdb4" successfully created.
+
+[root@localhost ~]# pvs   # 简单查看
+  PV         VG Fmt  Attr PSize PFree
+  /dev/sdb1     lvm2 ---  1.00g 1.00g
+  /dev/sdb2     lvm2 ---  1.00g 1.00g
+  /dev/sdb3     lvm2 ---  1.00g 1.00g
+  /dev/sdb4     lvm2 ---  1.00g 1.00g
+
+[root@localhost ~]# pvdisplay     # 详细查看
+  "/dev/sdb2" is a new physical volume of "1.00 GiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/sdb2
+  VG Name               
+  PV Size               1.00 GiB
+  Allocatable           NO
+  PE Size               0   
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               4IkMNT-qLFY-79Pf-0vVM-sFEb-2E2g-i3dAZp
+
+... ...
+```
+### 2. 创建VG
+
+```
+
+```
 
 
 
+
+
+
+
+
+
+### 3. 创建LV
 
 
 
