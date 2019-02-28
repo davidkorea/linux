@@ -327,9 +327,26 @@ Filesystem             Size  Used Avail Use% Mounted on
 /dev/mapper/vg01-lv01   77M  776K   73M   2% /root/lv01
 ```
 
+## 2.5 VG扩容
+vg扩容的场景：vg卷组中的空间不了够，需要添加新的硬盘进来。
 
+```
+[root@localhost ~]# vgs
+  VG   #PV #LV #SN Attr   VSize    VFree   
+  vg01   1   1   0 wz--n- 1020.00m  940.00m
+  vg02   1   0   0 wz--n- 1008.00m 1008.00m
+  
+[root@localhost ~]# pvcreate /dev/sdb3
+  Physical volume "/dev/sdb3" successfully created.
 
-
+[root@localhost ~]# vgextend vg01 /dev/sdb3
+  Volume group "vg01" successfully extended
+  
+[root@localhost ~]# vgs
+  VG   #PV #LV #SN Attr   VSize    VFree   
+  vg01   2   1   0 wz--n-    1.99g    1.91g
+  vg02   1   0   0 wz--n- 1008.00m 1008.00m
+```
 
 
 
