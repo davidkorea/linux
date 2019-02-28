@@ -230,12 +230,59 @@ mount: mount point /lv01 does not exist
 Filesystem             Size  Used Avail Use% Mounted on
 /dev/mapper/vg01-lv01   15M  268K   14M   2% /root/lv01
 
+[root@localhost ~]# cd ./lv01		# cd lv01报错，mkdir /lv01可以直接进入
+[root@localhost lv01]# ls
+lost+found
 ```
 
+## 2.3 指定PE大小用
 
+指定PE大小用的参数：vgcreate -s, 如果存储的数据都是大文件，那么PE尽量调大，读取速度快。
 
+```
+[root@localhost lv01]# vgcreate -s 16M vg02 /dev/sdb2		#将sdb2物理卷加入vg02群组
+  Volume group "vg02" successfully created
+  
+[root@localhost lv01]# vgdisplay vg02
+  --- Volume group ---
+  VG Name               vg02
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               1008.00 MiB
+  PE Size               16.00 MiB
+  Total PE              63
+  Alloc PE / Size       0 / 0   
+  Free  PE / Size       63 / 1008.00 MiB
+  VG UUID               KzCCKB-ShwU-6qni-cpdh-k8G3-PBXz-Ffv89Q
+```
 
+## 2.4 LV扩容
+首先，确定一下是否有可用的扩容空间，因为空间是从VG里面创建的，并且LV不能跨VG群组扩容。
 
+VG就是逻辑卷PV的群组，PV包含PE，或者说VG是PE pool，就是把磁盘等物理设备划分成若干4M（默认，可vgcreate -s自定义大小）的PE。只有vg群组中有足够多的PE，才能扩容。
+
+```
+[root@localhost lv01]# vgs
+  VG   #PV #LV #SN Attr   VSize    VFree   
+  vg01   1   1   0 wz--n- 1020.00m 1004.00m	# 群组vg01中 1个物理卷 1个逻辑卷lv
+  vg02   1   0   0 wz--n- 1008.00m 1008.00m	# 群组vg01中 1个物理卷 没有逻辑卷
+  
+[root@localhost lv01]# lvextend -L +30M /dev/vg01/lv01 
+  Rounding size to boundary between physical extents: 32.00 MiB.
+  Size of logical volume vg01/lv01 changed from 16.00 MiB (4 extents) to 48.00 MiB (12 extents).
+  Logical volume vg01/lv01 successfully resized.
+
+```
 
 
 
