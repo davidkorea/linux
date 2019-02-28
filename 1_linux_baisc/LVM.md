@@ -461,11 +461,41 @@ Do you really want to remove active logical volume vg01/lv01? [y/n]: y
   /dev/sdb4       lvm2 ---     1.00g    1.00g
 ```
 
+# 3. 实战-使用SSM工具为公司的邮件服务器创建可动态扩容的存储池
 
+## 3.1 安装system-storage-manager
+```
+[root@localhost ~]# yum -y install system-storage-manager
+```
+## 3.2 查看磁盘信息
+### 1. 磁盘信息
+```
+[root@localhost ~]# ssm list dev
+------------------------------------------------------------
+Device           Free     Used      Total  Pool  Mount point
+------------------------------------------------------------
+/dev/fd0                          4.00 KB                   
+/dev/sda                         20.00 GB        PARTITIONED
+/dev/sda1                       200.00 MB        /boot      
+/dev/sda2                        10.00 GB        /          
+/dev/sda3                         4.00 GB        SWAP       
+/dev/sda4                         1.00 GB                   
+/dev/sdb                         20.00 GB                   
+/dev/sdb1                         1.00 GB                   
+/dev/sdb2  1008.00 MB  0.00 KB    1.00 GB  vg02             
+/dev/sdb3                         1.00 GB                   
+/dev/sdb4                         1.00 GB               
+```
 
-
-
-
+### 2. vg卷组信息（PE池）
+```
+[root@localhost ~]# ssm list pool
+----------------------------------------------------
+Pool  Type  Devices        Free     Used       Total  
+----------------------------------------------------
+vg02  lvm   1        1008.00 MB  0.00 KB  1008.00 MB  
+----------------------------------------------------
+```
 
 
 
