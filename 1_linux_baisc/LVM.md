@@ -57,8 +57,9 @@
 4. LV直接可以格式化后挂载使用  #格式化挂载使用
 5. LV的扩充缩减实际上就是增加或减少组成该LV的PE数量，其过程不会丢失原始数据
 
+## 2.1 lvm常用的命令
 
-
+- 创建命令
 
 |功能|PV管理命令|VG管理命令|LV管理命令|
 |-|-|-|-|
@@ -69,6 +70,12 @@
 |extend 扩展| |vgextend|lvextend|
 |reduce减少| |vgreduce|lvreduce|
 
+- 查看命令
+
+|查看卷名|简单对应卷信息的查看|扫描相关的所有的对应卷|详细对应卷信息的查看|
+|物理卷|pvs|pvscan|pvdisplay|
+|卷组|vgs|vgscan|vgdisplay|
+|逻辑卷|lvs|lvscan|lvdisplay|
 
 
 
