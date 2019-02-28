@@ -123,20 +123,40 @@ WARNING: dos signature detected on /dev/sdb4 at offset 510. Wipe it? [y/n]: y
 ### 2. 创建VG
 
 ```
+[root@localhost ~]# vgcreate vg01 /dev/sdb1
+  Volume group "vg01" successfully created
+  
+[root@localhost ~]# vgs
+  VG   #PV #LV #SN Attr   VSize    VFree   
+  vg01   1   0   0 wz--n- 1020.00m 1020.00m
+  
+[root@localhost ~]# vgdisplay 
+  --- Volume group ---
+  VG Name               vg01
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               1020.00 MiB
+  PE Size               4.00 MiB
+  Total PE              255
+  Alloc PE / Size       0 / 0   
+  Free  PE / Size       255 / 1020.00 MiB
+  VG UUID               kKFi1y-EvPW-gw6N-ONJg-FcPl-hJeP-11OcMW
+```
+### 3. 创建LV
 
 ```
 
-
-
-
-
-
-
-
-
-### 3. 创建LV
-
-
+```
 
 
 
