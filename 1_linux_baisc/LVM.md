@@ -500,7 +500,7 @@ vg02  lvm   1        1008.00 MB  0.00 KB  1008.00 MB
 ## 3.3 实战：为公司的邮件服务器创建基于LVM的邮件存储
 > 实战场景：公司要搭建一台邮件服务器，考虑到后期公司发展规模扩张，需要你创建一个名为mail 的LVM存储池，并在其上创建一个名为mail-lv，初始大小为1G的lvm卷，格式化为xfs文件系统，并将其挂载/mail-lv目录下。此存储池中的空间后期要可以动态扩容。
 
-### 1. 删除所有已创建lv，vg，pv
+### 1. 删除所有已有lv，vg，pv
 ```
 [root@localhost ~]# vgremove vg02 
   Volume group "vg02" successfully removed
@@ -513,8 +513,7 @@ vg02  lvm   1        1008.00 MB  0.00 KB  1008.00 MB
 ```
 ### 2. 创建
 
-- ```ssm  create  -s  lv大小  -n  lv名称  --fstype  lv文件系统类型 -p 卷组名(vg,存储池)  设备  挂载点```
-
+- ```ssm  create  -s  lv大小  -n  lv名称  --fstype  lv文件系统类型 -p 卷组名(vg,存储池)  设备  挂载点```，自动把设备变成pv，创建vg , lv ,格式化文件系统, 自动挂载
 
 ```
 [root@localhost ~]# ssm create -s 1G -n mail-lv --fstype xfs -p mail /dev/sdb[1-4] /mail-lv
@@ -539,6 +538,14 @@ realtime =none                   extsz=4096   blocks=0, rtextents=0
 [root@localhost ~]# df -h /mail-lv/
 Filesystem                 Size  Used Avail Use% Mounted on
 /dev/mapper/mail-mail--lv 1014M   33M  982M   4% /mail-lv
+
+[root@localhost ~]# ssm list pool
+----------------------------------------------
+Pool  Type  Devices     Free     Used    Total  
+----------------------------------------------
+mail  lvm   4        2.98 GB  1.00 GB  3.98 GB  
+----------------------------------------------
+
 ```
 
 
