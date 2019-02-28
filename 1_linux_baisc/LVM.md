@@ -49,3 +49,93 @@
 
 **RAID+LVM一起用：LVM是软件的卷管理方式，而RAID是磁盘管理的方法。对于重要的数据，使用RAID来保护物理的磁盘不会因为故障而中断业务，再用LVM用来实现对卷的良性的管理，更好的利用磁盘资源。**
 
+# 2. 创建LVM的基本步骤
+
+1. 物理磁盘被格式化为PV，(空间被划分为一个个的PE) #PV包含PE
+2. 不同的PV加入到同一个VG中，(不同PV的PE全部进入到了VG的PE池内) #VG包含PV
+3. 在VG中创建LV逻辑卷，基于PE创建，(组成LV的PE可能来自不同的物理磁盘) #LV基于PE创建
+4. LV直接可以格式化后挂载使用  #格式化挂载使用
+5. LV的扩充缩减实际上就是增加或减少组成该LV的PE数量，其过程不会丢失原始数据
+
+
+
+
+|功能|PV管理命令|VG管理命令|LV管理命令|
+|-|-|-|-|
+|scan 扫描|pvscan|vgscan|lvscan|
+|create 创建|pvcreate|vgcreate|lvcreate|
+|display显示|pvdisplay|vgdisplay|lvdisplay|
+|remove 移除|pvremove|vgremove|lvremove|
+|extend 扩展| |vgextend|lvextend|
+|reduce减少| |vgreduce|lvreduce|
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
