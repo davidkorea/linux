@@ -350,10 +350,10 @@ vg扩容的场景：vg卷组中的空间不了够，需要添加新的硬盘进�
 
 ## 2.6 LVM缩小
 
-### 1. 
-> 互动：LVM可以动态增加，可以动态缩小吗？
+### 1. lvreduce
+> 互动：LV可以动态增加，可以动态缩小吗？
 > 
-> 答：LVM可以动态增加，也可以动态缩小，但是XFS不支持动态缩小，所以我们无法实现基于xfs的动态缩小。btrfs文件系统支持在线缩小。
+> 答：LV可以动态增加，也可以动态缩小，但是XFS不支持动态缩小，所以我们无法实现基于xfs的动态缩小。btrfs文件系统支持在线缩小。
 
 ```
 [root@localhost ~]# lvreduce -L 20M /dev/vg01/lv01 
@@ -371,7 +371,7 @@ Do you really want to reduce vg01/lv01? [y/n]: y
 Filesystem             Size  Used Avail Use% Mounted on
 /dev/mapper/vg01-lv01   77M  776K   73M   2% /root/lv01
 ```
-### 2. 
+### 2. vgreduce
 > VG的缩减，要保证你的物理卷是否被使用，是因为它无法缩减一个正在使用的PV
 
 ```
@@ -395,7 +395,7 @@ lost+found  passwd
   Physical volume "/dev/sdb1" still in use
 ```
 
-### 3. 
+### 3. pemove & vgreduce
 
 > 如果sdb1是一个磁盘阵列，而这个磁盘阵列使用年代太久，我们必须移出怎么办？
 
