@@ -240,10 +240,10 @@ lost+found
 指定PE大小用的参数：vgcreate -s, 如果存储的数据都是大文件，那么PE尽量调大，读取速度快。
 
 ```
-[root@localhost lv01]# vgcreate -s 16M vg02 /dev/sdb2		#将sdb2物理卷加入vg02群组
+[root@localhost ~]# vgcreate -s 16M vg02 /dev/sdb2		#将sdb2物理卷加入vg02群组
   Volume group "vg02" successfully created
   
-[root@localhost lv01]# vgdisplay vg02
+[root@localhost ~]# vgdisplay vg02
   --- Volume group ---
   VG Name               vg02
   System ID             
@@ -271,21 +271,61 @@ lost+found
 
 VG就是逻辑卷PV的群组，PV包含PE，或者说VG是PE pool，就是把磁盘等物理设备划分成若干4M（默认，可vgcreate -s自定义大小）的PE。只有vg群组中有足够多的PE，才能扩容。
 
+### 1. [不推荐]lvextend扩容
+
 ```
-[root@localhost lv01]# vgs
+[root@localhost ~]# vgs
   VG   #PV #LV #SN Attr   VSize    VFree   
   vg01   1   1   0 wz--n- 1020.00m 1004.00m	# 群组vg01中 1个物理卷 1个逻辑卷lv
   vg02   1   0   0 wz--n- 1008.00m 1008.00m	# 群组vg01中 1个物理卷 没有逻辑卷
   
-[root@localhost lv01]# lvextend -L +30M /dev/vg01/lv01 
+[root@localhost ~]# lvextend -L +30M /dev/vg01/lv01 
   Rounding size to boundary between physical extents: 32.00 MiB.
   Size of logical volume vg01/lv01 changed from 16.00 MiB (4 extents) to 48.00 MiB (12 extents).
   Logical volume vg01/lv01 successfully resized.
 
+[root@localhost ~]# lvs		# 确认lv01扩容成功
+  LV   VG   Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv01 vg01 -wi-ao---- 48.00m     
+  
+[root@localhost ~]# df -h 		# 文件系统 扩容并不成功
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/vg01-lv01   15M  268K   14M   2% /root/lv01
+```
+可以看到LV虽然扩展了，但是文件系统大小还是原来的，下面开始扩容文件系统
+
+- ext4文件系统扩容使用命令语法： resize2fs  逻辑卷名称
+- xfs文件系统扩容使用命令语法：  xfs_growfs  挂载点
+
+resize2fs和xfs_growfs 两者的区别是传递的参数不一样的，xfs_growfs是采用的挂载点；resize2fs是逻辑卷名称，而且resize2fs命令不能对xfs类型文件系统使用
+
+```
+[root@localhost ~]# resize2fs /dev/vg01/lv01 
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/vg01/lv01 is mounted on /root/lv01; on-line resizing required
+old_desc_blocks = 1, new_desc_blocks = 1
+The filesystem on /dev/vg01/lv01 is now 49152 blocks long.
+
+[root@localhost ~]# df -h 
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/vg01-lv01   46M  522K   43M   2% /root/lv01
 ```
 
+### 2. [推荐]逻辑卷LV & 文件系统同时扩容成功
+- ```lvextend -r```
+```
+[root@localhost ~]# lvextend -L 80M -r /dev/vg01/lv01 		#扩容到80M
+  Size of logical volume vg01/lv01 changed from 48.00 MiB (12 extents) to 80.00 MiB (20 extents).
+  Logical volume vg01/lv01 successfully resized.
+resize2fs 1.42.9 (28-Dec-2013)
+Filesystem at /dev/mapper/vg01-lv01 is mounted on /root/lv01; on-line resizing required
+old_desc_blocks = 1, new_desc_blocks = 1
+The filesystem on /dev/mapper/vg01-lv01 is now 81920 blocks long.
 
-
+[root@localhost ~]# df -h
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/vg01-lv01   77M  776K   73M   2% /root/lv01
+```
 
 
 
