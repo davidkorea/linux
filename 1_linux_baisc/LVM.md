@@ -348,8 +348,27 @@ vg扩容的场景：vg卷组中的空间不了够，需要添加新的硬盘进�
   vg02   1   0   0 wz--n- 1008.00m 1008.00m
 ```
 
+## 2.6 LVM缩小
+> 互动：LVM可以动态增加，可以动态缩小吗？
+> 
+> 答：LVM可以动态增加，也可以动态缩小，但是XFS不支持动态缩小，所以我们无法实现基于xfs的动态缩小。btrfs文件系统支持在线缩小。
 
-
+```
+[root@localhost ~]# lvreduce -L 20M /dev/vg01/lv01 
+  WARNING: Reducing active and open logical volume to 20.00 MiB.
+  THIS MAY DESTROY YOUR DATA (filesystem etc.)
+Do you really want to reduce vg01/lv01? [y/n]: y
+  Size of logical volume vg01/lv01 changed from 80.00 MiB (20 extents) to 20.00 MiB (5 extents).
+  Logical volume vg01/lv01 successfully resized.
+  
+[root@localhost ~]# lvs			# lv可以缩减成功
+  LV   VG   Attr       LSize  Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  lv01 vg01 -wi-ao---- 20.00m       
+  
+[root@localhost ~]# df -h		# 文件系统不支持缩减
+Filesystem             Size  Used Avail Use% Mounted on
+/dev/mapper/vg01-lv01   77M  776K   73M   2% /root/lv01
+```
 
 
 
