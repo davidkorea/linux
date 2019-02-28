@@ -122,8 +122,10 @@ WARNING: dos signature detected on /dev/sdb4 at offset 510. Wipe it? [y/n]: y
 ```
 ### 2. 创建VG
 
+- ```vgcreate  vg名字  pv的名字   (可以跟多个pv)```
+
 ```
-[root@localhost ~]# vgcreate vg01 /dev/sdb1
+[root@localhost ~]# vgcreate vg01 /dev/sdb1     # 只将sdb1一个物理卷pv，加入vg01群组中
   Volume group "vg01" successfully created
   
 [root@localhost ~]# vgs
@@ -153,12 +155,47 @@ WARNING: dos signature detected on /dev/sdb4 at offset 510. Wipe it? [y/n]: y
   VG UUID               kKFi1y-EvPW-gw6N-ONJg-FcPl-hJeP-11OcMW
 ```
 ### 3. 创建LV
-
+- 创建```lvcreate -n 指定新逻辑卷的名称  -L指定lv大小的SIZE(M,G) （-l：小l 指定LE的数量） vgname```
 ```
-
+[root@localhost ~]# lvcreate -n lv01 -L 16M vg01 
+  Logical volume "lv01" created.
 ```
-
-
+- 查看lv01详情
+```
+[root@localhost ~]# vgdisplay 
+  --- Volume group ---
+  VG Name               vg01
+  System ID             
+  Format                lvm2
+  Metadata Areas        1
+  Metadata Sequence No  2
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                1
+  Open LV               0
+  Max PV                0
+  Cur PV                1
+  Act PV                1
+  VG Size               1020.00 MiB
+  PE Size               4.00 MiB
+  Total PE              255                       # 一共1G，255个PE
+  Alloc PE / Size       4 / 16.00 MiB             # 已使用4个PE，共16M
+  Free  PE / Size       251 / 1004.00 MiB
+  VG UUID               kKFi1y-EvPW-gw6N-ONJg-FcPl-hJeP-11OcMW
+  
+  [root@localhost ~]# pvdisplay                   # 创建的16M的逻辑卷实际存放在sdb1分区，或者叫sdb1物理卷PV
+  --- Physical volume ---
+  PV Name               /dev/sdb1
+  VG Name               vg01
+  PV Size               1.00 GiB / not usable 4.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              255
+  Free PE               251
+  Allocated PE          4
+  PV UUID               cAr4cb-kB11-HiqQ-W6oG-QK52-kqCc-xSaUXN
+```
 
 
 
