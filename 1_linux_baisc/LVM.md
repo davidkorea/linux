@@ -395,7 +395,7 @@ lost+found  passwd
   Physical volume "/dev/sdb1" still in use
 ```
 
-### 3. pemove & vgreduce
+### 3. pvmove & vgreduce
 
 > 如果sdb1是一个磁盘阵列，而这个磁盘阵列使用年代太久，我们必须移出怎么办？
 
@@ -425,8 +425,41 @@ lost+found  passwd
 ```
 
 
+## 2.7 LVM删除
 
+删除LVM流程： umount卸载 -> lvremove lv移出卷组中所有逻辑卷-> vgremove vg移出卷组-> pvremove 移出pv
 
+```
+[root@localhost ~]# umount ./lv01
+[root@localhost ~]# lvremove /dev/vg01/lv01 
+Do you really want to remove active logical volume vg01/lv01? [y/n]: y
+  Logical volume "lv01" successfully removed
+  
+[root@localhost ~]# lvs		# 无任何显示
+
+[root@localhost ~]# vgremove vg01
+  Volume group "vg01" successfully removed
+  
+[root@localhost ~]# vgs		# vg01不再显示
+  VG   #PV #LV #SN Attr   VSize    VFree   
+  vg02   1   0   0 wz--n- 1008.00m 1008.00m
+  
+[root@localhost ~]# pvs
+  PV         VG   Fmt  Attr PSize    PFree   
+  /dev/sdb1       lvm2 ---     1.00g    1.00g
+  /dev/sdb2  vg02 lvm2 a--  1008.00m 1008.00m
+  /dev/sdb3       lvm2 ---     1.00g    1.00g
+  /dev/sdb4       lvm2 ---     1.00g    1.00g
+  
+[root@localhost ~]# pvremove /dev/sdb1
+  Labels on physical volume "/dev/sdb1" successfully wiped.
+  
+[root@localhost ~]# pvs		# 成功删除物理卷sdb1
+  PV         VG   Fmt  Attr PSize    PFree   
+  /dev/sdb2  vg02 lvm2 a--  1008.00m 1008.00m
+  /dev/sdb3       lvm2 ---     1.00g    1.00g
+  /dev/sdb4       lvm2 ---     1.00g    1.00g
+```
 
 
 
