@@ -84,17 +84,23 @@ at计划任务的特殊写法
   - ```crontab -e```             #编辑cron服务
 
 - cron -e 编辑时的语法
+  ```
+  Example of job definition:
+  .---------------- minute (0 - 59)
+  |  .------------- hour (0 - 23)
+  |  |  .---------- day of month (1 - 31)
+  |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+  |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+  |  |  |  |  |
+  *  *  *  *  * user-name  command to be executed
+  ```
 
-  > Example of job definition:
-  > .---------------- minute (0 - 59)
-  > |  .------------- hour (0 - 23)
-  > |  |  .---------- day of month (1 - 31)
-  > |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
-  > |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
-  > |  |  |  |  |
-  > *  *  *  *  * user-name  command to be executed
-
-
+|符号|说明|示例|
+|-|-|-|
+|* |代表取值范围内的数字| (任意/每)|
+| / | 指定时间的间隔频率 | */10   0-23/2 |
+| -| 代表从某个数字到某个数字 | 8-17  |
+| ，| 分开几个离散的数字 |6,10-13,20|
 
 
 
