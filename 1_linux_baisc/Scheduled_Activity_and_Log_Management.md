@@ -19,3 +19,50 @@
 ## 1.1 at 计划任务的使用
 - 语法格式： at  时间
 - 服务：atd
+### 1. 查看at服务状态
+```
+[root@localhost ~]# systemctl status atd
+[root@localhost ~]# systemctl start atd
+[root@localhost ~]# systemctl is-enabled atd
+enabled
+
+[root@localhost ~]# chkconfig --list | grep atd   # centos6 执行此命令，7不能执行
+```
+
+### 2. 创建计划任务
+```
+[root@localhost at]# date
+Fri Mar  1 09:30:38 CST 2019
+
+[root@localhost at]# at 9:35
+at> mkdir /abc
+at> touch /abc/1.txt<EOT>       # crtl+d 保存退出
+job 6 at Fri Mar  1 09:35:00 2019
+
+[root@localhost at]# atq        # 或者at -l
+6	Fri Mar  1 09:35:00 2019 a root
+
+[root@localhost at]# at -c 6    # 查看at计划源文件中包含的命令，长篇最后
+#!/bin/sh
+... ...
+mkdir /abc
+touch /abc/1.txt
+marcinDELIMITER6ed4ae62
+
+[root@localhost at]# tail -5 /var/spool/at/       # 查看at计划源文件中包含的命令，简单方法
+a00006018a8adf  .SEQ            spool/          
+[root@localhost at]# tail -5 /var/spool/at/a00006018a8adf 
+}
+${SHELL:-/bin/sh} << 'marcinDELIMITER6ed4ae62'
+mkdir /abc
+touch /abc/1.txt
+marcinDELIMITER6ed4ae62
+```
+at计划任务的特殊写法
+```
+[root@localhost ~]# at 20:00 2018-10-1   在某天 
+[root@localhost ~]# at now +10min        在 10分钟后执行
+[root@localhost ~]# at 17:00 tomorrow    明天下午5点执行
+[root@localhost ~]# at 6:00 pm +3 days   在3天以后的下午6点执行
+[root@localhost ~]# at 23:00 < a.txt
+```
