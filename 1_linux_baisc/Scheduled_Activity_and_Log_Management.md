@@ -609,5 +609,59 @@ set default create context
 -rw-------. 1 root root 219 Mar  1 14:14 /var/log/sshd.log.3
 ```
 
+## 3.4 配置远程日志服务器-实现日志集中的管理
+需要2台虚拟机，暂时不操作，方法如下。
 
+实验拓扑图： 
+![](https://i.loli.net/2019/03/01/5c78d5543ed16.png)
 
+```
+server端配置
+[root@xuegod63 ~]# vim  /etc/rsyslog.conf   # 	使用TCP协议方式，收集日志
+改：19 #$ModLoad imtcp
+    20 #$InputTCPServerRun 514
+为：
+19 $ModLoad imtcp
+ 20 $InputTCPServerRun 514
+注：使用UDP协议→速度快→不保证数据的完整，使用TCP协议→可靠.完整
+[root@xuegod63 ~]# systemctl  restart  rsyslog   #重新启动 rsyslog
+查看服务监听的状态：
+[root@xuegod63 ~]# netstat -anlpt| grep 514
+tcp        0      0 0.0.0.0:514             0.0.0.0:*               LISTEN      45631/rsyslogd      
+tcp6       0      0 :::514                  :::*                    LISTEN      45631/rsyslogd      
+
+服务端验证:
+在服务端关闭selinux和防火墙
+[root@xuegod63 ~]# getenforce 
+Enforcing
+[root@xuegod63 ~]# setenforce 0   #关闭selinux功能
+[root@xuegod63 ~]#getenforce 
+Permissive
+[root@xuegod63 ~]# systemctl stop firewalld
+[root@xuegod63 ~]# systemctl status firewalld
+[root@xuegod63 ~]# iptables -F    #清空防火墙规则 
+
+ client端配置
+登录xuegod64.cn
+[root@xuegod63 ~]# vim /etc/rsyslog.conf  #在90行之后，插入
+*.*   @@192.168.1.63:514
+
+注： *.* 所有类别和级别的日志   ； @@192.168.1.63:514  远端tcp协议的日志服务端的IP和端口
+重启rsyslog 服务
+[root@xuegod64 ~]# systemctl restart rsyslog.service
+
+查看日志：
+[root@xuegod63 ~]# tail -f /var/log/messages | grep xuegod64 --color   #动态查看日志
+
+在客户端xuegod64进行测试
+语法： logger  要模拟发送的日志
+[root@xuegod64 ~]# logger  “aaaaa”
+[root@xuegod63 ~]# tail -f /var/log/messages | grep xuegod64 --color  #服务器端到查看消息
+May 21 16:32:16 xuegod64 root: aaaaa
+注：
+总结：服务器使用udp协议，客户端只能使用的配置文件中这一行只能有一个@
+*.*  @192.168.1.64:514
+服务器使用tcp协议，客户端只能使用的配置文件中这一行必须有两个@@
+*.*  @@192.168.1.64:514
+
+```
