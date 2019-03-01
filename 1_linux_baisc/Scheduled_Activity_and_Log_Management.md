@@ -478,3 +478,25 @@ local7.*                                                /var/log/boot.log
 Mar  1 13:36:30 localhost sshd[44628]: Server listening on 0.0.0.0 port 22.
 Mar  1 13:36:30 localhost sshd[44628]: Server listening on :: port 22.
 ```
+
+
+# 3. 实战-日志切割-搭建远程日志收集服务器
+
+## 3.1 日志的切割
+  在linux下的日志会定期进行滚动增加，我们可以在线对正在进行回滚的日志进行指定大小的切割（动态），如果这个日志是静态的。比如没有应用向里面写内容。那么我们也可以用split工具进行切割，其中Logrotate支持按时间和大小来自动切分,以防止日志文件太大。
+
+  日志是很大的,如果让日志无限制的记录下去，是一件很可怕的事情，日积月累就有几百兆占用磁盘的空间，如果你要找出某一条可用信息：→海底捞针。当日志达到某个特定的大小,我们将日志分类,之前的日志保留一个备份,再产生的日志创建一个同名的文件保存新的日志。
+
+- logrotate配置文件主要有：```/etc/logrotate.conf``` 以及 ```/etc/logrotate.d/ ```这个子目录下的明细配置文件。
+- logrotate的执行由crond服务调用的。```vim /etc/cron.daily/logrotate   #查看logrotate脚本内容```
+- logrotate程序每天由cron在指定的时间（/etc/crontab）启动
+
+## 3.2 实战演示
+#### 1. 编辑配置文件
+
+
+
+
+
+
+
