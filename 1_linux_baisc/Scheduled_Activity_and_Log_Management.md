@@ -457,4 +457,24 @@ local7.*                                                /var/log/boot.log
   - ```.none```,  指的是排除某个类别  例： mail.none  所有mail类别的日志都不记录
 
 ## 2.4 自定义ssh服务的日志类型和存储位置
-
+#### 1. 把local0类别的日志，保存到 /var/log/sshd.log路径
+```
+[root@localhost ~]# vim /etc/rsyslog.conf    # 把local0类别的日志，保存到 /var/log/sshd.log路径
+ 72 # Save boot messages also to boot.log
+73 local7.*                                   /var/log/boot.log
+74 local0.*                                   /var/log/ssdh.log   #新增
+```
+#### 2. 定义ssh服务的日志类别为local0，编辑sshd服务的主配置文件
+```
+[root@localhost ~]# vim /etc/ssh/sshd_config 
+ 30 # Logging
+ 31 #SyslogFacility AUTH
+ 32 #SyslogFacility AUTHPRIV # 原有日志类型
+ 33 SyslogFacility local0
+ 
+[root@localhost ~]# systemctl restart rsyslog   # 先重启rsyslog服务(生效配置)
+[root@localhost ~]# systemctl restart sshd    # 再重启sshd服务.生成日志
+[root@localhost ~]# cat /var/log/ssdh.log     # 应该是sshd.log 写错了
+Mar  1 13:36:30 localhost sshd[44628]: Server listening on 0.0.0.0 port 22.
+Mar  1 13:36:30 localhost sshd[44628]: Server listening on :: port 22.
+```
