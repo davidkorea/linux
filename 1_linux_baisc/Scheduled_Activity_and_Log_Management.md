@@ -299,12 +299,12 @@ iptables -A INPUT -i eth0 -s. 192.168.0.211 -j DROP
 lastb | awk  '{ print $3}'  | sort | uniq -c | sort -n
 ```
 清空日志：
-  - 方法1：```[root@localhost ~]# > /var/log/btmp```
-  - 方法2：```rm -rf /var/log/btmp  && touch /var/log/btmp```
+
+方法1：```[root@localhost ~]# > /var/log/btmp```
+
+方法2：```rm -rf /var/log/btmp  && touch /var/log/btmp```
+
 两者的区别？使用方法2，因为创建了新的文件，而正在运行的服务，还用着原来文件的inode号和文件描述码，所需要重启一下rsyslog服务。建议使用方法1  > /var/log/btmp
-
-
-
 
 
 - /var/log/wtmp也是一个二进制文件，记录每个用户的登录次数和持续时间等信息。可以用last命令输出wtmp中内容，last显示到目前为止，成功登录系统的记录
@@ -316,7 +316,7 @@ root     pts/0        192.168.0.219    Fri Mar  1 09:27   still logged in
 ```
 
 
-
+## 2.2 日志的记录方式
 
 
 
