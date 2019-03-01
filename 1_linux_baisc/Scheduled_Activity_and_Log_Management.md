@@ -76,11 +76,13 @@ at计划任务的特殊写法
 - cron是一个linux下的定时执行工具，可以在无需人工干预的情况下运行作业。
 - 系统周期性所要执行的工作，如更新whatis数据库, updatedb数据库，日志定期切割，收集系统状态信息，/tmp定期清理
 - crontab的参数：
-  - crontab -u david       #指定david用户的cron服务
-  - crontab -l             #列出当前用户下的cron服务的详细内容
-  - crontab -u david -l    #列出指定用户david下的cron服务的详细内容
-  - crontab -r             #删除cron服务
-  - crontab -e             #编辑cron服务
+  - ```crontab -u david```       #指定david用户的cron服务
+  - ```crontab -l```             #列出当前用户下的cron服务的详细内容
+  - ```crontab -u david -l```    #列出指定用户david下的cron服务的详细内容
+  - ```crontab -r```             #删除cron服务
+  - ```crontab -u david -r```    #root想删除david的cron计划任务
+  - ```crontab -e```             #编辑cron服务
+
 
 
 
