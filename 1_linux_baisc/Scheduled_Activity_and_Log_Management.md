@@ -147,6 +147,10 @@ at计划任务的特殊写法
 
   ~                                                                                              
   ```
+  也可以直接在/etc/crontab中添加计划任务，与上面使用语法相同。使用crontab命令的注意事项：
+    - 环境变量的问题
+    - 清理你的邮件日志 ，比如使用重定向 >/dev/null  2>&1
+
   ```
   [root@localhost ~]# ll /etc/cron    # 2 times tab
   cron.d/       cron.deny     cron.monthly/ cron.weekly/  
