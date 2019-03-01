@@ -180,23 +180,23 @@ at计划任务的特殊写法
     - cron.hourly/   #每小时执行的脚本;
     - crontab       #主配置文件 也可添加任务;
   
-  - 常见写法：
-    - 每天晚上21:00 重启apache
-      - ```0 21 * * * /etc/init.d/httpd  restart```
-    - 每月1、10、22日的4 : 45重启apache。
-      - ```45 4 1,10,22 * *  /etc/init.d/httpd  restart```
-    - 每月1到10日的4 : 45重启apache。
-      - ```45 4 1-10 * *   /etc/init.d/httpd  restart```
-    - 每隔两天的上午8点到11点的第3和第15分钟重启apach
-      - ```3,15 8-11 */2 * *  /etc/init.d/httpd  restart```
-    - 晚上11点到早上7点之间，每隔一小时重启apach
-      - ```0 23-7/1 * * * /etc/init.d/apach restart```
-    - 周一到周五每天晚上 21:15 寄一封信给 root@panda:
-      - ```15 21 * * 1-5  mail -s "hi" root@panda < /etc/fstab```
-    - 互动：crontab不支持每秒。 每2秒执行一次脚本，怎么写？ 在脚本的死循环中，添加命令 sleep 2 ，执行30次自动退出，然后添加，计划任务：```* * * * *  /back.sh``` 
+#### 2. 常见写法：
+- 每天晚上21:00 重启apache
+  - ```0 21 * * * /etc/init.d/httpd  restart```
+- 每月1、10、22日的4 : 45重启apache。
+  - ```45 4 1,10,22 * *  /etc/init.d/httpd  restart```
+- 每月1到10日的4 : 45重启apache。
+  - ```45 4 1-10 * *   /etc/init.d/httpd  restart```
+- 每隔两天的上午8点到11点的第3和第15分钟重启apach
+  - ```3,15 8-11 */2 * *  /etc/init.d/httpd  restart```
+- 晚上11点到早上7点之间，每隔一小时重启apach
+  - ```0 23-7/1 * * * /etc/init.d/apach restart```
+- 周一到周五每天晚上 21:15 寄一封信给 root@panda:
+  - ```15 21 * * 1-5  mail -s "hi" root@panda < /etc/fstab```
+- 互动：crontab不支持每秒。 每2秒执行一次脚本，怎么写？ 在脚本的死循环中，添加命令 sleep 2 ，执行30次自动退出，然后添加，计划任务：```* * * * *  /back.sh``` 
 
 
-#### 2. 案例
+#### 3. 案例
 
 > 每天2：00备份/etc/目录到/tmp/backup下面
 > 将备份命令写入一个脚本中
