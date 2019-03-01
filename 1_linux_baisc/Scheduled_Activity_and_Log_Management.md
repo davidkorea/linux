@@ -105,7 +105,7 @@ at计划任务的特殊写法
   | ，| 分开几个离散的数字 |6,10-13,20|
 
 #### 1. 创建计划任务
-- 用户级别的计划任务
+- 用户级别的计划任务 /var/spool/cron/
   ```
   [root@localhost ~]# systemctl start crond
   [root@localhost ~]# systemctl enable crond
@@ -123,7 +123,7 @@ at计划任务的特殊写法
   total 4
   -rw-------. 1 root root 50 Mar  1 10:01 root
   ```
-- 系统级别的计划任务
+- 系统级别的计划任务 /etc/crontab 
   ```
   [root@localhost ~]# ll /etc/crontab 
   -rw-r--r--. 1 root root 451 Jun 10  2014 /etc/crontab
@@ -147,9 +147,7 @@ at计划任务的特殊写法
 
   ~                                                                                              
   ```
-  也可以直接在/etc/crontab中添加计划任务，与上面使用语法相同。使用crontab命令的注意事项：
-    - 环境变量的问题
-    - 清理你的邮件日志 ，比如使用重定向 >/dev/null  2>&1
+  也可以直接在/etc/crontab中添加计划任务，与上面使用语法相同。使用crontab命令的注意事项：- 环境变量的问题， - 清理邮件日志，比如使用重定向 ```> /dev/null  2>&1```
 
   ```
   [root@localhost ~]# ll /etc/cron    # 2 times tab
