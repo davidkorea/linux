@@ -159,7 +159,18 @@ at计划任务的特殊写法
   ```
   [root@localhost ~]# ll /etc/cron    # 2 times tab
   cron.d/       cron.deny     cron.monthly/ cron.weekly/  
-  cron.daily/   cron.hourly/  crontab      
+  cron.daily/   cron.hourly/  crontab     
+  
+  [root@localhost ~]# find /etc/cron* -type f
+  /etc/cron.d/0hourly
+  /etc/cron.d/raid-check
+  /etc/cron.d/sysstat
+  /etc/cron.daily/logrotate
+  /etc/cron.daily/man-db.cron
+  /etc/cron.daily/mlocate
+  /etc/cron.deny
+  /etc/cron.hourly/0anacron
+  /etc/crontab
   ```
     - cron.d/       #是系统自动定期需要做的任务，但是又不是按小时，按天，按星期，按月来执行的，那么就放在这个目录下面。
     - cron.deny     #控制用户是否能做计划任务的文件;
@@ -211,11 +222,28 @@ at计划任务的特殊写法
 # |  |  |  |  |
 # *  *  *  *  * user-name  command to be executed
 
-0 2 * * * root /bin/back.sh   #系统执行命令的搜索路径，已在上方定义
+0 2 * * * root /bin/back.sh   # 系统执行命令的搜索路径，已在上方定义。
+                              # 或者直接写绝对路径 /root/backup.sh
 ~                                            
 ```
+```
+===========================================================
+# 提前测试需执行命令
+mkdir /tmp/backup
+tar zcf etc.tar.gz /etc
+find /tmp/backup -name “*.tar.gz” -mtime +3 -exec rm -rf {}\;
+============================================================
+[root@localhost ~]# crontab -l
+0 2 * * * /root/backup.sh & > /dev/null   # 后台执行backu.sh并将标准输出放入null，即不输出
 
-
+[root@localhost ~]# cat backup.sh 
+#!/bin/bash
+find /tmp/backup -name "*.tar.gz" -mtime +3 -exec rm -f {}\;
+#find /tmp/backup -name "*.tar.gz" -mtime +3 -delete
+#find /tmp/backup -name "*.tar.gz" -mtime +3 |xargs rm -f
+tar zcf /tmp/backup/`date +%F`_etc.tar.gz /etc
+```
+工作中备份的文件不要放到/tmp,因为过一段时间，系统会清空备/tmp目录。
 
 
 
