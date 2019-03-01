@@ -440,3 +440,15 @@ local7.*                                                /var/log/boot.log
 # ### end of the forwarding rule ###
 ```
 
+- ```#$UDPServerRun 514```, 允许514端口接收使用UDP协议转发过来的日志
+- ```#$InputTCPServerRun 514```, 允许514端口接收使用TCP协议转发过来的日志
+- ```#kern.*    /dev/console```, 内核类型的所有级别日志 →存放到→    
+- ```*.info;mail.none;authpriv.none;cron.none     /var/log/messages```,所有的类别级别是info以上 除了mail,authpriv,cron (产生的日志太多,不易于查看) 
+
+- ```authpriv.*    /var/log/secure```, 认证的信息→存放→ 
+- ```mail.*        -/var/log/maillog```, 邮件相关的信息→ 存放→   
+- ```cron.*        /var/log/cron```, 计划任务相关的信息 →存放→  
+- ```local7.*      /var/log/boot.log```, 开机时显示的信息→存放-->   
+注：“- ”号： 邮件的信息比较多,现将数据存储到内存,达到一定大小,全部写到硬盘.有利于减少I/O进程的开销。数据存储在内存,如果关机不当数据消失
+
+
