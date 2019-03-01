@@ -491,8 +491,7 @@ Mar  1 13:36:30 localhost sshd[44628]: Server listening on :: port 22.
 - logrotate的执行由crond服务调用的。```vim /etc/cron.daily/logrotate   #查看logrotate脚本内容```
 - logrotate程序每天由cron在指定的时间（/etc/crontab）启动
 
-## 3.2 实战演示
-#### 1. 编辑配置文件
+## 3.2 解读配置文件
 ```
 [root@localhost ~]# vim /etc/logrotate.conf 
 
@@ -534,8 +533,75 @@ include /etc/logrotate.d
 # system-specific logs may be also be configured here.
 ```
 
+- 其它参数说明：
+	- ```monthly```: 日志文件将按月轮循。其它可用值为‘daily’，‘weekly’或者‘yearly’。
+	- ```rotate 5```: 一次将存储5个归档日志。对于第六个归档，时间最久的归档将被删除。
+	- ```compress```: 在轮循任务完成后，已轮循的归档将使用gzip进行压缩。
+	- ```delaycompress```: 总是与compress选项一起用，delaycompress选项指示logrotate不要将最近的归档压缩，压缩将在下一次轮循周期进行。这在你或任何软件仍然需要读取最新归档时很有用。
+  - ```missingok```: 在日志轮循期间，任何错误将被忽略，例如“文件无法找到”之类的错误。
+  - ```notifempty```: 如果日志文件为空，轮循不会进行。
+  - ```create 644 root root```: 以指定的权限创建全新的日志文件，同时logrotate也会重命名原始日志文件。
+  - ```postrotate/endscript```: 在所有其它指令完成后，postrotate和endscript里面指定的命令将被执行。在这种情况下，rsyslogd 进程将立即再次读取其配置并继续运行。
+  - /var/lib/logrotate/status中默认记录logrotate上次轮换日志文件的时间。
 
 
+
+## 3.3 实战-使用logrotate进行ssh日志分割
+```
+[root@localhost ~]# vim /etc/logrotate.d/sshd
+[root@localhost ~]# cat !$
+cat /etc/logrotate.d/sshd
+/var/log/sshd.log{
+	missingok
+	weekly
+	create 0600 root root
+	minsize 1M
+	rotate 3 
+}
+
+[root@localhost ~]# systemctl restart rsyslog
+
+[root@localhost ~]# logrotate -d /etc/logrotate.d/sshd
+reading config file /etc/logrotate.d/sshd
+Allocating hash table for state file, size 15360 B
+
+Handling 1 logs
+
+rotating pattern: /var/log/sshd.log weekly (3 rotations)
+empty log files are rotated, only log files >= 1048576 bytes are rotated, old logs are removed
+considering log /var/log/sshd.log
+  log does not need rotating (log has been already rotated)[root@localhost ~]# 
+  
+[root@localhost ~]# logrotate -vf /etc/logrotate.d/sshd     # -v 显示指令执行过程 -f 强制执行
+reading config file /etc/logrotate.d/sshd
+Allocating hash table for state file, size 15360 B
+
+Handling 1 logs
+
+rotating pattern: /var/log/sshd.log forced from command line (3 rotations)
+empty log files are rotated, only log files >= 1048576 bytes are rotated, old logs are removed
+considering log /var/log/sshd.log
+  log needs rotating
+rotating log /var/log/sshd.log, log->rotateCount is 3
+dateext suffix '-20190301'
+glob pattern '-[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'
+renaming /var/log/sshd.log.3 to /var/log/sshd.log.4 (rotatecount 3, logstart 1, i 3), 
+old log /var/log/sshd.log.3 does not exist
+renaming /var/log/sshd.log.2 to /var/log/sshd.log.3 (rotatecount 3, logstart 1, i 2), 
+old log /var/log/sshd.log.2 does not exist
+renaming /var/log/sshd.log.1 to /var/log/sshd.log.2 (rotatecount 3, logstart 1, i 1), 
+old log /var/log/sshd.log.1 does not exist
+renaming /var/log/sshd.log.0 to /var/log/sshd.log.1 (rotatecount 3, logstart 1, i 0), 
+old log /var/log/sshd.log.0 does not exist
+log /var/log/sshd.log.4 doesn't exist -- won't try to dispose of it
+fscreate context set to system_u:object_r:var_log_t:s0
+renaming /var/log/sshd.log to /var/log/sshd.log.1
+creating new /var/log/sshd.log mode = 0600 uid = 0 gid = 0
+set default create context
+
+[root@localhost ~]# ls /var/log/sshd*
+/var/log/sshd.log  /var/log/sshd.log.1
+```
 
 
 
