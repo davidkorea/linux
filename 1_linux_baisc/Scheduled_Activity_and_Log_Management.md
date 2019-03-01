@@ -493,7 +493,46 @@ Mar  1 13:36:30 localhost sshd[44628]: Server listening on :: port 22.
 
 ## 3.2 实战演示
 #### 1. 编辑配置文件
+```
+[root@localhost ~]# vim /etc/logrotate.conf 
 
+# see "man logrotate" for details
+# rotate log files weekly
+weekly    # 每周执行回滚，或者说每周执行一次日志回滚
+
+# keep 4 weeks worth of backlogs
+rotate 4    # 表示日志切分后历史文件最多保存离现在最近的多少份,切分后一共保存多少个子份
+
+# create new (empty) log files after rotating old ones
+create    # 指定新创建的文件的权限与所属主与群组
+
+# use date as a suffix of the rotated file
+dateext   # 使用日期为后缀的回滚文件  #可以去/var/log目录下看看
+
+# uncomment this if you want your log files compressed
+#compress
+
+# RPM packages drop log rotation information into this directory
+include /etc/logrotate.d
+
+# no packages own wtmp and btmp -- we'll rotate them here
+/var/log/wtmp {               
+    monthly                     # 每月轮换一次，切分一次
+    create 0664 root utmp
+        minsize 1M              # 文件超过1M→进行回滚，超过1M，及时不到1个月也会切分
+    rotate 1
+}
+
+/var/log/btmp {                 
+    missingok                   # 如果文件丢失，将不报错
+    monthly                     # 每月轮换一次，切分一次
+    create 0600 root utmp       # 设置btmp这个日志文件的权限，属主，属组
+    rotate 1                    # 日志切分后历史文件最多保存1份，不含当前使用的日志
+
+}
+
+# system-specific logs may be also be configured here.
+```
 
 
 
