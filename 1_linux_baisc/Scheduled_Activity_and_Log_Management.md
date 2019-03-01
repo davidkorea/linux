@@ -105,26 +105,60 @@ at计划任务的特殊写法
   | ，| 分开几个离散的数字 |6,10-13,20|
 
 #### 1. 创建计划任务
-```
-[root@localhost ~]# systemctl start crond
-[root@localhost ~]# systemctl enable crond
+- 用户级别的计划任务
+  ```
+  [root@localhost ~]# systemctl start crond
+  [root@localhost ~]# systemctl enable crond
 
-[root@localhost ~]# crontab -e    # 进入vim页面编辑命令
-"""
-2 10 * * * tar zcvf /opt/grub2.tar.gz /boot/grub2
-"""
-no crontab for root - using an empty one
-crontab: installing new crontab
-[root@localhost ~]# crontab -l    # 查看
-2 10 * * * tar zcvf /opt/grub2.tar.gz /boot/grub2
+  [root@localhost ~]# crontab -e    # 进入vim页面编辑命令
+  """
+  2 10 * * * tar zcvf /opt/grub2.tar.gz /boot/grub2
+  """
+  no crontab for root - using an empty one
+  crontab: installing new crontab
+  [root@localhost ~]# crontab -l    # 查看
+  2 10 * * * tar zcvf /opt/grub2.tar.gz /boot/grub2
 
-[root@localhost ~]# ll /var/spool/cron/     # 查看系统中全部的cron计划任务
-total 4
--rw-------. 1 root root 50 Mar  1 10:01 root
-```
+  [root@localhost ~]# ll /var/spool/cron/     # 查看系统中全部的cron计划任务
+  total 4
+  -rw-------. 1 root root 50 Mar  1 10:01 root
+  ```
+- 系统级别的计划任务
+  ```
+  [root@localhost ~]# ll /etc/crontab 
+  -rw-r--r--. 1 root root 451 Jun 10  2014 /etc/crontab
+  
+  [root@localhost ~]# vim /etc/crontab 
 
+  SHELL=/bin/bash
+  PATH=/sbin:/bin:/usr/sbin:/usr/bin
+  MAILTO=root
 
+  # For details see man 4 crontabs
 
+  # Example of job definition:
+  # .---------------- minute (0 - 59)
+  # |  .------------- hour (0 - 23)
+  # |  |  .---------- day of month (1 - 31)
+  # |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+  # |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+  # |  |  |  |  |
+  # *  *  *  *  * user-name  command to be executed
+
+  ~                                                                                              
+  ```
+  ```
+  [root@localhost ~]# ll /etc/cron    # 2 times tab
+  cron.d/       cron.deny     cron.monthly/ cron.weekly/  
+  cron.daily/   cron.hourly/  crontab      
+  ```
+    - cron.d/       #是系统自动定期需要做的任务，但是又不是按小时，按天，按星期，按月来执行的，那么就放在这个目录下面。
+    - cron.deny     #控制用户是否能做计划任务的文件;
+    - cron.monthly/  #每月执行的脚本;
+    - cron.weekly/   #每周执行的脚本;
+    - cron.daily/     #每天执行的脚本;
+    - cron.hourly/   #每小时执行的脚本;
+    - crontab       #主配置文件 也可添加任务;
 
 
 
