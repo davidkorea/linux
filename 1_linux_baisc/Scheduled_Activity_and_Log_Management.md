@@ -57,6 +57,11 @@ ${SHELL:-/bin/sh} << 'marcinDELIMITER6ed4ae62'
 mkdir /abc
 touch /abc/1.txt
 marcinDELIMITER6ed4ae62
+
+[root@localhost at]# at -l      # 或者 atq命令
+5	Fri Mar  1 09:35:00 2019 a root
+[root@localhost at]# atrm 5     # 删除计划任务
+
 ```
 at计划任务的特殊写法
 ```
