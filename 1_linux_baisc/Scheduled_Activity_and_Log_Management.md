@@ -126,11 +126,11 @@ at计划任务的特殊写法
 - 系统级别的计划任务 /etc/crontab 
     也可以直接在/etc/crontab中添加计划任务，与上面使用语法相同。 不建议用户级别的任务全部放到系统级别下执行，但如果都是root身份执行，不好区分的话就都可以。
     
-    使用crontab命令的注意事项：
-      - 环境变量的问题
-        - ```SHELL=/bin/bash```                        #指定操作系统使用哪个shell
-        - ```PATH=/sbin:/bin:/usr/sbin:/usr/bin```     #系统执行命令的搜索路径
-      - 清理邮件日志，比如使用重定向 ```> /dev/null  2>&1```
+  - 使用crontab命令的注意事项：
+    - 环境变量的问题
+      - ```SHELL=/bin/bash```                        #指定操作系统使用哪个shell
+      - ```PATH=/sbin:/bin:/usr/sbin:/usr/bin```     #系统执行命令的搜索路径
+    - 清理邮件日志，比如使用重定向 ```> /dev/null  2>&1```
     
   ```
   [root@localhost ~]# ll /etc/crontab 
