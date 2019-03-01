@@ -304,7 +304,7 @@ lastb | awk  '{ print $3}'  | sort | uniq -c | sort -n
 两者的区别？使用方法2，因为创建了新的文件，而正在运行的服务，还用着原来文件的inode号和文件描述码，所需要重启一下rsyslog服务。建议使用方法1  > /var/log/btmp
 
 
-#### 3. /var/log/wtmp记录每个用户成功登录次数和持续时间等信息
+#### 3. 使用/var/log/wtmp文件查看每个用户成功登录次数和持续时间等信息
 可以用last命令输出wtmp中内容，last显示到目前为止，成功登录系统的记录
 
 ```
@@ -347,7 +347,6 @@ root     pts/0        192.168.0.219    Fri Mar  1 09:27   still logged in
 
 ```
 [root@localhost ~]# vim /etc/rsyslog.conf 
-
 # rsyslog configuration file
 
 # For more information see /usr/share/doc/rsyslog-*/rsyslog_conf.html
@@ -372,5 +371,72 @@ $ModLoad imjournal # provides access to the systemd journal
 
 #### GLOBAL DIRECTIVES ####
 
+# Where to place auxiliary files
+$WorkDirectory /var/lib/rsyslog
+
+# Use default timestamp format
+$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat
+
+# File syncing capability is disabled by default. This feature is usually not required,
+# not useful and an extreme performance hit
+#$ActionFileEnableSync on
+
+# Include all config files in /etc/rsyslog.d/
+$IncludeConfig /etc/rsyslog.d/*.conf
+
+# Turn off message reception via local log socket;
+# local messages are retrieved through imjournal now.
+$OmitLocalLogging on
+
+# File to store the position in the journal
+$IMJournalStateFile imjournal.state
+
+
+#### RULES ####
+
+# Log all kernel messages to the console.
+# Logging much else clutters up the screen.
+#kern.*                                                 /dev/console
+
+# Log anything (except mail) of level info or higher.
+# Don't log private authentication messages!
+*.info;mail.none;authpriv.none;cron.none                /var/log/messages
+
+# The authpriv file has restricted access.
+authpriv.*                                              /var/log/secure
+
+# Log all the mail messages in one place.
+mail.*                                                  -/var/log/maillog
+
+
+# Log cron stuff
+cron.*                                                  /var/log/cron
+
+# Everybody gets emergency messages
+*.emerg                                                 :omusrmsg:*
+
+# Save news errors of level crit and higher in a special file.
+uucp,news.crit                                          /var/log/spooler
+
+# Save boot messages also to boot.log
+local7.*                                                /var/log/boot.log
+
+
+# ### begin forwarding rule ###
+# The statement between the begin ... end define a SINGLE forwarding
+# rule. They belong together, do NOT split them. If you create multiple
+# forwarding rules, duplicate the whole block!
+# Remote Logging (we use TCP for reliable delivery)
+#
+# An on-disk queue is created for this action. If the remote host is
+# down, messages are spooled to disk and sent when it is up again.
+#$ActionQueueFileName fwdRule1 # unique name prefix for spool files
+#$ActionQueueMaxDiskSpace 1g   # 1gb space limit (use as much as possible)
+#$ActionQueueSaveOnShutdown on # save messages to disk on shutdown
+#$ActionQueueType LinkedList   # run asynchronously
+#$ActionResumeRetryCount -1    # infinite retries if host is down
+# remote host is: name/ip:port, e.g. 192.168.0.1:514, port optional
+#*.* @@remote-host:514
+# ### end of the forwarding rule ###
 ```
 
