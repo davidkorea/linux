@@ -262,10 +262,29 @@ tar zcf /tmp/backup/`date +%F`_etc.tar.gz /etc
 |/var/log/dmesg|与系统启动相关的消息记录|
 
 
+- 查看暴力破解密码的ip
+```
+[root@localhost ~]# grep Failed /var/log/secure
+Feb 28 17:19:16 localhost sshd[31061]: Failed password for invalid user ROOT from 192.168.0.219 port 4743 ssh2
+Feb 28 17:19:22 localhost sshd[31061]: Failed password for invalid user ROOT from 192.168.0.219 port 4743 ssh2
+Mar  1 11:09:29 localhost sshd[42809]: Failed password for xerox from 192.168.0.219 port 6052 ssh2
+Mar  1 11:09:33 localhost sshd[42809]: Failed password for xerox from 192.168.0.219 port 6052 ssh2
+Mar  1 11:09:36 localhost sshd[42809]: Failed password for xerox from 192.168.0.219 port 6052 ssh2
+Mar  1 11:09:40 localhost sshd[42809]: Failed password for xerox from 192.168.0.219 port 6052 ssh2
+Mar  1 11:09:44 localhost sshd[42809]: Failed password for xerox from 192.168.0.219 port 6052 ssh2
 
+[root@localhost ~]# grep Failed /var/log/secure | awk '{print $11}' | uniq -c   # awk按列查看，打印第十一列，count unique
+      2 ROOT
+      5 192.168.0.219
+```
 
+- /var/log/wtmp也是一个二进制文件，记录每个用户的登录次数和持续时间等信息。可以用last命令输出wtmp中内容，last显示到目前为止，成功登录系统的记录
 
-
+```
+[root@localhost ~]# last    # 或者last -f /var/log/wtmp 
+xerox    pts/1        192.168.0.219    Fri Mar  1 11:09   still logged in   
+root     pts/0        192.168.0.219    Fri Mar  1 09:27   still logged in   
+```
 
 
 
