@@ -104,8 +104,24 @@ at计划任务的特殊写法
   | -| 代表从某个数字到某个数字 | 8-17  |
   | ，| 分开几个离散的数字 |6,10-13,20|
 
+#### 1. 创建计划任务
+```
+[root@localhost ~]# systemctl start crond
+[root@localhost ~]# systemctl enable crond
 
+[root@localhost ~]# crontab -e    # 进入vim页面编辑命令
+"""
+2 10 * * * tar zcvf /opt/grub2.tar.gz /boot/grub2
+"""
+no crontab for root - using an empty one
+crontab: installing new crontab
+[root@localhost ~]# crontab -l    # 查看
+2 10 * * * tar zcvf /opt/grub2.tar.gz /boot/grub2
 
+[root@localhost ~]# ll /var/spool/cron/     # 查看系统中全部的cron计划任务
+total 4
+-rw-------. 1 root root 50 Mar  1 10:01 root
+```
 
 
 
