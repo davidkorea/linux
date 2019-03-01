@@ -245,7 +245,21 @@ tar zcf /tmp/backup/`date +%F`_etc.tar.gz /etc
 ```
 工作中备份的文件不要放到/tmp,因为过一段时间，系统会清空备/tmp目录。
 
+# 2. 日志的种类和记录的方式-自定义ssh服务日志类型和存储位置
 
+在centos7中，系统日志消息由两个服务负责处理：systemd-journald和rsyslog
+
+## 2.1 常见日志文件的作用
+系统日志文件概述：/var/log目录保管由rsyslog维护的，里面存放的一些特定于系统和服务的日志文件
+
+|日志文件|用途|
+|-|-|
+|/var/log/message|大多数系统日志消息记录在此处。有也例外的：如与身份验证，电子邮件处理相关的定期作业任务等|
+|/var/log/secure|安全和身份验证相关的消息和登录失败的日志文件。  ssh远程连接产生的日志|
+|/var/log/maillog|与邮件服务器相关的消息日志文件|
+|/var/log/cron|与定期执行任务相关的日志文件|
+|/var/log/boot.log|与系统启动相关的消息记录|
+|/var/log/dmesg|与系统启动相关的消息记录|
 
 
 
