@@ -262,7 +262,7 @@ tar zcf /tmp/backup/`date +%F`_etc.tar.gz /etc
 |/var/log/dmesg|与系统启动相关的消息记录|
 
 
-- 查看暴力破解密码的ip
+- 使用/var/log/secure文件查看暴力破解系统的ip
 ```
 [root@localhost ~]# grep Failed /var/log/secure
 Feb 28 17:19:16 localhost sshd[31061]: Failed password for invalid user ROOT from 192.168.0.219 port 4743 ssh2
@@ -273,10 +273,39 @@ Mar  1 11:09:36 localhost sshd[42809]: Failed password for xerox from 192.168.0.
 Mar  1 11:09:40 localhost sshd[42809]: Failed password for xerox from 192.168.0.219 port 6052 ssh2
 Mar  1 11:09:44 localhost sshd[42809]: Failed password for xerox from 192.168.0.219 port 6052 ssh2
 
-[root@localhost ~]# grep Failed /var/log/secure | awk '{print $11}' | uniq -c   # awk按列查看，打印第十一列，count unique
-      2 ROOT
+[root@localhost ~]# grep Failed /var/log/secure | awk '{print $11}' | uniq -c  
+      2 ROOT                                    # awk按列（空格区分）查看，打印第十一列，count unique
       5 192.168.0.219
 ```
+- 使用/var/log/btmp文件查看暴力破解系统的用户
+
+/var/log/btmp文件是记录错误登录系统的日志。如果发现/var/log/btmp日志文件比较大，大于1M，就算大了，就说明很多人在暴力破解ssh服务，此日志需要使用lastb程序查看。
+
+```
+[root@localhost ~]# lastb
+xerox    ssh:notty    192.168.0.211    Fri Mar  1 11:09 - 11:09  (00:00)    
+xerox    ssh:notty    192.168.0.211    Fri Mar  1 11:09 - 11:09  (00:00)    
+xerox    ssh:notty    192.168.0.211    Fri Mar  1 11:09 - 11:09  (00:00)    
+
+btmp begins Fri Mar  1 11:09:29 2019
+```
+
+发现后，使用防火墙，拒绝掉：命令如下：
+```
+iptables -A INPUT -i eth0 -s. 192.168.0.211 -j DROP
+```
+查看恶意ip试图登录次数：
+```
+lastb | awk  '{ print $3}'  | sort | uniq -c | sort -n
+```
+清空日志：
+  - 方法1：```[root@localhost ~]# > /var/log/btmp```
+  - 方法2：```rm -rf /var/log/btmp  && touch /var/log/btmp```
+两者的区别？使用方法2，因为创建了新的文件，而正在运行的服务，还用着原来文件的inode号和文件描述码，所需要重启一下rsyslog服务。建议使用方法1  > /var/log/btmp
+
+
+
+
 
 - /var/log/wtmp也是一个二进制文件，记录每个用户的登录次数和持续时间等信息。可以用last命令输出wtmp中内容，last显示到目前为止，成功登录系统的记录
 
@@ -285,6 +314,7 @@ Mar  1 11:09:44 localhost sshd[42809]: Failed password for xerox from 192.168.0.
 xerox    pts/1        192.168.0.219    Fri Mar  1 11:09   still logged in   
 root     pts/0        192.168.0.219    Fri Mar  1 09:27   still logged in   
 ```
+
 
 
 
