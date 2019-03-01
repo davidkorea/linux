@@ -19,7 +19,7 @@
 ## 1.1 at 计划任务的使用
 - 语法格式： at  时间
 - 服务：atd
-### 1. 查看at服务状态
+#### 1. 查看at服务状态
 ```
 [root@localhost ~]# systemctl status atd
 [root@localhost ~]# systemctl start atd
@@ -29,7 +29,7 @@ enabled
 [root@localhost ~]# chkconfig --list | grep atd   # centos6 执行此命令，7不能执行
 ```
 
-### 2. 创建计划任务
+#### 2. 创建计划任务
 ```
 [root@localhost at]# date
 Fri Mar  1 09:30:38 CST 2019
@@ -71,3 +71,35 @@ at计划任务的特殊写法
 [root@localhost ~]# at 6:00 pm +3 days   在3天以后的下午6点执行
 [root@localhost ~]# at 23:00 < a.txt
 ```
+## 1.2 crontab定时任务的使用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
