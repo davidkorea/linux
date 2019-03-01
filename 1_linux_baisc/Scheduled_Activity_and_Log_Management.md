@@ -601,6 +601,12 @@ set default create context
 
 [root@localhost ~]# ls /var/log/sshd*
 /var/log/sshd.log  /var/log/sshd.log.1
+
+[root@localhost ~]# ll -h /var/log/sshd*	# 强行5次拆分
+-rw-------. 1 root root   0 Mar  1 14:38 /var/log/sshd.log
+-rw-------. 1 root root   0 Mar  1 14:38 /var/log/sshd.log.1
+-rw-------. 1 root root   0 Mar  1 14:35 /var/log/sshd.log.2
+-rw-------. 1 root root 219 Mar  1 14:14 /var/log/sshd.log.3
 ```
 
 
