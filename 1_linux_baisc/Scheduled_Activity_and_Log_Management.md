@@ -325,8 +325,7 @@ root     pts/0        192.168.0.219    Fri Mar  1 09:27   still logged in
   - mail, 	 邮件相关
   - syslog,  	日志服务本身的
   - news, 	 新闻系统
-  - local0~7,  自定义的日志设备
-  - local0-local7,    8个系统保留的类， 供其它的程序使用或者是用户自定义
+  - local0~7,  自定义的日志设备，8个系统保留的类，供其它的程序使用或者是用户自定义
 
 - 日志的级别: 0 严重 -> 7 不严重
 
@@ -341,7 +340,37 @@ root     pts/0        192.168.0.219    Fri Mar  1 09:27   still logged in
     |1|alert|警报,需要立刻修改的信息|
     |0|emerg|紧急，内核崩溃等严重信息|
 
+## 2.3 rsyslog日志服务
+
+- rhel5: 服务名称syslog  -> 配置文件  /etc/syslog.conf
+- rhel6-7: 服务名称rsyslog -> 配置文件  /etc/rsyslog.conf
+
+```
+[root@localhost ~]# vim /etc/rsyslog.conf 
+
+# rsyslog configuration file
+
+# For more information see /usr/share/doc/rsyslog-*/rsyslog_conf.html
+# If you experience problems, see http://www.rsyslog.com/doc/troubleshoot.html
+
+#### MODULES ####
+
+# The imjournal module bellow is now used as a message source instead of imuxsock.
+$ModLoad imuxsock # provides support for local system logging (e.g. via logger command)
+$ModLoad imjournal # provides access to the systemd journal
+#$ModLoad imklog # reads kernel messages (the same are read from journald)
+#$ModLoad immark  # provides --MARK-- message capability
+
+# Provides UDP syslog reception
+#$ModLoad imudp
+#$UDPServerRun 514
+
+# Provides TCP syslog reception
+#$ModLoad imtcp
+#$InputTCPServerRun 514
 
 
+#### GLOBAL DIRECTIVES ####
 
+```
 
