@@ -124,7 +124,9 @@ at计划任务的特殊写法
   -rw-------. 1 root root 50 Mar  1 10:01 root
   ```
 - 系统级别的计划任务 /etc/crontab 
-    也可以直接在/etc/crontab中添加计划任务，与上面使用语法相同。使用crontab命令的注意事项：- 环境变量的问题， - 清理邮件日志，比如使用重定向 ```> /dev/null  2>&1```
+    也可以直接在/etc/crontab中添加计划任务，与上面使用语法相同。
+    
+    使用crontab命令的注意事项：- 环境变量的问题， - 清理邮件日志，比如使用重定向 ```> /dev/null  2>&1```
     
   ```
   [root@localhost ~]# ll /etc/crontab 
@@ -132,9 +134,9 @@ at计划任务的特殊写法
   
   [root@localhost ~]# vim /etc/crontab 
 
-  SHELL=/bin/bash
-  PATH=/sbin:/bin:/usr/sbin:/usr/bin
-  MAILTO=root
+  SHELL=/bin/bash                        #指定操作系统使用哪个shell
+  PATH=/sbin:/bin:/usr/sbin:/usr/bin     #系统执行命令的搜索路径
+  MAILTO=root                            #将执行任务的信息通过邮件发送给xx用户
 
   # For details see man 4 crontabs
 
@@ -179,8 +181,35 @@ at计划任务的特殊写法
     - 互动：crontab不支持每秒。 每2秒执行一次脚本，怎么写？ 在脚本的死循环中，添加命令 sleep 2 ，执行30次自动退出，然后添加，计划任务：```* * * * *  /back.sh``` 
 
 
+#### 2. 案例
 
+> 每天2：00备份/etc/目录到/tmp/backup下面
+> 将备份命令写入一个脚本中
+> 每天备份文件名要求格式： 2017-08-19_etc.tar.gz
+> 在执行计划任务时，不要输出任务信息
+> 存放备份内容的目录要求只保留三天的数据
 
+```
+[root@localhost ~]# vim /etc/crontab 
+
+  SHELL=/bin/bash                        # 指定操作系统使用哪个shell
+  PATH=/sbin:/bin:/usr/sbin:/usr/bin     # 系统执行命令的搜索路径
+  MAILTO=root                            # 将执行任务的信息通过邮件发送给xx用户
+
+# For details see man 4 crontabs
+
+# Example of job definition:
+# .---------------- minute (0 - 59)
+# |  .------------- hour (0 - 23)
+# |  |  .---------- day of month (1 - 31)
+# |  |  |  .------- month (1 - 12) OR jan,feb,mar,apr ...
+# |  |  |  |  .---- day of week (0 - 6) (Sunday=0 or 7) OR sun,mon,tue,wed,thu,fri,sat
+# |  |  |  |  |
+# *  *  *  *  * user-name  command to be executed
+
+0 2 * * * root /bin/back.sh   #系统执行命令的搜索路径，已在上方定义
+~                                            
+```
 
 
 
