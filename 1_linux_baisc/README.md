@@ -1,5 +1,8 @@
 # linux - centos7 baiscs
 
+
+ㅎㅣㅁㄷㅡㄹㅇㅓ
+
 25. Linux计划任务与日志管理 https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/Scheduled_Activity_and_Log_Management.md
 
 -----
