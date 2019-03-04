@@ -1,7 +1,13 @@
 # linux - centos7 baiscs
 
 
-ㅎㅣㅁㄷㅡㄹㅇㅓ
+# Issue： emergency mode
+![](https://i.loli.net/2019/03/04/5c7ccb4e6f261.jpg)
+1. ```enter root pw```
+2. ```vim /etc/fstab```
+3. ```# noted the raid0 mount that is already removed```
+4. ```reboot```
+
 
 25. Linux计划任务与日志管理 https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/Scheduled_Activity_and_Log_Management.md
 
