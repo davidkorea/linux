@@ -6,7 +6,7 @@
 	- ```make```
 	- ```make install```
 
-- 如果是Makefile 文件，则执行：
+- 如果是Makefile 文件，则执行： # awl-r0.60 install failed -> make: *** no rule to make target install'. stop.
 	- ```make```
 	- ```make install```
 
