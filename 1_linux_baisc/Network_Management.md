@@ -227,8 +227,22 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
 12  * * *
 ```
 
-### 2.7 ping & arping
+### 2.7 ping & arping & watch
 - ping命令的一般格式为：
   - c 数目 在发送指定数目的包后停止。
   - i 秒数 设定间隔几秒送一个网络封包给一台机器，预设值是一秒送一次。?????```ping -i 0.01 192.168.0.1```->```ping: bad timing interval```
-  - I 指定从哪个端口出去。```ping -I ens33 192.168.0.1   ```
+  - I 指定从哪个端口出去。```ping -I ens33 192.168.0.1  ```
+  
+- IP地址冲突后或网关冲突
+```
+[root@localhost ~]# arping -I ens33 192.168.0.1
+ARPING 192.168.0.1 from 192.168.0.162 ens33
+Unicast reply from 192.168.0.1 [90:6C:AC:B3:0B:C4]  1.318ms
+Unicast reply from 192.168.0.1 [90:6C:AC:B3:0B:C4]  1.023ms
+```
+如果返回的mac不同，则出现来IP冲突的情况
+
+- watch 实时监测命令的运行结果，可以看到所有变化数据包的大小
+  - d, --differences   #高亮显示指令输出信息不同之处；
+  - n, --interval seconds  #指定指令执行的间隔时间（秒）；
+  - 每隔1秒高亮差异显示ens33相关信息```watch -d -n 1  "ifconfig ens33"```
