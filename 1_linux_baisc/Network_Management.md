@@ -180,4 +180,17 @@ tcp        0      0 192.168.0.162:22        192.168.0.219:4434      ESTABLISHED 
   - TIME_WAIT ：  在TCP四次挥手时，主动关闭端发送了ACK包之后，进入TIME_WAIT状态，等待最多MSL时间，让被动关闭端收到ACK包。
     - MSL，即Maximum Segment Lifetime，一个数据分片（报文）在网络中能够生存的最长时间，在RFC 793中定义MSL通常为2分钟，即超过两分钟即认为这个报文已经在网络中被丢弃了。对于一个TCP连接，在双方进入TIME_WAIT后，通常会等待2倍MSL时间后，再关闭掉连接，作用是为了防止由于FIN报文丢包，对端重发导致与后续的TCP连接请求产生顺序混乱
 
+- 实战：服务器上有大量TIME_WAI连接，如何优化TCP连接，快速释放tcp连接 ？
+> [root@localhost ~]# netstat  -antup | grep   TIME_WAI 
+> tcp        0      0 123.57.82.225:80            111.196.245.241:4002        TIME_WAIT   -                   
+> tcp        0      0 123.57.82.225:80            111.196.245.241:3970        TIME_WAIT   -                   
+> tcp        0      0 123.57.82.225:80            111.196.245.241:4486        TIME_WAIT   -                   
+> tcp        0      0 123.57.82.225:80            111.196.245.241:3932        TIME_WAIT   -                   
+> tcp        0      0 123.57.82.225:80            111.196.245.241:3938        TIME_WAIT   -   
 
+```
+[root@localhost ~]# cat /proc/sys/net/ipv4/tcp_fin_timeout 
+60
+
+[root@localhost ipv4]# echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout  #通过缩短时间time_wait时间来快速释放链接
+```
