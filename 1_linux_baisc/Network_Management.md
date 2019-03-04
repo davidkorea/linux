@@ -254,3 +254,7 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   2. 然后Server 进行回复确认，即 SYN=1 ，声明自己的序号是 seq=y, 并设置为ack=x+1,
   3. 最后Client 再进行一次确认，设置  ack=y+1.
 
+- tcpdump常用参数：
+  - c,        指定包个数
+  - n,       IP，端口用数字方式显示
+  - port,   指定端口 
