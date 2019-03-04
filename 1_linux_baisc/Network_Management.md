@@ -157,3 +157,25 @@ netstat 命令： 查看系统中网络连接状态信息。常用的参数格�
 - t  显示tcp协议连接
 - p, --programs   显示连接对应的PID与程序名
 
+```
+[root@localhost ~]# netstat -anutp
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:111             0.0.0.0:*               LISTEN      1/systemd              
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      9503/sshd           
+tcp        0      0 127.0.0.1:631           0.0.0.0:*               LISTEN      9502/cupsd          
+tcp        0      0 127.0.0.1:25            0.0.0.0:*               LISTEN      9816/master         
+tcp        0      0 192.168.0.162:22        192.168.0.219:4737      ESTABLISHED 11920/sshd: root@pt 
+tcp        0      0 192.168.0.162:22        192.168.0.219:4434      ESTABLISHED 10353/sshd: root@pt 
+```
+- Proto===连接协议的种类
+- Recv-Q====接收到字节数
+- Send-Q====从本服务器，发出去的字节数
+- Local Address====本地的IP地址，可以是IP，也可以是主机名
+- Foreign Address====远程主机的IP 地址
+- 网络连接状态STATE:
+  - CLOSED ： 初始（无连接）状态。
+  - LISTEN ：  侦听状态，等待远程机器的连接请求。
+  - ESTABLISHED： 完成TCP三次握手后，主动连接端进入ESTABLISHED状态。此时，TCP连接已经建立，可以进行通信。
+  - TIME_WAIT ：  在TCP四次挥手时，主动关闭端发送了ACK包之后，进入TIME_WAIT状态，等待最多MSL时间，让被动关闭端收到ACK包。
+
