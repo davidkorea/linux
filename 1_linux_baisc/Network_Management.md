@@ -44,4 +44,4 @@
 >  64 bytes from 127.3.4.5: icmp_seq=2 ttl=64 time=0.054 ms
 >  ```
 
-
+# 2. linux网络相关的调试命令
