@@ -351,3 +351,26 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
     TCP    192.168.0.219:5517     203.205.158.52:http    CLOSE_WAIT
   ```
   ![](https://i.loli.net/2019/03/04/5c7ceb298bef9.png)
+  
+  
+  -----
+  
+# TCP 握手
+
+
+> i. centos7 ssh to centos 6. ssh: connect to host 192.168.0.11 port 22: Connection refused
+
+1. go to centos6
+```
+[root@localhost ~]# service iptables stop
+[root@localhost ~]# service iptables status
+iptables：未运行防火墙。                            # still cannot ssh
+
+[root@localhost ~]# /etc/init.d/sshd restart
+停止 sshd：                                               [失败]
+生成 SSH2 RSA 主机键：                                     [确定]
+生成 SSH1 RSA 主机键：                                     [确定]
+正在生成 SSH2 DSA 主机键：                                  [确定]
+正在启动 sshd：                                            [确定]
+```
+2. 
