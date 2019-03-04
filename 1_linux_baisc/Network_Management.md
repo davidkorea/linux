@@ -373,4 +373,33 @@ iptables：未运行防火墙。                            # still cannot ssh
 正在生成 SSH2 DSA 主机键：                                  [确定]
 正在启动 sshd：                                            [确定]
 ```
-2. 
+2.  go to centos7
+run in one cmd
+```
+[root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+```
+run in another cmd
+```
+[root@localhost ~]# ssh root@192.168.0.11
+root@192.168.0.11's password:               # stop here with no pw input
+
+```
+go to the first cmd
+```
+[root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+00:51:19.157928 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [S], seq 2296476984, win 29200, options [mss 1460,sackOK,TS val 596461 ecr 0,nop,wscale 7], length 0
+
+00:51:19.158427 IP 192.168.0.11.ssh > 192.168.0.100.33722: Flags [S.], seq 2783925694, ack 2296476985, win 14480, options [mss 1460,sackOK,TS val 489701 ecr 596461,nop,wscale 7], length 0
+
+00:51:19.158475 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [.], ack 2783925695, win 229, options [nop,nop,TS val 596462 ecr 489701], length 0
+3 packets captured
+3 packets received by filter
+0 packets dropped by kernel
+```
+- seq 2296476984 -> ack 2296476985
+- seq 2783925694 -> ack 2783925695
