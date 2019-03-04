@@ -350,3 +350,4 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
     TCP    192.168.0.219:5514     161.202.224.155:8080   CLOSE_WAIT
     TCP    192.168.0.219:5517     203.205.158.52:http    CLOSE_WAIT
   ```
+  ![](https://i.loli.net/2019/03/04/5c7ceb298bef9.png)
