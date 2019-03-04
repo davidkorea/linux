@@ -46,12 +46,12 @@
 
 # 2. linux网络相关的调试命令
 
-1. 查看网络连接是否正常
+#### 1. 查看网络连接是否正常
 ```
 [root@localhost ~]# mii-tool ens33
 ens33: negotiated 1000baseT-FD flow-control, link ok
 ```
-2. 查看ip
+#### 2. 查看ip
 ```
 [root@localhost ~]# ifconfig
 ```
@@ -66,7 +66,32 @@ ens33: negotiated 1000baseT-FD flow-control, link ok
 - lo      本地回环接口
 - vnet0   KVM虚拟机网卡接口
 
+####  修改网卡IP地址 - 手工修改网卡配置文件
 
+```
+[root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33 
 
+TYPE="Ethernet"         # 设置类型是以太网设备
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="dhcp"        # 参数：static静态IP 或dhcp 或none无（不指定），如是none，配上IP地址和static效果一样
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="ens33"            # 网卡名字
+UUID="542350e0-61ad-4f1f-937b-7ee3c71f0f8d"        # 网卡UUID，全球唯一
+DEVICE="ens33"          # 设备名字，在内核中识别的名字
+ONBOOT="yes"            # 启用该设备，如果no，表示不启动此网络设备
+IPADDR=192.168.0.162
+PREFIX=24
+GATEWAY=192.168.0.1
+DNS1=114.114.114.114
+DNS2=8.8.8.8
+~                      
+```
 
 
