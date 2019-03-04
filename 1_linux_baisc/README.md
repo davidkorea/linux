@@ -1,5 +1,21 @@
 # linux - centos7 baiscs
+# Issue2： gz with no configure but Makefile
+观察下该目录中包含的是：configure 、Makefile 还是Imake。
+- 如果是configure 文件，接下来则执行：
+	- ```./configure```
+	- ```make```
+	- ```make install```
 
+- 如果是Makefile 文件，则执行：
+	- ```make```
+	- ```make install```
+
+- 如果是Imake文件，就执行：
+	- ```xmkmf```
+	- ```make```
+	- ```makeinstall```
+
+如果没有出现错误提示，则表明安装完成，软件安装的位置通常在安装时显示，否则只能查阅Readme文件
 
 # Issue1： emergency mode
 ![](https://i.loli.net/2019/03/04/5c7ccb4e6f261.jpg)
