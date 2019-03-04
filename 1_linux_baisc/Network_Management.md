@@ -45,3 +45,28 @@
 >  ```
 
 # 2. linux网络相关的调试命令
+
+1. 查看网络连接是否正常
+```
+[root@localhost ~]# mii-tool ens33
+ens33: negotiated 1000baseT-FD flow-control, link ok
+```
+2. 查看ip
+```
+[root@localhost ~]# ifconfig
+```
+常见的一些网络接口
+- eth0 ..... eth4 ...   以太网接口(linux6)
+- waln0      无线接口
+- eno177776  以太网接口 (linux7)
+- ens33   以太网接口(linux7)
+- bond0  team0   网卡绑定接口
+- virbr0  虚拟交换机桥接接口
+- br0    虚拟网桥接口
+- lo      本地回环接口
+- vnet0   KVM虚拟机网卡接口
+
+
+
+
+
