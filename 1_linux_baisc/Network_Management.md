@@ -234,15 +234,23 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   - I 指定从哪个端口出去。```ping -I ens33 192.168.0.1  ```
   
 - IP地址冲突后或网关冲突
-```
-[root@localhost ~]# arping -I ens33 192.168.0.1
-ARPING 192.168.0.1 from 192.168.0.162 ens33
-Unicast reply from 192.168.0.1 [90:6C:AC:B3:0B:C4]  1.318ms
-Unicast reply from 192.168.0.1 [90:6C:AC:B3:0B:C4]  1.023ms
-```
-如果返回的mac不同，则出现来IP冲突的情况
+  ```
+  [root@localhost ~]# arping -I ens33 192.168.0.1
+  ARPING 192.168.0.1 from 192.168.0.162 ens33
+  Unicast reply from 192.168.0.1 [90:6C:AC:B3:0B:C4]  1.318ms
+  Unicast reply from 192.168.0.1 [90:6C:AC:B3:0B:C4]  1.023ms
+  ```
+  如果返回的mac不同，则出现来IP冲突的情况
 
 - watch 实时监测命令的运行结果，可以看到所有变化数据包的大小
   - d, --differences   #高亮显示指令输出信息不同之处；
   - n, --interval seconds  #指定指令执行的间隔时间（秒）；
   - 每隔1秒高亮差异显示ens33相关信息```watch -d -n 1  "ifconfig ens33"```
+  
+# 3. 实战-局域网中使用awl伪装MAC地址进行多线程SYN洪水攻击
+
+- 三次握手的核心是： 确认每一次包的序列号。tcp三次握手过程：
+  1. 首先由Client发出请求连接即 SYN=1，声明自己的序号是 seq=x
+  2. 然后Server 进行回复确认，即 SYN=1 ，声明自己的序号是 seq=y, 并设置为ack=x+1,
+  3. 最后Client 再进行一次确认，设置  ack=y+1.
+
