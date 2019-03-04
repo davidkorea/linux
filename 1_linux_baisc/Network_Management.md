@@ -140,3 +140,11 @@ IPADDR=192.168.0.33   #改成33 IP
 [root@localhost ~]# ifconfig ens39 down
 [root@localhost ~]# ifconfig ens39 up
 ```
+- 临时配置IP地址
+```
+[root@localhost ~]# ifconfig ens39 192.168.0.89
+```
+- 给一个网络临时配置多个IP地址
+```
+[root@localhost ~]# ifconfig ens39:1 192.168.3.3
+```
