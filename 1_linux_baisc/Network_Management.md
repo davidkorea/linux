@@ -134,6 +134,9 @@ IPADDR=192.168.0.33   #改成33 IP
 [root@localhost ~]# ifconfig  #发现ens39 ，IP地址没有修改成功
 [root@localhost ~]# service  network restart   #重启网络服务生效
 [root@localhost ~]# ifconfig  #发现ens39 ，IP地址配置成功
-
 ```
-
+- 启动关闭指定网卡
+```
+[root@localhost ~]# ifconfig ens39 down
+[root@localhost ~]# ifconfig ens39 up
+```
