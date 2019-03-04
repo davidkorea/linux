@@ -255,8 +255,11 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   3. 最后Client 再进行一次确认，设置  ack=y+1.
   
   > 服务器端：LISTEN：侦听来自远方的TCP端口的连接请求
+  
   > 客户端：SYN-SENT：在发送连接请求后等待匹配的连接请求
+  
   > 服务器端：SYN-RECEIVED：在收到和发送一个连接请求后等待对方对连接请求的确认
+  
   > 客户端/服务器端：ESTABLISHED：代表一个打开的连接
 
 - tcpdump 抓包工具，常用参数：
@@ -287,3 +290,21 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
       - Flags [S]  中的 S 表示为SYN包为1
       - client主机返回ACK，包序号为ack=1 ，这是相对序号，如果需要看绝对序号，可以在tcpdump命令中加-S
 
+- SYN洪水攻击的过程：
+  在服务端返回一个确认的SYN-ACK包的时候有个潜在的弊端，如果发起的客户是一个不存在的客户端，那么服务端就不会接到客户端回应的ACK包。
+这时服务端需要耗费一定的数量的系统内存来等待这个未决的连接，直到等待超关闭，才能施放内存。
+
+  如果恶意者通过通过ip欺骗，发送大量SYN包给受害者系统，导致服务端存在大量未决的连接并占用大量内存和tcp连接，从而导致正常客户端无法访问服务端，这就是SYN洪水攻击的过程。
+
+  下载地址：https://gitlab.com/davical-project/awl/tags
+
+  安装
+  ```
+  [root@localhost63 ~]#tar zxvf awl-0.2.tar.gz  #解压
+  [root@localhost63 ~]#cd awl-0.2
+  [root@localhost63 awl-0.2]#./configure    # 查检软件包安装环境
+  [root@localhost63 awl-0.2]#make  -j  4    # make  把源代码编译成可执行的二进制文件, -j 4以4个进程同时编译，速度快
+  [root@localhost63 awl-0.2]#make install   # 安装
+  [root@localhost63 awl-0.2]# which awl     # 查看安装的命令
+  /usr/local/bin/awl
+  ```
