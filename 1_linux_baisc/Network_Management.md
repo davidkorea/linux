@@ -1,6 +1,9 @@
 # Linux网络管理技术
+1. OSI七层模型和TCP/IP
+2. linux网络相关的调试命令
+3. 实战-在局域网中使用 awl伪装MAC地址进行多线程SYN洪水攻击
 
-
+# 1. OSI七层模型和TCP/IP
 - OSI七层模型：OSI（Open System Interconnection）开放系统互连参考模型是国际标准化组织（ISO）制定的一个用于计算机或通信系统间互联的标准体系。
 - TCP/IP四层模型：TCP/IP参考模型是计算机网络的祖父ARPANET和其后继的因特网使用的参考模型。
 - 七层模型优点：
