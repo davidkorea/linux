@@ -128,17 +128,12 @@ ens39: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 NAME=ens39
 UUID=c713acec-674b-411d-9e61-646482a292ca   #这一行删除掉
 DEVICE=ens39
-IPADDR=192.168.0.89   #改成89 IP
+IPADDR=192.168.0.33   #改成33 IP
 
-[root@localhost network-scripts]# ssh root@192.168.0.89       # test ssh by new network adapter with new ip
-The authenticity of host '192.168.0.89 (192.168.0.89)' can't be established.
-ECDSA key fingerprint is SHA256:2jRM2HatzcmG7TN+NPtKjv9LTQkNSuhDKGby2x+JrRI.
-ECDSA key fingerprint is MD5:62:23:4c:dd:4d:43:07:bd:8c:c2:29:07:f5:42:ab:d0.
-Are you sure you want to continue connecting (yes/no)? y
-Please type 'yes' or 'no': yes
-Warning: Permanently added '192.168.0.89' (ECDSA) to the list of known hosts.
-root@192.168.0.89's password: 
-Last login: Mon Mar  4 14:59:47 2019 from 192.168.0.219
-[root@localhost ~]# 
+[root@localhost ~]# systemctl restart NetworkManager   
+[root@localhost ~]# ifconfig  #发现ens39 ，IP地址没有修改成功
+[root@localhost ~]# service  network restart   #重启网络服务生效
+[root@localhost ~]# ifconfig  #发现ens39 ，IP地址配置成功
+
 ```
 
