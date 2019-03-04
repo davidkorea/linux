@@ -207,3 +207,5 @@ Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 ```
 注：```0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 ens33```, 0.0.0.0是32位二进制转换成十进制的写法。32位子网掩码都为0。表示IP地址32位都是主机位。如果IP地址是0.0.0.0，子网掩码也是0.0.0.0，则表示所有的IP地址，或者是没有IP地址。
 
+- 添加路由```route add -net 192.168.2.0 netmask 255.255.255.0 dev ens38```
+- 删除路由```route del -net 192.168.2.0 netmask 255.255.255.0```
