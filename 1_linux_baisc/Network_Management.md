@@ -253,8 +253,37 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   1. 首先由Client发出请求连接即 SYN=1，声明自己的序号是 seq=x
   2. 然后Server 进行回复确认，即 SYN=1 ，声明自己的序号是 seq=y, 并设置为ack=x+1,
   3. 最后Client 再进行一次确认，设置  ack=y+1.
+  
+  > 服务器端：LISTEN：侦听来自远方的TCP端口的连接请求
+  > 客户端：SYN-SENT：在发送连接请求后等待匹配的连接请求
+  > 服务器端：SYN-RECEIVED：在收到和发送一个连接请求后等待对方对连接请求的确认
+  > 客户端/服务器端：ESTABLISHED：代表一个打开的连接
 
-- tcpdump常用参数：
+- tcpdump 抓包工具，常用参数：
   - c,        指定包个数
   - n,       IP，端口用数字方式显示
   - port,   指定端口 
+  - S, client主机返回ACK绝对序号
+  
+  - 互动：如何产生tcp的链接？在centos63上登录centos64，抓取ssh远程登录64时，产生的tcp三次握手包：
+    ```
+    [root@localhost63 ~]# ifconfig ens39 down
+    
+    [root@localhost63 ~]# ssh root@192.168.0.64
+    The authenticity of host '192.168.1.64 (192.168.1.64)' can't be established.
+    RSA key fingerprint is b2:29:c8:62:98:80:92:3c:e2:67:3f:f0:7c:40:69:63.
+    Are you sure you want to continue connecting (yes/no)?                      # 到这里就不用执行了，tcp已经建立连接
+
+    [root@localhost63 ~]# tcpdump -n -c 3 port 22  -S  -i ens33
+    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+    listening on eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
+    16:00:54.310316 IP 192.168.1.63.57528 > 192.168.1.64.ssh: Flags [S], seq 1932774705, win 14600, options [mss 1460,sackOK,TS val 5103659 ecr 0,nop,wscale 7], length 0
+    16:00:54.311072 IP 192.168.1.64.ssh > 192.168.1.63.57528: Flags [S.], seq 3006844046, ack 1932774706, win 14480, options [mss 1460,sackOK,TS val 3869455 ecr 5103659,nop,wscale 7], length 0
+    16:00:54.311175 IP 192.168.1.63.57528 > 192.168.1.64.ssh: Flags [.], ack 3006844047, win 115, options [nop,nop,TS val 5103660 ecr 3869455], length 0
+    3 packets captured
+    3 packets received by filter
+    0 packets dropped by kernel
+    ```
+      - Flags [S]  中的 S 表示为SYN包为1
+      - client主机返回ACK，包序号为ack=1 ，这是相对序号，如果需要看绝对序号，可以在tcpdump命令中加-S
+
