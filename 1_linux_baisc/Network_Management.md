@@ -298,13 +298,19 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
 
   下载地址：https://gitlab.com/davical-project/awl/tags
 
-  安装
-  ```
-  [root@localhost63 ~]#tar zxvf awl-0.2.tar.gz  #解压
-  [root@localhost63 ~]#cd awl-0.2
-  [root@localhost63 awl-0.2]#./configure    # 查检软件包安装环境
-  [root@localhost63 awl-0.2]#make  -j  4    # make  把源代码编译成可执行的二进制文件, -j 4以4个进程同时编译，速度快
-  [root@localhost63 awl-0.2]#make install   # 安装
-  [root@localhost63 awl-0.2]# which awl     # 查看安装的命令
-  /usr/local/bin/awl
-  ```
+  - 安装
+    ```
+    [root@localhost63 ~]#tar zxvf awl-0.2.tar.gz  #解压
+    [root@localhost63 ~]#cd awl-0.2
+    [root@localhost63 awl-0.2]#./configure    # 查检软件包安装环境
+    [root@localhost63 awl-0.2]#make  -j  4    # make  把源代码编译成可执行的二进制文件, -j 4以4个进程同时编译，速度快
+    [root@localhost63 awl-0.2]#make install   # 安装
+    [root@localhost63 awl-0.2]# which awl     # 查看安装的命令
+    /usr/local/bin/awl
+    ```
+  - awl参数如下:
+    - i 发送包的接口,如果省略默认是eth0
+    - m 指定目标mac地址, 注：如果-m没有指定mac，默认目标MAC地址是“FF.FF.FF.FF.FF.FF”，表示向同一网段内的所有主机发出ARP广播，进行SYN攻击，还容易使整个局域网瘫痪。
+    - d 被攻击机器的IP
+    - p 被攻击机器的端口
+
