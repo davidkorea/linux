@@ -148,3 +148,12 @@ IPADDR=192.168.0.33   #改成33 IP
 ```
 [root@localhost ~]# ifconfig ens39:1 192.168.3.3
 ```
+
+### 2.5 查看端口的监听状态
+netstat 命令： 查看系统中网络连接状态信息。常用的参数格式 :  ```netstat -anutp```  
+- a, --all  显示本机所有连接和监听的端口
+- n, --numeric    don't resolve names  以数字形式显示当前建立的有效连接和端口
+- u  显示udp协议连接
+- t  显示tcp协议连接
+- p, --programs   显示连接对应的PID与程序名
+
