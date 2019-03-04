@@ -194,3 +194,16 @@ tcp        0      0 192.168.0.162:22        192.168.0.219:4434      ESTABLISHED 
 
 [root@localhost ipv4]# echo 30 > /proc/sys/net/ipv4/tcp_fin_timeout  #通过缩短时间time_wait时间来快速释放链接
 ```
+
+### 2.6 路由信息
+```
+[root@localhost ~]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 ens33
+192.168.0.0     0.0.0.0         255.255.255.0   U     100    0        0 ens33
+192.168.3.0     0.0.0.0         255.255.255.0   U     0      0        0 ens39
+192.168.122.0   0.0.0.0         255.255.255.0   U     0      0        0 virbr0
+```
+注：```0.0.0.0         192.168.0.1     0.0.0.0         UG    100    0        0 ens33```, 0.0.0.0是32位二进制转换成十进制的写法。32位子网掩码都为0。表示IP地址32位都是主机位。如果IP地址是0.0.0.0，子网掩码也是0.0.0.0，则表示所有的IP地址，或者是没有IP地址。
+
