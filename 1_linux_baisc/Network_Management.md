@@ -46,12 +46,12 @@
 
 # 2. linux网络相关的调试命令
 
-### 1. 查看网络连接是否正常
+### 2.1 查看网络连接是否正常
 ```
 [root@localhost ~]# mii-tool ens33
 ens33: negotiated 1000baseT-FD flow-control, link ok
 ```
-### 2. 查看ip
+### 2.2 查看ip
 ```
 [root@localhost ~]# ifconfig
 ```
@@ -66,7 +66,7 @@ ens33: negotiated 1000baseT-FD flow-control, link ok
 - lo      本地回环接口
 - vnet0   KVM虚拟机网卡接口
 
-###  3. 修改网卡IP地址 - 手工修改网卡配置文件
+###  2.3 修改网卡IP地址 - 手工修改网卡配置文件
 
 ```
 [root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33 
@@ -94,7 +94,7 @@ DNS2=8.8.8.8
 ~                      
 ```
 
-### 4. 添加一个新网卡
+### 2.4 添加一个新网卡
 vm add a new network adapter
 
 ```
@@ -123,6 +123,12 @@ ens39: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 [root@localhost ~]# cd /etc/sysconfig/network-scripts/
 
 [root@localhost network-scripts]# cp ifcfg-ens33 ifcfg-ens39
+
+[root@localhost network-scripts]# cp vim ifcfg-ens39
+NAME=ens39
+UUID=c713acec-674b-411d-9e61-646482a292ca   #这一行删除掉
+DEVICE=ens39
+IPADDR=192.168.0.89   #改成89 IP
 
 [root@localhost network-scripts]# ssh root@192.168.0.89       # test ssh by new network adapter with new ip
 The authenticity of host '192.168.0.89 (192.168.0.89)' can't be established.
