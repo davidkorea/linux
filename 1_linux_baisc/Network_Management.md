@@ -46,12 +46,12 @@
 
 # 2. linux网络相关的调试命令
 
-#### 1. 查看网络连接是否正常
+### 1. 查看网络连接是否正常
 ```
 [root@localhost ~]# mii-tool ens33
 ens33: negotiated 1000baseT-FD flow-control, link ok
 ```
-#### 2. 查看ip
+### 2. 查看ip
 ```
 [root@localhost ~]# ifconfig
 ```
@@ -66,7 +66,7 @@ ens33: negotiated 1000baseT-FD flow-control, link ok
 - lo      本地回环接口
 - vnet0   KVM虚拟机网卡接口
 
-####  修改网卡IP地址 - 手工修改网卡配置文件
+###  3. 修改网卡IP地址 - 手工修改网卡配置文件
 
 ```
 [root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33 
@@ -94,4 +94,45 @@ DNS2=8.8.8.8
 ~                      
 ```
 
+### 4. 添加一个新网卡
+vm add a new network adapter
+
+```
+[root@localhost ~]# ifconfig
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.162  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::24cf:1100:bafc:e91e  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:57:73:32  txqueuelen 1000  (Ethernet)
+        RX packets 11802  bytes 1338943 (1.2 MiB)
+        RX errors 0  dropped 5  overruns 0  frame 0
+        TX packets 304  bytes 31115 (30.3 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens39: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.89  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::a652:9222:f87a:530d  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:57:73:3c  txqueuelen 1000  (Ethernet)
+        RX packets 1273  bytes 103404 (100.9 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 26  bytes 4590 (4.4 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+默认新增加的网卡没有配置文件，现在手动添加一个
+
+```
+[root@localhost ~]# cd /etc/sysconfig/network-scripts/
+
+[root@localhost network-scripts]# cp ifcfg-ens33 ifcfg-ens39
+
+[root@localhost network-scripts]# ssh root@192.168.0.89       # test ssh by new network adapter with new ip
+The authenticity of host '192.168.0.89 (192.168.0.89)' can't be established.
+ECDSA key fingerprint is SHA256:2jRM2HatzcmG7TN+NPtKjv9LTQkNSuhDKGby2x+JrRI.
+ECDSA key fingerprint is MD5:62:23:4c:dd:4d:43:07:bd:8c:c2:29:07:f5:42:ab:d0.
+Are you sure you want to continue connecting (yes/no)? y
+Please type 'yes' or 'no': yes
+Warning: Permanently added '192.168.0.89' (ECDSA) to the list of known hosts.
+root@192.168.0.89's password: 
+Last login: Mon Mar  4 14:59:47 2019 from 192.168.0.219
+[root@localhost ~]# 
+```
 
