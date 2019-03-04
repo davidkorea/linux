@@ -178,4 +178,6 @@ tcp        0      0 192.168.0.162:22        192.168.0.219:4434      ESTABLISHED 
   - LISTEN ：  侦听状态，等待远程机器的连接请求。
   - ESTABLISHED： 完成TCP三次握手后，主动连接端进入ESTABLISHED状态。此时，TCP连接已经建立，可以进行通信。
   - TIME_WAIT ：  在TCP四次挥手时，主动关闭端发送了ACK包之后，进入TIME_WAIT状态，等待最多MSL时间，让被动关闭端收到ACK包。
+    - MSL，即Maximum Segment Lifetime，一个数据分片（报文）在网络中能够生存的最长时间，在RFC 793中定义MSL通常为2分钟，即超过两分钟即认为这个报文已经在网络中被丢弃了。对于一个TCP连接，在双方进入TIME_WAIT后，通常会等待2倍MSL时间后，再关闭掉连接，作用是为了防止由于FIN报文丢包，对端重发导致与后续的TCP连接请求产生顺序混乱
+
 
