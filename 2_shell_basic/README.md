@@ -61,4 +61,16 @@
   [root@localhost ~]# echo `date +“%Y-%m”`
   “2019-03”
   ```
+  1. ```[root@localhost ~]# echo `date +“%Y-%m”````
+  
+    “2019-03”
+  2. ```[root@localhost ~]# date +"%Y-%m-%d %H-%M-%S"```, 分隔符可以使用```/```,```-```,```:```
+  
+    2019-03-05 11-17-32
+  3. ```[root@localhost ~]# date +"%Y-%m-%d %h-%m-%s"```
+  
+    2019-03-05 Mar-03-1551755869
+  4. ```[root@localhost ~]# date +"%H-%M-%S"```
+  
+    11-18-09
 
