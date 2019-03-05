@@ -332,7 +332,37 @@ i ha
 
 # 4. 实战-升级系统中的java版本到1.8版本-为后期安装Hadoop集群做准备
 
+未找到安装包，但是系统已经是最新版本，应该无需升级，升级方法如下
+```
+[root@localhost ~]# java -version
+openjdk version "1.8.0_181"
+OpenJDK Runtime Environment (build 1.8.0_181-b13)
+OpenJDK 64-Bit Server VM (build 25.181-b13, mixed mode)
+```
 
+安装jdk java运行环境
+
+上传jdk-8u161-linux-x64.rpm软件包到xuegod63
+```
+[root@localhost ~]# rpm -ivh jdk-8u161-linux-x64.rpm
+[root@localhost ~]#rpm -pql /root/jdk-8u161-linux-x64.rpm   #通过查看jdk的信息可以知道jdk的安装目录在/usr/java 
+[root@localhost ~]#vim /etc/profile   #在文件的最后添加以下内容：
+  export JAVA_HOME=/usr/java/jdk1.8.0_161
+  export JAVA_BIN=/usr/java/jdk1.8.0_161/bin
+  export PATH=${JAVA_HOME}/bin:$PATH
+  export CLASSPATH=.:${JAVA_HOME}/lib/dt.jar:${JAVA_HOME}/lib/tools.jar
+
+[root@localhost ~]#source /etc/profile #使配置文件生效
+```
+
+验证java运行环境是否安装成功：
+```
+[root@localhost ~]#  java -version
+java version "1.8.0_161"
+Java(TM) SE Runtime Environment (build 1.8.0_161-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.161-b12, mixed mode)
+```
+如果出现安装的对应版本，说明java运行环境已经安装成功。
 
 
 
