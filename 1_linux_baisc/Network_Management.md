@@ -343,6 +343,7 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   - d 被攻击机器的IP
   - p 被攻击机器的端口
 - 开始攻击
+
   **1. centos7 attack win10**
     ```
     [root@localhost ~]# arp -n     #   获取对方的IP地址解析成MAC地址
