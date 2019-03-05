@@ -199,11 +199,29 @@
     
     # open a new xshell and bash var1.sh success
     ```
+### 2.3 PATH环境变量    
+  shell要执行某一个程序，它要在系统中去搜索这个程序的路径，path变量是用来定义命令和查找命令的目录，当我们安装了第三方程序后，可以把第三方程序bin目录添加到这个path路径内，就可以在全局调用这个第三方程序的    
+- 创建一个backup 脚本
+```
+[root@localhost ~]# vim /opt/backup
+[root@localhost ~]# chmod +x /opt/backup 
+[root@localhost ~]# /opt/backup 
+backup data is ok!
+[root@localhost ~]# backup
+bash: backup: command not found...
+```
+- 将backup命令添加PATH中
+```
+[root@localhost ~]# PATH=/opt/:%PATH
+[root@localhost ~]# backup 
+backup data is ok!
+
+[root@localhost ~]# vim /etc/profile  # 在文件最后追加以下内容，永久生效
+export PATH=/opt/:$PATH   
+
+[root@localhost ~]# source /etc/profile
+```
+### 2.4 shell位置变量
     
-    
-    
-    
-    
-    
-    
-    
+- $0  获取当前执行shell脚本的文件文件名，包括脚本路径,命令本身
+- $n  获取当前脚本的第n个参数 n=1,2.....n 当n大于9时 用${10}表示
