@@ -7,3 +7,10 @@
 # 1. shell基本语法
 - Shell是一个命令解释器，它在操作系统的最外层，负责直接与用户进行对话，把用户的输入解释给操作系统，并处理各种各样的操作系统的输出结果，输出到屏幕反馈给用户。这种对话方式可是交互也可以是非交互式的
   ![shell.png](https://i.loli.net/2019/03/05/5c7de3e1b7e32.png)
+  
+- shell脚本的执行通常有以下几种方式
+  1. ```/root/test.sh```  或者 ```./test.sh``` (当前路径下执行脚本的话要有执行权限chmod +x test.sh) 
+  2. ```bash test.sh``` 或 sh test.sh```  （这种方式可以不对脚本文件添加执行权限）
+  3. ```source test.sh``` (可以没有执行权限)
+  4. ```sh < test.sh``` 或者 ```cat test.sh |sh(bash```)
+
