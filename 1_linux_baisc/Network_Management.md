@@ -271,9 +271,9 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   
 - 互动：如何产生tcp的链接？在centos7上登录centos7，抓取ssh远程登录6时，产生的tcp三次握手包
 
-> issue: centos7 ssh to centos 6. ```ssh: connect to host 192.168.0.11 port 22: Connection refused```
+  > issue: centos7 ssh to centos 6. ```ssh: connect to host 192.168.0.11 port 22: Connection refused```
 
-1. go to centos6
+1. **go to centos6**
 ```
 [root@localhost ~]# service iptables stop
 [root@localhost ~]# service iptables status
@@ -286,7 +286,7 @@ iptables：未运行防火墙。                            # still cannot ssh
 正在生成 SSH2 DSA 主机键：                                 [确定]
 正在启动 sshd：                                            [确定]
 ```
-2. go to centos7
+2.**go to centos7**
   - run in one cmd
     ```
     [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
@@ -316,45 +316,10 @@ iptables：未运行防火墙。                            # still cannot ssh
       - seq 2296476984 -> ack 2296476985
       - seq 2783925694 -> ack 2783925695
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    ```
-    [root@localhost63 ~]# ifconfig ens39 down
-    
-    [root@localhost63 ~]# ssh root@192.168.0.64
-    The authenticity of host '192.168.1.64 (192.168.1.64)' can't be established.
-    RSA key fingerprint is b2:29:c8:62:98:80:92:3c:e2:67:3f:f0:7c:40:69:63.
-    Are you sure you want to continue connecting (yes/no)?                      # 到这里就不用执行了，tcp已经建立连接
-
-    [root@localhost63 ~]# tcpdump -n -c 3 port 22  -S  -i ens33
-    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-    listening on eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
-    16:00:54.310316 IP 192.168.1.63.57528 > 192.168.1.64.ssh: Flags [S], seq 1932774705, win 14600, options [mss 1460,sackOK,TS val 5103659 ecr 0,nop,wscale 7], length 0
-    16:00:54.311072 IP 192.168.1.64.ssh > 192.168.1.63.57528: Flags [S.], seq 3006844046, ack 1932774706, win 14480, options [mss 1460,sackOK,TS val 3869455 ecr 5103659,nop,wscale 7], length 0
-    16:00:54.311175 IP 192.168.1.63.57528 > 192.168.1.64.ssh: Flags [.], ack 3006844047, win 115, options [nop,nop,TS val 5103660 ecr 3869455], length 0
-    3 packets captured
-    3 packets received by filter
-    0 packets dropped by kernel
-    ```
       - Flags [S]  中的 S 表示为SYN包为1
       - client主机返回ACK，包序号为ack=1 ，这是相对序号，如果需要看绝对序号，可以在tcpdump命令中加-S
 
-### 3.3 SYN洪水攻击的过程：
+### 3.3 SYN洪水攻击的过程
   在服务端返回一个确认的SYN-ACK包的时候有个潜在的弊端，如果发起的客户是一个不存在的客户端，那么服务端就不会接到客户端回应的ACK包。
 这时服务端需要耗费一定的数量的系统内存来等待这个未决的连接，直到等待超关闭，才能施放内存。
 
