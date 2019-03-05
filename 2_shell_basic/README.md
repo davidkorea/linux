@@ -109,7 +109,23 @@
   2. ```“”```,	在双引号中，除了$, '', `和\以外所有的字符都解释成字符本身，拥有“调用变量的值”、“引用命令”和“转义符”的特殊含义
   3. 单引号之间的内容原封不动赋值给变量，双引号之间的内容如有特殊符号会保留它的特殊含义
   4. \转义符，跟在\之后的特殊符号将失去特殊含义，变为普通字符。如\$将输出“$”符号，而不当做是变量引用
+  
+  ```
+  [root@localhost ~]# VAR4='hello $VAR1'
+  [root@localhost ~]# echo $VAR4
+  hello $VAR1
+  
+  [root@localhost ~]# VAR5="hello $VAR1"
+  [root@localhost ~]# echo $VAR5
+  hello 123
+  ```
+
+- 删除变量
+  ```
+  [root@localhost ~]# unset VAR1
+  [root@localhost ~]# echo $VAR1
 
 
+  ```
 
 
