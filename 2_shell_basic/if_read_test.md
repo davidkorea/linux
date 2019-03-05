@@ -105,6 +105,29 @@ fi
   [root@localhost ~]# bash if.sh 
   ok
   ```
-
+### 2.2 if-then-else-fi
+```shell
+if condition ; then
+  command1
+else
+  command2
+fi
+```
+- 示例
+  ```shell
+  [root@localhost ~]# vim if.sh 
+    #!/bin/bash
+    read -p "user name: " user
+    if grep $user /etc/passwd ; then
+            echo "login success"
+    else
+            echo "login failed"
+    fi  
+  
+  [root@localhost ~]# bash if.sh 
+  user name: xerox
+  xerox:x:1000:1000:xerox:/home/xerox:/bin/bash
+  login success
+  ```
 
 
