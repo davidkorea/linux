@@ -28,6 +28,7 @@
 
     - 局部变量是shell 程序内部定义的，其使用范围仅限于定义它的程序，对其它程序不可见。包括：用户自定义变量、位置变量和预定义变量。
     - 全局变量是环境变量，其值不随shell 脚本的执行结束而消失。
+### 2.1 用户自定义变量 
 
 - 变量的赋值, 不允许数字开头，等号两边不能有空格
   ```
@@ -125,7 +126,25 @@
   [root@localhost ~]# unset VAR1
   [root@localhost ~]# echo $VAR1
 
-
   ```
 
+### 2.2 环境变量
+在bash shell中，环境变量分为两类：全局变量和局部变量
+
+全局变量：对于shell会话和所有的子shell都是可见的
+
+局部变量：它只在自己的进程当中使用
+
+- 局部变量
+  ```
+  [root@localhost ~]# VAR1=123
+  [root@localhost ~]# echo $VAR1
+  123
+  
+  [root@localhost ~]# vim var1.sh
+    #!/bin/bash
+    echo $VAR1
+  [root@localhost ~]# bash var1.sh    # 执行var1.sh 时，会使用另一个bash去执行，就访问不到$VAR1的值
+
+  ```
 
