@@ -1,3 +1,9 @@
+> ########################################### 
+> 
+> [Issue: 所有命令无法使用，报错command not found...](https://github.com/davidkorea/linux_study/blob/master/2_shell_basic/README.md#issue)
+> 
+> ###########################################       
+
 # shell脚本基础
 1. shell基本语法
 2. shell变量及运用
