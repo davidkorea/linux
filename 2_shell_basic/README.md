@@ -148,3 +148,42 @@
 
   ```
 
+- 全局变量
+  1. 查看全局变量
+    ```
+    [root@localhost ~]# env         # 查看所有全局变量
+
+    [root@localhost ~]# env | grep PATH
+    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+    ```
+  2. 使用export把局部变量 -> 全局变量
+    ```
+    [root@localhost ~]# export VAR1=david
+    [root@localhost ~]# echo $VAR1
+    david
+    
+    [root@localhost ~]# vim var1.sh 
+    [root@localhost ~]# bash var1.sh 
+    david
+    ```
+  3. 全局变量->永久生效
+    > 新开的xshell连接中，还是读不到变量VAR1
+    > ![xshell.png](https://i.loli.net/2019/03/05/5c7e03a9b1f53.png)
+    
+    可以把定义好的变量写入配置文件, 当登录系统或新开启一个ssh连接启动bash进程时，一定会加载这4个配置文件
+    1. ```/etc/profile```
+    2. ```/etc/bashrc```
+    3. ```/root/.bashrc```
+    4. ```/root/.bash_profile```
+    
+    ```
+    
+    ```
+    
+    
+    
+    
+    
+    
+    
+    
