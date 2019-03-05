@@ -168,12 +168,24 @@
     ```
   3. 全局变量->永久生效
   
-    可以把定义好的变量写入配置文件, 当登录系统或新开启一个ssh连接启动bash进程时，一定会加载这4个配置文件
+    - 可以把定义好的变量写入配置文件, 当登录系统或新开启一个ssh连接启动bash进程时，一定会加载这4个配置文件
       -  ```/etc/profile```
       -  ```/etc/bashrc```
       -  ```/root/.bashrc```
       -  ```/root/.bash_profile```
-    
+      > 互动：如何知道新建一个ssh连接，加载这4个配置文件先后顺序？ 答：可以每个文件的最后，追加一个echo命令，输出一下文件的名字
+      >  ```
+      >  [root@localhost ~]# echo 'echo  /etc/profile ' >> /etc/profile
+      >  [root@localhost ~]# echo 'echo  /etc/bashrc' >> /etc/bashrc
+      >  [root@localhost ~]# echo 'echo  /root/.bashrc ' >> /root/.bashrc
+      >  [root@localhost ~]# echo 'echo  /root/.bash_profile ' >> /root/.bash_profile
+      >  [root@localhost ~]# ssh root@192.168.0.162   #弹出以下信息，就知道有优先级了
+      >  /etc/profile
+      >  /etc/bashrc
+      >  /root/.bashrc
+      >  /root/.bash_profile
+      >  ```
+      
     > 新开的xshell连接中，还是读不到变量VAR1
     > ![xshell.png](https://i.loli.net/2019/03/05/5c7e03a9b1f53.png)
     > 
