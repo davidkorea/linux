@@ -170,7 +170,7 @@ Shell中的 test 命令用于检查某个条件是否成立，它可以进行数
 
 格式：test 测试条件, 如果结果是对的，也叫结果为真，用$?=0表示，反之为假，用非0表示
 
-### 3.1 数值比较
+### 3.1 数值(integer only)比较
 
 |参数|说明|示例|
 |-|-|-|
@@ -181,8 +181,43 @@ Shell中的 test 命令用于检查某个条件是否成立，它可以进行数
 |-lt|小于则为真|[ “$a” -lt “$b” ]|
 |-le|小于等于则为真|[ “$a” -le “$b” ]|
 
+- 在做数值比较时，只能用整数
+  ```
+  [root@localhost ~]# vim num.sh
+    #!/bin/bash
+  read -p "please input 2 num: " num1 num2
+  if [ $num1 -gt $num2  ] ; then
+          echo "$num1 is bigger than $num2"
+  elif [ $num1 -lt $num2  ] ; then
+          echo "$num1 is less than $num2"
+  else
+          echo "$num1 equals $num2"
+  fi
+  
+  [root@localhost ~]# bash num.sh 
+  please input 2 num: 1 2
+  1 is less than 2
+  [root@localhost ~]# bash num.sh 
+  please input 2 num: 22 22
+  22 equals 22
+  [root@localhost ~]# bash num.sh 
+  please input 2 num: 3 1
+  3 is bigger than 1
+  ```
+### 3.2 字符串比较
+
+|参数|说明|示例|
+|-|-|-|
+|==|等于则为真|[ “$a” == “$b” ]|
+|!=|不相等则为真|[ “$a” != “$b” ]|
+|-z 字符串|字符串的长度为零则为真|[ -z “$a” ]|
+|-n 字符串|字符串的长度不为空则为真|[ -n “$a” ]|
+|str1 > str2|str1大于str2为真|[ str1 \> str2 ]|
+|str1 < str2|str1小于str2为真|[ str1 \< str2 ]|
 
 
+
+例1：根据用户名判断是否是超级管理员
 
 
 
