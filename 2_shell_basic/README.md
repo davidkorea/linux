@@ -271,6 +271,8 @@ export PATH=/opt/:$PATH
 -----
 
 # Issue
+搞坏了```echo "export PATH=/opt/:$PATH" >> /etc/profile```, 这一句应该有问题
+
 ```
 [root@localhost ~]# vim
 bash: vim: command not found...
