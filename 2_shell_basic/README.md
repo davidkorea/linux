@@ -61,16 +61,30 @@
   [root@localhost ~]# echo `date +“%Y-%m”`
   “2019-03”
   ```
-  1. ```[root@localhost ~]# echo `date +“%Y-%m”````
-  
-    “2019-03”
-  2. ```[root@localhost ~]# date +"%Y-%m-%d %H-%M-%S"```, 分隔符可以使用```/```,```-```,```:```
-  
-    2019-03-05 11-17-32
-  3. ```[root@localhost ~]# date +"%Y-%m-%d %h-%m-%s"```
-  
-    2019-03-05 Mar-03-1551755869
-  4. ```[root@localhost ~]# date +"%H-%M-%S"```
-  
-    11-18-09
-
+  1. date的使用
+    ```
+    [root@localhost ~]# echo `date +“%Y-%m”`  
+      “2019-03”
+    [root@localhost ~]# date +"%Y-%m-%d %H-%M-%S", 分隔符可以使用```/```,```-```,```:```  
+      2019-03-05 11-17-32
+    [root@localhost ~]# date +"%Y-%m-%d %h-%m-%s"  
+      2019-03-05 Mar-03-1551755869
+    [root@localhost ~]# date +"%H-%M-%S"  
+      11-18-09
+    ···
+  2. date设定日期
+    ```
+    date -s 20180523               #设置成20120523，这样会把具体时间设置成空00:00:00
+    date -s 01:01:01               #设置具体时间，不会对日期做更改
+    date -s "2018-05-23 01:01:01"  #这样可以设置全部时间
+    ```
+  3. date命令加减操作：
+    ```
+    date +%Y%m%d                   #显示当天年月日
+    date -d "+1 day" +%Y%m%d       #显示明天的日期
+    date -d "-1 day" +%Y%m%d       #显示昨天的日期
+    date -d "-1 month" +%Y%m%d     #显示上一月的日期
+    date -d "+1 month" +%Y%m%d     #显示下一月的日期
+    date -d "-1 year" +%Y%m%d      #显示前一年的日期
+    date -d "+1 year" +%Y%m%d      #显示下一年的日期
+    ```
