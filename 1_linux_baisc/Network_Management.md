@@ -271,7 +271,7 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   
 - 互动：如何产生tcp的链接？在centos7上登录centos7，抓取ssh远程登录6时，产生的tcp三次握手包
 
-  > issue: centos7 ssh to centos 6. ```ssh: connect to host 192.168.0.11 port 22: Connection refused```
+> issue: centos7 ssh to centos 6. ```ssh: connect to host 192.168.0.11 port 22: Connection refused```
 
 1. go to centos6
 ```
@@ -283,24 +283,23 @@ iptables：未运行防火墙。                            # still cannot ssh
 停止 sshd：                                               [失败]
 生成 SSH2 RSA 主机键：                                     [确定]
 生成 SSH1 RSA 主机键：                                     [确定]
-正在生成 SSH2 DSA 主机键：                                  [确定]
+正在生成 SSH2 DSA 主机键：                                 [确定]
 正在启动 sshd：                                            [确定]
 ```
 2. go to centos7
-  1. run in one cmd
+  - run in one cmd
     ```
     [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
     tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-    listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
-  
+    listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes 
     ```
-  2. run in another cmd
+  - run in another cmd
     ```
     [root@localhost ~]# ssh root@192.168.0.11
     root@192.168.0.11's password:               # stop here with no pw input
 
     ```
-  3. go to the first cmd
+  - go to the first cmd
     ```
     [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
     tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
@@ -355,7 +354,7 @@ iptables：未运行防火墙。                            # still cannot ssh
       - Flags [S]  中的 S 表示为SYN包为1
       - client主机返回ACK，包序号为ack=1 ，这是相对序号，如果需要看绝对序号，可以在tcpdump命令中加-S
 
-- SYN洪水攻击的过程：
+### 3.3 SYN洪水攻击的过程：
   在服务端返回一个确认的SYN-ACK包的时候有个潜在的弊端，如果发起的客户是一个不存在的客户端，那么服务端就不会接到客户端回应的ACK包。
 这时服务端需要耗费一定的数量的系统内存来等待这个未决的连接，直到等待超关闭，才能施放内存。
 
