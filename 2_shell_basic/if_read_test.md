@@ -164,3 +164,25 @@ fi
   ls: cannot access /home/frank: No such file or directory
   no frank account and home dir
   ```
+# 3. test测试命令
+
+Shell中的 test 命令用于检查某个条件是否成立，它可以进行数值、字符和文件三个方面的测试。
+
+格式：test 测试条件, 如果结果是对的，也叫结果为真，用$?=0表示，反之为假，用非0表示
+
+### 3.1 数值比较
+
+|参数|说明|示例|
+|-|-|-|
+|-eq|等于则为真|[ “$a” -eq “$b” ]|
+|-ne|不等于则为真|[ “$a” -ne “$b” ]|
+|-gt|大于则为真|[ “$a” -gt “$b” ]|
+|-ge|大于等于则为真|[ “$a” -ge “$b” ]|
+|-lt|小于则为真|[ “$a” -lt “$b” ]|
+|-le|小于等于则为真|[ “$a” -le “$b” ]|
+
+
+
+
+
+
