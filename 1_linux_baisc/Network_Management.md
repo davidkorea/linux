@@ -273,51 +273,51 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
 
   > issue: centos7 ssh to centos 6. ```ssh: connect to host 192.168.0.11 port 22: Connection refused```
 
-**1. go to centos6**
-  ```
-  [root@localhost ~]# service iptables stop
-  [root@localhost ~]# service iptables status
-  iptables：未运行防火墙。                            # still cannot ssh
+  **1. go to centos6**
+    ```
+    [root@localhost ~]# service iptables stop
+    [root@localhost ~]# service iptables status
+    iptables：未运行防火墙。                            # still cannot ssh
 
-  [root@localhost ~]# /etc/init.d/sshd restart
-  停止 sshd：                                               [失败]
-  生成 SSH2 RSA 主机键：                                     [确定]
-  生成 SSH1 RSA 主机键：                                     [确定]
-  正在生成 SSH2 DSA 主机键：                                 [确定]
-  正在启动 sshd：                                            [确定]
-  ```
-**2. go to centos7**
-  - run in one cmd
+    [root@localhost ~]# /etc/init.d/sshd restart
+    停止 sshd：                                               [失败]
+    生成 SSH2 RSA 主机键：                                     [确定]
+    生成 SSH1 RSA 主机键：                                     [确定]
+    正在生成 SSH2 DSA 主机键：                                 [确定]
+    正在启动 sshd：                                            [确定]
     ```
-    [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
-    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-    listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes 
-    ```
-  - run in another cmd
-    ```
-    [root@localhost ~]# ssh root@192.168.0.11
-    root@192.168.0.11's password:               # stop here with no pw input
+  **2. go to centos7**
+    - run in one cmd
+      ```
+      [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
+      tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+      listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes 
+      ```
+    - run in another cmd
+      ```
+      [root@localhost ~]# ssh root@192.168.0.11
+      root@192.168.0.11's password:               # stop here with no pw input
 
-    ```
-  - go to the first cmd
-    ```
-    [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
-    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-    listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
-    00:51:19.157928 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [S], seq 2296476984, win 29200, options [mss 1460,sackOK,TS val 596461 ecr 0,nop,wscale 7], length 0
+      ```
+    - go to the first cmd
+      ```
+      [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
+      tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+      listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+      00:51:19.157928 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [S], seq 2296476984, win 29200, options [mss 1460,sackOK,TS val 596461 ecr 0,nop,wscale 7], length 0
 
-    00:51:19.158427 IP 192.168.0.11.ssh > 192.168.0.100.33722: Flags [S.], seq 2783925694, ack 2296476985, win 14480, options [mss 1460,sackOK,TS val 489701 ecr 596461,nop,wscale 7], length 0
+      00:51:19.158427 IP 192.168.0.11.ssh > 192.168.0.100.33722: Flags [S.], seq 2783925694, ack 2296476985, win 14480, options [mss 1460,sackOK,TS val 489701 ecr 596461,nop,wscale 7], length 0
 
-    00:51:19.158475 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [.], ack 2783925695, win 229, options [nop,nop,TS val 596462 ecr 489701], length 0
-    3 packets captured
-    3 packets received by filter
-    0 packets dropped by kernel
-    ```
-      - seq 2296476984 -> ack 2296476985
-      - seq 2783925694 -> ack 2783925695
+      00:51:19.158475 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [.], ack 2783925695, win 229, options [nop,nop,TS val 596462 ecr 489701], length 0
+      3 packets captured
+      3 packets received by filter
+      0 packets dropped by kernel
+      ```
+        - seq 2296476984 -> ack 2296476985
+        - seq 2783925694 -> ack 2783925695
 
-      - Flags [S]  中的 S 表示为SYN包为1
-      - client主机返回ACK，包序号为ack=1 ，这是相对序号，如果需要看绝对序号，可以在tcpdump命令中加-S
+        - Flags [S]  中的 S 表示为SYN包为1
+        - client主机返回ACK，包序号为ack=1 ，这是相对序号，如果需要看绝对序号，可以在tcpdump命令中加-S
 
 ### 3.3 SYN洪水攻击的过程
   在服务端返回一个确认的SYN-ACK包的时候有个潜在的弊端，如果发起的客户是一个不存在的客户端，那么服务端就不会接到客户端回应的ACK包。
