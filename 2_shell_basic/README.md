@@ -225,3 +225,65 @@ export PATH=/opt/:$PATH
     
 - $0  获取当前执行shell脚本的文件文件名，包括脚本路径,命令本身
 - $n  获取当前脚本的第n个参数 n=1,2.....n 当n大于9时 用${10}表示
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
+
+# Issue
+```
+[root@localhost ~]# vim
+bash: vim: command not found...
+[root@localhost ~]# cat
+bash: cat: command not found...
+[root@localhost ~]# ls
+bash: ls: command not found...
+
+[root@localhost ~]# echo $PATH
+/opt/:/opt/:%PATH
+[root@localhost ~]# export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+[root@localhost ~]# vim /etc/profile
+  export PATH=$PATH:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+  
+[root@localhost ~]# source /etc/profile  
+```
