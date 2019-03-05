@@ -226,9 +226,35 @@ export PATH=/opt/:$PATH
 - $0  获取当前执行shell脚本的文件文件名，包括脚本路径,命令本身
 - $n  获取当前脚本的第n个参数 n=1,2.....n 当n大于9时 用${10}表示
 
+```
+[root@localhost ~]# vim print.sh
+  #!/bin/bash
+  echo "shell 's name: $0"
+  echo "first param: $!"
+  echo "second param: $2"
+  echo "thrid param: $3"
 
+[root@localhost ~]# chmod +x print.sh 
+[root@localhost ~]# ./print.sh 11 22 33
+shell 's name: ./print.sh
+first param: 
+second param: 22
+thrid param: 33
+```
 
+### 2.5 特殊变量
 
+有些变量是一开始执行Script脚本时就会设定，且不能被修改，但我们不叫它只读的系统变量，而叫它特殊变量。这些变量当一执行程序时就有了，以下是一些特殊变量：
+
+|paramater|describe|
+|-|-|
+|$* |以一个单字符串显示所有向脚本传递的参数；如"$*"用【"】括起来的情况、以"$1 $2 … $n"的形式输出所有参数|
+|$#|传递到脚本的参数个数|
+|$$|当前进程的进程号PID|
+|$?|显示最后命令的退出状态；0表示没有错误，其他任何值表明有错误|
+|$!|后台运行的最后一个进程的进程号pid|
+
+例子：
 
 
 
