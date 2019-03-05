@@ -249,26 +249,91 @@ traceroute to naver.com (125.209.222.141), 30 hops max, 60 byte packets
   
 # 3. 实战-局域网中使用awl伪装MAC地址进行多线程SYN洪水攻击
 
-- 三次握手的核心是： 确认每一次包的序列号。tcp三次握手过程：
-  1. 首先由Client发出请求连接即 SYN=1，声明自己的序号是 seq=x
-  2. 然后Server 进行回复确认，即 SYN=1 ，声明自己的序号是 seq=y, 并设置为ack=x+1,
-  3. 最后Client 再进行一次确认，设置  ack=y+1.
-  
-  > 服务器端：LISTEN：侦听来自远方的TCP端口的连接请求
-  > 
-  > 客户端：SYN-SENT：在发送连接请求后等待匹配的连接请求
-  > 
-  > 服务器端：SYN-RECEIVED：在收到和发送一个连接请求后等待对方对连接请求的确认
-  > 
-  > 客户端/服务器端：ESTABLISHED：代表一个打开的连接
+### 3.1 三次握手的核心是： 确认每一次包的序列号。tcp三次握手过程：
+1. 首先由Client发出请求连接即 SYN=1，声明自己的序号是 seq=x
+2. 然后Server 进行回复确认，即 SYN=1 ，声明自己的序号是 seq=y, 并设置为ack=x+1,
+3. 最后Client 再进行一次确认，设置  ack=y+1.
 
-- tcpdump 抓包工具，常用参数：
+> 服务器端：LISTEN：侦听来自远方的TCP端口的连接请求
+> 
+> 客户端：SYN-SENT：在发送连接请求后等待匹配的连接请求
+> 
+> 服务器端：SYN-RECEIVED：在收到和发送一个连接请求后等待对方对连接请求的确认
+> 
+> 客户端/服务器端：ESTABLISHED：代表一个打开的连接
+
+### 3.2 tcpdump 抓包工具
+- tcpdump常用参数：
   - c,        指定包个数
   - n,       IP，端口用数字方式显示
   - port,   指定端口 
   - S, client主机返回ACK绝对序号
   
-  - 互动：如何产生tcp的链接？在centos63上登录centos64，抓取ssh远程登录64时，产生的tcp三次握手包：
+- 互动：如何产生tcp的链接？在centos7上登录centos7，抓取ssh远程登录6时，产生的tcp三次握手包
+
+  > issue: centos7 ssh to centos 6. ```ssh: connect to host 192.168.0.11 port 22: Connection refused```
+
+1. go to centos6
+```
+[root@localhost ~]# service iptables stop
+[root@localhost ~]# service iptables status
+iptables：未运行防火墙。                            # still cannot ssh
+
+[root@localhost ~]# /etc/init.d/sshd restart
+停止 sshd：                                               [失败]
+生成 SSH2 RSA 主机键：                                     [确定]
+生成 SSH1 RSA 主机键：                                     [确定]
+正在生成 SSH2 DSA 主机键：                                  [确定]
+正在启动 sshd：                                            [确定]
+```
+2. go to centos7
+  1. run in one cmd
+    ```
+    [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
+    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+    listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+  
+    ```
+  2. run in another cmd
+    ```
+    [root@localhost ~]# ssh root@192.168.0.11
+    root@192.168.0.11's password:               # stop here with no pw input
+
+    ```
+  3. go to the first cmd
+    ```
+    [root@localhost ~]# tcpdump -n -c 3 port 22 -S -i ens33
+    tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+    listening on ens33, link-type EN10MB (Ethernet), capture size 262144 bytes
+    00:51:19.157928 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [S], seq 2296476984, win 29200, options [mss 1460,sackOK,TS val 596461 ecr 0,nop,wscale 7], length 0
+
+    00:51:19.158427 IP 192.168.0.11.ssh > 192.168.0.100.33722: Flags [S.], seq 2783925694, ack 2296476985, win 14480, options [mss 1460,sackOK,TS val 489701 ecr 596461,nop,wscale 7], length 0
+
+    00:51:19.158475 IP 192.168.0.100.33722 > 192.168.0.11.ssh: Flags [.], ack 2783925695, win 229, options [nop,nop,TS val 596462 ecr 489701], length 0
+    3 packets captured
+    3 packets received by filter
+    0 packets dropped by kernel
+    ```
+      - seq 2296476984 -> ack 2296476985
+      - seq 2783925694 -> ack 2783925695
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     ```
     [root@localhost63 ~]# ifconfig ens39 down
     
