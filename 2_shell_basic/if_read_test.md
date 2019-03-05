@@ -91,7 +91,20 @@ if condition ; then
 fi
 ```
 
+- 示例
+  ```shell
+  [root@localhost ~]# vim if.sh
+    #!/bin/bash
+    if ls /mnt ; then             # if `ls /mnt` 也可以
+            echo "ok"
+    fi
 
+  [root@localhost ~]# bash if.sh 
+  if.sh: line 4: syntax error: unexpected end of file
+  [root@localhost ~]# vim +4 if.sh 
+  [root@localhost ~]# bash if.sh 
+  ok
+  ```
 
 
 
