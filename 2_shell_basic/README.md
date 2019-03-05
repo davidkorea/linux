@@ -272,8 +272,22 @@ thrid param: 33
 32835 PID of the last cmd in background
 0 the result of the last cmd
 ```
-
-
+# 3. 数学运算
+### 3.1 expr 做比较时，输出结果假为0，1为真；特殊符号用转义符
+```
+[root@localhost ~]# expr 2 \> 5
+0
+[root@localhost ~]# expr 8 \> 5
+1
+[root@localhost ~]# expr 3 \+ 5
+8
+[root@localhost ~]# expr 3 \* 5
+15
+[root@localhost ~]# expr 2 \/ 5
+0
+[root@localhost ~]# expr 4 \/ 2
+2
+```
 
 
 
