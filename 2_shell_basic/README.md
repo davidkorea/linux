@@ -28,3 +28,24 @@
 
     - 局部变量是shell 程序内部定义的，其使用范围仅限于定义它的程序，对其它程序不可见。包括：用户自定义变量、位置变量和预定义变量。
     - 全局变量是环境变量，其值不随shell 脚本的执行结束而消失。
+
+- 变量的赋值, 不允许数字开头，等号两边不能有空格
+  ```
+  [root@localhost ~]# VAR1=123
+  [root@localhost ~]# echo $VAR1 
+  123
+  [root@localhost ~]# VAR2 = 222
+  bash: VAR2: command not found...
+  ```
+- 变量值的叠加，使用${}
+  ```
+  [root@localhost ~]# VAR2=mysql
+  [root@localhost ~]# echo $VAR2
+  mysql
+  [root@localhost ~]# echo $VAR2_db     # VAR2_db 被识别为一个变量，找不到，为空
+
+  [root@localhost ~]# echo $VAR2.db
+  mysql.db
+  [root@localhost ~]# echo ${VAR2}_db   # ${VAR2}_db
+  mysql_db
+  ```
