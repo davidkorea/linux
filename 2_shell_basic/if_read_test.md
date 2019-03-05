@@ -212,12 +212,43 @@ Shell中的 test 命令用于检查某个条件是否成立，它可以进行数
 |!=|不相等则为真|[ “$a” != “$b” ]|
 |-z 字符串|字符串的长度为零则为真|[ -z “$a” ]|
 |-n 字符串|字符串的长度不为空则为真|[ -n “$a” ]|
-|str1 > str2|str1大于str2为真|[ str1 \> str2 ]|
-|str1 < str2|str1小于str2为真|[ str1 \< str2 ]|
+|str1 > str2|str1大于str2为真|[ str1 \\> str2 ]|
+|str1 < str2|str1小于str2为真|[ str1 \\< str2 ]|
 
 
 
-例1：根据用户名判断是否是超级管理员
+- 根据用户名判断是否是超级管理员
+  ```
+  [root@localhost ~]# vim str.sh
+    #!/bin/bash
+    read -p "inout user: " user
+    if [ $user == "root" ] ; then
+            echo "you are admin"
+    else
+            echo "you are general user"
+    fi
 
+  [root@localhost ~]# bash str.sh 
+  inout user: root
+  you are admin
+  ```
 
+- 字符串大小比较
+  - 大于号和小于号必须转义，要不然SHELL会把它当成重定向符号
+  - 大于和小于它们的顺序和sort排序是不一样的
+  - 在test比较测试中，它使用的是ASCII顺序，大写字母是小于小写字母的
+  ```
+  [root@localhost ~]# bash str.sh 
+    #!/bin/bash
+    read -p "inout 2 strings: " str1 str2
+    if [ $str1 \> $str2 ] ; then
+            echo "$str1 > $str2"
+    else
+            echo "$str1 < $str2"
+    fi
+    
+  [root@localhost ~]# bash str.sh 
+  inout user: aabc Aabc
+  aabc > Aabc
+  ```
 
