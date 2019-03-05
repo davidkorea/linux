@@ -129,5 +129,38 @@ fi
   xerox:x:1000:1000:xerox:/home/xerox:/bin/bash
   login success
   ```
+### 2.3 multi if-then elif-...-else-fi
+```bash
+if condition1 ; then
+  command1
+elif condition2 ; then
+  command2
+elif condition3 ; then
+  ...
+else
+  commandn
+fi
+```
+- 示例
+  ```bash
+  [root@localhost ~]# vim if.sh 
+    #!/bin/bash
+    read -p "user name: " user
+    if grep $user /etc/passwd ; then
+            echo "user $user exsits"
+    elif ls -d /home/$user ; then
+            echo "no account, but '/home/'$user exsits"
+    else
+            echo "no $user account and home dir"
+    fi
 
-
+  [root@localhost ~]# bash if.sh 
+  user name: david
+  david:x:1001:1001::/home/david:/bin/bash
+  user david exsits
+  
+  [root@localhost ~]# bash if.sh 
+  user name: frank
+  ls: cannot access /home/frank: No such file or directory
+  no frank account and home dir
+  ```
