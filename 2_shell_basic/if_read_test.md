@@ -60,6 +60,7 @@
     read -p "name: " name
     read -p "age: " age
     read -p "gender: " gender
+    clear     # 清屏
     cat<<eof
     ####################
     name:   $name
@@ -69,12 +70,24 @@
     eof
 
   [root@localhost ~]# bash read.sh 
-  name: david
-  age: 12
-  gender: man
   ####################
   name:   david
   age:    12
   gender: man
   ####################
   ```
+# 2. 流程控制语句if
+
+### 2.1 if-then-fi
+```shell
+if condition
+then
+  command
+fi
+```
+
+
+
+
+
+
