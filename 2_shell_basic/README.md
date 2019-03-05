@@ -49,3 +49,16 @@
   [root@localhost ~]# echo ${VAR2}_db   # ${VAR2}_db
   mysql_db
   ```
+- 命令的替换/调用, 使用$()或反引号``` `...` ```
+  ```
+  [root@localhost ~]# date
+  Tue Mar  5 11:14:36 CST 2019
+  [root@localhost ~]# echo `date`
+  Tue Mar 5 11:14:43 CST 2019
+  [root@localhost ~]# echo $(date)
+  Tue Mar 5 11:14:52 CST 2019
+
+  [root@localhost ~]# echo `date +“%Y-%m”`
+  “2019-03”
+  ```
+
