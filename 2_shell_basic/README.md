@@ -71,7 +71,7 @@
       2019-03-05 Mar-03-1551755869
     [root@localhost ~]# date +"%H-%M-%S"  
       11-18-09
-    ···
+    ```
   2. date设定日期
     ```
     date -s 20180523               #设置成20120523，这样会把具体时间设置成空00:00:00
@@ -88,3 +88,19 @@
     date -d "-1 year" +%Y%m%d      #显示前一年的日期
     date -d "+1 year" +%Y%m%d      #显示下一年的日期
     ```
+- 命令的嵌套使用，使用$( $( ))
+  ```
+  [root@localhost ~]# find ./-name *.txt
+  find: './-name': No such file or directory
+  1.txt
+  2.txt
+  3.txt
+  4.txt
+  5.txt
+
+  [root@localhost ~]# VAR3=$(tar zcvf txtgz.tar.gz $(find ./-name *.txt))
+  find: './-name': No such file or directory
+  
+  [root@localhost ~]# ls
+  1.txt  2.txt  3.txt  4.txt  5.txt  txtgz.tar.gz
+  ```
