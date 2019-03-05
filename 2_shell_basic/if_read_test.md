@@ -53,3 +53,28 @@
   [root@localhost ~]# echo $pass
   12345
   ```
+- read案例an'li
+  ```
+  [root@localhost ~]# vim read.sh
+    #!/bin/bash
+    read -p "name: " name
+    read -p "age: " age
+    read -p "gender: " gender
+    cat<<eof
+    ####################
+    name:   $name
+    age:    $age
+    gender: $gender
+    ####################
+    eof
+
+  [root@localhost ~]# bash read.sh 
+  name: david
+  age: 12
+  gender: man
+  ####################
+  name:   david
+  age:    12
+  gender: man
+  ####################
+  ```
