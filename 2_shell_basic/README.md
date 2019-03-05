@@ -185,14 +185,19 @@
       >  /root/.bashrc
       >  /root/.bash_profile
       >  ```
+      > 可以在这里添加木马程序，只要管理登录系统，就触发木马程序
       
-    > 新开的xshell连接中，还是读不到变量VAR1
-    > ![xshell.png](https://i.loli.net/2019/03/05/5c7e03a9b1f53.png)
-    > 
+    - 新开的xshell连接中，还是读不到变量VAR1
+      ![xshell.png](https://i.loli.net/2019/03/05/5c7e03a9b1f53.png)
 
     
     ```
+    [root@localhost ~]# vim /etc/profile        #在文件的最后插入
+    export VAR1=david                           #=等号两边不能有空格
+
+    [root@localhost ~]# source  /etc/profile    #重新加载profile文件
     
+    # open a new xshell and bash var1.sh success
     ```
     
     
