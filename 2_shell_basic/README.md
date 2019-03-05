@@ -255,7 +255,23 @@ thrid param: 33
 |$!|后台运行的最后一个进程的进程号pid|
 
 例子：
+```
+[root@localhost ~]# vim special_vars.sh 
+  #!/bin/bash
+  echo "$* all parameters"
+  echo "$# the amount/num of parameters"
+  echo "$$ PID of this script"
+  touch /tmp/a.txt &
+  echo "$! PID of the last cmd in background"
+  echo "$? the result of the last cmd"
 
+[root@localhost ~]# bash special_vars.sh 11 22 33 44 55
+11 22 33 44 55 all parameters
+5 the amount/num of parameters
+32834 PID of this script
+32835 PID of the last cmd in background
+0 the result of the last cmd
+```
 
 
 
