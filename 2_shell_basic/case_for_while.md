@@ -258,3 +258,56 @@ done
   8 * 1 = 88 * 2 = 168 * 3 = 248 * 4 = 328 * 5 = 408 * 6 = 488 * 7 = 568 * 8 = 64
   9 * 1 = 99 * 2 = 189 * 3 = 279 * 4 = 369 * 5 = 459 * 6 = 549 * 7 = 639 * 8 = 729 * 9 = 81
   ```
+# 4. 实战-3个shell脚本实战
+### 4.1  实战-将/var/log/目录下所有的日志文件全自动打包到/opt/bachup
+- my code
+  ```
+  #!/bin/bash
+  name=`date +%Y-%m-%d`
+  dest=/opt/backup
+  sour=/var/log/
+  [ -e $dest ] || mkdir $dest
+  tar -zcvf ${dest}/${name}.tar.gz ${sour}/*.log
+  ls -lh ${dest}/${name}.tar.gz
+  if [ $? -eq 0 ] ; then
+          echo "tar auccess"
+  else
+          echo "tar failed"
+  fi
+  ```
+  
+- example
+  ```
+  [root@xuegod63 ~]# vim log-back.sh
+  #!/bin/sh
+  SRC_DIR=/var/log/
+  DES_DIR=/opt/backup/`date +%Y%m%d`
+  if
+  [ ! -d  $DES_DIR ] ; then
+          mkdir -p $DES_DIR
+  fi
+  for i in  `find  $SRC_DIR  -name "*.log"`
+  do
+          tar  czf  $i.tgz  $i
+  done
+  mv /var/log/*.tgz $DES_DIR
+  ls -lh $DES_DIR
+  echo "The scripts exec end, Files tar successfully !"
+  
+  [root@localhost ~]# bash log.sh 
+  tar: Removing leading `/' from member names
+  /var/log//Xorg.0.log
+  /var/log//Xorg.9.log
+  /var/log//boot.log
+  /var/log//ssdh.log
+  /var/log//sshd.log
+  /var/log//vmware-network.1.log
+  /var/log//vmware-network.2.log
+  /var/log//vmware-network.3.log
+  /var/log//vmware-network.log
+  /var/log//vmware-vmsvc.log
+  /var/log//wpa_supplicant.log
+  /var/log//yum.log
+  -rw-r--r--. 1 root root 13K Mar  6 13:51 /opt/backup/2019-03-06.tar.gz
+  tar auccess
+  ```
