@@ -13,3 +13,37 @@ break概述：跳出当前整个循环或结束当前循环，在for、while等�
 
 continue概述：忽略本次循环剩余的代码，直接进行下一次循环；在for、while等循环语句中，用于跳出当前所在的循环体，执行循环体之后的语句，如果后面加的数字是1，表示忽略本次条件循环，如果是2的话，忽略下来2次条件的循环
 
+- continue break演示
+  ```shell
+  #! /bin/sh
+  while true
+  do
+     echo "*******************************"
+     echo "Please select your operation:"
+     echo " 1 Copy"
+     echo " 2 Delete"
+     echo " 3 Backup"
+     echo " 4 Quit"
+     echo "*******************************"
+     read op
+   case $op in
+      1)
+        continue                         # 这里加了continue后，后面的echo命令就不执行了
+        echo "your selection is Copy"
+        ;;
+      2)
+         echo "your selection is Delete"
+         ;;
+      3)
+        echo "your selection is Backup"
+        ;;
+      4)
+        echo "Exit ..."
+        break                             # 跳出循环体
+       ;;
+      *)
+        echo "invalide selection,please try again"
+    esac
+  done
+
+  ```
