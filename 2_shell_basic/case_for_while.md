@@ -213,8 +213,8 @@ done
   ```
 ### 3.2 嵌套循环
 - 批量创建用户
-  ```
-  echo "user1 user2 user3" > user.txt
+  ```shell
+  [root@localhost ~]# echo "user1 user2 user3" > user.txt
   
   [root@localhost ~]# vim adduser.sh 
     #!/bin/bash
