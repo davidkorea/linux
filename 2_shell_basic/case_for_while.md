@@ -92,5 +92,11 @@ esac
      Active: inactive (dead)
        Docs: man:httpd(8)
              man:apachectl(8)
-
   ```
+# 2.循环语句 for
+
+```shell
+for var in list ; do
+  commands
+done
+```
