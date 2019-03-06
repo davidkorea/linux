@@ -273,7 +273,24 @@ done
           echo "tar auccess"
   else
           echo "tar failed"
-  fi
+  fi  
+    
+  [root@localhost ~]# bash log.sh 
+  tar: Removing leading `/' from member names
+  /var/log//Xorg.0.log
+  /var/log//Xorg.9.log
+  /var/log//boot.log
+  /var/log//ssdh.log
+  /var/log//sshd.log
+  /var/log//vmware-network.1.log
+  /var/log//vmware-network.2.log
+  /var/log//vmware-network.3.log
+  /var/log//vmware-network.log
+  /var/log//vmware-vmsvc.log
+  /var/log//wpa_supplicant.log
+  /var/log//yum.log
+  -rw-r--r--. 1 root root 13K Mar  6 13:51 /opt/backup/2019-03-06.tar.gz
+  tar auccess
   ```
   
 - example
@@ -293,21 +310,31 @@ done
   mv /var/log/*.tgz $DES_DIR
   ls -lh $DES_DIR
   echo "The scripts exec end, Files tar successfully !"
-  
-  [root@localhost ~]# bash log.sh 
-  tar: Removing leading `/' from member names
-  /var/log//Xorg.0.log
-  /var/log//Xorg.9.log
-  /var/log//boot.log
-  /var/log//ssdh.log
-  /var/log//sshd.log
-  /var/log//vmware-network.1.log
-  /var/log//vmware-network.2.log
-  /var/log//vmware-network.3.log
-  /var/log//vmware-network.log
-  /var/log//vmware-vmsvc.log
-  /var/log//wpa_supplicant.log
-  /var/log//yum.log
-  -rw-r--r--. 1 root root 13K Mar  6 13:51 /opt/backup/2019-03-06.tar.gz
-  tar auccess
   ```
+
+### 4.2 实战-找出192.168.1.1-10网段中，服务器已经关机的IP地址
+
+- my code
+  ```
+  #!/bin/bash
+  for i in `seq 10` ; do
+          ping -c 3 192.168.0.$i &> /dev/null
+          if [ $? -ne 0 ] ; then
+                  echo "192.168.0.$i shut down"
+          fi
+  done
+  ```
+- exanple
+  ```
+  #!/bin/bash
+  i=1
+  for (( i=1;i<10;i++ ))
+  do
+    ping  -c  3  192.168.1.$i &> /dev/null
+    if  [ $? -ne 0 ];then
+       echo 192.168.1.$i is shutdown
+    fi
+  done
+  ```
+
+
