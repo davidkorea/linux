@@ -176,5 +176,37 @@ done
   done
   ```
 
+# 3. while循环语句和循环嵌套
+```shell
+while condition
+do
+  command
+done
+```
+- 降序输出10到1的数字
+  ```
+  #!/bin/bash
+  var=10
+  while [ $var -gt 0 ]
+  do
+      echo $var
+      var=$[$var-1]
+  done
+  ```
 
-
+- 两数相乘
+  ```
+  #!/bin/bash
+  var=1
+  while [ $var -lt 10 ] ; do
+          echo "$var * $var = $(( $var * $var  ))"
+  #       var=$[ $var+1 ]
+          (( var++ ))
+  done
+  ```
+  ```
+  1 * 1 = 1
+  2 * 2 = 4
+  ...
+  9 * 9 = 81
+  ```
