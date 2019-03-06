@@ -100,6 +100,7 @@ for var in list ; do
   commands
 done
 ```
+
 - 可以直接读取in 后面的值，默认以空格做分隔
   ```shell
   [root@localhost ~]# vim for.sh
@@ -167,7 +168,13 @@ done
   127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
   ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
   ```
-
+- C语言风格的for
+  ```
+  #!/bin/bash
+  for ((i=1;i<=10;i++)) ; do      # for (( i=1 ; i<=10 ; i++ )) 加空格也可以
+          echo "$i"
+  done
+  ```
 
 
 
