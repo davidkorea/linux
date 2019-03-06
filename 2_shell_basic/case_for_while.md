@@ -100,3 +100,52 @@ for var in list ; do
   commands
 done
 ```
+- 可以直接读取in 后面的值，默认以空格做分隔
+  ```shell
+  [root@localhost ~]# vim for.sh
+    #!/bin/bash
+    for var in a b c ; do
+            echo "$var"
+    done
+
+  [root@localhost ~]# bash for.sh 
+  a
+  b
+  c
+  ```
+  
+- 列表中的复杂值，可以使用 引号或转义字符”/”来加以约束
+  ```shell
+  [root@localhost ~]# vim for.sh
+    #!/bin/bash
+    for var in "a b c" d "e f " \$ ; do
+            echo "$var"
+    done
+   
+  [root@localhost ~]# bash for.sh 
+  a b c
+  d
+  e f 
+  $
+  ```
+- 从变量中取值
+  ```shell
+  #!/bin/bash
+  list="a b \$"
+  for var in $list ; do
+          echo "$var"
+  done
+  ```
+
+- 从命令中取值
+  ```
+  #!/bin/bash"
+  for var in `ls` ; do
+          echo "$var"
+  done
+  ```
+
+
+
+
+
