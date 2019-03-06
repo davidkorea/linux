@@ -171,8 +171,8 @@ done
 - C语言风格的for
   ```
   #!/bin/bash
-  for ((i=1;i<=10;i++)) ; do      # for (( i=1 ; i<=10 ; i++ )) 加空格也可以
-          echo "$i"
+  for ((i=1 ,j=10 ; i<=10 ; i++,j-- )) ; do   # ((  ))有没有空格都可以，注意，和；的使用
+          echo "$i - $j"
   done
   ```
 
