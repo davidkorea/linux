@@ -199,9 +199,9 @@ done
   #!/bin/bash
   var=1
   while [ $var -lt 10 ] ; do
-          echo "$var * $var = $(( $var * $var  ))"
-  #       var=$[ $var+1 ]
-          (( var++ ))
+          echo "$var * $var = $(( $var * $var  ))"    # $((...))数字运算
+  #       var=$[ $var+1 ]   # 二者都有变量自加1的效果
+          (( var++ ))       # 二者都有变量自加1的效果
   done
   ```
   ```
