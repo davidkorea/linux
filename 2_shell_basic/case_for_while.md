@@ -177,6 +177,7 @@ done
   ```
 
 # 3. while循环语句和循环嵌套
+### 3.1 while
 ```shell
 while condition
 do
@@ -209,4 +210,28 @@ done
   2 * 2 = 4
   ...
   9 * 9 = 81
+  ```
+### 3.2 嵌套循环
+- 批量创建用户
+  ```
+  echo "user1 user2 user3" > user.txt
+  
+  [root@localhost ~]# vim adduser.sh 
+    #!/bin/bash
+    userlist=`cat user.txt`                   # 读取文档中用户
+    for user in $userlist ; do          
+            id $user &> /dev/null             # 运行id username命令，返回信息指定为空
+            if [ $? -ne 0 ] ; then            # 如果上一条命令运行成功，则用户已存在，否则可以创建该新用户
+                                              # if [   ] 方括号为test命令，作比较
+                    useradd $user
+                    echo "user $user created"
+            else
+                    echo "$user exsits"
+            fi
+    done
+  
+  [root@localhost ~]# bash adduser.sh 
+  user user1 created
+  user user2 created
+  user user3 created  
   ```
