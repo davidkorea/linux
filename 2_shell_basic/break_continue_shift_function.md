@@ -47,3 +47,49 @@ continue概述：忽略本次循环剩余的代码，直接进行下一次循环
   done
 
   ```
+- 使用交互式方法批量添加用户
+  ```shell
+  while :
+  do
+          read -p "please input prefix, pasw, num: " pre pswd num
+          echo "
+          *******************
+          ** prefix: $pre  **
+          ** pswd:   $pswd **
+          ** num:    $num  **
+          *******************
+          "
+          read -p "are you sure?[y/n]: " choice
+          if [ $choice == "y" ] ; then
+                  break
+          fi
+  done
+  for i in `seq $num` ; do
+          user=${pre}${i}
+          id $user &> /dev/null
+          if [ $? -ne 0 ] ; then
+                  useradd $user
+                  echo "$pswd"|passwd --stdin $user &> /dev/null
+                  if [ $? -eq 0 ] ; then
+                          echo -e "\033[31m $user \033[0m created"
+                  fi
+          else
+                  echo "$user exsits"
+          fi
+  done
+  ```
+  ```
+  [root@localhost ~]# bash adduser.sh 
+   please input prefix, pasw, num: usr 11111 2
+
+    *******************
+    ** prefix: usr   **
+    ** pswd:   11111 **
+    ** num:	   2     **
+    *******************
+
+   are you sure?[y/n]: y
+   usr1  created
+   usr2  created
+
+  ```
