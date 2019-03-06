@@ -337,4 +337,22 @@ done
   done
   ```
 
+### 4.3 批量创建帐号并生成随机密码
+- example
+  ```
+  #!/bin/bash
+  for i in xuegoda{1..10}
+  do
+        useradd $i
+        pass=`date +%s|md5sum|cut -c 1-8`
+        sleep 1
+        echo "$i:$pass" >> /tmp/passwd.log
+        echo $pass |passwd --stdin $i > /dev/null 2>&1
+        if [ $? -eq 0 ];then
+          echo "create user is successfully!"
+        else
+          echo "create user is failed!"
+        fi
+  done
 
+  ```
