@@ -156,7 +156,16 @@ done
     - ```IFS=$'\n'```   #正真的使用换行符, 回车做为字段分隔符。
 
   ```
-  
+  [root@localhost ~]# vim for.sh
+    #!/bin/bash
+    IFS=$'\n'            # 回车 分隔
+    for var in `cat /etc/hosts` ; do
+            echo "$var"
+    done
+
+  [root@localhost ~]# bash for.sh 
+  127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+  ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
   ```
 
 
