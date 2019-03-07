@@ -140,8 +140,8 @@ continue概述：忽略本次循环剩余的代码，直接进行下一次循环
 - 调用函数时, 可以传递参数, 在函数中用$1、$2…来引用传递的参数
 
 - 函数的使用
-  1. 函数名的使用，如果在一个脚本中定义了重复的函数名，那么以最后一个为准
-  2. 使用return命令来退出函数并返回特定的退出码
+  -  函数名的使用，如果在一个脚本中定义了重复的函数名，那么以最后一个为准
+  - 使用return命令来退出函数并返回特定的退出码
     - 状态码的确定必需要在函数一结束就运行return返回值；状态码的取值范围（0~255）
     - exit 数字 和return 数字的区别？
       - exit整个脚本就直接退出，返回数字
@@ -161,6 +161,19 @@ continue概述：忽略本次循环剩余的代码，直接进行下一次循环
     [root@localhost ~]# echo $?
     55
     ```
+  - 把函数值赋给变量使用, 函数名就相当于一个命令
+    ```shell
+    [root@localhost ~]# vim func.sh
+      #!/bin/bash
+      func(){
+              read -p "pls input: " var
+              echo $[ $var*2 ]
+      }
+      num=$(func)
+      echo $num
 
-
+    [root@localhost ~]# bash func.sh 
+    pls input: 2
+    4
+    ```
 
