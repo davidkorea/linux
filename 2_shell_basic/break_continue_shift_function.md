@@ -139,8 +139,23 @@ continue概述：忽略本次循环剩余的代码，直接进行下一次循环
   ```
 - 调用函数时, 可以传递参数, 在函数中用$1、$2…来引用传递的参数
 
+- 函数的使用
+  1. 函数名的使用，如果在一个脚本中定义了重复的函数名，那么以最后一个为准
+  2. 使用return命令来退出函数并返回特定的退出码
+    ```shell
+    [root@localhost ~]# vim shift.sh 
+      #!/bin/bash
+      func(){
+              echo "hello world"
+              return 55
+      }
+      func
 
-
+    [root@localhost ~]# bash func.sh 
+    hello world
+    [root@localhost ~]# echo $?
+    55
+    ```
 
 
 
