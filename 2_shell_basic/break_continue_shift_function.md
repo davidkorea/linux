@@ -99,9 +99,23 @@ continue概述：忽略本次循环剩余的代码，直接进行下一次循环
 - 作用：每执行一次，参数序列顺次左移一个位置，$#的值减1，用于分别处理每个参数，移出去的参数，不再可用
 
 - 加法计算器
+  ```shell
+  [root@localhost ~]# vim shift.sh 
+    #!/bin/bash
+    [ $# -eq 0 ] && echo "pls input nums"
+    sum=0
+    while [ $# -gt 0 ] ; do
+            sum=$(($sum+$1))
+            shift
+    done
+    echo "sum = $sum"
   ```
-  
+  ```shell
+  [root@localhost ~]# bash shift.sh 1 2 3 4 5
+  sum = 15
+  [root@localhost ~]# bash shift.sh 
+  pls input nums
+  sum = 0
   ```
-
 
 
