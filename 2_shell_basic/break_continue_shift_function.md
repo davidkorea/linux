@@ -176,4 +176,25 @@ continue概述：忽略本次循环剩余的代码，直接进行下一次循环
     pls input: 2
     4
     ```
+  - 函数中多参数传递和使用方法
+    ```
+    #!/bin/bash
+    func(){
+            echo $[$1*2]
+            echo $[$2*3]
+    }
+    func 2 3
+    ```
+  - 函数中变量的处理, 函数使用的变量类型有两种：
+    - 局部变量
+    - 全局变量, 默认情况下，脚本中定义的变量都是全局变量，函数外面定义的变量在函数内也可以使用
 
+    ```
+    #!/bin/bash
+    function fun1 {
+            num1=$[var1*2]
+    }
+    read -p "input a num:" var1
+    fun1                        # 此处并未传递参数，根据变量名执行函数的操作
+    echo the new value is: $num1
+    ```
