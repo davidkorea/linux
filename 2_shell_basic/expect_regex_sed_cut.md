@@ -112,3 +112,11 @@
   - ```[root@localhost ~]# grep -v  "^$\|^#" /etc/ssh/sshd_config ```, 整个正则表达式中不加空格，使用转义或者符号
   - ```[root@localhost ~]# grep -E -v "^$|^#" /etc/ssh/sshd_config ```, -E, 可以不转义或者符号|
   - ```[root@localhost ~]# egrep -v "^$|^#" /etc/ssh/sshd_config ```，egrep = grep -E
+
+- 查找passwd文件包括.ot 的字符
+  ```shell
+  [root@localhost ~]# grep .ot /etc/passwd
+  root:x:0:0:root:/root:/bin/bash
+  operator:x:11:0:operator:/root:/sbin/nologin
+  setroubleshoot:x:990:984::/var/lib/setroubleshoot:/sbin/nologin
+  ```
