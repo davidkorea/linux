@@ -76,3 +76,8 @@
     expect /root/ssh.exp $ip $pass
   done
   ```
+# 2. 正则表达式
+
+正则表达式不只有一种，而且LINUX中不同的程序可能会使用不同的正则表达式，如：grep   sed   awk
+
+
