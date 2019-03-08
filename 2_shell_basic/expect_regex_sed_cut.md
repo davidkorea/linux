@@ -12,7 +12,7 @@
 
 
 
-- 
+- 免密码通过SSH登录服务器
   ```
   [root@localhost ~]# vim ssh.exp
     #!/usr/bin/expect
