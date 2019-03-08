@@ -10,10 +10,7 @@
 如果你想要写一个能够自动处理输入输出的脚本（如向用户提问并且验证密码）又不想面对C或者Perl，那么expect是你的最好的选择。它可以用来做一些linux下无法做到交互的一些命令操作
 
 - 使用expect创建脚本的方法
-  1. 定义脚本执行的shell, 这里定义的是expect可执行文件的链接路径（或真实路径），功能类似于bash等shell功能
-    ```
-    #!/usr/bin/expect 
-    ```    
+  1. 定义脚本执行的shell, ```#!/usr/bin/expect ```, 这里定义的是expect可执行文件的链接路径（或真实路径），功能类似于bash等shell功能
   2. ```set timeout 30```	设置超时时间，单位是秒，如果设为timeout -1 意为永不超时
   3. spawn 是进入expect环境后才能执行的内部命令，如果没有装expect或者直接在默认的SHELL下执行是找不到spawn命令的。不能直接在默认的shell环境中进行执行主要功能，它主要的功能是给ssh运行进程加个壳，用来传递交互指令。
   4. expect	这里的expect同样是expect的内部命令
