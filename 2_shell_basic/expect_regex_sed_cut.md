@@ -108,6 +108,7 @@
 |\r|匹配一个回车符|
 |\t|匹配一个制表符|
 
-- ```[root@localhost ~]# grep -v  "^$\|^#" /etc/ssh/sshd_config ```, 整个正则表达式中不加空格，使用转义或者符号
-- ```[root@localhost ~]# grep -E -v "^$|^#" /etc/ssh/sshd_config ```, -E, 可以不转义或者符号|
-- ```[root@localhost ~]# egrep -v "^$|^#" /etc/ssh/sshd_config ```，egrep = grep -E
+- 统计/etc/ssh/sshd_config文件中除去空行和#号开头的行的行数
+  - ```[root@localhost ~]# grep -v  "^$\|^#" /etc/ssh/sshd_config ```, 整个正则表达式中不加空格，使用转义或者符号
+  - ```[root@localhost ~]# grep -E -v "^$|^#" /etc/ssh/sshd_config ```, -E, 可以不转义或者符号|
+  - ```[root@localhost ~]# egrep -v "^$|^#" /etc/ssh/sshd_config ```，egrep = grep -E
