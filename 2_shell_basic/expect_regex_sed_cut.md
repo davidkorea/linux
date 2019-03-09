@@ -176,5 +176,26 @@ i am a dog
 	
 	[root@localhost david]# sed 's/root/hello/g' /etc/passwd	# g参数 全部替换一整行
 	hello:x:0:0:hello:/hello:/bin/bash
-
 	```
+- 按行替换
+1. 用数字表示行范围；$表示行尾
+2. 用文本模式配置来过滤
+
+	- 单行替换
+	```
+	[root@localhost david]# sed '2s/bin/hello/' /etc/passwd | more
+	root:x:0:0:root:/root:/bin/bash
+	hello:x:1:1:bin:/bin:/sbin/nologin
+	```
+	- 多行替换，如果涉及到多行处理，用逗号表示行间隔
+	```
+	[root@localhost david]# sed '2,$s/bin/okok/' /etc/passwd | more #从第二行一直到文档结尾
+	root:x:0:0:root:/root:/bin/bash
+	okok:x:1:1:bin:/bin:/sbin/nologin
+	daemon:x:2:2:daemon:/sokok:/sbin/nologin
+	adm:x:3:4:adm:/var/adm:/sokok/nologin
+	```
+	
+	
+	
+	
