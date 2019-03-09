@@ -167,5 +167,14 @@ i am a dog
 	- ^ 匹配行开始，如：/^sed/匹配所有以sed开头的行。
 	- $ 匹配行结束，如：/sed$/匹配所有以sed结尾的行。
 	- . 匹配一个非换行符的任意字符，如：/s.d/匹配s后接一个任意字符，最后是d。
-	- * 匹配0个或多个字符，如：/*sed/匹配所有模板是一个或多个空格后紧跟sed的行。
+	- \* 匹配0个或多个字符，如：/*sed/匹配所有模板是一个或多个空格后紧跟sed的行。
 
+- 替换/etc/passwd
+	```
+	[root@localhost david]# sed 's/root/hello/' /etc/passwd
+	hello:x:0:0:root:/root:/bin/bash
+	
+	[root@localhost david]# sed 's/root/hello/g' /etc/passwd	# g参数 全部替换一整行
+	hello:x:0:0:hello:/hello:/bin/bash
+
+	```
