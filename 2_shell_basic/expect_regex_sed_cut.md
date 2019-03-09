@@ -297,11 +297,26 @@ cut命令用来显示行中的指定部分，删除文件中指定字段。
 4. -b 表示字节；
 5. -c 表示字符；
 6. -f 表示定义字段。
+
+- 打印第1个到第3个字符
+	```
+	[root@localhost david]# cut -c1-3 /etc/passwd
+	roo
+	bin
+	```
+- 打印前2个字符
+	```
+	[root@localhost david]# cut -c-2 /etc/passwd
+	ro
+	bi
+	```
 	
-	
-	
-	
-	
+- 打印从第5个字符开始到结尾
+	```
+	[root@localhost david]# cut -c5- /etc/passwd
+	:x:0:0:root:/root:/bin/bash
+	x:1:1:bin:/bin:/sbin/nologin
+	```
 	
 	
 	
