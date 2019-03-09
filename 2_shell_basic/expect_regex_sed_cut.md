@@ -143,6 +143,10 @@ sed的执行过程：
 - 重复上面四步
 
 语法格式：```sed  [options] ‘[commands]’ filename```
+```
+[root@localhost david]# echo "i am a cat" | sed 's/cat/dog/'
+i am a dog
+```
 - sed选项|参数options:
 	- a	在当前行下面插入文件
 	- n	读取下一个输入行，用下一个命令处理新的行而不是用第一个命令
