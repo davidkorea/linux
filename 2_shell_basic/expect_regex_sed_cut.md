@@ -169,7 +169,7 @@ i am a dog
 	- . 匹配一个非换行符的任意字符，如：/s.d/匹配s后接一个任意字符，最后是d。
 	- \* 匹配0个或多个字符，如：/*sed/匹配所有模板是一个或多个空格后紧跟sed的行。
 
-- 替换/etc/passwd
+- s 替换/etc/passwd
 	```
 	[root@localhost david]# sed 's/root/hello/' /etc/passwd
 	hello:x:0:0:root:/root:/bin/bash
@@ -178,8 +178,8 @@ i am a dog
 	hello:x:0:0:hello:/hello:/bin/bash
 	```
 - 按行替换
-1. 用数字表示行范围；$表示行尾
-2. 用文本模式配置来过滤
+	1. 用数字表示行范围；$表示行尾
+	2. 用文本模式配置来过滤	
 
 	- 单行替换
 	```
@@ -196,6 +196,27 @@ i am a dog
 	adm:x:3:4:adm:/var/adm:/sokok/nologin
 	```
 	
+- d  删除第2行到第4行的内容
+	```
+	[root@localhost david]# sed '2,4d' /etc/hosts
+	127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+	[root@localhost david]#
+	```
+- 添加行
+	1. 命令i(insert插入)，在当前行前面插入一行  i\
+	2. 命令a(append附加)，在当前行后面添加一行 a\
 	
-	
-	
+	```
+	[root@localhost david]# echo "hello "| sed 'i\ world'
+	 world
+	hello 
+	```
+	- 在文件最后追加内容 $a
+		```
+		[root@localhost david]# cat a.txt 
+		kjhkjh
+		[root@localhost david]# sed '$a\ hello world' a.txt 
+		kjhkjh
+		 hello world
+
+		```
