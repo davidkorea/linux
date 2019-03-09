@@ -206,11 +206,12 @@ i am a dog
 	1. 命令i(insert插入)，在当前行前面插入一行  i\
 	2. 命令a(append附加)，在当前行后面添加一行 a\
 	
-	```
-	[root@localhost david]# echo "hello "| sed 'i\ world'
-	 world
-	hello 
-	```
+	- 插入
+		```
+		[root@localhost david]# echo "hello "| sed 'i\ world'
+		 world
+		hello 
+		```
 	- 在文件最后追加内容 $a
 		```
 		[root@localhost david]# cat a.txt 
@@ -218,5 +219,18 @@ i am a dog
 		[root@localhost david]# sed '$a\ hello world' a.txt 
 		kjhkjh
 		 hello world
+		```
+	- 在文件中第2～4行之后，开始追加内容
+		```
+		[root@localhost david]# sed '2,4a\hello world' a.txt 
+		kjhkjh
+		sdfasf
+		hello world
+		sdfasf
+		hello world
+		sdfasf
+		hello world
+		sdfasf
+		sdfasf
 
 		```
