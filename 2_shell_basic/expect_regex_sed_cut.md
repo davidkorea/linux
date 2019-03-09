@@ -232,5 +232,39 @@ i am a dog
 		hello world
 		sdfasf
 		sdfasf
-
 		```
+- 修改行命令c (change) c\
+	- 将包含asf到行全部换成bye
+		```
+		[root@localhost david]# sed '/asf/c\bye' a.txt 
+		kjhkjh
+		bye
+		bye
+		bye
+		bye
+		bye
+		```
+- n 打印，直接输入文件中的内容
+	```
+	[root@localhost david]# sed -n '2p' a.txt 	# 输入第2行内容
+	sdfasf
+	```
+- w 将修改或过滤出来的内容保存到另一个文件中
+	- 将passwd中的包括root字样的行保存到 c.txt 中
+		```
+		[root@localhost david]# sed -n '/root/w root.txt' /etc/passwd
+		[root@localhost david]# cat root.txt 
+		root:x:0:0:root:/root:/bin/bash
+		operator:x:11:0:operator:/root:/sbin/nologin
+		```
+	
+- i 对原文件修改，保存（ 必会 ）   使用场景： 替换或修改服务器配置文件	
+	```
+	[root@localhost david]# sed -i 's/asf/byebye/' a.txt 
+	[root@localhost david]# cat a.txt 
+	kjhkjh
+	sdfbyebye
+	sdfbyebye
+	sdfbyebye
+	```
+	
