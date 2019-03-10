@@ -28,3 +28,24 @@ setenforce: SELinux is disabled
 [root@localhost ~]# getenforce 
 Disabled
 ```
+3. 系统光盘开机自动挂载
+```
+[root@localhost ~]# echo "/dev/sr0 /mnt iso9660 defaults 0 0" >> /etc/fstab
+[root@localhost ~]# mount -a
+mount: /dev/sr0 写保护，将以只读方式挂载
+[root@localhost ~]# ls /mnt/   #可以查看到此目录下有内容，说明挂载成功
+CentOS_BuildTag  GPL       LiveOS    RPM-GPG-KEY-CentOS-7
+```
+4. 本地yum源
+```
+[root@localhost yum.repos.d]#rm -rf  /etc/yum.repos.d/*  # 删除原有的文件
+[root@localhost yum.repos.d]# vim  CentOS7.repo  #写入以下红色内容
+  [CentOS7]   
+  name=CentOS-server     
+  baseurl=file:///mnt  
+  enabled=1  
+  gpgcheck=0
+```
+
+
+
