@@ -48,4 +48,15 @@ CentOS_BuildTag  GPL       LiveOS    RPM-GPG-KEY-CentOS-7
 ```
 
 
+5. 配置网络yum源
+  - 阿里云镜像源站点（http://mirrors.aliyun.com/）。
+  - centos镜像参考：http://mirrors.aliyun.com/help/centos
+```
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup   # 1、备份
+wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7.repo   #下载新的CentOS-Base.repo 到/etc/yum.repos.d/
+```
+6. 之后运行```yum makecache```生成缓存
+
+7. 安装epel源 ```yum install epel-release –y```
+
 
