@@ -59,4 +59,8 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
 
 7. 安装epel源 ```yum install epel-release –y```
 
+8. 克隆后发现克隆的机器网卡无法启动，需要如下操作：
+  - 删除克隆机器的网卡MAC地址
+  - 删除网卡信息文件```rm -rf /etc/udev/rules.d/70-persistent-net.rules```
+  - 重启：reboot
 
