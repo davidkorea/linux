@@ -257,5 +257,21 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
 实战背景：
 最近公网网站一直被别人暴力破解sshd服务密码。虽然没有成功，但会导致系统负载很高，原因是在暴力破解的时候，系统会不断地认证用户，从而增加了系统资源额外开销，导致访问公司网站速度很慢。
 
+#### 1. fail2ban
+
+fail2ban可以监视你的系统日志，然后匹配日志的错误信息（正则式匹配）执行相应的屏蔽动作（一般情况下是防火墙），而且可以发送e-mail通知系统管理员，很好、很实用、很强大！简单来说其功能就是防止暴力破解。工作的原理是通过分析一定时间内的相关服务日志，将满足动作的相关IP利用iptables加入到dorp列表一定时间。 
+注：重启iptables服务的话，所有drop将重置。
+
+http://www.fail2ban.org
+
+steps (refer to README.md in package folder)
+1. ```tar zxvf fail2ban-0.9.4.tar.gz```
+2. ```cd fail2ban-0.9.4```
+3. ```python setup.py install```
+4. ```[root@localhost ail2ban-0.9.4]# cp files/redhat-initd /etc/rc.d/init.d/fail2ban
+  the system init/service script is not automatically installed.To enable fail2ban as an automatic service, simply copy the script for your distro from the `files` directory to `/etc/rc.d/init.d/`
+5. ```[root@localhost ail2ban-0.9.4]# chkconfig --add fail2ban```  #开机自动启动
+
+
 
 
