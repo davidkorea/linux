@@ -92,6 +92,7 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
 - 例如想要开放sshd端口为 22和222，则多加一行内容为： Port 222 即可
 - 然后重新启动sshd这样就好了。 建议大家修改 port number 为其它端口。防止别人暴力破解。
 
+1. 修改配置文件
 ```shell
 [root@localhost ~]# vim /etc/ssh/sshd_config 
 
@@ -107,13 +108,17 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
  13 # If you want to change the port on a SELinux system, you have     to tell
  14 # SELinux about this change.
  15 # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
- 16 # Port 22
- 17 Port 222
+ 16 # 
+ 17 Port 22             # 先不要注释掉端口22，否则下面配置失败后就再也不能远程了，测试222成功后再注释掉
+ 18 Port 222
 ```
+2. 本来重启就成功来，没想到报错
 ```
 [root@localhost ~]# systemctl restart sshd
-Job for sshd.service failed because the control process exited with error code. See "systemctl status sshd.service" and "journalctl -xe" for details.
+Job for sshd.service failed because the control process exited with error code. 
+See "systemctl status sshd.service" and "journalctl -xe" for details.
 ```
+3. 按照上面的报错提示设置一下，查看到时防火墙禁止来222端口
 ```
 [root@localhost ~]# journalctl -xe
 *****  Plugin bind_ports (99.5 confidence) suggests   ************************
@@ -124,6 +129,7 @@ Job for sshd.service failed because the control process exited with error code. 
  # semanage port -a -t PORT_TYPE -p tcp 222
      where PORT_TYPE is one of the following: ssh_port_t, vnc_port_t, xserver_port_t.
 ```
+4. 按照报错提示的命令进行操作，竟然成功了
 ```
 [root@localhost ~]# semanage port -a -t ssh_port_t -p tcp 222
 [root@localhost ~]# systemctl restart sshd
@@ -132,8 +138,23 @@ Job for sshd.service failed because the control process exited with error code. 
    Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
    Active: active (running) since Mon 2019-03-11 10:19:33 CST; 2min 41s ago
 ```
+5. 查看防火墙ssh的端口,222和22都可以使用，但是远程登录依旧提示错误
+```
+[root@localhost ~]# semanage port -l |grep ssh
+ssh_port_t                     tcp      222, 22
+```
 
-
+6. 抓紧看来下上面的步骤firewalld, selinux都没有关闭，因为换了台服务器做测试。
+```
+[root@localhost ~]# systemctl stop firewalld      # 先停止掉
+[root@localhost ~]# systemctl disable firewalld   # 再禁止开机启动
+[root@localhost ~]# vim /etc/selinux/config  
+改：7 SELINUX=enforcing     #前面的7，表示文档中第7行。方便你查找
+为：7 SELINUX=disabled
+[root@localhost ~]# reboot 
+```
+7. 果然还是要关闭firewalld之后才可以ssh
+防火墙设置参考[Centos7 修改SSH 端口](https://www.baidu.com/link?url=60dVRJChAmvON7vivW06OJZUPzJSnEAOQs3AA8_xaAyb-nC4JT30D9_nsxlERyn3Ik-zZccoyWeKH-9TY6H9oq&wd=&eqid=b67809ed0006069b000000065c85cbe3)
 
 
 
