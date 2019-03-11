@@ -264,7 +264,7 @@ fail2ban可以监视你的系统日志，然后匹配日志的错误信息（正
 
 http://www.fail2ban.org
 
-steps (refer to README.md in package folder)
+- steps (refer to README.md in package folder)
 1. ```tar zxvf fail2ban-0.9.4.tar.gz```
 2. ```cd fail2ban-0.9.4```
 3. ```python setup.py install```
@@ -276,8 +276,15 @@ steps (refer to README.md in package folder)
 ```shell
 [root@localhost fail2ban-0.9.4]# grep chkconfig ./* -R --color
 ./files/redhat-initd:# chkconfig: - 92 08             # 启动脚本里都包含chkconfig 字段
-
 ```
+- 相关主要文件说明：
+  - ```/etc/fail2ban/action.d``` #动作文件夹，内含默认文件。iptables以及mail等动作配置
+  - ```/etc/fail2ban/fail2ban.conf```    #定义了fai2ban日志级别、日志位置及sock文件位置
+  - ```/etc/fail2ban/filter.d```                    #条件文件夹，内含默认文件。过滤日志关键内容设置
+  - ```/etc/fail2ban/jail.conf```     #主要配置文件，模块化。主要设置启用ban动作的服务及动作阀值
 
+
+- 应用实例
+设置条件：ssh远程登录5分钟内3次密码验证失败，禁止用户IP访问主机1小时，1小时该限制自动解除，用户可重新登录。因为动作文件（action.d/iptables.conf）以及日志匹配条件文件（filter.d/sshd.conf ）安装后是默认存在的。基本不用做任何修改。所有主要需要设置的就只有jail.conf文件。启用sshd服务的日志分析，指定动作阀值即可。
 
 
