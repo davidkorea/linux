@@ -8,7 +8,7 @@
 
 1. 清空关闭防火墙
 ```
-iptables -F
+iptables -F     # 可以通过/sbin/iptables -F清除所有规则来暂时停止防火墙： (警告：这只适合在没有配置防火墙的环境中，如果已经配置过默认规则为deny的环境，此步骤将使系统的所有网络访问中断)
 systemctl stop firewalld
 systemctl disable firewalld
 ```
