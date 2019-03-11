@@ -192,14 +192,13 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
 ### 3.4  SyslogFacility AUTHPRIV 
 当有人使用 SSH 登入系统的时候，SSH 会记录信息，这个信息要记录的类型为AUTHPRIV。sshd服务日志存放在： /var/log/secure 
 因为LogLevel INFO，登录记录的等级！INFO级别以上。
-
+[定义ssh服务的日志类别为local0，编辑sshd服务的主配置文件](https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/Scheduled_Activity_and_Log_Management.md#2-%E5%AE%9A%E4%B9%89ssh%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%97%A5%E5%BF%97%E7%B1%BB%E5%88%AB%E4%B8%BAlocal0%E7%BC%96%E8%BE%91sshd%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%B8%BB%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
 ```
 [root@localhost ~]# vim /etc/ssh/sshd_config 
  31 # Logging
  32 #SyslogFacility AUTH
  33 #SyslogFacility AUTHPRIV
- 34 SyslogFacility local0
- 35 #LogLevel INFO
+ 34 #LogLevel INFO
 ```
 关于日志相关信息 参考[Linux计划任务与日志管理
 ](https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/Scheduled_Activity_and_Log_Management.md#21-%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8)
