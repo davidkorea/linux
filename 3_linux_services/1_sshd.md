@@ -64,3 +64,22 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
   - 删除网卡信息文件```rm -rf /etc/udev/rules.d/70-persistent-net.rules```
   - 重启：reboot
 
+# 2. sshd服务安装-ssh命令使用方法
+1. SSHD服务
+  - 介绍：SSH 协议：安全外壳协议。为 Secure Shell 的缩写。SSH 为建立在应用层和传输层基础上的安全协议。
+  - 作用：sshd服务使用SSH协议可以用来进行远程控制， 或在计算机之间传送文件。相比较之前用telnet方式来传输文件要安全很多，因为telnet使用明文传输，是加密传输。
+2. 服务安装：需要安装OpenSSH 四个安装包, OpenSSH软件包，提供了服务端后台程序和客户端工具，用来加密远程控件和文件传输过程中的数据，并由此来代替原来的类似服务。
+  - 安装包：OpenSSH服务需要4 个软件包
+    - openssh-5.3p1-114.el6_7.x86_64：包含OpenSSH服务器及客户端需要的核心文件
+    - openssh-clients-5.3p1-114.el6_7.x86_64：OpenSSH客户端软件包
+    - openssh-server-5.3p1-114.el6_7.x86_64：OpenSSH服务器软件包
+    - openssh-askpass-5.3p1-114.el6_7.x86_64：支持对话框窗口的显示，是一个基于X 系统的密码诊断工具
+3. 配置yum源，通过```yum install openssh openssh-clients openssh-server -y```来安装。前提：系统以及配置好yum源，（本地源or网络源） 推荐用yum来安装。 奇怪， 安装完成后并没有 openssh-askpass-5.3p1-114.el6_7.x86_64， 只有下面三个
+    ```shell
+    [root@localhost ~]# rpm -qa | grep openssh
+    openssh-7.4p1-16.el7.x86_64
+    openssh-server-7.4p1-16.el7.x86_64
+    openssh-clients-7.4p1-16.el7.x86_64
+    ```
+    
+
