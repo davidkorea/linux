@@ -84,3 +84,56 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
 # 3. sshd服务配置和管理    
 
 介绍下配置文件/etc/ssh/sshd_config，以及需要安全调优的地方。注：参数前面有#，且#后没有空格，表示是默认缺省值。如要变更，需去除前面#，再该更保存，才能生效。
+
+### port22
+
+```shell
+[root@localhost ~]# vim /etc/ssh/sshd_config 
+
+# This is the sshd server system-wide configuration file.  See
+# sshd_config(5) for more information.
+
+# This sshd was compiled with PATH=/usr/local/bin:/usr/bin
+
+  9 # OpenSSH is to specify options with their default value where
+ 10 # possible, but leave them commented.  Uncommented options over    ride the
+ 11 # default value.
+ 12 
+ 13 # If you want to change the port on a SELinux system, you have     to tell
+ 14 # SELinux about this change.
+ 15 # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
+ 16 #
+ 17 Port 222
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
