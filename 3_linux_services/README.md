@@ -1,10 +1,5 @@
 # sshd服务搭建管理和防止暴力破解
 
- # semanage port -a -t PORT_TYPE -p tcp 222
-         where PORT_TYPE is one of the following: ssh_port_t, vnc_port_t, xserver_port_t.
-
-
-
 Issue： yum install时，无法安装正在被其他程序调用
 ```
 Another app is currently holding the yum lock; waiting for it to exit...
