@@ -85,15 +85,12 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
 
 介绍下配置文件/etc/ssh/sshd_config，以及需要安全调优的地方。注：参数前面有#，且#后没有空格，表示是默认缺省值。如要变更，需去除前面#，再该更保存，才能生效。
 
-### port22
+### 3.1 port22
 
 设置sshd监听端口号
 - SSH 预设使用 22 这个port，也可以使用多个port，即重复使用 port 这个设定项目！
 - 例如想要开放sshd端口为 22和222，则多加一行内容为： Port 222 即可
 - 然后重新启动sshd这样就好了。 建议大家修改 port number 为其它端口。防止别人暴力破解。
-
-
-
 
 ```shell
 [root@localhost ~]# vim /etc/ssh/sshd_config 
@@ -110,11 +107,31 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
  13 # If you want to change the port on a SELinux system, you have     to tell
  14 # SELinux about this change.
  15 # semanage port -a -t ssh_port_t -p tcp #PORTNUMBER
- 16 #
+ 16 # Port 22
  17 Port 222
 ```
-
-
+```
+[root@localhost ~]# systemctl restart sshd
+Job for sshd.service failed because the control process exited with error code. See "systemctl status sshd.service" and "journalctl -xe" for details.
+```
+```
+[root@localhost ~]# journalctl -xe
+*****  Plugin bind_ports (99.5 confidence) suggests   ************************
+                                                     
+ If you want to allow /usr/sbin/sshd to bind to network port 222
+ Then you need to modify the port type.
+ Do
+ # semanage port -a -t PORT_TYPE -p tcp 222
+     where PORT_TYPE is one of the following: ssh_port_t, vnc_port_t, xserver_port_t.
+```
+```
+[root@localhost ~]# semanage port -a -t ssh_port_t -p tcp 222
+[root@localhost ~]# systemctl restart sshd
+[root@localhost ~]# systemctl status sshd
+● sshd.service - OpenSSH server daemon
+   Loaded: loaded (/usr/lib/systemd/system/sshd.service; enabled; vendor preset: enabled)
+   Active: active (running) since Mon 2019-03-11 10:19:33 CST; 2min 41s ago
+```
 
 
 
