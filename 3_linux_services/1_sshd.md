@@ -81,5 +81,6 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
     openssh-server-7.4p1-16.el7.x86_64
     openssh-clients-7.4p1-16.el7.x86_64
     ```
-    
+# 3. sshd服务配置和管理    
 
+介绍下配置文件/etc/ssh/sshd_config，以及需要安全调优的地方。注：参数前面有#，且#后没有空格，表示是默认值，此行会运行，并不是注释
