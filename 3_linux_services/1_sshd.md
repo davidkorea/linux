@@ -229,8 +229,15 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
     [root@localhost ~]# cat /etc/motd 
     Warning! From now on, all of your operations have been recorded.
     ```
+- ```108 #PrintLastLog yes```, 显示上次登入的信息！预设也是 yes  
+  - ssh登录成功后 会有如下显示
+    ```
+    Last login: Mon Mar 11 11:03:32 2019 from 192.168.0.219
+    Warning! From now on, all of your operations have been recorded.
+    ```
 
-
+- ```117 #UseDNS yes```
+  - 一般来说，为了要判断客户端来源是正常合法的，因此会使用 DNS 去反查客户端的主机名。不过如果是在内网互连，这项目设定为 no 会让联机速度比较快。
 
 
 
