@@ -286,5 +286,13 @@ http://www.fail2ban.org
 
 - 应用实例
 设置条件：ssh远程登录5分钟内3次密码验证失败，禁止用户IP访问主机1小时，1小时该限制自动解除，用户可重新登录。因为动作文件（action.d/iptables.conf）以及日志匹配条件文件（filter.d/sshd.conf ）安装后是默认存在的。基本不用做任何修改。所有主要需要设置的就只有jail.conf文件。启用sshd服务的日志分析，指定动作阀值即可。
-
+  - 实例文件/etc/fail2ban/jail.conf及说明如下：
+    ```shell
+      [DEFAULT]                   #全局设置
+      ignoreip = 127.0.0.1/8      #忽略的IP列表,不受设置限制
+      bantime  = 600              #屏蔽时间，单位：秒
+      findtime  = 600             #这个时间段内超过规定次数会被ban掉
+      maxretry = 3                #最大尝试次数
+      backend = auto              #日志修改检测机制（gamin、polling和auto这三种）
+    ```
 
