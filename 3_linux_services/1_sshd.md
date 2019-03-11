@@ -87,6 +87,14 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
 
 ### port22
 
+设置sshd监听端口号
+- SSH 预设使用 22 这个port，也可以使用多个port，即重复使用 port 这个设定项目！
+- 例如想要开放sshd端口为 22和222，则多加一行内容为： Port 222 即可
+- 然后重新启动sshd这样就好了。 建议大家修改 port number 为其它端口。防止别人暴力破解。
+
+
+
+
 ```shell
 [root@localhost ~]# vim /etc/ssh/sshd_config 
 
