@@ -224,7 +224,12 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
 
 - ```107 #PrintMotd yes```
   - 登入后是否显示出一些信息呢？例如上次登入的时间、地点等等，预设是 yes,亦即是打印出 /etc/motd这个文档的内容，默认是个空文档。
-
+  - 添加警告信息
+    ```
+    [root@localhost ~]# echo "Warning! From now on, all of your operations have been recorded." > /etc/motd 
+    [root@localhost ~]# cat /etc/motd 
+    Warning! From now on, all of your operations have been recorded.
+    ```
 
 
 
