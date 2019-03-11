@@ -156,19 +156,57 @@ ssh_port_t                     tcp      222, 22
 7. 果然还是要关闭firewalld之后才可以ssh
 防火墙设置参考[Centos7 修改SSH 端口](https://www.baidu.com/link?url=60dVRJChAmvON7vivW06OJZUPzJSnEAOQs3AA8_xaAyb-nC4JT30D9_nsxlERyn3Ik-zZccoyWeKH-9TY6H9oq&wd=&eqid=b67809ed0006069b000000065c85cbe3)
 
+8. 查看端口状态
+```
+[root@localhost ~]# netstat -nlutp | grep sshd
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      11599/sshd          
+tcp        0      0 0.0.0.0:222             0.0.0.0:*               LISTEN      11599/sshd      
+tcp6       0      0 :::22                   :::*                    LISTEN      11599/sshd          
+tcp6       0      0 :::222                  :::*                    LISTEN      11599/sshd          
+```
+9. 更改端口后登陆 ```ssh -p 222 192.168.0.162```
 
 
+### 3.2 ListenAddress 0.0.0.0
+```
+[root@localhost ~]# vim /etc/ssh/sshd_config 
+ 17 Port 22
+ 18 Port 222
+ 19 #AddressFamily any
+ 20 #ListenAddress 0.0.0.0
+ 21 #ListenAddress ::
+ 22 
+```
+设置sshd服务器绑定的IP 地址，0.0.0.0 表示侦听所有地址。这个值可以写成本地IP地址也可以写成所有地址
 
+### 3.3 设置包含计算机私人密匙的文件HostKey /etc/ssh/ssh_host_key
 
+```
+[root@localhost ~]# vim /etc/ssh/sshd_config 
+ 23 HostKey /etc/ssh/ssh_host_rsa_key
+ 24 #HostKey /etc/ssh/ssh_host_dsa_key
+ 25 HostKey /etc/ssh/ssh_host_ecdsa_key
+ 26 HostKey /etc/ssh/ssh_host_ed25519_key
+```
 
+### 3.4  SyslogFacility AUTHPRIV 
+当有人使用 SSH 登入系统的时候，SSH 会记录信息，这个信息要记录的类型为AUTHPRIV。sshd服务日志存放在： /var/log/secure 
+因为LogLevel INFO，登录记录的等级！INFO级别以上。
 
+```
+[root@localhost ~]# vim /etc/ssh/sshd_config 
+ 31 # Logging
+ 32 #SyslogFacility AUTH
+ 33 #SyslogFacility AUTHPRIV
+ 34 SyslogFacility local0
+ 35 #LogLevel INFO
+```
 
-
-
-
-
-
-
+```
+[root@localhost ~]# vim /etc/rsyslog.conf 
+ 56 # The authpriv file has restricted access.
+ 57 authpriv.*                                              /var/log/secure
+```
 
 
 
