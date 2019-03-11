@@ -179,8 +179,8 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
 ```
 设置sshd服务器绑定的IP 地址，0.0.0.0 表示侦听所有地址。这个值可以写成本地IP地址也可以写成所有地址
 
-### 3.3 设置包含计算机私人密匙的文件HostKey /etc/ssh/ssh_host_key
-
+### 3.3 HostKey /etc/ssh/ssh_host_key
+设置包含计算机私人密匙的文件
 ```
 [root@localhost ~]# vim /etc/ssh/sshd_config 
  23 HostKey /etc/ssh/ssh_host_rsa_key
@@ -201,14 +201,15 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
  34 SyslogFacility local0
  35 #LogLevel INFO
 ```
-
+关于日志相关信息 参考[Linux计划任务与日志管理
+](https://github.com/davidkorea/linux_study/blob/master/1_linux_baisc/Scheduled_Activity_and_Log_Management.md#21-%E5%B8%B8%E8%A7%81%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6%E7%9A%84%E4%BD%9C%E7%94%A8)
 ```
 [root@localhost ~]# vim /etc/rsyslog.conf 
  56 # The authpriv file has restricted access.
  57 authpriv.*                                              /var/log/secure
 ```
 
-
+### 3.5 安全调优的重点
 
 
 
