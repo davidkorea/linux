@@ -351,6 +351,7 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
 - 应用实例
 设置条件：ssh远程登录5分钟内3次密码验证失败，禁止用户IP访问主机1小时，1小时该限制自动解除，用户可重新登录。因为动作文件（action.d/iptables.conf）以及日志匹配条件文件（filter.d/sshd.conf ）安装后是默认存在的。基本不用做任何修改。所有主要需要设置的就只有jail.conf文件。启用sshd服务的日志分析，指定动作阀值即可。
   - 实例文件/etc/fail2ban/jail.conf及说明如下：
+  1. 全局设置
     ```shell
       [DEFAULT]                   #全局设置
       ignoreip = 127.0.0.1/8      #忽略的IP列表,不受设置限制
@@ -359,14 +360,16 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
       maxretry = 3                #最大尝试次数
       backend = auto              #日志修改检测机制（gamin、polling和auto这三种）
     ```
+    2. ssh服务的设置，优先级高于全局设置
     ```
      94 [ssh-iptables]      # 单个服务检查设置，如设置bantime、findtime、maxretry和全局冲突，服务优先级大于全局设置。
      95 
-     96 enabled  = false    # 是否激活此项（true/false）修改成 true       
+     96 enabled  = true    # 是否激活此项（true/false）修改成 true       
      97 filter   = sshd     # 过滤规则filter的名字，对应filter.d目录下的sshd.conf
-     98 action   = iptables[name=SSH, port=ssh, protocol=tcp]     # 动作的相关参数，对应action.d/iptables.conf文件
+     98 action   = iptables[name=SSH, port=ssh, protocol=tcp]     
      99            sendmail-whois[name=SSH, dest=you@example.com, sender=fail2ban@example.c    om, sendername="Fail2Ban"]
-                                            # 触发报警的收件人
+                  # 动作的相关参数，对应action.d/iptables.conf文件
+                  # 触发报警的收件人
     100 logpath  = /var/log/sshd.log      # 检测的系统的登陆日志文件。这里要写sshd服务日志文件。默认为logpath=/var/log/sshd.log
     101 # maxretry = 5
     
@@ -375,17 +378,38 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
         findtime  = 300    #在5分钟内内出现规定次数就开始工作
         maxretry = 3    #3次密码验证失败
     ```
+    3. 设置好后重启服务，查看iptables有fail2ban的条目，并清空已有secure日志
+    ```shell
+    [root@server162 .ssh]# systemctl restart fail2ban
+    [root@server162 .ssh]# iptables -L -n
+    Chain INPUT (policy ACCEPT)
+    target     prot opt source               destination         
+    fail2ban-SSH  tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+
+    Chain FORWARD (policy ACCEPT)
+    target     prot opt source               destination         
+
+    Chain OUTPUT (policy ACCEPT)
+    target     prot opt source               destination         
+
+    Chain fail2ban-SSH (1 references)
+    target     prot opt source               destination         
+    RETURN     all  --  0.0.0.0/0            0.0.0.0/0    
+    [root@server162 ~]# > /var/log/secure     # 清日志
     ```
-    restart
-    ```
+    4. 将之前设置的免密码ssh登陆，在服务器端删除
     ```shell
     [root@server162 ~]# cd .ssh/
     [root@server162 .ssh]# ls
     authorized_keys  known_hosts
     [root@server162 .ssh]# cat authorized_keys 
-    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkmazYl3UzCDFQ8bY1bQZN9ez8LbfAklLfZFk3WpRu6s3VlkELamLXk8DvTtMWU1DlNhUt5iGIjjYtAZWDBANp/adaNSyLUAy18tSvsfTO8PDpUAfYHDzTbTNQ9LzKNWs9yUFi42d470R1yMJHAhvPK7sBBtbN1g0oNTLg4ZNxXbZQDBckJohwvgHyXupdG2KRrSxaCGxs9PWMvvJgdfVTA4Nu7qeCwJn0eCQ6Q60mXSHt1W2t0jcyYq8DtP/VJLtuMhcptPj09qVkU9qCFNq5quMmCEVpaQDOxG0lIdeZQvMEngK5TWpSyFtHpAF09dlUFug3skRpOJtHclMeVbBZ root@client163
-    [root@server162 .ssh]# > authorized_keys 
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkmazYl3UzCDFQ8bY1bQZN9ez8LbfAklLfZFk3WpRu6s3VlkELamLXk8DvTtMW
+    U1DlNhUt5iGIjjYtAZWDBANp/adaNSyLUAy18tSvsfTO8PDpUAfYHDzTbTNQ9LzKNWs9yUFi42d470R1yMJHAhvPK7sBBtbN1g0oNTL
+    g4ZNxXbZQDBckJohwvgHyXupdG2KRrSxaCGxs9PWMvvJgdfVTA4Nu7qeCwJn0eCQ6Q60mXSHt1W2t0jcyYq8DtP/VJLtuMhcptPj09qV
+    kU9qCFNq5quMmCEVpaQDOxG0lIdeZQvMEngK5TWpSyFtHpAF09dlUFug3skRpOJtHclMeVbBZ root@client163
+    [root@server162 .ssh]# > authorized_keys  # 清空文件
     ```
+    5. 客户端上面ssh到服务器，错三次密码，再ssh是提示refused
     ```
     [root@client163 ~]# ssh 192.168.0.162
     root@192.168.0.162's password: 
@@ -394,4 +418,9 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
     Permission denied, please try again.
     root@192.168.0.162's password: 
     Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).
+    [root@client163 ~]# ssh 192.168.0.162
+    ssh: connect to host 192.168.0.162 port 22: Connection refused
+    [root@client163 ~]# ssh -p 222 192.168.0.162      # 但是换一个端口，可以继续ssh，上面的port=ssh改成port=222即可
+    root@192.168.0.162's password: 
+
     ```
