@@ -322,7 +322,10 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
 fail2ban可以监视你的系统日志，然后匹配日志的错误信息（正则式匹配）执行相应的屏蔽动作（一般情况下是防火墙），而且可以发送e-mail通知系统管理员，很好、很实用、很强大！简单来说其功能就是防止暴力破解。工作的原理是通过分析一定时间内的相关服务日志，将满足动作的相关IP利用iptables加入到dorp列表一定时间。 
 注：重启iptables服务的话，所有drop将重置。
 
-http://www.fail2ban.org
+http://www.fail2ban.org 下载fail2ban-0.8.14版本
+```shell
+[root@server162 ~]# wget -o fail2ban-0.8.14.tar.gz http://github.com/fail2ban/fail2ban/archive/0.8.14.tar.gz
+```
 
 - steps (refer to README.md in package folder)
 1. ```tar zxvf fail2ban-0.9.4.tar.gz```
