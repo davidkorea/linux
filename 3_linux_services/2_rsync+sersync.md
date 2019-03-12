@@ -85,7 +85,9 @@
       - ```rsync -avz --delete /var/www/html rsyncuser@192.168.0.163::wwwroot```
         - 用户名是配置文件中的用户，wwwroot为配置文件中的模块名，会自动查找该模块下的path路径
   
-  
+      - 自动化命令备份时，密码怎么传输？？
+        - 创建与刚才同样的文件/etc/rsync.passwd 输入password123 但是不需要用户名。命令中指定密码文件路径即可
+        - ```rsync -avz -delete /var/www/html rsyncuser@192.168.0.163::wwwroot --password-file=/etc/rsync.passwd```
   
   
   
