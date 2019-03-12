@@ -351,7 +351,7 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
 - 应用实例
 设置条件：ssh远程登录5分钟内3次密码验证失败，禁止用户IP访问主机1小时，1小时该限制自动解除，用户可重新登录。因为动作文件（action.d/iptables.conf）以及日志匹配条件文件（filter.d/sshd.conf ）安装后是默认存在的。基本不用做任何修改。所有主要需要设置的就只有jail.conf文件。启用sshd服务的日志分析，指定动作阀值即可。
   - 实例文件/etc/fail2ban/jail.conf及说明如下：
-  1. 全局设置
+    1. 全局设置
     ```shell
       [DEFAULT]                   #全局设置
       ignoreip = 127.0.0.1/8      #忽略的IP列表,不受设置限制
@@ -446,3 +446,24 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
     2019-03-12 14:28:50,870 fail2ban.jail   [15565]: INFO    Jail 'ssh-iptables' started
     2019-03-12 14:28:56,950 fail2ban.actions[15565]: WARNING [ssh-iptables] Ban 192.168.0.163
     ```
+  - 需要注意的四点：
+
+  1. 如果做错了，想清空一下记录，还原
+  ```
+  > /var/log/secure   # 清空就可以了。
+  service  fail2ban  restart  
+  ```
+  2. 另外如果后期需要把iptables清空后或iptables重启后，也需要把fail2ban重启一下。
+
+  3、如果修改ssh默认端口22为2015后 。 配置fail2ban来监控sshd服务
+  ```shell
+  [root@xuegod63 fail2ban]# vim jail.conf
+  # 修改iptables动作中的端口号。 默认为ssh。 重启服务即可
+  改：port=ssh 为 port=2015  
+  ```
+  ```
+  [root@xuegod63 fail2ban]# vim /etc/fail2ban/action.d/iptables.conf  
+  # 修改动作文件中默认端口号, 重启服务即可
+  改： port=ssh  为port=2015
+  ```
+
