@@ -112,7 +112,10 @@
 6. 启动服务之前，文件夹内已有到内容不会被监听和同步。只有在服务启动后 新创建到文件，在增删改，才会被坚挺到并同步到备份服务器
 7. 只能用来实时同步，不能用来备份。如果备份源被删除了，那么备份源也将被同步删除
 
-
+8. 应用场景，集群之间数据同步。负载均衡服务器上的内容需要完全一致，才能正常对外提供服务。同步的延迟在毫秒级
+9. 同步多个目录，写多个xml文件 www_conxml.xml， bbs_confxml.xml
+    - ```/usr/local/sersync/sersync2 -d -o /usr/local/sersync/bbs_confxml.xml```
+    - ```/usr/local/sersync/seraync2 -d -o /usr/local/sersync/www_confxml.xml```
 
 
 
