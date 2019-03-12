@@ -91,12 +91,18 @@
   
 -----
 
-rsync + sersync 实时同步
+# rsync + sersync 实时同步
   
 1. sersync 安装在数据源，监控源数据的变化，监控到变化后就可以触发rsync服务，将增删改后到数据传输到备份服务器
 2. /var/www/html所在服务器162安装sersync， 163机器不需要更改 
 3. sersync基于inotify开发，inotify只能监听到变化，但不知具体哪个文件变化，所以同步都是全量同步。 sersync知道具体哪个文件变化是增量同步
-4. 
+4. 解压后不需要安装，到源文件目录下找到confxml.xml配置文件，改之前 备份一份
+    ```
+    24 watch="/var/www/html"
+    25 remote ip="192.168.0.163" name="wwwroot"  远程服务器到ip，以及rsync到模块名wwwroot
+    31 auth start=“true” users=“rsyncuser” passowrdfile=“/etc/rsync.passwd”
+    ···
+    
 
 
 
