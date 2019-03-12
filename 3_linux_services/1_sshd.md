@@ -359,4 +359,20 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
       maxretry = 3                #最大尝试次数
       backend = auto              #日志修改检测机制（gamin、polling和auto这三种）
     ```
+    ```
+     94 [ssh-iptables]      # 单个服务检查设置，如设置bantime、findtime、maxretry和全局冲突，服务优先级大于全局设置。
+     95 
+     96 enabled  = false    # 是否激活此项（true/false）修改成 true       
+     97 filter   = sshd     # 过滤规则filter的名字，对应filter.d目录下的sshd.conf
+     98 action   = iptables[name=SSH, port=ssh, protocol=tcp]     # 动作的相关参数，对应action.d/iptables.conf文件
+     99            sendmail-whois[name=SSH, dest=you@example.com, sender=fail2ban@example.c    om, sendername="Fail2Ban"]
+                                            # 触发报警的收件人
+    100 logpath  = /var/log/sshd.log      # 检测的系统的登陆日志文件。这里要写sshd服务日志文件。默认为logpath=/var/log/sshd.log
+    101 # maxretry = 5
+    
+        # 5分钟内3次密码验证失败，禁止用户IP访问主机1小时。 配置如下        
+        bantime  = 3600   #禁止用户IP访问主机1小时
+        findtime  = 300    #在5分钟内内出现规定次数就开始工作
+        maxretry = 3    #3次密码验证失败
+    ```
 
