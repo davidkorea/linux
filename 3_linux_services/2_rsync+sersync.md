@@ -103,15 +103,14 @@
     31 auth start=“true” users=“rsyncuser” passowrdfile=“/etc/rsync.passwd”
     ```
 5. 还是刚才源文件目录下到另一个文件sersync2这个文件。启动sersync服务
-  ```shell
-  ./sersync2 -d -r -o ./confxml.xml
-  
-  config xml parse success
-  watch path is /var/www/hmtl
-  ```
+    ```shell
+    ./sersync2 -d -r -o ./confxml.xml
 
-
-
+    config xml parse success
+    watch path is /var/www/hmtl
+    ```
+6. 启动服务之前，文件夹内已有到内容不会被监听和同步。只有在服务启动后 新创建到文件，在增删改，才会被坚挺到并同步到备份服务器
+7. 只能用来实时同步，不能用来备份。如果备份源被删除了，那么备份源也将被同步删除
 
 
 
