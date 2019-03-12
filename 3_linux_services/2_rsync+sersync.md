@@ -50,7 +50,7 @@
       gid = root
       address = 192.168.0.163     本机ip地址
       port = 873
-      host allow = 192.168.0.0/24     允许整个望断
+      host allow = 192.168.0.0/24     允许整个网段
       use chroot = yes
       max connections = 4    最大链接数
       pid file = /var/run/rsyncd.pid
@@ -72,7 +72,15 @@
     - 创建/etc/rsync.passwd, ```rsyncuser:password123 ``` 前面的用户名用要和上面定义的auth user保持一致
       - 权限一定是600或者是700 否则读取不到```chmod 600 /etc/rsync.passwd```
 
-  
+    - 重启rsync服务，使其读取刚才的配置文件 
+      ```
+      systemctl start xinetd
+      systemctl enable xinetd  开机自启动
+      kill -9 pid 干掉之前没有读取配置文件的rsync --daemon进程
+      rsync --daemon --config=/etc/rsync.conf  加载配置文件后启动
+      ps aux | gerp rsync
+      netstat -nlutp | grep 873  可以监听打破局域网内所有在线ip的873端口，因为之前配置文件中配置了192.168.0.0/24host allow
+      ```
   
   
   
