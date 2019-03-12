@@ -72,7 +72,7 @@
     ```
     rsyncuser:password123       前面的用户名用要和上面定义的auth user保持一致
     ```
-
+      - 权限一定是600或者是700 否则读取不到```chmod 600 /etc/rsync.passwd```
 
 
 
