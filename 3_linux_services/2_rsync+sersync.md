@@ -3,6 +3,7 @@
 1. 基于ssh协议的远程传输文件协议
 2. scp远程传输文件协议
   ```
+  ##### 单个文件 #####
   [root@server162 ~]# scp print.sh root@192.168.0.163:/root
   The authenticity of host '192.168.0.163 (192.168.0.163)' can't be established.
   ECDSA key fingerprint is SHA256:TDObcVvc4d/BfgGvlfoUD1dd5a9+t9B2nSq6gdbSEoY.
@@ -11,4 +12,9 @@
   Warning: Permanently added '192.168.0.163' (ECDSA) to the list of known hosts.
   root@192.168.0.163's password: 
   print.sh                                             100%  108    10.3KB/s   00:00  
+  
+  ##### 整个目录 -r #####
+  [root@server162 ~]# scp -r a/ root@192.168.0.163:/root
+  root@192.168.0.163's password: 
+  1.txt                                                100%    0     0.0KB/s   00:00 
   ```
