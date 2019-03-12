@@ -103,9 +103,10 @@
     31 auth start=“true” users=“rsyncuser” passowrdfile=“/etc/rsync.passwd”
     ```
 5. 还是刚才源文件目录下到另一个文件sersync2这个文件。启动sersync服务
-  ```
+  ```shell
   ./sersync2 -d -r -o ./confxml.xml
   
+  config xml parse success
   watch path is /var/www/hmtl
   ```
 
