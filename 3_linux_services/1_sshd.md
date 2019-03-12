@@ -95,6 +95,10 @@ wget -O /etc/yum.repos.d/CentOS-Base.repohttp://mirrors.aliyun.com/repo/Centos-7
     openssh-server-7.4p1-16.el7.x86_64
     openssh-clients-7.4p1-16.el7.x86_64
     ```
+  - OpenSSH配置文件，OpenSSH常用配置文件有两个/etc/ssh/ssh_config和/etc/sshd_config。
+    - ssh_config为客户端配置文件
+    - sshd_config为服务器端配置文件
+
 # 3. sshd服务配置和管理    
 
 介绍下配置文件/etc/ssh/sshd_config，以及需要安全调优的地方。注：参数前面有#，且#后没有空格，表示是默认缺省值。如要变更，需去除前面#，再该更保存，才能生效。
