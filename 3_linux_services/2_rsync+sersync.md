@@ -89,9 +89,25 @@
         - 创建与刚才同样的文件/etc/rsync.passwd 输入password123 但是不需要用户名。命令中指定密码文件路径即可
         - ```rsync -avz -delete /var/www/html rsyncuser@192.168.0.163::wwwroot --password-file=/etc/rsync.passwd```
   
+-----
+
+rsync + sersync 实时同步
   
-  
-  
+1. sersync 安装在数据源，监控源数据的变化，监控到变化后就可以触发rsync服务，将增删改后到数据传输到备份服务器
+2. /var/www/html所在服务器162安装sersync， 163机器不需要更改 
+3. sersync基于inotify开发，inotify只能监听到变化，但不知具体哪个文件变化，所以同步都是全量同步。 sersync知道具体哪个文件变化是增量同步
+4. 
+
+
+
+
+
+
+
+
+
+
+
   
   
   
