@@ -423,3 +423,26 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
     [root@client163 ~]# ssh -p 222 192.168.0.162      # 但是换一个端口，可以继续ssh，上面的port=ssh改成port=222即可
     root@192.168.0.162's password: 
     ```
+    6. 查看服务器上fail2ban-client status
+    ```shell
+    [root@server162 ~]# fail2ban-client status
+    Status
+    |- Number of jail:	1
+    `- Jail list:		ssh-iptables
+  
+    [root@server162 ~]# fail2ban-client status ssh-iptables
+    Status for the jail: ssh-iptables
+    |- filter
+    |  |- File list:	/var/log/sshd.log 
+    |  |- Currently failed:	0
+    |  `- Total failed:	13
+    `- action
+       |- Currently banned:	1
+       |  `- IP list:	192.168.0.163 
+       `- Total banned:	1
+       
+    [root@server162 ~]# tail -3  /var/log/fail2ban.log 
+    2019-03-12 14:28:50,740 fail2ban.actions[15565]: INFO    Set banTime = 3600
+    2019-03-12 14:28:50,870 fail2ban.jail   [15565]: INFO    Jail 'ssh-iptables' started
+    2019-03-12 14:28:56,950 fail2ban.actions[15565]: WARNING [ssh-iptables] Ban 192.168.0.163
+    ```
