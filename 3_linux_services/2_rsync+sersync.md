@@ -67,22 +67,23 @@
       secrets file = /etc/rsync。passwd      没有此文件，需要自行创建
       ```    
     
-    - 创建motd
-    
-    - 创建/etc/rsync.passwd, ```rsyncuser:password123 ``` 前面的用户名用要和上面定义的auth user保持一致
-      - 权限一定是600或者是700 否则读取不到```chmod 600 /etc/rsync.passwd```
+      - 创建motd
 
-    - 重启rsync服务，使其读取刚才的配置文件 
-      ```
-      systemctl start xinetd
-      systemctl enable xinetd  开机自启动
-      kill -9 pid 干掉之前没有读取配置文件的rsync --daemon进程
-      rsync --daemon --config=/etc/rsync.conf  加载配置文件后启动
-      ps aux | gerp rsync
-      netstat -nlutp | grep 873  可以监听打破局域网内所有在线ip的873端口，因为之前配置文件中配置了192.168.0.0/24host allow
-      ```
-  
-  
+      - 创建/etc/rsync.passwd, ```rsyncuser:password123 ``` 前面的用户名用要和上面定义的auth user保持一致
+        - 权限一定是600或者是700 否则读取不到```chmod 600 /etc/rsync.passwd```
+
+      - 重启rsync服务，使其读取刚才的配置文件 
+        ```
+        systemctl start xinetd
+        systemctl enable xinetd  开机自启动
+        kill -9 pid 干掉之前没有读取配置文件的rsync --daemon进程
+        rsync --daemon --config=/etc/rsync.conf  加载配置文件后启动
+        ps aux | gerp rsync
+        netstat -nlutp | grep 873  可以监听打破局域网内所有在线ip的873端口，因为之前配置文件中配置了192.168.0.0/24host allow
+        ```
+    - 162 需要备份的服务器
+      - ```rsync -avz --delete /var/www/html rsyncuser@192.168.0.163::wwwroot```
+        - 用户名是配置文件中的用户，wwwroot为配置文件中的模块名，会自动查找该模块下的path路径
   
   
   
