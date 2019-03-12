@@ -266,6 +266,48 @@ tcp6       0      0 :::222                  :::*                    LISTEN      
 
 ### 4.1 通过密钥认证实现sshd认证
 
+#### 1. client
+- 客户端生成密钥对，然后把公钥传输到服务端
+  ```
+  [root@client163 ~]# ssh-keygen
+  Generating public/private rsa key pair.
+  Enter file in which to save the key (/root/.ssh/id_rsa): 
+  Enter passphrase (empty for no passphrase): 
+  Enter same passphrase again: 
+  Your identification has been saved in /root/.ssh/id_rsa.
+  Your public key has been saved in /root/.ssh/id_rsa.pub.
+  The key fingerprint is:
+  SHA256:U5H4ITsNZKM2eQqrMLjKsZAsuYrFn/dc7lAOHrtzZ8U root@client163
+  The key's randomart image is:
+  +---[RSA 2048]----+
+  |       .+...     |
+  |       ++.o.     |
+  |    . = .*..     |
+  |.    + +o.o      |
+  |+   . . S..  .   |
+  |.B .   . B    E  |
+  |*o+     + o  .   |
+  |*oo. ....=. o    |
+  |*o  o. .++oo     |
+  +----[SHA256]-----+
+  ```
+- 发布公钥到服务端 ```ssh-copy-id -i 192.168.0.162```使用默认22端口进行ssh通信
+  ```shell
+  [root@client163 ~]# ssh-copy-id -i ~/.ssh/id_rsa.pub -p 222 root@192.168.0.162      # 指定ssh端口222
+  /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"
+  The authenticity of host '[192.168.0.162]:222 ([192.168.0.162]:222)' can't be established.
+  ECDSA key fingerprint is SHA256:2jRM2HatzcmG7TN+NPtKjv9LTQkNSuhDKGby2x+JrRI.
+  ECDSA key fingerprint is MD5:62:23:4c:dd:4d:43:07:bd:8c:c2:29:07:f5:42:ab:d0.
+  Are you sure you want to continue connecting (yes/no)? yes
+  /usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+  /usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+  root@192.168.0.162's password: 
+
+  Number of key(s) added: 1
+
+  Now try logging into the machine, with:   "ssh -p '222' 'root@192.168.0.162'"
+  and check to make sure that only the key(s) you wanted were added.
+  ```
 
 
 
