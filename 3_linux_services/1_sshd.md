@@ -46,7 +46,21 @@ CentOS_BuildTag  GPL       LiveOS    RPM-GPG-KEY-CentOS-7
   enabled=1  
   gpgcheck=0
 ```
-
+我想先备份一下系统自带的yum配置文件，再执行上面的操作
+```
+[root@client163 ~]# tar zcvf yumreposd.tar.gz /etc/yum.repos.d/     # tar.gz包被创建在/root下
+[root@client163 ~]# mkdir /media/yum.repos.d/
+[root@client163 ~]# cp yumreposd.tar.gz /media/yum.repos.d/   # 将压缩包复制到/media/yum.repos.d/文件夹下保存
+[root@client163 yum.repos.d]# tar tvf yumreposd.tar.gz        # 不解压查看压缩包的文件
+drwxr-xr-x root/root         0 2018-11-05 09:53 etc/yum.repos.d/
+-rw-r--r-- root/root      1664 2018-11-23 21:16 etc/yum.repos.d/CentOS-Base.repo
+-rw-r--r-- root/root      1309 2018-11-23 21:16 etc/yum.repos.d/CentOS-CR.repo
+-rw-r--r-- root/root       649 2018-11-23 21:16 etc/yum.repos.d/CentOS-Debuginfo.repo
+-rw-r--r-- root/root       630 2018-11-23 21:16 etc/yum.repos.d/CentOS-Media.repo
+-rw-r--r-- root/root      1331 2018-11-23 21:16 etc/yum.repos.d/CentOS-Sources.repo
+-rw-r--r-- root/root      5701 2018-11-23 21:16 etc/yum.repos.d/CentOS-Vault.repo
+-rw-r--r-- root/root       314 2018-11-23 21:16 etc/yum.repos.d/CentOS-fasttrack.repo
+```
 
 5. 配置网络yum源
   - 阿里云镜像源站点（http://mirrors.aliyun.com/）。
