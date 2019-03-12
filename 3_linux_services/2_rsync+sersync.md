@@ -105,6 +105,8 @@
 5. 还是刚才源文件目录下到另一个文件sersync2这个文件。启动sersync服务
   ```
   ./sersync2 -d -r -o ./confxml.xml
+  
+  watch path is /var/www/hmtl
   ```
 
 
