@@ -328,12 +328,13 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
 ```
 
 - steps (refer to README.md in package folder)
-1. ```tar zxvf fail2ban-0.9.4.tar.gz```
-2. ```cd fail2ban-0.9.4```
+1. ```tar zxvf fail2ban-0.8.14.tar.gz```
+2. ```cd fail2ban-0.8.14```
 3. ```python setup.py install```
-4. ```[root@localhost ail2ban-0.9.4]# cp files/redhat-initd /etc/rc.d/init.d/fail2ban```
+4. ```[root@localhost fail2ban-0.8.14]# cp files/redhat-initd /etc/rc.d/init.d/fail2ban```
   the system init/service script is not automatically installed.To enable fail2ban as an automatic service, simply copy the script for your distro from the `files` directory to `/etc/rc.d/init.d/`
-5. ```[root@localhost ail2ban-0.9.4]# chkconfig --add fail2ban```  #开机自动启动
+5. ```[root@localhost fail2ban-0.8.14]# chkconfig --add fail2ban```  开机自动启动，下次开机自动启动
+6. ```[root@server162 fail2ban-0.8.14]# systemctl start fail2ban``` 服务立即启动
 
 你怎么知道要复制这个文件？ 一个新的软件包，后期怎么可以知道哪个文件是启动脚本文件？这就要找服务器启动脚本文件中有什么特点，然后过滤出来对应的文件名。
 ```shell
