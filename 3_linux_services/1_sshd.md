@@ -367,10 +367,10 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
      96 enabled  = true    # 是否激活此项（true/false）修改成 true       
      97 filter   = sshd     # 过滤规则filter的名字，对应filter.d目录下的sshd.conf
      98 action   = iptables[name=SSH, port=ssh, protocol=tcp]     
-     99            sendmail-whois[name=SSH, dest=you@example.com, sender=fail2ban@example.c    om, sendername="Fail2Ban"]
+     99            sendmail-whois[name=SSH, dest=you@example.com, sender=fail2ban@example.com, sendername="Fail2Ban"]
                   # 动作的相关参数，对应action.d/iptables.conf文件
                   # 触发报警的收件人
-    100 logpath  = /var/log/sshd.log      # 检测的系统的登陆日志文件。这里要写sshd服务日志文件。默认为logpath=/var/log/sshd.log
+    100 logpath  = /var/log/sshd.log      # 检测的系统的登陆日志文件。这里要写sshd服务日志文件。
     101 # maxretry = 5
     
         # 5分钟内3次密码验证失败，禁止用户IP访问主机1小时。 配置如下        
@@ -422,5 +422,4 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
     ssh: connect to host 192.168.0.162 port 22: Connection refused
     [root@client163 ~]# ssh -p 222 192.168.0.162      # 但是换一个端口，可以继续ssh，上面的port=ssh改成port=222即可
     root@192.168.0.162's password: 
-
     ```
