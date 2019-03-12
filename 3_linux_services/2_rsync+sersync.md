@@ -43,30 +43,44 @@
     - ```rsync -avz --delete /var/www/html/ rget1@192.168.0.163:/web-back```，今川氏html文件夹下面的文件
     - 但是 生产环境中 不加delete，以免将备份数据清空，或者服务器被黑了，备份数据也跟着被删除
 
-14.用非系统用户，进行文件传输。对于安全级别比较高的服务器更适合一些。需要更改配置文件/etc/rsyncd.comf。centos7已存在模版，但是6上面没有
+14. 用非系统用户，进行文件传输。对于安全级别比较高的服务器更适合一些。需要更改配置文件/etc/rsyncd.comf。centos7已存在模版，但是6上面没有
     - 163服务端
-    
+      ```shell
+      uid = root    用root权限
+      gid = root
+      address = 192.168.0.163     本机ip地址
+      port = 873
+      host allow = 192.168.0.0/24     允许整个望断
+      use chroot = yes
+      max connections = 4    最大链接数
+      pid file = /var/run/rsyncd.pid
+      lock file = /var/run/rsync/lock
+      log file = /var/log/rsync.log
+      motd file = /etc/rsync.motd     没有此文件，需要自行创建
       
+      [wwwroot]       模块名，自己定义一个模块，名称自己定
+      path = /web-back/
+      comment = web back rsync server
+      read only = false
+      list = yes 是否可以产看此模块信息yes
+      auth user = rsyncuser     用户名自己指定，自己定义的非系统用户，即不需要useradd命令来创建的真是centos系统用户
+      secrets file = /etc/rsync。passwd      没有此文件，需要自行创建
+      ```    
     
     - 创建motd
     
-    - 创建/etc/rsync.passwd
-      ```
-      rsyncuser:password123       前面的用户名用要和上面定义的auth user保持一致
-      ```
+    - 创建/etc/rsync.passwd, ```rsyncuser:password123 ``` 前面的用户名用要和上面定义的auth user保持一致
       - 权限一定是600或者是700 否则读取不到```chmod 600 /etc/rsync.passwd```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
