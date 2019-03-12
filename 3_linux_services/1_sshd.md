@@ -375,4 +375,23 @@ http://www.fail2ban.org 下载fail2ban-0.8.14版本
         findtime  = 300    #在5分钟内内出现规定次数就开始工作
         maxretry = 3    #3次密码验证失败
     ```
-
+    ```
+    restart
+    ```
+    ```shell
+    [root@server162 ~]# cd .ssh/
+    [root@server162 .ssh]# ls
+    authorized_keys  known_hosts
+    [root@server162 .ssh]# cat authorized_keys 
+    ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDkmazYl3UzCDFQ8bY1bQZN9ez8LbfAklLfZFk3WpRu6s3VlkELamLXk8DvTtMWU1DlNhUt5iGIjjYtAZWDBANp/adaNSyLUAy18tSvsfTO8PDpUAfYHDzTbTNQ9LzKNWs9yUFi42d470R1yMJHAhvPK7sBBtbN1g0oNTLg4ZNxXbZQDBckJohwvgHyXupdG2KRrSxaCGxs9PWMvvJgdfVTA4Nu7qeCwJn0eCQ6Q60mXSHt1W2t0jcyYq8DtP/VJLtuMhcptPj09qVkU9qCFNq5quMmCEVpaQDOxG0lIdeZQvMEngK5TWpSyFtHpAF09dlUFug3skRpOJtHclMeVbBZ root@client163
+    [root@server162 .ssh]# > authorized_keys 
+    ```
+    ```
+    [root@client163 ~]# ssh 192.168.0.162
+    root@192.168.0.162's password: 
+    Permission denied, please try again.
+    root@192.168.0.162's password: 
+    Permission denied, please try again.
+    root@192.168.0.162's password: 
+    Permission denied (publickey,gssapi-keyex,gssapi-with-mic,password).
+    ```
