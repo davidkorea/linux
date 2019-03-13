@@ -44,23 +44,23 @@ root@192.168.0.163's password:
 9. rsync小服务由超级互联网守护进程服务xinetd统一管理
 10. rsync 常用参数 -avz， --delete参数使得在2个机器之间完全一致，生产环境下不建议使用
 ## 2.1 创建系统用户进行备份
-#### 1. 安装
+### 1. 安装
 
-        ```
-        [root@client163 ~]# yum install xinetd rsync -y
+```
+[root@client163 ~]# yum install xinetd rsync -y
 
-        [root@client163 ~]# rsync --daemon                  # 后台运行
-        [root@client163 ~]# systemctl status rsync          # 并不能在systemctl查到该服务    
-        Unit rsync.service could not be found.
+[root@client163 ~]# rsync --daemon                  # 后台运行
+[root@client163 ~]# systemctl status rsync          # 并不能在systemctl查到该服务    
+Unit rsync.service could not be found.
 
-        [root@client163 ~]# netstat -anutp | grep 873        # 使用netstat -nlutp | grep 873 搜索不到结果
-        tcp        0      0 0.0.0.0:873             0.0.0.0:*               LISTEN      25583/rsync         
-        tcp6       0      0 :::873                  :::*                    LISTEN      25583/rsync  
-        ```
-#### 2. 将server162的/var/www/html目录 备份至 client163的/root/web-back。创建测试用户rget1用于下载
-- 创建备份用户rget1，client163上面，可以吧/web-back的用户和属组给到新创建的用户 
-- 创建备份用户rget1，server162上面，将此新用户添加至/var/www/html, 不改变目录原有的用户和属组
-#### 3. client162的设置
+[root@client163 ~]# netstat -anutp | grep 873        # 使用netstat -nlutp | grep 873 搜索不到结果
+tcp        0      0 0.0.0.0:873             0.0.0.0:*               LISTEN      25583/rsync         
+tcp6       0      0 :::873                  :::*                    LISTEN      25583/rsync  
+```
+### 2. 将server162的/var/www/html目录 备份至 client163的/root/web-back。创建测试用户rget1用于下载
+- 创建备份用户rget1，client163上面，可以把/web-back的主+组给到新创建的用户 chown
+- 创建备份用户rget1，server162上面，将此新用户添加至/var/www/html, setfacl不改变目录原有的用户和属组。此处不能把目录的权限完全chown到rget1，是因为程序运行的时候，有时必须用到root权限
+### 3. client162的设置
 - 创建传输专用用户rget1
 - 创建要备份的路径mkdir -p /var/www/html  
 - 给该路径分配rget1用户的扩展权限getfacl setfacl [linux basic command](https://github.com/davidkorea/linux_study/tree/master/1_linux_baisc)
@@ -114,7 +114,19 @@ default:other::r-x
 ```
 
 
-#### 4. client163的设置
+### 4. client163的设置
+- 创建与server162相同的新用户rget1
+- 创建备份数据保存目录
+- 将此目录的主组chown变更给新用户rget1
+```shell
+[root@client163 ~]# useradd rget1;echo rget1:11111|chpasswd
+
+[root@client163 ~]# mkdir web-back
+
+[root@client163 ~]# chown rget1:rget1 -R web-back/
+[root@client163 ~]# ll -d web-back/
+drwxr-xr-x 2 rget1 rget1 6 Mar 13 11:04 web-back/
+```
 
 
 
