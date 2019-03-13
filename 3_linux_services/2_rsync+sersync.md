@@ -135,7 +135,7 @@ server162 推送至 client163
 [root@server162 ~]# rsync -avz --delete /var/www/html/ rget1@192.168.0.163:/root/web-back
 rget1@192.168.0.163's password: 
 sending incremental file list
-rsync: failed to set times on "/web-back/.": Operation not permitted (1)
+rsync: failed to set times on "/root/web-back/.": Operation not permitted (1)
 
 ##### /web-back 根下面的文件夹 #####
 # 再根/下面创建是可以的，因此此文件夹外层无其他文件夹，给到rget1权限后，-R 下面的目录都有访问权限
@@ -147,6 +147,7 @@ sent 462,188 bytes  received 589 bytes  185,110.80 bytes/sec
 total size is 463,820  speedup is 1.00
 ```
 
+## 2.2 非系统用户备份数据
 
 
 
