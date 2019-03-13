@@ -164,7 +164,7 @@ uid = root                          # 用root权限
 gid = root
 address = 192.168.0.163             # 本机ip地址
 port = 873
-host allow = 192.168.0.0/24         # 允许整个网段
+hosts allow = 192.168.0.0/24         # 允许整个网段
 use chroot = yes
 max connections = 4                 # 最大链接数
 pid file = /var/run/rsyncd.pid
@@ -177,7 +177,7 @@ path = /web-back/
 comment = web back rsync server
 read only = false
 list = yes                          # 是否可以产看此模块信息yes
-auth user = rsyncuser               # 用户名自己指定，自己定义的非系统用户，
+auth users = rsyncuser               # 用户名自己指定，自己定义的非系统用户，
                                     # 即不需要useradd命令来创建的真是centos系统用户
 secrets file = /etc/rsync.passwd    # 没有此文件，需要自行创建
 ```    
@@ -218,7 +218,15 @@ secrets file = /etc/rsync.passwd    # 没有此文件，需要自行创建
 可以创建隐藏的模块。默认值是true。
 - ```timeout```   #→通过该选项可以覆盖客户指定的IP超时时间。通过该选项可以确保rsync服务器不会永远等待一个崩溃的客户端。超时单位为秒钟，0表示没有超时定义，这也是默认值。对于匿名rsync服务器来说，一个理想的数字是600。
 
+```shell
+[root@localhost ~]# echo "welcome to back server" ? /etc/rsyncd.motd
 
+[root@localhost ~]# vim /etc/rsync.passwd
+rsyncuser:11111         # 密码11111，用户名为rsyncuser 在配置文件中的auth users
+
+[root@localhost ~]# chmod 600 /etc/rsync.passwd         # 目录权限必须是700或者600，否则的话身份验证会失效，设置rsync user的时候
+
+```
 
 
 
