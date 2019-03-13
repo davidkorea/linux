@@ -156,8 +156,8 @@ total size is 463,820  speedup is 1.00
 
 ### 1. client163
 因为server162推送给client163，所以client163为服务端
-
- ```shell
+- 更改配置文件
+```shell
 [root@client163 ~]# vim /etc/rsyncd.conf 
 
 uid = root                          # 用root权限
@@ -188,36 +188,37 @@ secrets file = /etc/rsync.passwd    # 没有此文件，需要自行创建
 - 模块参数：定义需要通过rsync输出的目录定义的参数
 
 常见的全局参数：
-- ```port```          #→指定后台程序使用的端口号，默认为873。
-- ```uid```            #→该选项指定当该模块传输文件时守护进程应该具有的uid，配合gid选项使用可以确定哪些可以访问怎么样的文件权限，默认值是" nobody"。
-- ```gid```            #→该选项指定当该模块传输文件时守护进程应该具有的gid。默认值为" nobody"。
-- ```max connections```        #→指定该模块的最大并发连接数量以保护服务器，超过限制的连接请求将被告知随后再试。默认值是0，也就是没有限制。
-- ```lock file```                  #→指定支持max connections参数的锁文件，默认值是/var/run/rsyncd.lock。
-- ```motd file```         #→" motd file"参数用来指定一个消息文件，当客户连接服务器时该文件的内容显示给客户，默认
-是没有motd文件的。
-- ```log file```             #→" log file"指定rsync的日志文件，而不将日志发送给syslog。
-- ```pid file```              #→指定rsync的pid文件，通常指定为“/var/run/rsyncd.pid”，存放进程ID的文件位置。
-- ```hosts allow``` =    #→单个IP地址或网络地址   //允许访问的客户机地址
+    - ```port```          #→指定后台程序使用的端口号，默认为873。
+    - ```uid```            #→该选项指定当该模块传输文件时守护进程应该具有的uid，配合gid选项使用可以确定哪些可以访问怎么样的文件权限，默认值是" nobody"。
+    - ```gid```            #→该选项指定当该模块传输文件时守护进程应该具有的gid。默认值为" nobody"。
+    - ```max connections```        #→指定该模块的最大并发连接数量以保护服务器，超过限制的连接请求将被告知随后再试。默认值是0，也就是没有限制。
+    - ```lock file```                  #→指定支持max connections参数的锁文件，默认值是/var/run/rsyncd.lock。
+    - ```motd file```         #→" motd file"参数用来指定一个消息文件，当客户连接服务器时该文件的内容显示给客户，默认
+    是没有motd文件的。
+    - ```log file```             #→" log file"指定rsync的日志文件，而不将日志发送给syslog。
+    - ```pid file```              #→指定rsync的pid文件，通常指定为“/var/run/rsyncd.pid”，存放进程ID的文件位置。
+    - ```hosts allow``` =    #→单个IP地址或网络地址   //允许访问的客户机地址
 
 常见的模块参数：主要是定义服务器哪个要被同步输出，其格式必须为“ [ 共享模块名 ]” 形式，这个名字就是在 rsync 客户端看到的名字，其实很像 Samba 服务器提供的共享名。而服务器真正同步的数据是通过 path 来指定的。
-- ```Comment```         #→给模块指定一个描述，该描述连同模块名在客户连接得到模块列表时显示给客户。默认没有描述定义。
-- ```Path```                  #→指定该模块的供备份的目录树路径，该参数是必须指定的。
-- ```read only```         #→yes为只允许下载，no为可以下载和上传文件到服务器
-- ```exclude```             #→用来指定多个由空格隔开的多个文件或目录(相对路径)，将其添加到exclude列表中。这等同于在客户端命令中使用―exclude或----filter来指定某些文件或目录不下载或上传(既不可访问)
-- ```exclude from```   #→指定一个包含exclude模式的定义的文件名，服务器从该文件中读取exclude列表定义，每个文件或目录需要占用一行
-- ```include```             #→用来指定不排除符合要求的文件或目录。这等同于在客户端命令中使用--include来指定模式，结合include和exclude可以定义复杂的exclude/include规则。
-- ```include from```   #→指定一个包含include模式的定义的文件名，服务器从该文件中读取include列表定义。
-- ```auth users```       #→该选项指定由空格或逗号分隔的用户名列表，只有这些用户才允许连接该模块。这里的用户和系统用户没有任何关系。如果" auth users"被设置，那么客户端发出对该模块的连接请求以后会被rsync请求challenged进行验证身份这里使用的challenge/response认证协议。用户的名和密码以明文方式存放在" secrets file"选项指定的文件中。默认情况下无需密码就可以连接模块(也就是匿名方式)。
-- ```secrets file```      #→该选项指定一个包含定义用户名:密码对的文件。只有在" auth users"被定义时，该文件才有作用。文件每行包含一个username:passwd对。一般来说密码最好不要超过8个字符。没有默认的secures file名，注意：该文件的权限一定要是600，否则客户端将不能连接服务器。
-- ```hosts allow ```     #→指定哪些IP的客户允许连接该模块。定义可以是以下形式：
-    单个IP地址，例如：192.167.0.1，多个IP或网段需要用空格隔开，
-    整个网段，例如：192.168.0.0/24，也可以是192.168.0.0/255.255.255.0
-“*”则表示所有，默认是允许所有主机连接。
-- ```hosts deny```      #→指定不允许连接rsync服务器的机器，可以使用hosts allow的定义方式来进行定义。默认是没有hosts deny定义。
-- ```list```              #→该选项设定当客户请求可以使用的模块列表时，该模块是否应该被列出。如果设置该选项为false，
-可以创建隐藏的模块。默认值是true。
-- ```timeout```   #→通过该选项可以覆盖客户指定的IP超时时间。通过该选项可以确保rsync服务器不会永远等待一个崩溃的客户端。超时单位为秒钟，0表示没有超时定义，这也是默认值。对于匿名rsync服务器来说，一个理想的数字是600。
+    - ```Comment```         #→给模块指定一个描述，该描述连同模块名在客户连接得到模块列表时显示给客户。默认没有描述定义。
+    - ```Path```                  #→指定该模块的供备份的目录树路径，该参数是必须指定的。
+    - ```read only```         #→yes为只允许下载，no为可以下载和上传文件到服务器
+    - ```exclude```             #→用来指定多个由空格隔开的多个文件或目录(相对路径)，将其添加到exclude列表中。这等同于在客户端命令中使用―exclude或----filter来指定某些文件或目录不下载或上传(既不可访问)
+    - ```exclude from```   #→指定一个包含exclude模式的定义的文件名，服务器从该文件中读取exclude列表定义，每个文件或目录需要占用一行
+    - ```include```             #→用来指定不排除符合要求的文件或目录。这等同于在客户端命令中使用--include来指定模式，结合include和exclude可以定义复杂的exclude/include规则。
+    - ```include from```   #→指定一个包含include模式的定义的文件名，服务器从该文件中读取include列表定义。
+    - ```auth users```       #→该选项指定由空格或逗号分隔的用户名列表，只有这些用户才允许连接该模块。这里的用户和系统用户没有任何关系。如果" auth users"被设置，那么客户端发出对该模块的连接请求以后会被rsync请求challenged进行验证身份这里使用的challenge/response认证协议。用户的名和密码以明文方式存放在" secrets file"选项指定的文件中。默认情况下无需密码就可以连接模块(也就是匿名方式)。
+    - ```secrets file```      #→该选项指定一个包含定义用户名:密码对的文件。只有在" auth users"被定义时，该文件才有作用。文件每行包含一个username:passwd对。一般来说密码最好不要超过8个字符。没有默认的secures file名，注意：该文件的权限一定要是600，否则客户端将不能连接服务器。
+    - ```hosts allow ```     #→指定哪些IP的客户允许连接该模块。定义可以是以下形式：
+        单个IP地址，例如：192.167.0.1，多个IP或网段需要用空格隔开，
+        整个网段，例如：192.168.0.0/24，也可以是192.168.0.0/255.255.255.0
+    “*”则表示所有，默认是允许所有主机连接。
+    - ```hosts deny```      #→指定不允许连接rsync服务器的机器，可以使用hosts allow的定义方式来进行定义。默认是没有hosts deny定义。
+    - ```list```              #→该选项设定当客户请求可以使用的模块列表时，该模块是否应该被列出。如果设置该选项为false，
+    可以创建隐藏的模块。默认值是true。
+    - ```timeout```   #→通过该选项可以覆盖客户指定的IP超时时间。通过该选项可以确保rsync服务器不会永远等待一个崩溃的客户端。超时单位为秒钟，0表示没有超时定义，这也是默认值。对于匿名rsync服务器来说，一个理想的数字是600。
 
+- 创建motd文件和rsync.passwd文件
 ```shell
 [root@localhost ~]# echo "welcome to back server" ? /etc/rsyncd.motd
 
@@ -225,7 +226,15 @@ secrets file = /etc/rsync.passwd    # 没有此文件，需要自行创建
 rsyncuser:11111         # 密码11111，用户名为rsyncuser 在配置文件中的auth users
 
 [root@localhost ~]# chmod 600 /etc/rsync.passwd         # 目录权限必须是700或者600，否则的话身份验证会失效，设置rsync user的时候
-
+```
+- 重启rsync服务，使其读取刚才的配置文件 
+```
+systemctl start xinetd
+systemctl enable xinetd             # 开机自启动
+ps aux | gerp rsync                 # 查看当前rsync的pid
+kill -9 pid                         # 干掉之前没有读取配置文件的rsync --daemon进程
+rsync --daemon --config=/etc/rsync.conf         # 加载配置文件后，重新启动rsync
+netstat -nlutp | grep 873       # 可以监听打破局域网内所有在线ip的873端口，因为之前配置文件中配置了192.168.0.0/24host allow
 ```
 ### 2. server162/server100
 - 手动输入密码
@@ -275,34 +284,6 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
 
 
 
-14. 用非系统用户，进行文件传输。对于安全级别比较高的服务器更适合一些。需要更改配置文件/etc/rsyncd.comf。centos7已存在模版，但是6上面没有
-    - 163服务端
-      ```shell
-      uid = root    用root权限
-      gid = root
-      address = 192.168.0.163     本机ip地址
-      port = 873
-      host allow = 192.168.0.0/24     允许整个网段
-      use chroot = yes
-      max connections = 4    最大链接数
-      pid file = /var/run/rsyncd.pid
-      lock file = /var/run/rsync/lock
-      log file = /var/log/rsync.log
-      motd file = /etc/rsync.motd     没有此文件，需要自行创建
-      
-      [wwwroot]       模块名，自己定义一个模块，名称自己定
-      path = /web-back/
-      comment = web back rsync server
-      read only = false
-      list = yes 是否可以产看此模块信息yes
-      auth user = rsyncuser     用户名自己指定，自己定义的非系统用户，即不需要useradd命令来创建的真是centos系统用户
-      secrets file = /etc/rsync。passwd      没有此文件，需要自行创建
-      ```    
-    
-      - 创建motd
-
-      - 创建/etc/rsync.passwd, ```rsyncuser:password123 ``` 前面的用户名用要和上面定义的auth user保持一致
-        - 权限一定是600或者是700 否则读取不到```chmod 600 /etc/rsync.passwd```
 
       - 重启rsync服务，使其读取刚才的配置文件 
         ```
