@@ -289,6 +289,7 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
 
 
 # rsync + sersync 实时同步
+  https://code.google.com/archive/p/sersync/downloads
   
 1. sersync 安装在数据源，监控源数据的变化，监控到变化后就可以触发rsync服务，将增删改后到数据传输到备份服务器
 2. /var/www/html所在服务器162安装sersync， 163机器不需要更改 
