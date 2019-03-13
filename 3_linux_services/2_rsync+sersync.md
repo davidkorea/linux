@@ -338,7 +338,7 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
     ```
 6. 启动服务之前，文件夹内已有到内容不会被监听和同步。只有在服务启动后 新创建到文件，在增删改，才会被坚挺到并同步到备份服务器
     ```
-    [root@client12 web-back]# watch ls -l       # 实时监控变化
+    [root@client12 web-back]# watch ls -l       # 实时监控目录变化
     ```
 7. 只能用来实时同步，不能用来备份。如果备份源被删除了，那么备份源也将被同步删除
 
