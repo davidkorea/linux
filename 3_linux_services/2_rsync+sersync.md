@@ -43,8 +43,8 @@ root@192.168.0.163's password:
     - 传给谁，谁安装rsync服务端，但是两边都要安装rsync服务
 9. rsync小服务由超级互联网守护进程服务xinetd统一管理
 10. rsync 常用参数 -avz， --delete参数使得在2个机器之间完全一致，生产环境下不建议使用
-### 2.1 
-1. 安装
+## 2.1 创建系统用户进行备份
+#### 1. 安装
 
         ```
         [root@client163 ~]# yum install xinetd rsync -y
@@ -57,55 +57,59 @@ root@192.168.0.163's password:
         tcp        0      0 0.0.0.0:873             0.0.0.0:*               LISTEN      25583/rsync         
         tcp6       0      0 :::873                  :::*                    LISTEN      25583/rsync  
         ```
-2. 将server162的/var/www/html目录 备份至 client163的/root/web-back。创建测试用户rget1用于下载
-    - 创建备份用户rget1，client163上面，可以吧/web-back的用户和属组给到新创建的用户 
-    - 创建备份用户rget1，server162上面，将此新用户添加至/var/www/html, 不改变目录原有的用户和属组
-        
-        ```shell
-        [root@client162 ~]# useradd rget1;echo rget1:11111|chpasswd          # 创建用户
-        
-        [root@server162 ~]# mkdir -p /var/www/html                           # 创建要备份的路径             
-        [root@server162 ~]# ll -d /var/www/html/
-        drwxr-xr-x. 2 root root 6 Nov  5 09:47 /var/www/html/
+#### 2. 将server162的/var/www/html目录 备份至 client163的/root/web-back。创建测试用户rget1用于下载
+- 创建备份用户rget1，client163上面，可以吧/web-back的用户和属组给到新创建的用户 
+- 创建备份用户rget1，server162上面，将此新用户添加至/var/www/html, 不改变目录原有的用户和属组
+#### 3. client162的设置
+- 创建传输专用用户rget1
+- 创建要备份的路径mkdir -p /var/www/html  
+- 给该路径分配rget1用户的扩展权限
 
-        [root@server162 ~]# getfacl /var/www/html/                           # 查看该目录的文件扩展权限ACL(access control list)
-        getfacl: Removing leading '/' from absolute path names
-        # file: var/www/html/
-        # owner: root
-        # group: root
-        user::rwx
-        group::r-x
-        other::r-x
+```shell
+[root@client162 ~]# useradd rget1;echo rget1:11111|chpasswd          # 创建用户
 
-        [root@server162 ~]# setfacl -R -m u:rget1:rwx /var/www/html/        # -R 递归应用子目录文件 -m modify -u user
-        [root@server162 ~]# getfacl /var/www/html/                          # -R 必须用在 -m 之前，否则没有效果
-        getfacl: Removing leading '/' from absolute path names
-        # file: var/www/html/
-        # owner: root
-        # group: root
-        user::rwx
-        user:rget1:rwx
-        group::r-x
-        mask::rwx
-        other::r-x
+[root@server162 ~]# mkdir -p /var/www/html                           # 创建要备份的路径             
+[root@server162 ~]# ll -d /var/www/html/
+drwxr-xr-x. 2 root root 6 Nov  5 09:47 /var/www/html/
 
-        [root@server162 ~]# setfacl -R -m d:rget1:rwx /var/www/html/       # -d == -default 默认
-        [root@server162 ~]# getfacl /var/www/html/
-        getfacl: Removing leading '/' from absolute path names
-        # file: var/www/html/
-        # owner: root
-        # group: root
-        user::rwx
-        user:rget1:rwx
-        group::r-x
-        mask::rwx
-        other::r-x
-        default:user::rwx
-        default:user:rget1:rwx
-        default:group::r-x
-        default:mask::rwx
-        default:other::r-x
-        ```
+[root@server162 ~]# getfacl /var/www/html/                           # 查看该目录的文件扩展权限ACL(access control list)
+getfacl: Removing leading '/' from absolute path names
+# file: var/www/html/
+# owner: root
+# group: root
+user::rwx
+group::r-x
+other::r-x
+
+[root@server162 ~]# setfacl -R -m u:rget1:rwx /var/www/html/        # -R 递归应用子目录文件 -m modify -u user
+[root@server162 ~]# getfacl /var/www/html/                          # -R 必须用在 -m 之前，否则没有效果
+getfacl: Removing leading '/' from absolute path names
+# file: var/www/html/
+# owner: root
+# group: root
+user::rwx
+user:rget1:rwx
+group::r-x
+mask::rwx
+other::r-x
+
+[root@server162 ~]# setfacl -R -m d:rget1:rwx /var/www/html/       # -d == -default 默认
+[root@server162 ~]# getfacl /var/www/html/
+getfacl: Removing leading '/' from absolute path names
+# file: var/www/html/
+# owner: root
+# group: root
+user::rwx
+user:rget1:rwx
+group::r-x
+mask::rwx
+other::r-x
+default:user::rwx
+default:user:rget1:rwx
+default:group::r-x
+default:mask::rwx
+default:other::r-x
+```
 
 -----
 
