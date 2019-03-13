@@ -121,21 +121,30 @@ default:other::r-x
 ```shell
 [root@client163 ~]# useradd rget1;echo rget1:11111|chpasswd
 
-[root@client163 ~]# mkdir /web-back             # 创建于根/ 下的web-back， 不加/，则表示再root/web-back
+[root@client163 ~]# chown rget1:rget1 -R /web-back/       # 创建于根/ 下的web-back， 不加/，则表示再root/web-back
 
-[root@client163 ~]# chown rget1:rget1 -R web-back/
-[root@client163 ~]# ll -d web-back/
-drwxr-xr-x 2 rget1 rget1 6 Mar 13 11:04 web-back/
+[root@client163 ~]# ll -d /web-back/
+drwxr-xr-x 2 rget1 rget1 6 Mar 13 11:50 /web-back/
 ```
 
 ### 5. rsync备份
 server162 推送至 client163
 ```
-[root@server162 ~]# rsync -avz --delete /var/www/html/ rget1@192.168.0.163:/web-back
+##### /root/web-back 会失败#####
+# 因为虽然给web-back来rget1 -R 的权限，但是外层文件夹/root 是不允许rget1访问的，因此会报错拒绝
+[root@server162 ~]# rsync -avz --delete /var/www/html/ rget1@192.168.0.163:/root/web-back
 rget1@192.168.0.163's password: 
 sending incremental file list
 rsync: failed to set times on "/web-back/.": Operation not permitted (1)
 
+##### /web-back 根下面的文件夹 #####
+# 再根/下面创建是可以的，因此此文件夹外层无其他文件夹，给到rget1权限后，-R 下面的目录都有访问权限
+[root@server162 ~]# rsync -avz --delete /var/www/html/ rget1@192.168.0.163:/web-back/
+rget1@192.168.0.163's password: 
+sending incremental file list
+......
+sent 462,188 bytes  received 589 bytes  185,110.80 bytes/sec
+total size is 463,820  speedup is 1.00
 ```
 
 
