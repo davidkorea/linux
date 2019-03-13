@@ -63,16 +63,16 @@ root@192.168.0.163's password:
 #### 3. client162的设置
 - 创建传输专用用户rget1
 - 创建要备份的路径mkdir -p /var/www/html  
-- 给该路径分配rget1用户的扩展权限
-
+- 给该路径分配rget1用户的扩展权限getfacl setfacl [linux basic command](https://github.com/davidkorea/linux_study/tree/master/1_linux_baisc)
+- 创建测试数据至/var/www/html 
 ```shell
-[root@client162 ~]# useradd rget1;echo rget1:11111|chpasswd          # 创建用户
+[root@client162 ~]# useradd rget1;echo rget1:11111|chpasswd        # 创建用户
 
-[root@server162 ~]# mkdir -p /var/www/html                           # 创建要备份的路径             
+[root@server162 ~]# mkdir -p /var/www/html                         # 创建要备份的路径             
 [root@server162 ~]# ll -d /var/www/html/
 drwxr-xr-x. 2 root root 6 Nov  5 09:47 /var/www/html/
 
-[root@server162 ~]# getfacl /var/www/html/                           # 查看该目录的文件扩展权限ACL(access control list)
+[root@server162 ~]# getfacl /var/www/html/                         # 查看该目录的文件扩展权限ACL(access control list)
 getfacl: Removing leading '/' from absolute path names
 # file: var/www/html/
 # owner: root
@@ -81,8 +81,8 @@ user::rwx
 group::r-x
 other::r-x
 
-[root@server162 ~]# setfacl -R -m u:rget1:rwx /var/www/html/        # -R 递归应用子目录文件 -m modify -u user
-[root@server162 ~]# getfacl /var/www/html/                          # -R 必须用在 -m 之前，否则没有效果
+[root@server162 ~]# setfacl -R -m u:rget1:rwx /var/www/html/       # -R 递归应用子目录文件 -m modify -u user
+[root@server162 ~]# getfacl /var/www/html/                         # -R 必须用在 -m 之前，否则没有效果
 getfacl: Removing leading '/' from absolute path names
 # file: var/www/html/
 # owner: root
