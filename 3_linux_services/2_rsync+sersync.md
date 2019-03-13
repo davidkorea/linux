@@ -280,7 +280,7 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
 
 # 3. rsync + sersync 实时同步
 
-下载sersync：  https://code.google.com/archive/p/sersync/downloads
+下载sersync：sersync2.5.4_64bit_binary_stable_final.tar.gz	  https://code.google.com/archive/p/sersync/downloads
   
 1. sersync 安装在数据源，监控源数据的变化，监控到变化后就可以触发rsync服务，将增删改后到数据传输到备份服务器
     1. 用户实时的往sersync服务器上写入更新文件数据；
