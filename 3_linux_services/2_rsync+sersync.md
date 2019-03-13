@@ -253,8 +253,16 @@ sent 466 bytes  received 38 bytes  1,008.00 bytes/sec
 total size is 6,087  speedup is 12.08
 
 ```
-
-
+### 3. 脚本实现定时自动备份
+```shell
+[root@xuegod63 ~]# vim autobackup.sh
+#!/bin/bash
+rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-file=/opt/passfile 
+[root@xuegod63 ~]# chmod +x autobackup.sh
+[root@XueGod64 ~]# rm -rf /web-back/*                       //测试脚本
+[root@xuegod63~]# sh autobackup.sh
+[root@XueGod64 ~]# echo "01 3 * * * sh /root/autoback.sh &" >> /var/spool/cron/root
+```
 
 
 
