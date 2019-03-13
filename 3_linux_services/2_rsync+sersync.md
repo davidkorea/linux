@@ -109,7 +109,27 @@ default:user:rget1:rwx
 default:group::r-x
 default:mask::rwx
 default:other::r-x
+
+[root@server162 ~]# cp ./* /var/www/html/           # 创建测试数据
 ```
+
+
+#### 4. client163的设置
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -----
 
