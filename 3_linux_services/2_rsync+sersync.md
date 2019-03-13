@@ -227,8 +227,32 @@ rsyncuser:11111         # 密码11111，用户名为rsyncuser 在配置文件中
 [root@localhost ~]# chmod 600 /etc/rsync.passwd         # 目录权限必须是700或者600，否则的话身份验证会失效，设置rsync user的时候
 
 ```
+### 2. server162/server100
+- 手动输入密码
+```shell
+[root@server100 ~]# rsync -avz --delete /var/www/html/ rsyncuser@192.168.0.12::wwwroot
+welcome to back server
 
+Password: 
+sending incremental file list
+```
+- 配置密码文件，以便自动备份
+```shell
+[root@server100 ~]# vim /etc/rsync.passwd
+    11111
+    
+[root@server100 ~]# chmod 600 /etc/rsync.passwd 
+[root@server100 ~]# rsync -avz --delete /var/www/html/ rsyncuser@192.168.0.12::wwwroot --password-file=/etc/rsync.passwd
+welcome to back server
 
+sending incremental file list
+./
+11 22 33
+
+sent 466 bytes  received 38 bytes  1,008.00 bytes/sec
+total size is 6,087  speedup is 12.08
+
+```
 
 
 
