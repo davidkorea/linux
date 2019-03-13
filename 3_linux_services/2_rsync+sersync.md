@@ -307,6 +307,36 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
     config xml parse success
     watch path is /var/www/hmtl
     ```
+    
+```
+[root@server100 sersync]# ./sersync2 -d -r -o ./confxml.xml
+set the system param
+execute：echo 50000000 > /proc/sys/fs/inotify/max_user_watches
+execute：echo 327679 > /proc/sys/fs/inotify/max_queued_events
+parse the command param
+option: -d 	run as a daemon
+option: -r 	rsync all the local files to the remote servers before the sersync work
+option: -o 	config xml name：  ./confxml.xml
+daemon thread num: 10
+parse xml config file
+host ip : localhost	host port: 8008
+daemon start，sersync run behind the console 
+use rsync password-file :
+user is	rsyncuser
+passwordfile is 	/etc/rsync.passwd
+config xml parse success
+please set /etc/rsyncd.conf max connections=0 Manually
+sersync working thread 12  = 1(primary thread) + 1(fail retry thread) + 10(daemon sub threads) 
+Max threads numbers is: 22 = 12(Thread pool nums) + 10(Sub threads)
+please according your cpu ，use -n param to adjust the cpu rate
+------------------------------------------
+rsync the directory recursivly to the remote servers once
+working please wait...
+execute command: cd /var/www/html && rsync -artuz -R --delete ./ rsyncuser@192.168.0.12::wwwroot --password-file=/etc/rsync.passwd >/dev/null 2>&1 
+run the sersync: 
+watch path is: /var/www/html
+
+```
 6. 启动服务之前，文件夹内已有到内容不会被监听和同步。只有在服务启动后 新创建到文件，在增删改，才会被坚挺到并同步到备份服务器
 7. 只能用来实时同步，不能用来备份。如果备份源被删除了，那么备份源也将被同步删除
 
