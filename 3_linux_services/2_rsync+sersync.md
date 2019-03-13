@@ -343,10 +343,34 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
 7. 只能用来实时同步，不能用来备份。如果备份源被删除了，那么备份源也将被同步删除
 
 8. 应用场景，集群之间数据同步。负载均衡服务器上的内容需要完全一致，才能正常对外提供服务。同步的延迟在毫秒级
-9. 同步多个目录，写多个xml文件 www_conxml.xml， bbs_confxml.xml
+9. 多实例情况, 同步多个目录，写多个xml文件 www_conxml.xml， bbs_confxml.xml
     - ```/usr/local/sersync/sersync2 -d -o /usr/local/sersync/bbs_confxml.xml```
     - ```/usr/local/sersync/seraync2 -d -o /usr/local/sersync/www_confxml.xml```
 
+10. 设置sersync监控开机自动执行
+    ```shell
+    vim /etc/rc.d/rc.local  #编辑，在最后添加一行
+    /usr/local/sersync/sersync2 -d -r -o  /usr/local/sersync/confxml.xml  ＃设置开机自动运行脚本
+    ```
+11. 添加脚本监控sersync是否正常运行,
+    ```shell
+    vim  /opt/check_sersync.sh  #编辑，添加以下代码
+    #!/bin/sh
+    sersync="/opt /sersync/sersync2"
+    confxml="/opt /sersync/confxml.xml"
+    status=$(ps aux |grep 'sersync2'|grep -v 'grep'|wc -l)
+    if [ $status -eq 0 ];
+    then
+    $sersync -d -r -o $confxml &
+    else
+    exit 0;
+    fi
+    ```
+    ```shell
+    chmod +x /opt /check_sersync.sh  #添加脚本执行权限
+    ```
+    把这个脚本加到任务计划,定期执行检测
+    
 
 
 
