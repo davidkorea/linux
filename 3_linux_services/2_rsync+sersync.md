@@ -240,7 +240,7 @@ netstat -nlutp | grep 873       # 可以监听打破局域网内所有在线ip�
 - 手动输入密码
 ```shell
 [root@server100 ~]# rsync -avz --delete /var/www/html/ rsyncuser@192.168.0.12::wwwroot
-welcome to back server
+welcome to back server              # 用户名是配置文件中的auth user，wwwroot为配置文件中的模块名，会自动查找该模块下的path路径
 
 Password: 
 sending incremental file list
@@ -263,6 +263,10 @@ total size is 6,087  speedup is 12.08
 
 ```
 ### 3. 脚本实现定时自动备份
+自动化命令备份时，密码怎么传输？？
+- 创建与刚才同样的文件/etc/rsync.passwd 输入密码11111，但是不需要用户名，命令中指定密码文件路径即可
+- ```rsync -avz -delete /var/www/html rsyncuser@192.168.0.163::wwwroot --password-file=/etc/rsync.passwd```
+
 ```shell
 [root@xuegod63 ~]# vim autobackup.sh
 #!/bin/bash
@@ -283,26 +287,6 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
 
 
 
-
-
-      - 重启rsync服务，使其读取刚才的配置文件 
-        ```
-        systemctl start xinetd
-        systemctl enable xinetd  开机自启动
-        kill -9 pid 干掉之前没有读取配置文件的rsync --daemon进程
-        rsync --daemon --config=/etc/rsync.conf  加载配置文件后启动
-        ps aux | gerp rsync
-        netstat -nlutp | grep 873  可以监听打破局域网内所有在线ip的873端口，因为之前配置文件中配置了192.168.0.0/24host allow
-        ```
-    - 162 需要备份的服务器
-      - ```rsync -avz --delete /var/www/html rsyncuser@192.168.0.163::wwwroot```
-        - 用户名是配置文件中的用户，wwwroot为配置文件中的模块名，会自动查找该模块下的path路径
-  
-      - 自动化命令备份时，密码怎么传输？？
-        - 创建与刚才同样的文件/etc/rsync.passwd 输入password123 但是不需要用户名。命令中指定密码文件路径即可
-        - ```rsync -avz -delete /var/www/html rsyncuser@192.168.0.163::wwwroot --password-file=/etc/rsync.passwd```
-  
------
 
 # rsync + sersync 实时同步
   
