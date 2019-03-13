@@ -283,6 +283,10 @@ rsync -avz --delete  /var/www/html rsyncuser@192.168.0.64::wwwroot --password-fi
 下载sersync：  https://code.google.com/archive/p/sersync/downloads
   
 1. sersync 安装在数据源，监控源数据的变化，监控到变化后就可以触发rsync服务，将增删改后到数据传输到备份服务器
+    1. 用户实时的往sersync服务器上写入更新文件数据；
+    2. 此时需要在同步主服务器上配置sersync服务；
+    3. 在另一台服务器开启rsync守护进程服务，以同步拉取来自sersync服务器上的数据；通过rsync的守护进程服务后可以发现，实际上sersync就是监控本地的数据写入或更新事件；然后，在调用rsync客户端的命令，将写入或更新事件对应的文件通过rsync推送到目标服务器
+
 2. /var/www/html所在服务器server162安装sersync， client163机器不需要更改 
 3. sersync基于inotify开发，inotify只能监听到变化，但不知具体哪个文件变化，所以同步都是全量同步。 sersync知道具体哪个文件变化是增量同步
 4. 解压后不需要安装，文件夹改个名称
