@@ -130,7 +130,13 @@ drwxr-xr-x 2 rget1 rget1 6 Mar 13 11:04 web-back/
 
 ### 5. rsync备份
 server162 推送至 client163
+```
+[root@server162 ~]# rsync -avz --delete /var/www/html/ rget1@192.168.0.163:/web-back
+rget1@192.168.0.163's password: 
+sending incremental file list
+rsync: failed to set times on "/web-back/.": Operation not permitted (1)
 
+```
 
 
 
