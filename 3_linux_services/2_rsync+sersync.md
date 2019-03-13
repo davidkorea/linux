@@ -43,12 +43,10 @@ root@192.168.0.163's password:
 ## 2.1 创建系统用户进行备份
 
 本教程使用push的方式进行同步
-
-    - 你推送给我，我就是服务端服。需要备份的机器是客户端，存储备份的机器是服务端
-    - 传给谁，谁安装rsync服务端，但是两边都要安装rsync服务
+- 你推送给我，我就是服务端服。需要备份的机器是客户端，存储备份的机器是服务端
+- 传给谁，谁安装rsync服务端，但是两边都要安装rsync服务
     
 ### 1. 安装
-
 ```
 [root@client163 ~]# yum install xinetd rsync -y
 
@@ -116,7 +114,6 @@ default:other::r-x
 [root@server162 ~]# cp ./* /var/www/html/           # 创建测试数据
 ```
 
-
 ### 4. client163的设置
 - 创建与server162相同的新用户rget1
 - 创建备份数据保存目录
@@ -124,15 +121,15 @@ default:other::r-x
 ```shell
 [root@client163 ~]# useradd rget1;echo rget1:11111|chpasswd
 
-[root@client163 ~]# mkdir web-back
+[root@client163 ~]# mkdir /web-back             # 创建于根/ 下的web-back， 不加/，则表示再root/web-back
 
 [root@client163 ~]# chown rget1:rget1 -R web-back/
 [root@client163 ~]# ll -d web-back/
 drwxr-xr-x 2 rget1 rget1 6 Mar 13 11:04 web-back/
 ```
 
-
-
+### 5. rsync备份
+server162 推送至 client163
 
 
 
