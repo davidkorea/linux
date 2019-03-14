@@ -65,7 +65,7 @@ DHCP 刚安装好后租约数据库文件dhcpd.leases 是个空文件/var/lib/dh
 subnet 192.168.1.0 netmask 255.255.255.0 {
   range 192.168.1.100 192.168.1.200;
   option domain-name-servers 192.168.1.1;
-  option domain-name "xuegod.cn";
+  option domain-name "xuegod.cn";     # 没有的话，随便配，不影响
   option routers 192.168.1.1;
   option broadcast-address 192.168.1.255;
   default-lease-time 600;
