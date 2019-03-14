@@ -189,6 +189,8 @@ host xuegod63 {    #这一段内容，要写在subnet字段中，和subnet配合
 - 公网ntp服务器``` ntpdate ntp1.aliyun.com```
 - 内网ntp服务器，一般路由器，或者AD服务器 可以作为ntp服务器
 
+ 但这样的同步，只是强制性的将系统时间设置为ntp服务器时间。只是治标不治本。所以，一般配合cron命令，来进行定期同步设置。比如，在crontab中添加： 
+```0 12 *  * * /usr/sbin/ntpdate 192.168.0.1 ```
 
 
 
