@@ -59,8 +59,12 @@
   - 重启服务
   - 但是在ftp客户端链接到时候依旧可以选择使用无证书加密到方式链接。和客户端有关系
       
-# 2. NFS
-      
+# 2. NFS network file system
+
+rpcbind
+nfc-utils
+
+
       
       
       
