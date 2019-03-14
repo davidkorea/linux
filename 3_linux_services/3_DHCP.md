@@ -12,28 +12,30 @@
     - 给内部网络或网络服务供应商自动分配IP地址，主机名，DNS服务器，域名
     - 配合其它服务，实现集成化管理功能。如：无人执守安装服务器
 
-### 1.2特点 C/S 模式
-- 自动分配IP地址，方便管理
-- DHCP不会同时租借相同的IP地址给两台主机；
-- DHCP管理员可以约束特定的计算机使用特定的IP地址；
-- 可以为每个DHCP作用域设置很多选项；
-- 客户机在不同子网间移动时不需要重新设置IP地址。每次都自动获取IP地址就可以了。
-DHCP的缺点: 
-- 当网络上存在多服务器时，一个DHCP服务器不能查出已被其它服务器租出去的IP地址；
-- DHCP服务器不能跨路由器与客户机通信，除非路由器允许BOOTP协议转发。
-端口：
-- DHCP服务使用：端口67(bootps) 68(bootpc) 。
-例：查看
-```shell
-[root@server162 ~]# vim /etc/services 
-   71 bootps          67/tcp                          # BOOTP server
-   72 bootps          67/udp
-   73 bootpc          68/tcp          dhcpc           # BOOTP client
-   74 bootpc          68/udp          dhcpc
-···
+3. 特点 C/S 模式
+    - 自动分配IP地址，方便管理
+    - DHCP不会同时租借相同的IP地址给两台主机；
+    - DHCP管理员可以约束特定的计算机使用特定的IP地址；
+    - 可以为每个DHCP作用域设置很多选项；
+    - 客户机在不同子网间移动时不需要重新设置IP地址。每次都自动获取IP地址就可以了。
+4. DHCP的缺点: 
+    - 当网络上存在多服务器时，一个DHCP服务器不能查出已被其它服务器租出去的IP地址；
+    - DHCP服务器不能跨路由器与客户机通信，除非路由器允许BOOTP协议转发。
+5. 端口：DHCP服务使用端口67(bootps) 68(bootpc) 。
 
+    ```shell
+    [root@server162 ~]# vim /etc/services 
+       71 bootps          67/tcp                          # BOOTP server
+       72 bootps          67/udp
+       73 bootpc          68/tcp          dhcpc           # BOOTP client
+       74 bootpc          68/udp          dhcpc
+    ```
+### 2. DHCP服务运行原理
 
-
+1. DHCP协议由 bootp协议发展而来，是BOOTP的增强版本，bootps代表服务端端口， bootpc代表客户端端口
+2. bootp协议：引导程序协议（BOOTP）。它可以让无盘工作站从一个中心服务器上获得IP地址，为局域网中的无盘工作站分配动态IP地址，并不需要每个用户去设置静态IP地址。
+3. BOOTP有一个缺点：您在设定前须事先获得客户端的硬件地址，而且，MCA地址与IP的对应是静态的。换而言之，BOOTP非常缺乏“动态性”，若在有限的IP资源环境中，BOOTP的一对一对应会造成非常可观的浪费。
+4. DHCP可以说是BOOTP的增强版本，它分为两个部分：一个是服务器端，而另一个是客户端。所有的IP网络设定数据都由DHCP服务器集中管理，并负责处理客户端的DHCP要求；而客户端则会使用从服务器分配下来的IP环境数据。比较BOOTP, DHCP透过“租约”的概念，有效且动态的分配客户端的TCP/IP设定，而且，作为兼容考虑，DHCP也完全照顾了BOOTP Client的需求。
 
 
 
