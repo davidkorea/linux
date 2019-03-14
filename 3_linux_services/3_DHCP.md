@@ -193,7 +193,11 @@ host xuegod63 {    #这一段内容，要写在subnet字段中，和subnet配合
 ```0 12 *  * * /usr/sbin/ntpdate 192.168.0.1 ```
 
 
-
+- linux系统时间和BIOS时间是不是一定一样？
+```
+hwclock -r    :读出BIOS的时间参数
+hwclock -w    :将当前系统时间写入BIOS中。
+```
 
 
 
