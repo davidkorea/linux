@@ -186,8 +186,8 @@ host xuegod63 {    #这一段内容，要写在subnet字段中，和subnet配合
 ### 时间同步 ntp
 同步时间 是linux初始化配置中必做的一步，刚装好系统就要配置
 
-公网ntp服务器``` ntpdate ntp1.aliyun.com```
-
+- 公网ntp服务器``` ntpdate ntp1.aliyun.com```
+- 内网ntp服务器，一般路由器，或者AD服务器 可以作为ntp服务器
 
 
 
