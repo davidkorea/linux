@@ -329,10 +329,27 @@ ens38: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 # 4. 时间同步 ntp
 
+## 4.1 ntpdate
 同步时间 是linux初始化配置中必做的一步，刚装好系统就要配置
 
 - 公网ntp服务器``` ntpdate ntp1.aliyun.com```
 - 内网ntp服务器，一般路由器，或者AD服务器 可以作为ntp服务器
+### 1. 服务端
+只与ntpd服务有关，与ntpdate服务无关
+```
+[root@server162 ~]# yum install ntp -y
+[root@server162 ~]# systemctl enable ntpd
+[root@server162 ~]# systemctl start ntpd
+```
+配置文件，不用更改也可直接用
+```
+[root@server162 ~]# vim /etc/ntp.conf 
+```
+### 2. 客户端
+```
+[root@client163 ~]# ntpdate 192.168.0.162
+14 Mar 17:22:33 ntpdate[2605]: adjust time server 192.168.0.162 offset 0.000375 sec
+```
 
 但这样的同步，只是强制性的将系统时间设置为ntp服务器时间。只是治标不治本。所以，一般配合cron命令，来进行定期同步设置。在crontab中添加： 
 ```0 12 *  * * /usr/sbin/ntpdate 192.168.0.1 ```
