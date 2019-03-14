@@ -4,6 +4,41 @@
 3. 使用DHCP为服务器分配固定IP地址
 4. ntpdate加计划任务同步服务器时间
 
+# 1. DHCP服务器工作原理
+
+### 1.1 DHCP服务概述
+1. 名称：DHCP  - Dynamic Host Configuration Protocol  动态主机配置协议
+2. 功能：DHCP(Dynamic Host Configuration Protocol，动态主机配置协议)是一个局域网的网络协议，使用UDP协议工作， 主要有两个用途：
+    - 给内部网络或网络服务供应商自动分配IP地址，主机名，DNS服务器，域名
+    - 配合其它服务，实现集成化管理功能。如：无人执守安装服务器
+
+### 1.2特点 C/S 模式
+- 自动分配IP地址，方便管理
+- DHCP不会同时租借相同的IP地址给两台主机；
+- DHCP管理员可以约束特定的计算机使用特定的IP地址；
+- 可以为每个DHCP作用域设置很多选项；
+- 客户机在不同子网间移动时不需要重新设置IP地址。每次都自动获取IP地址就可以了。
+DHCP的缺点: 
+- 当网络上存在多服务器时，一个DHCP服务器不能查出已被其它服务器租出去的IP地址；
+- DHCP服务器不能跨路由器与客户机通信，除非路由器允许BOOTP协议转发。
+端口：
+- DHCP服务使用：端口67(bootps) 68(bootpc) 。
+例：查看
+```shell
+[root@server162 ~]# vim /etc/services 
+   71 bootps          67/tcp                          # BOOTP server
+   72 bootps          67/udp
+   73 bootpc          68/tcp          dhcpc           # BOOTP client
+   74 bootpc          68/udp          dhcpc
+···
+
+
+
+
+
+
+
+
 
 配置文件：/etc/dhcp/dhcpd.conf	部分配置解释
 ```shell
