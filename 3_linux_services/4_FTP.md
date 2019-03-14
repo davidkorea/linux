@@ -34,11 +34,32 @@
       mkdir -p /var/www/html
       chmod -R o+w /var/www/html    # a+w 全新啊有点大 
       ```
+- FTP证书，当ftp服务器放在公网的时候，为了安全 。sftp 相比ftp 大文件传输特别慢
+  - openssl req -new x509 -node -out vsftp.pem -keyout vsftp.pem -days 3650
+  - mkdir /etc/vsftp/.sslkey # 吧pem文件拷贝到这个路径
+  - chmod 400 vsftp.pem
+  ```
+  ssl_enable=YES     #启用SSL支持
+  allow_anon_ssl=NO 
+   force_local_data_ssl=YES   
+  force_local_logins_ssl=YES
+  force_anon_logins_ssl=YES
+  force_anon_data_ssl=YES
+  #上面四行force 表示强制匿名用户使用加密登陆和数据传输
+  ssl_tlsv1=YES   #指定vsftpd支持TLS v1[
+  ssl_sslv2=YES   #指定vsftpd支持SSL v2
+  ssl_sslv3=YES   #指定vsftpd支持SSL v3
+  require_ssl_reuse=NO   #不重用SSL会话,安全配置项 
+  ssl_ciphers=HIGH    #允许用于加密 SSL 连接的 SSL 算法。这可以极大地限制那些尝试发现使用存在缺陷的特定算法的攻击者
+  rsa_cert_file=/etc/vsftpd/.sslkey/vsftpd.pem 
+  rsa_private_key_file=/etc/vsftpd/.sslkey/vsftpd.pem
+  #定义 SSL 证书和密钥文件的位置
+
+  ```
+  - 重启服务
+  - 但是在ftp客户端链接到时候依旧可以选择使用无证书加密到方式链接。和客户端有关系
       
-      
-      
-      
-      
+# 2. NFS
       
       
       
