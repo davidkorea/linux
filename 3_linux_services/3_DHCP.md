@@ -329,7 +329,7 @@ ens38: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 # 4. 时间同步 ntp
 
-## 4.1 ntpdate
+## 4.1 ntpdate, ntpd
 同步时间 是linux初始化配置中必做的一步，刚装好系统就要配置
 
 - 公网ntp服务器``` ntpdate ntp1.aliyun.com```
@@ -354,8 +354,12 @@ ens38: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 但这样的同步，只是强制性的将系统时间设置为ntp服务器时间。只是治标不治本。所以，一般配合cron命令，来进行定期同步设置。在crontab中添加： 
 ```0 12 *  * * /usr/sbin/ntpdate 192.168.0.1 ```
 
+## 4.2 让NTP服务同步硬件时间
+ntp服务，默认只会同步系统时间。如果想要让ntp同时同步硬件时间，可以设置/etc/sysconfig/ntpdate 文件。 
+在/etc/sysconfig/ntpdate 文件中，把SYNC_HWCLOCK=no 改成SYNC_HWCLOCK=yes
+就可以让硬件时间与系统时间一起同步。
 
-- linux系统时间和BIOS时间是不是一定一样？
+## 4.3 linux系统时间和BIOS时间是不是一定一样？
 ```
 hwclock -r    :读出BIOS的时间参数
 hwclock -w    :将当前系统时间写入BIOS中。
