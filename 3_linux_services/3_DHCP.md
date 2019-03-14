@@ -184,3 +184,17 @@ host xuegod63 {    #这一段内容，要写在subnet字段中，和subnet配合
 所有的网络设备，业务服务器，都要固定ip
 
 ### 时间同步 ntp
+同步时间 是linux初始化配置中必做的一步，刚装好系统就要配置
+
+公网ntp服务器``` ntpdate ntp1.aliyun.com```
+
+
+
+
+
+
+
+
+
+
+
