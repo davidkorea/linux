@@ -69,7 +69,12 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
   option routers 192.168.1.1;         # 最重要 配置一个网关
   option broadcast-address 192.168.1.255;     # 广播一般是这个地址
   default-lease-time 600;
-  max-lease-time 7200; 租赁期限7天 3个月 99999
+  max-lease-time 7200;    # 租赁期限7天 3个月 99999
 }
 #### 在路由器上设置 或 wimdows server 上设置 超级简单，鼠标点十几下而已
+```
+配置完成后```systemctl start dhcpd```
+```
+ps aux | grep dhcp    # 查看进程
+netstat nlutp | grep dhcp     # 查看端口
 ```
