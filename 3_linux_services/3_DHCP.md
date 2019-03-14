@@ -6,7 +6,7 @@
 
 # 1. DHCP服务器工作原理
 
-### 1.1 DHCP服务概述
+## 1.1 DHCP服务概述
 1. 名称：DHCP  - Dynamic Host Configuration Protocol  动态主机配置协议
 2. 功能：DHCP(Dynamic Host Configuration Protocol，动态主机配置协议)是一个局域网的网络协议，使用UDP协议工作， 主要有两个用途：
     - 给内部网络或网络服务供应商自动分配IP地址，主机名，DNS服务器，域名
@@ -30,17 +30,51 @@
        73 bootpc          68/tcp          dhcpc           # BOOTP client
        74 bootpc          68/udp          dhcpc
     ```
-### 2. DHCP服务运行原理
+## 2. DHCP服务运行原理
 
 1. DHCP协议由 bootp协议发展而来，是BOOTP的增强版本，bootps代表服务端端口， bootpc代表客户端端口
 2. bootp协议：引导程序协议（BOOTP）。它可以让无盘工作站从一个中心服务器上获得IP地址，为局域网中的无盘工作站分配动态IP地址，并不需要每个用户去设置静态IP地址。
 3. BOOTP有一个缺点：您在设定前须事先获得客户端的硬件地址，而且，MCA地址与IP的对应是静态的。换而言之，BOOTP非常缺乏“动态性”，若在有限的IP资源环境中，BOOTP的一对一对应会造成非常可观的浪费。
 4. DHCP可以说是BOOTP的增强版本，它分为两个部分：一个是服务器端，而另一个是客户端。所有的IP网络设定数据都由DHCP服务器集中管理，并负责处理客户端的DHCP要求；而客户端则会使用从服务器分配下来的IP环境数据。比较BOOTP, DHCP透过“租约”的概念，有效且动态的分配客户端的TCP/IP设定，而且，作为兼容考虑，DHCP也完全照顾了BOOTP Client的需求。
 
+### 1. DHCP服务运行原理
+1. DHCP Client发现阶段
+    即DHCP客户端寻找DHCP服务端的过程，对应于客户端发送DHCP Discovery，因为DHCP Server对应于DHCP客户端是未知的，所以DHCP 客户端发出的DHCP Discovery报文是广播包，源地址为0.0.0.0目的地址为255.255.255.255。网络上的所有支持TCP/IP的主机都会收到该DHCP Discovery报文，但是只有DHCP Server会响应该报文。
+    
+注意：客户端执行DHCP DISCOVER 后，如果没有DHCP 服务器响应客户端的请求，客户端会随机使用169.254.0.0/16 网段中的一个IP 地址配置本机地址。
+
+169.254.0.0/16是windows的自动专有IP寻址范围，也就是在无法通过DHCP获取IP地址时，由系统自动分配的IP地址段。 
+
+早先的Linux上并不会产生这条路由，现在有这条路由大概是为了和windows兼容。
+```
+[root@xuegod63 ~]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+192.168.1.0     0.0.0.0         255.255.255.0   U     0      0        0 eth0
+169.254.0.0     0.0.0.0         255.255.0.0     U     1002   0        0 eth0
+0.0.0.0         192.168.1.1     0.0.0.0         UG    0      0        0 eth0
+```
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
 
 配置文件：/etc/dhcp/dhcpd.conf	部分配置解释
 ```shell
