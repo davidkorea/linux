@@ -75,15 +75,40 @@ DHCP获取到的IP地址都有一个租约，租约过期后，DHCP Server将回
 - 主配置文件：/etc/dhcp/dhcpd.conf，DHCP主程序包安装好后会自动生成主配置文件的范本文件/usr/share/doc/dhcp-4.1.1/dhcpd.conf.sample
 
 ## 2.1 配置
-
+1. 配置dhcpd.conf文件
 ```shell
-[root@server162 html]# vim /etc/dhcp/dhcpd.conf 
+[root@server162 ~]# vim /etc/dhcp/dhcpd.conf 
     #
     # DHCP Server Configuration file.
     #   see /usr/share/doc/dhcp*/dhcpd.conf.example
     #   see dhcpd.conf(5) man page
     #
 ```
+2. 根据文件内提示，复制末班文件来覆盖此文件
+```
+[root@server162 ~]# cp /usr/share/doc/dhcp*/dhcpd.conf.example /etc/dhcp/dhcpd.conf 
+cp: overwrite '/etc/dhcp/dhcpd.conf'? y
+```
+3. 真正配置时，清空里面全部内容，全部手写下面内容即可
+```shell
+[root@server162 ~]# > /etc/dhcp/dhcpd.conf 
+[root@server162 ~]# vim /etc/dhcp/dhcpd.conf 
+    subnet 192.168.1.0 netmask 255.255.255.0 {
+            range 192.168.1.100 192.168.1.200;
+            option domain-name-servers 192.168.1.1;
+            option domain-name "xerox.kr";
+            option routers 192.168.1.1;
+            option broadcast-address 192.168.1.255;
+            default-lease-time 600;
+            max-lease-time 7200;
+    }
+```
+
+
+
+
+
+
 
 
 
