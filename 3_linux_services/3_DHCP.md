@@ -73,7 +73,13 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 }
 #### 在路由器上设置 或 wimdows server 上设置 超级简单，鼠标点十几下而已
 ```
-配置完成后```systemctl start dhcpd```
+配置完成后启动服务
+```systemctl start dhcpd
+
+注意在写好配置文件之前，不要启动服务。
+因为网卡目前是192.168.0.162，dhcp要负责sutnet为192.168.1.*，肯定会启动不成功
+自己0都不在自己要控制的网段1里面
+```
 ```
 ps aux | grep dhcp    # 查看进程
 netstat nlutp | grep dhcp     # 查看端口
