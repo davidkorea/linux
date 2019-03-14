@@ -57,3 +57,19 @@ DHCP 刚安装好后租约数据库文件dhcpd.leases 是个空文件/var/lib/dh
 当DHCP 服务正常运行后就可以使用cat 命令查看租约数据库文件内容了
 
 ```
+
+应用案例
+
+公司有60 台计算机，IP 地址段为192.168.1.1-192.168.1.254，子网掩码是255.255.255.0，网关为192.168.1.1，192.168.1.2-192.168.1.30 网段地址给服务器配置，客户端可以使用的地址段为192.168.1.100-200，其余剩下的IP 地址为保留地址。
+```
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range 192.168.1.100 192.168.1.200;
+  option domain-name-servers 192.168.1.1;
+  option domain-name "xuegod.cn";
+  option routers 192.168.1.1;
+  option broadcast-address 192.168.1.255;
+  default-lease-time 600;
+  max-lease-time 7200;
+}
+#### 在路由器上设置 或 wimdows server 上设置 超级简单，鼠标点十几下而已
+```
