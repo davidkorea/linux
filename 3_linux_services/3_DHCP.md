@@ -36,8 +36,9 @@
 9. DHCP可以说是BOOTP的增强版本，它分为两个部分：一个是服务器端，而另一个是客户端。所有的IP网络设定数据都由DHCP服务器集中管理，并负责处理客户端的DHCP要求；而客户端则会使用从服务器分配下来的IP环境数据。比较BOOTP, DHCP透过“租约”的概念，有效且动态的分配客户端的TCP/IP设定，而且，作为兼容考虑，DHCP也完全照顾了BOOTP Client的需求。
 
 ## 1.2. DHCP服务运行原理
+![](https://i.loli.net/2019/03/14/5c89ea88a6530.png)
 
-### 1. DHCP Client发现阶段DHCP Discovery
+### 1. DHCP Discovery 发现阶段
 
 即DHCP客户端寻找DHCP服务端的过程，对应于客户端发送DHCP Discovery，因为DHCP Server对应于DHCP客户端是未知的，所以DHCP 客户端发出的DHCP Discovery报文是广播包，源地址为0.0.0.0目的地址为255.255.255.255。网络上的所有支持TCP/IP的主机都会收到该DHCP Discovery报文，但是只有DHCP Server会响应该报文。
     
@@ -69,6 +70,59 @@ DHCP Server提供阶段，即为DHCP Server响应DHCP Discovery所发的DHCP Off
 ### 6. DHCP Client更新租约
 DHCP获取到的IP地址都有一个租约，租约过期后，DHCP Server将回收该IP地址，所以如果DHCP Client如果想继续使用该IP地址，则必须更新租约。更新的方式就是，当当前租约期限过了一半后，DHCP Client都会发送DHCP Renew报文来续约租期。
 
+# 2. 使用DHCP为局域网中的机器分配IP地址
+- 安装```yum -y install dhcp```
+- 主配置文件：/etc/dhcp/dhcpd.conf，DHCP主程序包安装好后会自动生成主配置文件的范本文件/usr/share/doc/dhcp-4.1.1/dhcpd.conf.sample
+
+## 2.1 配置文件/etc/dhcp/dhcpd.conf	部分配置解释
+```shell
+# option definitions common to all supported networks...      # 定义全局配置，通用于所有支持的网络选项.
+
+option domain-name "example.org";                             # 为客户端指定所属的域，可填写可不填
+
+option domain-name-servers ns1.example.org, ns2.example.org;  # 为客户端指定DNS服务器地址，配置dhcp ip的同时，可以获取dns
+
+default-lease-time 600;       # 作用：定义默认IP 租约时间，以秒为单位的租约时间。
+# 50%:续约。(续不上继续用)
+# 87.5%:再次续约。(续不上找别人)
+# DHCP工作站除了在开机的时候发出 DHCPrequest 请求之外，
+# 在租约期限一半的时候也会发出 DHCPrequest，如果此时得不到 DHCP服务器的确认的话，工作站还可以继续使用该IP；
+# 当租约期过了87.5%时，如果客户机仍然无法与当初的DHCP服务器联系上，它将与其它 DHCP服务器通信。
+# 如果网络上再没有任何DHCP协议服务器在运行时，该客户机必须停止使用该IP地址，并从发送一个Dhcpdiscover数据包开 始，再一次重复整个过程。
+# 要是您想退租，可以随时送出 DHCPRELEASE 命令解约，就算您的租约在前一秒钟才获得的。
+
+max-lease-time 7200;       # 作用：定义客户端IP租约时间的最大值，当客户端超过租约时间，却尚未更新IP 时，最长可以使用该IP 的时间；
+# 比如，机器在开机获得IP地址后，然后关机了。这时，当时间过了default-lease-time 600秒后，没有机器向DHCP续约，DHCP会保留7200秒，保留此IP地址不用于分配# 给其它机器。 当超过7200秒后，将不再保留此IP地址给此机器。
+# 注意: 2个时间都是以秒为单位的租约时间，该项参数可以作用在全局配置中，也可以作用在局部配置中。
+
+log-facility local7;   #定义日志类型为  local7
+
+subnet： # 声明一般用来指定IP 作用域、定义为客户端分配的IP 地址池等等。声明格式如下：
+subnet 声明一个网段 netmask 子网掩码 {
+    range ip范围
+    dns
+    domain name
+    option routers 默认网关
+    广播地址
+    期限 600
+    最大期限 7200
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -87,50 +141,6 @@ DHCP获取到的IP地址都有一个租约，租约过期后，DHCP Server将回
 
 -----
 
-配置文件：/etc/dhcp/dhcpd.conf	部分配置解释
-```shell
-# option definitions common to all supported networks...    ＃定义全局配置，通用于所有支持的网络选项.
-option domain-name "example.org";    #为客户端指定所属的域，可填写可不填
-option domain-name-servers ns1.example.org, ns2.example.org;  #为客户端指定DNS服务器地址，配置dhcp ip的同时，可以获取dns
-
-default-lease-time number(数字)
-  default-lease-time 600;
-作用：定义默认IP 租约时间，以秒为单位的租约时间。
-50%:续约。(续不上继续用)
-87.5%:再次续约。(续不上找别人)
-DHCP工作站除了在开机的时候发出 DHCPrequest 请求之外，
-在租约期限一半的时候也会发出 DHCPrequest，如果此时得不到 DHCP服务器的确认的话，工作站还可以继续使用该IP；
-当租约期过了87.5%时，如果客户机仍然无法与当初的DHCP服务器联系上，它将与其它 DHCP服务器通信。
-如果网络上再没有任何DHCP协议服务器在运行时，该客户机必须停止使用该IP地址，并从发送一个Dhcpdiscover数据包开 始，再一次重复整个过程。
-要是您想退租，可以随时送出 DHCPRELEASE 命令解约，就算您的租约在前一秒钟才获得的。
-
-max-lease-time 7200; (数字)
-作用：定义客户端IP租约时间的最大值，当客户端超过租约时间，却尚未更新IP 时，最长可以使用该IP 的时间；
-例：
-比如，机器在开机获得IP地址后，然后关机了。这时，当时间过了default-lease-time 600秒后，没有机器向DHCP续约，DHCP会保留7200秒，保留此IP地址不用于分配给其它机器。 当超过7200秒后，将不再保留此IP地址给此机器。
-注意:（3）、（4）都是以秒为单位的租约时间，该项参数可以作用在全局配置中，也可以作用在局部配置中。
-
-log-facility local7;   #定义日志类型为  local7
-
-subnet：
-
-声明一般用来指定IP 作用域、定义为客户端分配的IP 地址池等等
-声明格式如下：
-subnet 网络号 netmask 子网掩码 {
-选项或参数
-}
-```
-```
-subnet 声明一个网段
-netmask 子网掩码
-range ip范围
-dns
-domain name
-option routers 默认网关
-广播地址
-期限 600
-最大期限 7200
-```
 ```
 ## 租约数据库文件 相当于 房屋租赁合同
 租约数据库文件用于保存一系列的租约声明，其中包含客户端的主机名、MAC 地址、分配到的IP地址，以及IP地址的有效期等相关信息。
