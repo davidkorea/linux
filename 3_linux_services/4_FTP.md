@@ -13,12 +13,41 @@
   - 创建一个系统用户，但是不允许登陆服务器
     - ```useradd -s /sbin/mologin team1```
     - ```echo "11111" | passwd --stdin team
-    - 
+    - 修改配置文件
       ```
       anonymous_enable=NO
       local_enable=YES    # 允许系统创建的本地用户
-      101 local_root = /var/www/html      # 新添加这一样
+      101 local_root=/var/www/html      # 新添加这一样
       102 chroot_list_enable=YES
-      104 chroot_list_file = /etc/vsftp/chroot_list   # 不存在，需要自己创建，要锁定用户的用户名
-      105 allpw_writeable_chroot=YES      # 允许锁定的用户有写的权限
+      104 chroot_list_file=/etc/vsftp/chroot_list   # 不存在，需要自己创建，要锁定用户的用户名
+      105 allow_writeable_chroot=YES      # 允许锁定的用户有写的权限
       ```
+    - 创建名单
+      ```
+      vim /etc/vsftp/chroot_list
+      
+        team1   # 一个用户名，一行
+        team2
+      ```
+    - 创建限定的目录
+      ```
+      mkdir -p /var/www/html
+      chmod -R o+w /var/www/html    # a+w 全新啊有点大 
+      ```
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
