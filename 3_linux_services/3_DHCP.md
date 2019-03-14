@@ -151,15 +151,13 @@ lease 192.168.0.200 {
 
 
 - IP 地址绑定
-在DHCP 中的IP 地址绑定用于给客户端分配固定IP 地址。比如服务器需要使用固定IP 地址就可以使用IP 地址绑定，通过MAC 地址与IP 地址的对应关系为指定的物理地址计算机分配固定IP地址。
-整个配置过程需要用到 host 声明和hardware、fixed-address 参数。
+在DHCP 中的IP 地址绑定用于给客户端分配固定IP 地址。比如服务器需要使用固定IP 地址就可以使用IP 地址绑定，通过MAC 地址与IP 地址的对应关系为指定的物理地址计算机分配固定IP地址。整个配置过程需要用到 host 声明和hardware、fixed-address 参数。
 
-（1）host 主机名 {......}
-作用：用于定义保留地址
-（2）hardware 类型硬件地址
-作用：定义网络接口类型和硬件地址。常用类型为以太网（ethernet）,地址为MAC 地址。
-（3）fixed-address IP 地址
-作用：定义DHCP 客户端指定的IP 地址。
+除非dhcp服务器宕机，否则这个ip地址会一值只给这台机器使用
+
+（1）host 主机名 {......}作用：用于定义保留地址
+（2）hardware 类型硬件地址作用：定义网络接口类型和硬件地址。常用类型为以太网（ethernet）,地址为MAC 地址。
+（3）fixed-address IP 地址作用：定义DHCP 客户端指定的IP 地址。
 ```
 [root@xuegod63 ~]# vim /etc/dhcp/dhcpd.conf   # 找到对应的子网范围，修改成以下内容
 subnet 192.168.0.0 netmask 255.255.255.0 {
