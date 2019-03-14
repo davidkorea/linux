@@ -274,64 +274,52 @@ subnet 声明一个网段 netmask 子网掩码 {
 ```
 
 
+# 3. 使用DHCP为服务器分配固定IP地址
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------
-
-
-### IP 地址绑定
 在DHCP 中的IP 地址绑定用于给客户端分配固定IP 地址。比如服务器需要使用固定IP 地址就可以使用IP 地址绑定，通过MAC 地址与IP 地址的对应关系为指定的物理地址计算机分配固定IP地址。整个配置过程需要用到 host 声明和hardware、fixed-address 参数。
 
-除非dhcp服务器宕机，否则这个ip地址会一值只给这台机器使用
+**除非dhcp服务器宕机，否则这个ip地址会一值只给这台机器使用**
 
-（1）host 主机名 {......}作用：用于定义保留地址
-（2）hardware 类型硬件地址作用：定义网络接口类型和硬件地址。常用类型为以太网（ethernet）,地址为MAC 地址。
-（3）fixed-address IP 地址作用：定义DHCP 客户端指定的IP 地址。
+- host 主机名 {......}作用：用于定义保留地址
+- hardware 类型硬件地址作用：定义网络接口类型和硬件地址。常用类型为以太网（ethernet）,地址为MAC 地址。
+- fixed-address IP 地址作用：定义DHCP 客户端指定的IP 地址。
+
+## 3.1 DHCP服务器更改配置文件
 ```
-[root@xuegod63 ~]# vim /etc/dhcp/dhcpd.conf   # 找到对应的子网范围，修改成以下内容
-subnet 192.168.0.0 netmask 255.255.255.0 {
-  range 192.168.1.100 192.168.1.200;
-  option domain-name-servers 192.168.1.1;
-  option domain-name "internal.example.org";
-  option routers 192.168.1.1;
-  option broadcast-address 192.168.1.255;
-  default-lease-time 600;
-  max-lease-time 7200;
-host xuegod63 {    #这一段内容，要写在subnet字段中，和subnet配合使用。
-    hardware ethernet 00:0C:29:12:ec:1e;
-    fixed-address 192.168.1.251;
- }
+subnet 192.168.1.0 netmask 255.255.255.0 {
+        range 192.168.1.100 192.168.1.200;
+        option domain-name-servers 192.168.1.1;
+        option domain-name "xerox.kr";
+        option routers 192.168.1.1;
+        option broadcast-address 192.168.1.255;
+        default-lease-time 600;
+        max-lease-time 7200;
+        host client163 {                                # 声明设备hostname，写什么不重要吧？
+                hardware ethernet 00:0c:29:ce:03:2f;    # 需要固定ip的设备mac地址
+                fixed-address 192.168.1.111;            # 需要固定为的ip
+        }
 }
-
-#### ip a 查看ip地址
 ```
+重启dhcpd服务
+```
+[root@server162 ~]# systemctl restart dhcpd
+```
+## 3.2 客户机重启网卡
+```
+[root@client163 ~]# ifdown ens38 && ifup ens38
+Device 'ens38' successfully disconnected.
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/25)
+[root@client163 ~]# ifconfig ens38
+ens38: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.1.111  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::20c:29ff:fece:32f  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:ce:03:2f  txqueuelen 1000  (Ethernet)
+        RX packets 26  bytes 8046 (7.8 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1128  bytes 143987 (140.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+
 注意：
 在生成环境中使用DHCP服务，往往需要结合实际是网络环境来搭建，很多公司采用路由器的DHCP服务来提供IP地址
 
@@ -339,13 +327,14 @@ host xuegod63 {    #这一段内容，要写在subnet字段中，和subnet配合
 
 所有的网络设备，业务服务器，都要固定ip
 
-### 时间同步 ntp
+# 4. 时间同步 ntp
+
 同步时间 是linux初始化配置中必做的一步，刚装好系统就要配置
 
 - 公网ntp服务器``` ntpdate ntp1.aliyun.com```
 - 内网ntp服务器，一般路由器，或者AD服务器 可以作为ntp服务器
 
- 但这样的同步，只是强制性的将系统时间设置为ntp服务器时间。只是治标不治本。所以，一般配合cron命令，来进行定期同步设置。比如，在crontab中添加： 
+但这样的同步，只是强制性的将系统时间设置为ntp服务器时间。只是治标不治本。所以，一般配合cron命令，来进行定期同步设置。在crontab中添加： 
 ```0 12 *  * * /usr/sbin/ntpdate 192.168.0.1 ```
 
 
