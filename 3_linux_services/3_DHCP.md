@@ -74,7 +74,21 @@ DHCP获取到的IP地址都有一个租约，租约过期后，DHCP Server将回
 - 安装```yum -y install dhcp```
 - 主配置文件：/etc/dhcp/dhcpd.conf，DHCP主程序包安装好后会自动生成主配置文件的范本文件/usr/share/doc/dhcp-4.1.1/dhcpd.conf.sample
 
-## 2.1 配置文件/etc/dhcp/dhcpd.conf	部分配置解释
+## 2.1 配置
+
+```shell
+[root@server162 html]# vim /etc/dhcp/dhcpd.conf 
+    #
+    # DHCP Server Configuration file.
+    #   see /usr/share/doc/dhcp*/dhcpd.conf.example
+    #   see dhcpd.conf(5) man page
+    #
+```
+
+
+
+
+/etc/dhcp/dhcpd.conf	部分配置解释
 ```shell
 # option definitions common to all supported networks...      # 定义全局配置，通用于所有支持的网络选项.
 
