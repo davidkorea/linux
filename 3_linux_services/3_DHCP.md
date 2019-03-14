@@ -88,3 +88,20 @@ netstat nlutp | grep dhcp     # 查看端口
 ```
 
 客户端也要添加一个网卡vmnet4/5/6/...可以随便选，但是需要和服务器在一个网段，网卡名称不重要，重要的是配置ip在同一网段
+```shell
+[root@xuegod64 network-scripts]# vim ifcfg-ens35
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="dhcp"    ##改成dhcp模式，删除ip地址
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+NAME="ens35"
+UUID="5e02ab66-a084-404a-bb4c-50bf47bd1bd5"   # 删除不删除无所谓
+DEVICE="ens35"
+ONBOOT="yes"
+
+重启网卡:
+
+[root@xuegod64 network-scripts]# ifdown ens35 && ifup ens35
+```
