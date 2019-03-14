@@ -74,7 +74,7 @@ DHCP获取到的IP地址都有一个租约，租约过期后，DHCP Server将回
 - 安装```yum -y install dhcp```
 - 主配置文件：/etc/dhcp/dhcpd.conf，DHCP主程序包安装好后会自动生成主配置文件的范本文件/usr/share/doc/dhcp-4.1.1/dhcpd.conf.sample
 
-## 2.1 配置
+## 2.1 配置DHCP Server
 1. 配置dhcpd.conf文件
 ```shell
 [root@server162 ~]# vim /etc/dhcp/dhcpd.conf 
@@ -91,6 +91,8 @@ cp: overwrite '/etc/dhcp/dhcpd.conf'? y
 ```
 3. 真正配置时，清空里面全部内容，全部手写下面内容即可
 ```shell
+[root@server162 ~]# cp /etc/dhcp/dhcpd.conf /etc/dhcp/dhcpd.conf.bak     # 清空之前，先备份一下
+
 [root@server162 ~]# > /etc/dhcp/dhcpd.conf 
 [root@server162 ~]# vim /etc/dhcp/dhcpd.conf 
     subnet 192.168.1.0 netmask 255.255.255.0 {
@@ -103,12 +105,38 @@ cp: overwrite '/etc/dhcp/dhcpd.conf'? y
             max-lease-time 7200;
     }
 ```
+4. VM添加网卡vmnet4
+```
+[root@server162 ~]# ifconfig ens39 down
+[root@server162 ~]# ifconfig ens39 up
+[root@server162 ~]# ifconfig ens39 192.168.1.10/24      # 给新添加网卡配置192.168.1.*网段的一个ip
+[root@server162 ~]# ifconfig ens39
+ens39: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.1.10  netmask 255.255.255.0  broadcast 192.168.1.255
+        inet6 fe80::7b96:753a:53a:c9b3  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:57:73:3c  txqueuelen 1000  (Ethernet)
+        RX packets 2027533  bytes 162150877 (154.6 MiB)
+        RX errors 0  dropped 294498  overruns 0  frame 0
+        TX packets 126  bytes 18061 (17.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+5. 启动dhcpd服务
+```
+[root@server162 ~]# systemctl enable dhcpd
+Created symlink from /etc/systemd/system/multi-user.target.wants/dhcpd.service to /usr/lib/systemd/system/dhcpd.service.
+[root@server162 ~]# systemctl is-enabled dhcpd
+enabled
+[root@server162 ~]# systemctl start dhcpd
+```
+注意在写好配置文件之前，不要启动服务。因为网卡目前是192.168.0.162，dhcp要负责sutnet为192.168.1.*，肯定会启动不成功。自己0都不在自己要控制的网段1里面，要再创建一个网卡vmnet4，配置好1网段的ip，再启动写好的配置文件的服务
 
+## 2.2 配置DHCP Client
+1. VM添加网卡vmnet4（这个可以随便选），但是IP要和服务器是同一个1网段下面
 
+2. 复制一份网卡配置文件
+```
 
-
-
-
+```
 
 
 
