@@ -132,7 +132,20 @@ enabled
 
 ## 2.2 配置DHCP Client
 1. VM添加网卡vmnet4（这个可以随便选），但是IP要和服务器是同一个1网段下面
-
+**其实此时已经获取来192.168.1.100这个网址**，虽然还没有ifcfg-ens38这个网卡配置文件
+```
+[root@client163 ~]# ls /etc/sysconfig/network-scripts/ifcfg-ens*
+/etc/sysconfig/network-scripts/ifcfg-ens33
+```
+```
+[root@client163 ~]# ip a
+5: ens38: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:ce:03:2f brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.100/24 brd 192.168.1.255 scope global noprefixroute dynamic ens38
+       valid_lft 135sec preferred_lft 135sec
+    inet6 fe80::eff8:e943:6350:7aa5/64 scope link noprefixroute 
+       valid_lft forever preferred_lft forever
+```
 2. 复制一份网卡配置文件
 ```
 
