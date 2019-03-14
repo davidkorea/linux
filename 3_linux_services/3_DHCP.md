@@ -38,8 +38,9 @@
 4. DHCP可以说是BOOTP的增强版本，它分为两个部分：一个是服务器端，而另一个是客户端。所有的IP网络设定数据都由DHCP服务器集中管理，并负责处理客户端的DHCP要求；而客户端则会使用从服务器分配下来的IP环境数据。比较BOOTP, DHCP透过“租约”的概念，有效且动态的分配客户端的TCP/IP设定，而且，作为兼容考虑，DHCP也完全照顾了BOOTP Client的需求。
 
 ### 1. DHCP服务运行原理
-1. DHCP Client发现阶段
-    即DHCP客户端寻找DHCP服务端的过程，对应于客户端发送DHCP Discovery，因为DHCP Server对应于DHCP客户端是未知的，所以DHCP 客户端发出的DHCP Discovery报文是广播包，源地址为0.0.0.0目的地址为255.255.255.255。网络上的所有支持TCP/IP的主机都会收到该DHCP Discovery报文，但是只有DHCP Server会响应该报文。
+- 1. DHCP Client发现阶段
+
+即DHCP客户端寻找DHCP服务端的过程，对应于客户端发送DHCP Discovery，因为DHCP Server对应于DHCP客户端是未知的，所以DHCP 客户端发出的DHCP Discovery报文是广播包，源地址为0.0.0.0目的地址为255.255.255.255。网络上的所有支持TCP/IP的主机都会收到该DHCP Discovery报文，但是只有DHCP Server会响应该报文。
     
 注意：客户端执行DHCP DISCOVER 后，如果没有DHCP 服务器响应客户端的请求，客户端会随机使用169.254.0.0/16 网段中的一个IP 地址配置本机地址。
 
