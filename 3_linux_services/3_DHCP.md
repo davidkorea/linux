@@ -86,3 +86,5 @@ systemctl start dhcpd
 ps aux | grep dhcp    # 查看进程
 netstat nlutp | grep dhcp     # 查看端口
 ```
+
+客户端也要添加一个网卡vmnet4/5/6/...可以随便选，但是需要和服务器在一个网段，网卡名称不重要，重要的是配置ip在同一网段
