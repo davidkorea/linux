@@ -133,9 +133,28 @@ drwxr-xr-x 2 ftp ftp 6 Oct 31 03:45 /var/ftp/pub/
 - 此时可以上传，创建文件。但是删除和重命名并不允许
 ![](https://i.loli.net/2019/03/15/5c8b23079b53a.png)
 
-#### 3. anon_other_write_enable=YES
+#### 3. 开启匿名用户全部权限 anon_other_write_enable=YES
+> **Issue**
+> [root@server162 ~]# systemctl start vsftpd
+> Mar 15 13:15:07 server162 vsftpd[32918]: 500 OOPS: bad bool value in config file for: anon_other_write_enable
+> 
+> 配置文件中的有效行，每行命令的任何地方不许有空格，=前后，命令结尾YES后，都不可以
 
+```
+[root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
 
+ 29 anon_upload_enable=YES
+ 30 #
+ 31 # Uncomment this if you want the anonymous FTP user to be able to create
+ 32 # new directories.
+ 33 anon_mkdir_write_enable=YES
+ 34 anon_other_write_enable=YES       # 默认没有这一行命令，手动添加
+ 
+[root@server162 ~]# systemctl start vsftpd
+```
+此时可以删除，重命名文件。但是这个参数对匿名用户来说权限太大,不安全，均衡使用这个参数
+
+注意，默认匿名用户家目录的权限是755，这个权限是不能改变的。切记！
 
 
 ## 1.4 实战：用户名密码方式访问VSFTP
