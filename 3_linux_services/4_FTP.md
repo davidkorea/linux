@@ -361,7 +361,7 @@ ll /etc/vsftpd/.sslkey/vsftpd.pem
     
 - 注意: 在工作中,内网FTP传输,可以不用证书加密传输。**如果FTP服务器在公网,为了数据的安全性,就一定要配置证书加密传输**
  
-      
+- ```[root@server100 ~]# openssl x509 -inform pem -in vsftpd.pem -outform der -out vsftpd.cer```
             
 # 2. NFS network file system
 
