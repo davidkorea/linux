@@ -272,9 +272,6 @@ FTP与HTTP一样缺省状态都是基于明文传输，希望FTP服务器端与�
   - newkey - 指定证书密钥处理器。
   - keyout - 设置密钥存储文件。
   - out - 设置证书存储文件，注意证书和密钥都保存在一个相同的文件  
-    ```SHELL
-    openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem -days 3560
-    ```
   
 ```shell
 [root@server162 ~]# openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem -days 3650
@@ -310,7 +307,41 @@ ll /etc/vsftpd/.sslkey/vsftpd.pem
 -r-------- 1 root root 3095 Mar 15 17:47 /etc/vsftpd/.sslkey/vsftpd.pem
 ```
 ### 3. 修改配置文件,支持SSL
-  
+```shell
+[root@server162 ~]# vim /etc/vsftpd/vsftpd.conf     # 手动添加下面命令
+
+  119 # config ssl, add below commands
+  120 ssl_enable=YES
+  121 allow_anon_ssl=NO
+  122 force_local_data_ssl=YES
+  123 force_local_logins_ssl=YES
+  124 force_anon_logins_ssl=YES
+  125 force_anon_data_ssl=YES
+  126 ssl_tlsv1=YES
+  127 ssl_sslv2=YES
+  128 ssl_sslv3=YES
+  129 require_ssl_reuse=NO
+  130 ssl_ciphers=HIGH
+  131 rsa_cert_file=/etc/vsftpd/.sslkey/vsftpd.pem
+  132 rsa_private_key_file=/etc/vsftpd/.sslkey/vsftpd.pem
+```
+- 参数解释： 
+  - 表示强制匿名用户使用加密登陆和数据传输
+    - ssl_enable=YES     #启用SSL支持
+    - allow_anon_ssl=NO 
+    - force_local_data_ssl=YES   
+    - force_local_logins_ssl=YES
+    - force_anon_logins_ssl=YES
+    - force_anon_data_ssl=YES
+  - ssl_tlsv1=YES   #指定vsftpd支持TLS v1[
+  - ssl_sslv2=YES   #指定vsftpd支持SSL v2
+  - ssl_sslv3=YES   #指定vsftpd支持SSL v3
+  - require_ssl_reuse=NO   #不重用SSL会话,安全配置项 
+  - ssl_ciphers=HIGH    #允许用于加密 SSL 连接的 SSL 算法。这可以极大地限制那些尝试发现使用存在缺陷的特定算法的攻击者
+  - rsa_cert_file=/etc/vsftpd/.sslkey/vsftpd.pem  #定义 SSL 证书和密钥文件的位置
+  - rsa_private_key_file=/etc/vsftpd/.sslkey/vsftpd.pem
+
+**注意:上面的配置项不要添加到vsftpd.conf 文件最后,否则启动报错**
   
   
   
