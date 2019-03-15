@@ -78,8 +78,8 @@ ftp 默认允许匿名登录，所以启动服务号可以直接登录，但是�
 [root@server162 ~]# systemctl start vsftpd
 [root@server162 ~]# systemctl enable vsftpd
 ```
-![](https://i.loli.net/2019/03/15/5c8b188f8512b.png)
-![](https://i.loli.net/2019/03/15/5c8b190e9bcfe.png)
+> ![](https://i.loli.net/2019/03/15/5c8b188f8512b.png)
+> ![](https://i.loli.net/2019/03/15/5c8b190e9bcfe.png)
 
 ## 1.3 实战：匿名访问VSFTP
 ## 1.4 实战：用户名密码方式访问VSFTP
