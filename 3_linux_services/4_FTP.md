@@ -72,6 +72,14 @@ bin ... ...
 ```
 3. /etc/vsftpd/vsftpd.conf：vsftpd 的核心配置文件
 4. /etc/vsftpd/vsftpd_conf_migrate.sh：是vsftpd 操作的一些变量和设置脚本。/var/ftp/：默认情况下匿名用户的根目录
+### 3. 启动vsftp服务
+ftp 默认允许匿名登录，所以启动服务号可以直接登录，但是只读权限
+```
+[root@server162 ~]# systemctl start vsftpd
+[root@server162 ~]# systemctl enable vsftpd
+```
+![](https://i.loli.net/2019/03/15/5c8b188f8512b.png)
+![](https://i.loli.net/2019/03/15/5c8b190e9bcfe.png)
 
 ## 1.3 实战：匿名访问VSFTP
 ## 1.4 实战：用户名密码方式访问VSFTP
