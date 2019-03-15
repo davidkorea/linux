@@ -348,7 +348,17 @@ ll /etc/vsftpd/.sslkey/vsftpd.pem
 ![](https://i.loli.net/2019/03/15/5c8bc12d96622.png)
 ![](https://i.loli.net/2019/03/15/5c8bc12d9a04b.png)
 
-- 但是在ftp客户端链接到时候依旧可以选择使用无证书加密到方式链接。是否使用ssl认证和客户端配置有关系，如上图配置
+- [X]但是在ftp客户端链接到时候依旧可以选择使用无证书加密到方式链接。是否使用ssl认证和客户端配置有关系，如上图配置
+  - NO,NO,NO 不是这样的，ftp服务器开启了使用ssl，所以浏览器，windows资源管理器无法访问。只能用专门的客户端来ssl链接ftp
+  - linux lftp 需要做如下更改，才可以正常访问
+    ```shell
+    [root@client12 ~]# vim /etc/lftp.conf 
+
+      8 # add this command
+      9 set ssl:verify-certificate no
+    ```
+
+    
 - 注意: 在工作中,内网FTP传输,可以不用证书加密传输。**如果FTP服务器在公网,为了数据的安全性,就一定要配置证书加密传输**
  
       
