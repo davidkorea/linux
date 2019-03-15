@@ -35,7 +35,7 @@
     - 随着WWW的广泛流行，许多人习惯用web浏览器作为FTP客户端。大多数浏览器只在访问ftp:// 这样的URL时才支持被动模式。这到底是好还是坏取决于服务器和防火墙的配置。
 
 ## 1.2 安装配置VSFTP
-
+### 1. 安装
 1. 服务端
 ```
 [root@server162 ~]# yum install vsftpd lftp -y
@@ -45,16 +45,33 @@
 [root@client163 ~]# yum install -y lftp
 ```
   从RHEL6开始，系统镜像中默认没有ftp客户端命令。取而代之的是lftp命令。lftp 是一个功能强大的下载工具，它支持访问文件的协议: ftp, ftps, http, https, hftp, fish.(其中ftps和https需要在编译的时候包含openssl库)。llftp的界面非常好一个shell: 有命令补全，历史记录，允许多个后台任务执行等功能，使用起来非常方便。它还有书签、排队、镜像、断点续传、多进程下载等功能。
-3. 配置文件
+### 2. 配置文件
 ```
 [root@server162 ~]# ls /etc/vsftpd/
 ftpusers                vsftpd.conf             
 user_list               vsftpd_conf_migrate.sh  
 ```
-- /etc/vsftpd/vsftpd.conf：vsftpd 的核心配置文件
-- /etc/vsftpd/ftpusers：用于指定哪些用户不能访问FTP 服务器。  黑名单
-- /etc/vsftpd/user_list：指定允许使用vsftpd 的用户列表文件。  userlist_deny= YES（默认）绝不允许在这个文件中的用户登录ftp，甚至不提示输入密码prompt 提示
-
+1. /etc/vsftpd/ftpusers：用于指定哪些用户不能访问FTP 服务器。  黑名单
+```
+[root@server162 ~]# cat /etc/vsftpd/ftpusers 
+# Users that are not allowed to login via ftp
+root
+bin ... ...
+```
+2. /etc/vsftpd/user_list：可以用来允许使用vsftpd 的用户列表文件的白名单。但userlist_deny= YES（默认）不允许在这个文件中的用户登录ftp，甚至不提示输入密码prompt 提示
+```
+[root@server162 ~]# cat /etc/vsftpd/user_list 
+# vsftpd userlist
+# If userlist_deny=NO, only allow users in this file
+# If userlist_deny=YES (default), never allow users in this file, and # 其实默认也是黑名单
+# do not even prompt for a password.
+# Note that the default vsftpd pam config also checks /etc/vsftpd/ftpusers
+# for users that are denied.
+root
+bin ... ...
+```
+3. /etc/vsftpd/vsftpd.conf：vsftpd 的核心配置文件
+4. /etc/vsftpd/vsftpd_conf_migrate.sh：是vsftpd 操作的一些变量和设置脚本。/var/ftp/：默认情况下匿名用户的根目录
 
 ## 1.3 实战：匿名访问VSFTP
 ## 1.4 实战：用户名密码方式访问VSFTP
