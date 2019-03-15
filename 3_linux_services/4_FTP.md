@@ -73,7 +73,7 @@ bin ... ...
 3. /etc/vsftpd/vsftpd.conf：vsftpd 的核心配置文件
 4. /etc/vsftpd/vsftpd_conf_migrate.sh：是vsftpd 操作的一些变量和设置脚本。/var/ftp/：默认情况下匿名用户的根目录
 #### 3. 启动vsftp服务
-ftp 默认允许匿名登录，所以启动服务号可以直接登录，但是只读权限
+ftp 默认允许匿名登录，所以启动服务号可以直接登录，但是只读权限/var/ftp/pub/
 1. 服务端启动服务
 ```
 [root@server162 ~]# systemctl start vsftpd
@@ -97,10 +97,34 @@ drwxr-xr-x    2 0      0       6 Oct 30 19:45 pub
 > 
 > 分析：允许所有员工上传和下载文件需要设置成允许匿名用户登录并且需要将允许匿名用户上传功能, anon_mkdir_write_enable可以控制是否允许匿名用户创建目录。
 
+1. 更改配置文件
+```shell
+[root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
 
+ 29 anon_upload_enable=YES        # 取消掉此行注释#
+ 30 #
+ 31 # Uncomment this if you want the anonymous FTP user to be able to create
+ 32 # new directories.
+ 33 anon_mkdir_write_enable=YES   # 取消掉此行注释#
+```
+2. 更改ftp文件目录读写权限
+虽然ftp的配置文件已经允许匿名用户上传和写入文件，但是文件目录的权限不允许拥有者之外有写入权限
+```
+[root@server162 ~]# ll -d /var/ftp/pub/
+drwxr-xr-x 2 root root 6 Oct 31 03:45 /var/ftp/pub/
+```
+所以需要加入ftp服务用户的写入权限，首先查看哪些用户在使用ftp服务
+```
+[root@server162 ~]# ps aux | grep vsftpd
+root     16334  0.0  0.0  53272   724 ?        Ss   11:39   0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+nobody   17004  0.0  0.0  55396  1484 ?        Ss   11:40   0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ftp      17006  0.0  0.0  57504  1480 ?        S    11:40   0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+root     21032  0.0  0.0 112680   700 pts/2    S+   11:44   0:00 grep --color=auto vsftpd
+```
 
 ## 1.4 实战：用户名密码方式访问VSFTP
 
+-----
 
 1. 支持匿名传输 在pub目录下 
   -  配置文件给匿名权限
