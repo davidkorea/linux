@@ -231,15 +231,17 @@ ls: Login failed: 530 Login incorrect.                  # 报错！！
 lftp team1@192.168.0.162:~> 
 ```
 2. windows 同样一致显示登录界面
-![](https://i.loli.net/2019/03/15/5c8b582663319.png)
 
--【fixed】参考：[ftp vsftpd 530 login incorrect 解决办法汇总](https://blog.csdn.net/wlchn/article/details/50855447)
-查看vsftp配置文件中pam服务名称=vsftp，正确
+  ![](https://i.loli.net/2019/03/15/5c8b582663319.png)
+
+#### Issue：Login failed: 530 Login incorrect.  
+【fixed】参考：[ftp vsftpd 530 login incorrect 解决办法汇总](https://blog.csdn.net/wlchn/article/details/50855447)
+- 查看vsftp配置文件中pam服务名称=vsftp，正确
 ```
 [root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
   129 pam_service_name=vsftpd
 ```
-去到/etc/pam.d/vsftpd，注释掉第四行#auth  required    pam_shells.so
+- 去到/etc/pam.d/vsftpd，注释掉第四行#auth  required    pam_shells.so
 ```
 [root@server162 ~]# vim /etc/pam.d/vsftpd 
 
@@ -252,9 +254,9 @@ lftp team1@192.168.0.162:~>
   7 session    required     pam_loginuid.so
   8 session    include      password-auth
 ```
-重启vsftpd服务，客户端登录成功
+- 重启vsftpd服务，客户端登录成功
 
-
+  ![](https://i.loli.net/2019/03/15/5c8b5a2a482bb.png)
 -----
 
 
