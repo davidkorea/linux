@@ -97,7 +97,7 @@ drwxr-xr-x    2 0      0       6 Oct 30 19:45 pub
 > 
 > 分析：允许所有员工上传和下载文件需要设置成允许匿名用户登录并且需要将允许匿名用户上传功能, anon_mkdir_write_enable可以控制是否允许匿名用户创建目录。
 
-1. 更改配置文件
+#### 1. 更改配置文件
 ```shell
 [root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
 
@@ -107,13 +107,16 @@ drwxr-xr-x    2 0      0       6 Oct 30 19:45 pub
  32 # new directories.
  33 anon_mkdir_write_enable=YES   # 取消掉此行注释#
 ```
-2. 更改ftp文件目录读写权限
-虽然ftp的配置文件已经允许匿名用户上传和写入文件，但是文件目录的权限不允许拥有者之外有写入权限
+#### 2. 更改ftp文件目录读写权限
+- 虽然ftp的配置文件已经允许匿名用户上传和写入文件，但是文件目录的权限不允许拥有者之外有写入权限
 ```
 [root@server162 ~]# ll -d /var/ftp/pub/
 drwxr-xr-x 2 root root 6 Oct 31 03:45 /var/ftp/pub/
 ```
-所以需要加入ftp服务用户的写入权限，首先查看哪些用户在使用ftp服务
+- 所以需要加入ftp服务使用用户的写入权限。首先查看哪些用户在使用ftp服务
+  - root拥有文件目录，不用管
+  - nobody是匿名用户
+  - ftp是ftp服务使用的账户
 ```
 [root@server162 ~]# ps aux | grep vsftpd
 root     16334  0.0  0.0  53272   724 ?        Ss   11:39   0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
@@ -121,6 +124,19 @@ nobody   17004  0.0  0.0  55396  1484 ?        Ss   11:40   0:00 /usr/sbin/vsftp
 ftp      17006  0.0  0.0  57504  1480 ?        S    11:40   0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
 root     21032  0.0  0.0 112680   700 pts/2    S+   11:44   0:00 grep --color=auto vsftpd
 ```
+- 将目录/var/ftp/pub/的主组完全转给用户ftp
+```
+[root@server162 ~]# chown ftp.ftp /var/ftp/pub/     # chown ftp:ftp /var/ftp/pub
+[root@server162 ~]# ll -d /var/ftp/pub/
+drwxr-xr-x 2 ftp ftp 6 Oct 31 03:45 /var/ftp/pub/
+```
+- 此时可以上传，创建文件。但是删除和重命名并不允许
+![](https://i.loli.net/2019/03/15/5c8b23079b53a.png)
+
+#### 3. anon_other_write_enable=YES
+
+
+
 
 ## 1.4 实战：用户名密码方式访问VSFTP
 
