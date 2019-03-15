@@ -1,4 +1,16 @@
-# FTP
+# FTP & NFS
+
+# 1. FTP(vsftp)
+## 1.1 VSFTP服务器概述
+- FTP服务器（File Transfer Protocol Server）是在互联网上提供文件存储和访问服务的计算机，它们依照FTP协议提供服务。
+- 常见FTP服务器：
+  - windows：Serv-U FTP Server，filezilla_server
+  - Linux：ProFTPD:（Professional FTP daemon）一个Unix平台上或是类Unix平台上（如Linux, FreeBSD等）的FTP服务器程序。
+
+## 1.2 安装配置VSFTP
+## 1.3 实战：匿名访问VSFTP
+## 1.4 实战：用户名密码方式访问VSFTP
+
 
 1. 支持匿名传输 在pub目录下 
   -  配置文件给匿名权限
