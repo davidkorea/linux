@@ -35,6 +35,18 @@
     - 随着WWW的广泛流行，许多人习惯用web浏览器作为FTP客户端。大多数浏览器只在访问ftp:// 这样的URL时才支持被动模式。这到底是好还是坏取决于服务器和防火墙的配置。
 
 ## 1.2 安装配置VSFTP
+
+1. 服务端
+  ```
+  [root@server162 ~]# yum install vsftp lftp -y
+  ```
+2. 客户端
+  ```
+  [root@client163 ~]# yum install -y lftp
+  ```
+  从RHEL6开始，系统镜像中默认没有ftp客户端命令。取而代之的是lftp命令。lftp 是一个功能强大的下载工具，它支持访问文件的协议: ftp, ftps, http, https, hftp, fish.(其中ftps和https需要在编译的时候包含openssl库)。llftp的界面非常好一个shell: 有命令补全，历史记录，允许多个后台任务执行等功能，使用起来非常方便。它还有书签、排队、镜像、断点续传、多进程下载等功能。
+
+
 ## 1.3 实战：匿名访问VSFTP
 ## 1.4 实战：用户名密码方式访问VSFTP
 
