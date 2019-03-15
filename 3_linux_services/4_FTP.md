@@ -77,6 +77,8 @@ ftp 默认允许匿名登录，所以启动服务号可以直接登录，但是�
 ```
 [root@server162 ~]# systemctl start vsftpd
 [root@server162 ~]# systemctl enable vsftpd
+[root@server162 ~]# netstat -anutp | grep ftp   # 没有20号端口，是因为没有传输数据
+tcp6       0      0 :::21       :::*      LISTEN      38886/vsftpd   
 ```
 > ![](https://i.loli.net/2019/03/15/5c8b188f8512b.png)
 > ![](https://i.loli.net/2019/03/15/5c8b190e9bcfe.png)
