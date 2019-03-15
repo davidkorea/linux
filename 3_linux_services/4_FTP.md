@@ -139,6 +139,7 @@ drwxr-xr-x 2 ftp ftp 6 Oct 31 03:45 /var/ftp/pub/
 > Mar 15 13:15:07 server162 vsftpd[32918]: 500 OOPS: bad bool value in config file for: anon_other_write_enable
 > 
 > 配置文件中的有效行，每行命令的任何地方不许有空格，=前后，命令结尾YES后，都不可以
+> 参考 [vsftpd 500 OOPS: bad bool value in config file for: anon_world_readable_only](https://blog.csdn.net/zhaoyangjian724/article/details/45841655)
 
 ```
 [root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
