@@ -209,6 +209,21 @@ team1:x:1006:1006::/home/team1:/sbin/nologin
 ```
 [root@server162 ~]# vim /etc/vsftpd/chroot_list
   team1   # 一个用户名，一行
+```
+
+#### 4. 修改本地目录权限， 重启vsftpd服务使配置生效
+```
+[root@server162 ~]# ll -d /var/www/html/
+drwxrwxr-x+ 2 root root 4096 Mar 14 09:41 /var/www/html/
+[root@server162 ~]# chmod o+w /var/www/html/
+[root@server162 ~]# ll -d /var/www/html/
+drwxrwxrwx+ 2 root root 4096 Mar 14 09:41 /var/www/html/
+
+[root@server162 ~]# systemctl restart vsftpd
+```
+
+
+
 -----
 
     
