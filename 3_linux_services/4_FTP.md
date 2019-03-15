@@ -265,14 +265,17 @@ lftp team1@192.168.0.162:~>
 FTP与HTTP一样缺省状态都是基于明文传输，希望FTP服务器端与客户端传输保证安全，可以为FTP配置SSL
 
 #### 1. 使用OpenSSL生成自签证书
-OpenSSL 简单参数解释:
-- req - 是 X.509 Certificate Signing Request （CSR，证书签名请求）管理的一个命令。
-- x509 - X.509 证书数据管理。
-- days - 定义证书的有效日期。
-- newkey - 指定证书密钥处理器。
-- keyout - 设置密钥存储文件。
-- out - 设置证书存储文件，注意证书和密钥都保存在一个相同的文件
-
+- OpenSSL 简单参数解释:
+  - req - 是 X.509 Certificate Signing Request （CSR，证书签名请求）管理的一个命令。
+  - x509 - X.509 证书数据管理。
+  - days - 定义证书的有效日期。
+  - newkey - 指定证书密钥处理器。
+  - keyout - 设置密钥存储文件。
+  - out - 设置证书存储文件，注意证书和密钥都保存在一个相同的文件
+  
+```SHELL
+openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem -days 3560
+```
   
   
   
