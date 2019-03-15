@@ -74,11 +74,20 @@ bin ... ...
 4. /etc/vsftpd/vsftpd_conf_migrate.sh：是vsftpd 操作的一些变量和设置脚本。/var/ftp/：默认情况下匿名用户的根目录
 ### 3. 启动vsftp服务
 ftp 默认允许匿名登录，所以启动服务号可以直接登录，但是只读权限
+1. 服务端启动服务
 ```
 [root@server162 ~]# systemctl start vsftpd
 [root@server162 ~]# systemctl enable vsftpd
 [root@server162 ~]# netstat -anutp | grep ftp   # 没有20号端口，是因为没有传输数据
 tcp6       0      0 :::21       :::*      LISTEN      38886/vsftpd   
+```
+2. 客户端连接
+```
+[root@client163 ~]# lftp 192.168.0.162
+lftp 192.168.0.162:~> pwd
+ftp://192.168.0.162
+lftp 192.168.0.162:~> ls
+drwxr-xr-x    2 0      0       6 Oct 30 19:45 pub
 ```
 > ![](https://i.loli.net/2019/03/15/5c8b188f8512b.png)
 > ![](https://i.loli.net/2019/03/15/5c8b190e9bcfe.png)
