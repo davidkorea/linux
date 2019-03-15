@@ -160,26 +160,39 @@ drwxr-xr-x 2 ftp ftp 6 Oct 31 03:45 /var/ftp/pub/
     ![](https://i.loli.net/2019/03/15/5c8b390455f9e.png)
 
 #### 4. 创建一个公司上传用的目录
-下面我们来一步一步的实现,先修改目录权限,创建一个公司上传用的目录xeroxdata，,设置拥有者为ftp用户所有，目录权限是755。不允许删除，取消配置文件中的蚕食anon_other_write_enable=YES
+下面我们来一步一步的实现,先修改目录权限,创建一个公司上传用的目录xeroxdata,设置拥有者为ftp用户所有，目录权限是755。不允许删除，取消配置文件中的参数anon_other_write_enable=YES
 ```
 [root@server162 ~]# mkdir /var/ftp/xeroxdata
 [root@server162 ~]# chown ftp:ftp /var/ftp/xeroxdata/
 [root@server162 ~]# ll -d /var/ftp/xeroxdata/
 drwxr-xr-x 2 ftp ftp 6 Mar 15 13:37 /var/ftp/xeroxdata/
 ```
-
+**强烈部件是使用匿名用户**
 
 ## 1.4 实战：用户名密码方式访问VSFTP
 
+> 公司内部现在有一台FTP和WEB服务器，FTP 的功能主要用于维护公司的网站内容，包括上传文件、创建目录、更新网页等等。公司现有两个部门负责维护任务，他们分别适用team1 和team2帐号进行管理。先要求仅允许team1 和team2 帐号登录FTP 服务器，但不能登录本地系统，并将这两个帐号的根目录限制为/var/www/html，不能进入该目录以外的任何目录。
+> 
+> 分析：将FTP 和WEB 服务器做在一起是企业经常采用的方法，这样方便实现对网站的维护，为了增强安全性，首先需要使用仅允许本地用户访问，并禁止匿名用户登录。其次使用chroot 功能将team1和team2 锁定在/var/www/html 目录下。如果需要删除文件则还需要注意本地权限
+
+#### 1. 创建一个系统用户，但是不允许登录服务器
+```
+[root@server162 ~]# useradd -s /sbin/nologin team1
+[root@server162 ~]# echo "11111" | passwd --stdin team1
+Changing password for user team1.
+passwd: all authentication tokens updated successfully.
+
+[root@server162 ~]# tail -2 /etc/passwd       # 确认权限，的确服务使用的账号都是nologin，不熏晕登录服务器的
+dhcpd:x:177:177:DHCP server:/:/sbin/nologin
+team1:x:1006:1006::/home/team1:/sbin/nologin
+```
+#### 2. 配置vsftpd.conf
+
+
+
+
 -----
 
-1. 支持匿名传输 在pub目录下 
-  -  配置文件给匿名权限
-  - /var/ftp/pub 改主组权限chown ftp.ftp /ver/ftp/pub 才可以上传
-  - 如果不知道当前服务是哪个用户在哦运行，那么目录权限全部改了 755 或766，一般766就够了
-    - 其实可以ps aux | grep vsftp 来查看当前服务是哪个用户在使用
-  - anom_other_write_enable=YES 不建议这个开启
-    - 一般情况下 匿名用户 只读，执行，写，删除权限不可有
     
 2. 系统用户
   - ftp web一起使用，为了安全 
