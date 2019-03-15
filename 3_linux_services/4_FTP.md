@@ -345,9 +345,11 @@ ll /etc/vsftpd/.sslkey/vsftpd.pem
   
 #### 4. 配置FileZilla客户端验证
 
+![](https://i.loli.net/2019/03/15/5c8bc12d96622.png)
+![](https://i.loli.net/2019/03/15/5c8bc12d9a04b.png)
 
 
-
+注意: 在工作中,内网FTP传输,可以不用证书加密传输。**如果FTP服务器在公网,为了数据的安全性,就一定要配置证书加密传输**
 
 ----- 
 
