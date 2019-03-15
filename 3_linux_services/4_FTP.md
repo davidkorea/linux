@@ -215,44 +215,49 @@ team1:x:1006:1006::/home/team1:/sbin/nologin
 ```
 [root@server162 ~]# ll -d /var/www/html/
 drwxrwxr-x+ 2 root root 4096 Mar 14 09:41 /var/www/html/
-[root@server162 ~]# chmod o+w /var/www/html/
+
+[root@server162 ~]# chmod -R o+w /var/www/html/
 [root@server162 ~]# ll -d /var/www/html/
 drwxrwxrwx+ 2 root root 4096 Mar 14 09:41 /var/www/html/
 
 [root@server162 ~]# systemctl restart vsftpd
 ```
+测试客户端登录
+1. lftp
+```shell
+[root@client163 ~]# lftp 192.168.0.162 -u team1,11111   # -u用户，用户名和密码用,隔开，不能有空格
+lftp team1@192.168.0.162:~> ls
+ls: Login failed: 530 Login incorrect.                  # 报错！！
+lftp team1@192.168.0.162:~> 
+```
+2. windows 同样一致显示登录界面
+![](https://i.loli.net/2019/03/15/5c8b582663319.png)
 
+-【fixed】参考：[ftp vsftpd 530 login incorrect 解决办法汇总](https://blog.csdn.net/wlchn/article/details/50855447)
+查看vsftp配置文件中pam服务名称=vsftp，正确
+```
+[root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
+  129 pam_service_name=vsftpd
+```
+去到/etc/pam.d/vsftpd，注释掉第四行#auth  required    pam_shells.so
+```
+[root@server162 ~]# vim /etc/pam.d/vsftpd 
+
+  1 #%PAM-1.0
+  2 session    optional     pam_keyinit.so    force revoke
+  3 auth       required     pam_listfile.so item=user sense=deny file=/etc/vsftpd/f    tpusers onerr=succeed
+  4 #auth       required    pam_shells.so
+  5 auth       include      password-auth
+  6 account    include      password-auth
+  7 session    required     pam_loginuid.so
+  8 session    include      password-auth
+```
+重启vsftpd服务，客户端登录成功
 
 
 -----
 
-    
-2. 系统用户
-  - ftp web一起使用，为了安全 
-  - 创建一个系统用户，但是不允许登陆服务器
-    - ```useradd -s /sbin/mologin team1```
-    - ```echo "11111" | passwd --stdin team
-    - 修改配置文件
-      ```
-      anonymous_enable=NO
-      local_enable=YES    # 允许系统创建的本地用户
-      101 local_root=/var/www/html      # 新添加这一样
-      102 chroot_list_enable=YES
-      104 chroot_list_file=/etc/vsftp/chroot_list   # 不存在，需要自己创建，要锁定用户的用户名
-      105 allow_writeable_chroot=YES      # 允许锁定的用户有写的权限
-      ```
-    - 创建名单
-      ```
-      vim /etc/vsftp/chroot_list
-      
-        team1   # 一个用户名，一行
-        team2
-      ```
-    - 创建限定的目录
-      ```
-      mkdir -p /var/www/html
-      chmod -R o+w /var/www/html    # a+w 全新啊有点大 
-      ```
+
 - FTP证书，当ftp服务器放在公网的时候，为了安全 。sftp 相比ftp 大文件传输特别慢
   - openssl req -new x509 -node -out vsftp.pem -keyout vsftp.pem -days 3650
   - mkdir /etc/vsftp/.sslkey # 吧pem文件拷贝到这个路径
