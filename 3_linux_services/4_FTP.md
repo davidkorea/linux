@@ -187,8 +187,22 @@ dhcpd:x:177:177:DHCP server:/:/sbin/nologin
 team1:x:1006:1006::/home/team1:/sbin/nologin
 ```
 #### 2. 配置vsftpd.conf
+```
+[root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
 
+ 12 anonymous_enable=NO             # 禁止匿名登录
 
+ 33 #anon_mkdir_write_enable=YES    # 注释掉之前的匿名权限，不注释也可以，上面已经全部禁止匿名来
+ 34 #anon_other_write_enable=YES
+
+102 #chroot_local_user=YES
+103 local_root=/var/www/html        # 新增这一行，指定ftp可以访问的本地目录
+104 chroot_list_enable=YES          # 激活chroot 功能
+105 # (default follows)
+106 chroot_list_file=/etc/vsftpd/chroot_list     # 此文件存放要锁定的用户名
+107 allow_writeable_chroot=YES      # 新增这一行，允许锁定的用户有写的权限
+108 #
+```
 
 
 -----
