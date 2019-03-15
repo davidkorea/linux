@@ -191,6 +191,8 @@ team1:x:1006:1006::/home/team1:/sbin/nologin
 [root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
 
  12 anonymous_enable=NO             # 禁止匿名登录
+ 16 local_enable=YES                # 允许系统创建的本地用户，默认已开启
+
 
  33 #anon_mkdir_write_enable=YES    # 注释掉之前的匿名权限，不注释也可以，上面已经全部禁止匿名来
  34 #anon_other_write_enable=YES
@@ -199,12 +201,14 @@ team1:x:1006:1006::/home/team1:/sbin/nologin
 103 local_root=/var/www/html        # 新增这一行，指定ftp可以访问的本地目录
 104 chroot_list_enable=YES          # 激活chroot 功能
 105 # (default follows)
-106 chroot_list_file=/etc/vsftpd/chroot_list     # 此文件存放要锁定的用户名
+106 chroot_list_file=/etc/vsftpd/chroot_list     # 此文件存放要锁定的用户名，不存在，需要自己创建
 107 allow_writeable_chroot=YES      # 新增这一行，允许锁定的用户有写的权限
 108 #
 ```
-
-
+#### 3. 建立/etc/vsftpd/chroot_list文件，添加team1 和team2 帐号
+```
+[root@server162 ~]# vim /etc/vsftpd/chroot_list
+  team1   # 一个用户名，一行
 -----
 
     
