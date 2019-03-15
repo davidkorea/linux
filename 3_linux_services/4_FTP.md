@@ -271,15 +271,45 @@ FTP与HTTP一样缺省状态都是基于明文传输，希望FTP服务器端与�
   - days - 定义证书的有效日期。
   - newkey - 指定证书密钥处理器。
   - keyout - 设置密钥存储文件。
-  - out - 设置证书存储文件，注意证书和密钥都保存在一个相同的文件
+  - out - 设置证书存储文件，注意证书和密钥都保存在一个相同的文件  
+    ```SHELL
+    openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem -days 3560
+    ```
   
-```SHELL
-openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem -days 3560
+```shell
+[root@server162 ~]# openssl req -new -x509 -nodes -out vsftpd.pem -keyout vsftpd.pem -days 3650
+Generating a 2048 bit RSA private key
+.....+++
+..........................................................................................................+++
+writing new private key to 'vsftpd.pem'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [XX]:Kr
+State or Province Name (full name) []:Seoul
+Locality Name (eg, city) [Default City]:Seoul
+Organization Name (eg, company) [Default Company Ltd]:Xerox
+Organizational Unit Name (eg, section) []:SBG
+Common Name (eg, your name or your server's hostname) []:server162
+Email Address []:ftp@server162.com
 ```
-  
-  
-  
-  
+#### 2. 创建证书文件存放目录
+```
+[root@server162 ~]# mkdir /etc/vsftpd/.sslkey                   # 创建隐藏路径
+
+[root@server162 ~]# cp vsftpd.pem /etc/vsftpd/.sslkey/          # 复制pem文件至隐藏路径
+
+[root@server162 ~]# chmod 400 /etc/vsftpd/.sslkey/vsftpd.pem    # 更改pem文件权限为400
+[root@server162 ~]# ll !$
+ll /etc/vsftpd/.sslkey/vsftpd.pem
+-r-------- 1 root root 3095 Mar 15 17:47 /etc/vsftpd/.sslkey/vsftpd.pem
+```
+### 3. 修改配置文件,支持SSL
   
   
   
