@@ -396,7 +396,13 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/nfs-server.serv
 root@server100 ~]# exportfs -rv      # 重读配置文件
 exporting 192.168.0.12:/share_nfs
 ```
-      
+#### 3. 客户端挂在
+```
+[root@client12 ~]# showmount -e 192.168.0.100       # 客户端在挂在之前先查看一下
+Export list for 192.168.0.100:
+/share_nfs 192.168.0.12
+
+```
       
       
       
