@@ -420,9 +420,21 @@ tmpfs                     394M   32K  394M    1% /run/user/0
 [root@client12 ~]# touch /nfs_share_100/{1,2}.txt
 touch: 无法创建"/nfs_share_100/1.txt": 权限不够
 touch: 无法创建"/nfs_share_100/2.txt": 权限不够
-
 ```
-      
+权限不够，在客户端无法创建文件，回到客户端添加write权限
+```
+[root@server100 ~]# ll -d /share_nfs/
+drwxr-xr-x 2 root root 25 3月  16 21:07 /share_nfs/
+
+[root@server100 ~]# chmod o+w /share_nfs/
+```
+再次回到客户端，创建成功
+```
+t@client12 ~]# ls /nfs_share_100/
+1.txt  2.txt
+```
+
+
       
       
       
