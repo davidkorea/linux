@@ -363,15 +363,27 @@ ll /etc/vsftpd/.sslkey/vsftpd.pem
  
 - ```[root@server100 ~]# openssl x509 -inform pem -in vsftpd.pem -outform der -out vsftpd.cer```
             
-# 2. NFS network file system
+# 2. 配置NFS服务器并实现开机自动挂载
 
-rpcbind
-nfc-utils
+NFS，是Network File System的简写，即网络文件系统。网络文件系统是FreeBSD支持的文件系统中的一种，也被称为NFS. NFS允许一个系统在网络上与他人共享目录和文件。通过使用NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件。RHEL7是以NFSv4作为默认版本，NFSv4使用TCP协议（端口号是2049）和NFS服务器建立连接
 
+![](https://i.loli.net/2019/03/16/5c8ce0a2b80fd.png)
+      
+#### 1. 安装rpcbind, nfs-utils
+```
+[root@server100 ~]# yum install -y rpcbind nfs-utils
 
-      
-      
-      
+[root@server100 ~]# systemctl start rpcbind
+[root@server100 ~]# systemctl start nfs-server.service 
+[root@server100 ~]# netstat -anutp | grep 2049
+tcp        0      0 0.0.0.0:2049            0.0.0.0:*               LISTEN      -                   
+tcp6       0      0 :::2049                 :::*                    LISTEN      -                   
+udp        0      0 0.0.0.0:2049            0.0.0.0:*                           -                   
+udp6       0      0 :::2049                 :::*                                -            
+
+[root@server100 ~]# systemctl enable nfs-server.service 
+Created symlink from /etc/systemd/system/multi-user.target.wants/nfs-server.service to /usr/lib/systemd/system/nfs-server.service.
+```
       
       
       
