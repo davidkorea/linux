@@ -396,7 +396,7 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/nfs-server.serv
 root@server100 ~]# exportfs -rv      # 重读配置文件
 exporting 192.168.0.12:/share_nfs
 ```
-#### 3. 客户端挂在
+#### 3. 客户端挂载
 ```
 [root@client12 ~]# showmount -e 192.168.0.100       # 客户端在挂在之前先查看一下
 Export list for 192.168.0.100:
@@ -440,7 +440,14 @@ t@client12 ~]# ls /nfs_share_100/
 -rw-r--r-- 1 nfsnobody nfsnobody 0 3月  16 21:10 1.txt
 -rw-r--r-- 1 nfsnobody nfsnobody 0 3月  16 21:10 2.txt
 ```
+#### 4. 客户端置开机自动挂载nfs共享
+```
+[root@client12 ~]# vim /etc/fstab 
+192.168.0.100:/share_nfs        /nfs_share_100  nfs     defaults        0 0
 
+[root@client12 ~]# mount -a
+```
+如果担心开机无法启动，可以写到/etc/rc.d/rc.local里面。具体怎么操作？？？？？
       
       
       
