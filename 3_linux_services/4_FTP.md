@@ -392,6 +392,9 @@ Created symlink from /etc/systemd/system/multi-user.target.wants/nfs-server.serv
 [root@server100 ~]# vim /etc/exports
   /share_nfs    192.168.0.12(rw)     # 先写上要共享出去都目录，后面跟允许访问都地址，再跟上括号和权限，ip和括号之间没有空格
                                      # IP地址或者写 192.168.0.0/24 即允许整个网段使用共享目录
+                                     
+root@server100 ~]# exportfs -rv      # 重读配置文件
+exporting 192.168.0.12:/share_nfs
 ```
       
       
