@@ -475,4 +475,27 @@ t@client12 ~]# ls /nfs_share_100/
 ```
 #### 2. NFS客户端参数 
 
-      
+NFS高并发环境下的服务端重要优化(mount -o 参数）
+
+- async 异步同步，此参数会提高I/O性能，但会降低数据安全（除非对性能要求很高，对数据可靠性不要求的场合。一般生产环境，不推荐使用）
+- noatime 取消更新文件系统上的inode访问时间,提升I/O性能，优化I/O目的，推荐使用。
+- nodiratime 取消更新文件系统上的directory inode访问时间，高并发环境，推荐显式应用该选项，提高系统性能
+- intr：可以中断不成功的挂载
+- rsize/wsize 读取（rsize）/写入（wsize）的区块大小（block size），这个设置值可以影响客户端与服
+务端传输数据的缓冲存储量。一般来说，如果在局域网内，并且客户端与服务端都具有足够的内存，这个
+值可以设置大一点，比如说32768（bytes）,提升缓冲区块将可提升NFS文件系统的传输能力。但设置的值也不要太大，最好是实现网络能够传输的最大值为限。
+- 内核优化： 
+  - net.core.wmem_default = 8388608     #内核默认读缓存
+  - net.core.rmem_default = 8388608      #内核默认写缓存
+  - net.core.rmem_max = 16777216        #内核最大读缓存
+  - net.core.wmem_max = 16777216	   #内核最大写缓存
+ 
+用法:
+```
+mount -t nfs -o noatime,nodiratime,rsize=131072,wsize=131072,intr 192.168.0.100:/share_nfs  /nfs_share_100
+```
+或者写到挂载文件里:
+```
+192.168.0.100:/share_nfs  /nfs_share_100      noatime,nodiratime,rsize=131072,wsize=131072,intr 0 0
+```
+
