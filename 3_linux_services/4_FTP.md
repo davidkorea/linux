@@ -456,7 +456,8 @@ t@client12 ~]# ls /nfs_share_100/
 - sync               资料同步写入到内存与硬盘当中，安全性
 - async             资料会先暂存于内存当中，而非直接写入硬盘，速度性
 - all_squash               共享文件的UID和GID映射匿名用户anonymous，适合公用目录。压制所有用户的权限，即不论使用哪个用户创建文件，最终都会是显示为nfsnobody。而root_squash是将root账户创建的问价压制为nfsnobody用户
-
+- root_squash             root用户的所有请求映射成如anonymous用户一样的权限（默认） 
+- no_root_squash        root用户具有根目录的完全管理访问权限，root创建的文件就保持为root的主组
       
       
       
