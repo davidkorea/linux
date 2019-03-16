@@ -402,6 +402,25 @@ exporting 192.168.0.12:/share_nfs
 Export list for 192.168.0.100:
 /share_nfs 192.168.0.12
 
+[root@client12 ~]# mkdir /nfs_share_100             # 创建挂载路径
+[root@client12 ~]# mount -t nfs 192.168.0.100:/share_nfs /nfs_share_100/    # 挂载
+[root@client12 ~]# df -h
+文件系统                  容量  已用  可用 已用% 挂载点
+/dev/sda2                  10G  4.6G  5.5G   46% /
+devtmpfs                  2.0G     0  2.0G    0% /dev
+tmpfs                     2.0G     0  2.0G    0% /dev/shm
+tmpfs                     2.0G   13M  2.0G    1% /run
+tmpfs                     2.0G     0  2.0G    0% /sys/fs/cgroup
+/dev/sda1                 197M  141M   56M   72% /boot
+tmpfs                     394M  4.0K  394M    1% /run/user/42
+tmpfs                     394M   32K  394M    1% /run/user/0
+/dev/sr0                  4.3G  4.3G     0  100% /run/media/root/CentOS 7 x86_64
+192.168.0.100:/share_nfs   10G  4.6G  5.5G   46% /nfs_share_100
+
+[root@client12 ~]# touch /nfs_share_100/{1,2}.txt
+touch: 无法创建"/nfs_share_100/1.txt": 权限不够
+touch: 无法创建"/nfs_share_100/2.txt": 权限不够
+
 ```
       
       
