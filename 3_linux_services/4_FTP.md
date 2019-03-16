@@ -370,7 +370,8 @@ ll /etc/vsftpd/.sslkey/vsftpd.pem
 NFS，是Network File System的简写，即网络文件系统。网络文件系统是FreeBSD支持的文件系统中的一种，也被称为NFS. NFS允许一个系统在网络上与他人共享目录和文件。通过使用NFS，用户和程序可以像访问本地文件一样访问远端系统上的文件。RHEL7是以NFSv4作为默认版本，NFSv4使用TCP协议（端口号是2049）和NFS服务器建立连接
 
 ![](https://i.loli.net/2019/03/16/5c8ce0a2b80fd.png)
-      
+## 2.1 搭建NFS服务器共享
+
 #### 1. 安装rpcbind, nfs-utils
 
 nfs依赖于rpcbind包，两个都要安装
@@ -450,8 +451,9 @@ t@client12 ~]# ls /nfs_share_100/
 [root@client12 ~]# mount -a
 ```
 如果担心开机无法启动，可以写到/etc/rc.d/rc.local里面。具体怎么操作？？？？？
-      
-#### 5. NFS共享的常用参数： 
+
+## 2.2 NFS调优
+#### 1. NFS服务端参数 
 
 - ro                    只读访问 
 - rw                   读写访问 
@@ -470,7 +472,7 @@ t@client12 ~]# ls /nfs_share_100/
 /tmp/a/async               192.168.3.0/255.255.255.0(async)
 /tmp/a/rw                  192.168.3.0/255.255.255.0(rw)    192.168.4.0/255.255.255.0(rw)
 /tmp/a/root_squash         *(rw,root_squash)    
-
 ```
-      
+#### 2. NFS客户端参数 
+
       
