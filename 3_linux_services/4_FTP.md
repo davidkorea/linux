@@ -387,7 +387,12 @@ udp6       0      0 :::2049                 :::*                                
 [root@server100 ~]# systemctl enable nfs-server.service 
 Created symlink from /etc/systemd/system/multi-user.target.wants/nfs-server.service to /usr/lib/systemd/system/nfs-server.service.
 ```
-      
+#### 2. 编辑配置文件 /etc/exports
+```
+[root@server100 ~]# vim /etc/exports
+  /share_nfs    192.168.0.12(rw)     # 先写上要共享出去都目录，后面跟允许访问都地址，再跟上括号和权限，ip和括号之间没有空格
+                                     # IP地址或者写 192.168.0.0/24 即允许整个网段使用共享目录
+```
       
       
       
