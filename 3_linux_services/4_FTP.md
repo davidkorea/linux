@@ -433,7 +433,13 @@ drwxr-xr-x 2 root root 25 3月  16 21:07 /share_nfs/
 t@client12 ~]# ls /nfs_share_100/
 1.txt  2.txt
 ```
-
+再次回到server查看在客户端创建都文件，发现文件都主组都为nfsnobody用户，所以可以知道，nfs服务默认是有nfsnobody用户来运行。所以刚才o+w的另一种实现方法是，把这个共享目录都主组直接更改为nfsnobody这个用户
+```
+[root@server100 ~]# ll /share_nfs/
+总用量 0
+-rw-r--r-- 1 nfsnobody nfsnobody 0 3月  16 21:10 1.txt
+-rw-r--r-- 1 nfsnobody nfsnobody 0 3月  16 21:10 2.txt
+```
 
       
       
