@@ -458,6 +458,17 @@ t@client12 ~]# ls /nfs_share_100/
 - all_squash               共享文件的UID和GID映射匿名用户anonymous，适合公用目录。压制所有用户的权限，即不论使用哪个用户创建文件，最终都会是显示为nfsnobody。而root_squash是将root账户创建的问价压制为nfsnobody用户
 - root_squash             root用户的所有请求映射成如anonymous用户一样的权限（默认） 
 - no_root_squash        root用户具有根目录的完全管理访问权限，root创建的文件就保持为root的主组
-      
+
+```
+# 示例
+/tmp/a/no_root_squash      *(rw,no_root_squash)       # *代表全网段，不同权限用，隔开
+/tmp/a/sync                192.168.0.0/24(rw,sync)
+/tmp/a/ro                  192.168.1.64(ro)
+/tmp/a/all_squash          192.168.0.0/24(rw,all_squash,anonuid=500,anongid=500)
+/tmp/a/async               192.168.3.0/255.255.255.0(async)
+/tmp/a/rw                  192.168.3.0/255.255.255.0(rw)    192.168.4.0/255.255.255.0(rw)
+/tmp/a/root_squash         *(rw,root_squash)    
+
+```
       
       
