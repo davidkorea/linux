@@ -370,6 +370,9 @@ NFS，是Network File System的简写，即网络文件系统。网络文件系�
 ![](https://i.loli.net/2019/03/16/5c8ce0a2b80fd.png)
       
 #### 1. 安装rpcbind, nfs-utils
+
+nfs依赖于rpcbind包，两个都要安装
+
 ```
 [root@server100 ~]# yum install -y rpcbind nfs-utils
 
