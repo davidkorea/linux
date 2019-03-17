@@ -2,9 +2,9 @@
 
 1. 虚拟化产品对比介绍
 2. 安装 KVM 虚拟机
-3. 实戓 1:配置 KVM 网络桥接功能
-4. 实戓 2:使用 KVM 安装虚拟机
-5. 实戓 3:解决 centos6 下 shutdown 关丌了 KVM 虚拟机的问题
+3. 实战 1:配置 KVM 网络桥接功能
+4. 实战 2:使用 KVM 安装虚拟机
+5. 实战 3:解决 centos6 下 shutdown 关丌了 KVM 虚拟机的问题
 
 # 1. 虚拟化产品对比介绍
 - 仿真虚拟化： [对系统硬件没有要求,性能最低] vmware
@@ -63,7 +63,7 @@ irqbypass              13503  1 kvm
 
 <img src="https://i.loli.net/2019/03/17/5c8dd96184df2.png" width="400" height="300" >
 
-# 3. 实戓1:配置 KVM 网络桥接功能
+# 3. 实战1: 配置 KVM 网络桥接功能
 
 ### 1. 安装网桥
 - 网桥: 我们经常所说的 Bridge 设备其实就是网桥设备，也就相当亍现在的二层交换机，用亍连接 同一网段内的所有机器，所以我们的目的就是将网络设备 eth0 添加到 br0，此时 br0 就成为了所谓的交 换机设备，我们物理机的 eth0 也是连接在上面的。添加桥接设备 br0, 相当亍一个二层交换机
@@ -144,7 +144,7 @@ bridge name	bridge id		STP enabled	interfaces
 br0		8000.000c29504e8f	no		ens33
 virbr0		8000.5254009c1b42	yes		virbr0-nic
 ```
-# 4. 实戓2: 创建一台 KVM 虚拟机
+# 4. 实战2: 创建一台 KVM 虚拟机
 
 ### 1. 创建一个分区，用亍存放安装好的 Linux 操作系统
 先删除之前创建的sdb1分区
@@ -205,7 +205,14 @@ The partition table has been altered!
 Calling ioctl() to re-read partition table.
 正在同步磁盘。
 ```
-
+格式化新分区
+```
+[root@server100 ~]# mkfs.xfs -f /dev/sdb1
+```
+挂载新分区
+```
+[root@server100 ~]# mount /dev/sdb1 /var/lib/libvirt/images/
+```
 
 
 
