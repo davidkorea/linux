@@ -229,6 +229,8 @@ virsh list                    #列出在运行的虚拟机
 virsh start centos7-71        #启劢 centos7-71 虚拟机
 virsh shutdown centos7-71     #关闭 centos7-71 虚拟机 
 virsh autostart centos7-71    #设置 centos7-71 虚拟机为物理机开机
+[root@localhost ~]# virsh autostart kvm_centos7 
+域 kvm_centos7标记为自动开始
 ```
 reboot 后，没有发现 kvm 虚拟机开机自劢启劢。原因是什么?
 
