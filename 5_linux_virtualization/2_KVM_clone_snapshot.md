@@ -106,11 +106,51 @@ autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
 VMware 的格式，整体性能最好，因为原本 VMware 就是做虚拟化起家。从性能和功能上来说，vmdk应该算最出色的，由于 vmdk 结合了 VMware 的很多能力，目前来看，KVM 和 XEN 使用这种格式的情况不是太多。但就 VMware 的企业级虚拟化 Esxi 来看，它的稳定性和各方面的能力都很好
 
 
+# 3. KVM 虚拟机快照功能使用方法
+- 快照的作用:1、热备 2、灾难恢复 3、回滚到历中的某个状态
+- 原理
+  1. 创建快照之前到磁盘空间，不再进行任何改动
+  2. 之后到任何操作都在磁盘分区到另一块空间进行
+  3. 恢复快照，就是恢复到创建快照时到那一块空间
+- kvm 快照，分两种:
+  - 方法 1:使用 lvm 快照，如果分区是 lvm，可以利用 lvm 迚行 kvm 的快照备份 
+  - 方法 2:使用 qcow2 格式的镜像创建快照
+### 3.1 创建 KVM 快照
+**要使用快照功能，磁盘格式必须为 qcow2。** 在 centos6 下，kvm 虚拟机默认使用 raw 格式的镜像格式，性能最好，速度最快，它的缺点就是不支持一些新的功能，如支持镜像,zlib 磁盘压缩,AES 加密等。
+1. 查看磁盘格式
+虽然clone 到时候，镜像命名为img，但实际上还是qcow2到格式
+```
+[root@localhost ~]# qemu-img info /var/lib/libvirt/images/clone_kvm_centos7.img 
+image: /var/lib/libvirt/images/clone_kvm_centos7.img
+file format: qcow2
+virtual size: 10G (10737418240 bytes)
+disk size: 1.2G
+cluster_size: 65536
+Format specific information:
+    compat: 1.1
+    lazy refcounts: true
+```
+2. 创建快照
+创建快照时丌需要关闭虚拟机，关机创建快照比较快，开机创建快照需要把内存中的内容写到磁盘上，记录虚拟机这一时刻的状态。
 
-
-
-
-
-
+- 语法: virsh snapshot-create 虚拟机的名字
+```
+[root@localhost ~]# virsh snapshot-create clone_kvm_centos7 
+已生成域快照 1552832632
+```
+- 创建快照时启个名字, 语法:virsh snapshot-create-as KVM 虚拟机名 快照名
+```
+[root@localhost ~]# virsh snapshot-create-as clone_kvm_centos7 snapshot_1
+已生成域快照 snapshot_1
+```
+3. 查看虚拟机镜像快照列表
+语法: virsh snapshot-list 虚拟机的名字
+```
+[root@localhost ~]# virsh snapshot-list clone_kvm_centos7 
+ 名称               生成时间              状态
+------------------------------------------------------------
+ 1552832632           2019-03-17 23:23:52 +0900 running
+ snapshot_1           2019-03-17 23:26:13 +0900 running
+```
 
 
