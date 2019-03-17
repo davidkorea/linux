@@ -24,6 +24,6 @@
 1. 把虚拟机内存调成 2G 以上，因为我们要在 VMware 虚拟中安装 KVM,然后在 KVM 中再安装虚拟机
 2. 开启虚拟化支持
 <p align="center">
-    <img src="https://i.loli.net/2019/03/17/5c8dd55b85c0e.png" alt="Sample"  width="500" height="280">
+    <img src="https://i.loli.net/2019/03/17/5c8dd55b85c0e.png" alt="Sample"  width="500" height="380">
 </p>
 3. 添加一个 20G 的硬盘，用亍存 KVM 虚拟机
