@@ -58,6 +58,9 @@ autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
 ```
 ![](https://i.loli.net/2019/03/17/5c8e50c73b6c1.png)
 
+### 1.4 测试克隆机器
+打开后，可以正常联网，不用做额外操作
+![](https://i.loli.net/2019/03/17/5c8e52eb5f097.png)
 
 
 
