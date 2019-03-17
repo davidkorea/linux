@@ -61,6 +61,7 @@ irqbypass              13503  1 kvm
 ```
 ### 3. 使用virt-manager命令建立虚拟机
 
-
-
+<p align='center'>
+  <img src="https://i.loli.net/2019/03/17/5c8dd96184df2.png" width="300" height="550"  />
+</p>
 
