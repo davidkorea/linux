@@ -214,7 +214,16 @@ Calling ioctl() to re-read partition table.
 [root@server100 ~]# mount /dev/sdb1 /var/lib/libvirt/images/
 ```
 
+### 2. 创建KVM虚拟机
 
+### ISSUE：系统根目录爆满，无法拷贝iso镜像
+
+先拷贝安装iso到目录/var/lib/libvirt/images/
+```
+[root@server100 ~]# cd /var/lib/libvirt/images/
+[root@server100 images]# ls
+CentOS-7-x86_64-DVD-1810.iso
+```
 
 
 
