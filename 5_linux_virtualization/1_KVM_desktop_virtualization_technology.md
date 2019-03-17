@@ -96,5 +96,15 @@ irqbypass              13503  1 kvm
   IPV6_PRIVACY="no"
   BRIDGE="br0"            # 添加这一行，删除所有IPV4 IPADDR，NETMASK，GATEWAY，DNS1
 ```
-
-
+生成桥设备的配置文件
+```
+TYPE="Bridge"             # 设备类型为bridge
+DEVICE="br0"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+BOOTPROTO=none
+IPADDR=192.168.0.100
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.1
+DNS1=8.8.8.8
+```
