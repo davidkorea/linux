@@ -69,7 +69,7 @@ autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
     [root@xuegod63 ~]# rm -rf /etc/udev/rules.d/70-persistent-*
     [root@xuegod63 ~]#vim /etc/sysconfig/network-scripts/ifcfg-eth0 #写入以下内容
     ```
-    ![](https://i.loli.net/2019/03/17/5c8e53eb90c5e.png)
+    <img src="https://i.loli.net/2019/03/17/5c8e53eb90c5e.png" height="100" width="180">
     注: 记得把 ONBOOT="no" 改为: ONBOOT="yes"
     注: 把原配置文件中的 MAC 和 UUID 地址删除，然后修改一个和原虚拟机不一样的 IP，reboot #重启生效
   - 方法 2
