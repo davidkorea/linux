@@ -174,9 +174,37 @@ Format specific information:
 
 ## 3.2 恢复虚拟机快照
 
+恢复虚拟机快照必须关闭虚拟机。注:阿里云也需要关闭后再恢复快照
 
+```
+[root@localhost ~]# virsh domstate clone_kvm_centos7      # 确认已经关闭
+关闭
 
+[root@localhost ~]# virsh snapshot-revert clone_kvm_centos7 snapshot_1 
+```
 
+## 3.3 删除快照
+```
+[root@localhost ~]# virsh snapshot-list clone_kvm_centos7               # 查看有哪些快照
+ 名称               生成时间              状态
+------------------------------------------------------------
+ 1552832632           2019-03-17 23:23:52 +0900 running
+ snapshot_1           2019-03-17 23:26:13 +0900 running
 
+[root@localhost ~]# virsh snapshot-delete clone_kvm_centos7 1552832632  # 删除快照
+已删除域快照 1552832632
 
+[root@localhost ~]# qemu-img info /var/lib/libvirt/images/clone_kvm_centos7.img 
+image: /var/lib/libvirt/images/clone_kvm_centos7.img
+file format: qcow2
+virtual size: 10G (10737418240 bytes)
+disk size: 1.5G
+cluster_size: 65536
+Snapshot list:
+ID        TAG                 VM SIZE                DATE       VM CLOCK
+2         snapshot_1             311M 2019-03-17 23:26:13   00:32:19.200
+Format specific information:
+    compat: 1.1
+    lazy refcounts: true
+```
 
