@@ -32,3 +32,19 @@
   - Intel: ```cat /proc/cpuinfo | grep --color vmx```
   
   - AMD: ```cat /proc/cpuinfo | grep --color svm```
+  
+# 2. 安装 KVM 虚拟机
+
+#### 1. 安装 KVM 模块、管理工具和 libvirt
+```
+yum install qemu-kvm libvirt libguestfs-tools virt-install virt-manager libvirt-python -y
+```
+- qemu-kvm : kvm 主程序， KVM 虚拟化模块
+- libvirt: 虚拟化服务
+- libguestfs-tools : 虚拟机的系统管理工具
+- virt-install : 安装虚拟机的实用工具 。比如 virt-clone 克隆工具就是这个包安装的
+- virt-manager: KVM 图形化管理工具
+- libvirt-python : python 调用 libvirt 虚拟化服务的 api 接口库文件
+  
+  
+
