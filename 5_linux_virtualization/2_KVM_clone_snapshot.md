@@ -226,4 +226,18 @@ Format specific information:
     compat: 1.1
     lazy refcounts: true
 ```
-
+# 4. virsh 常用命令
+- virsh list
+- virsh list --all
+- virsh version
+- virsh start xuegod63-kvm2
+- virsh shutdown xuegod63-kvm2 //关机 xuegod63-kvm2 虚拟机
+- virsh dumpxml xuegod63-kvm2 > xuegod63-kvm2.xml //导出 xuegod63-kvm2 虚拟机配置文件
+- virsh undefine centos7.0 //取消 centos7.0 定义 域 centos7.0 已经被取消定义
+- virsh define /opt/centos7.0   
+- virsh destroy xuegod63-kvm2 //强制关闭 xuegod63-kvm2 虚拟机。正常关不了机时，用这个
+- virsh autostart centos7.0 //设置开机自启劢 node1。 
+- virsh autostart --disable vm1 #取消虚拟机随宿主机开机自启
+- virsh suspend vm1 #挂起虚拟机
+- virsh resume vm1  #恢复虚拟机
+- virsh console vm1   #控制台管理虚拟机
