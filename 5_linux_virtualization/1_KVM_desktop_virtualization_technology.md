@@ -73,5 +73,28 @@ irqbypass              13503  1 kvm
 ```
 ### 2. 把 ens33 绑到 br0 桥设备上
 
+先备份一下ens33的网卡配置文件，然后更改
+```
+[root@server100 ~]# cp /etc/sysconfig/network-scripts/ifcfg-ens33 /etc/sysconfig/network-scripts/ifcfg-ens33.bak
+[root@server100 ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33
+
+  TYPE="Ethernet"
+  PROXY_METHOD="none"
+  BROWSER_ONLY="no"
+  BOOTPROTO="none"
+  DEFROUTE="yes"
+  IPV4_FAILURE_FATAL="no"
+  IPV6INIT="yes"
+  IPV6_AUTOCONF="yes"
+  IPV6_DEFROUTE="yes"
+  IPV6_FAILURE_FATAL="no"
+  IPV6_ADDR_GEN_MODE="stable-privacy"
+  NAME="ens33"
+  UUID="929392fa-2fcb-47ce-8bcf-a1371afbaeda"
+  DEVICE="ens33"
+  ONBOOT="yes"
+  IPV6_PRIVACY="no"
+  BRIDGE="br0"            # 添加这一行，删除所有IPV4 IPADDR，NETMASK，GATEWAY，DNS1
+```
 
 
