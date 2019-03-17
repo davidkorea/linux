@@ -79,3 +79,28 @@ autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
                                   # 新生成的 udev 文件，会使用新系统的 MAC 地址。 
     [root@xuegod63 ~]# service network restart
     ```
+# 2. 虚拟机常用镜像格式对比
+
+目前主要虚拟机的镜像格式:raw，cow， qcow，qcow2，vmdk 
+
+## 2.1 raw 格式镜像
+- raw:老牌的镜像格式，用一个字来说就是裸，也就是赤裸裸，你随便 dd 一个 file 就模拟了一个 raw 格式的镜像。由于裸的彻底，性能上来说的话还是丌错的。
+- centos6 上 KVM 和 XEN 默认的格式还是这 个格式。centos7 以上默认是 qcow2 。
+- 裸的好处还有就是简单，支持转换成其它格式的虚拟机镜像对裸露的它来说还是很简单的(如果其它 格式需要转换，有时候还是需要它做为中间格式)，空间使用来看，这个很像磁盘，使用多少就是多少(du -h 看到的大小就是使用大小)。
+- 之前 qcow2 转为 vmdk 方法是: qcow2 转为 raw ，然后把 raw 转为 vmdk 。也可以直接 qcow2 转为 vmdk
+- 扩展: 佳能相机上的高保真用的就是这种 raw 格式。RAW 的原意就是“未经加工”。可以理解为:RAW 图像就是 CMOS 或者 CCD 图像感应器将捕捉到的光源信号转化为数字信号的原始数据。RAW 理解为“数 字底片”
+- 缺点:不支持 snapshot 快照。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
