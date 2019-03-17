@@ -241,3 +241,46 @@ Format specific information:
 - virsh suspend vm1 #挂起虚拟机
 - virsh resume vm1  #恢复虚拟机
 - virsh console vm1   #控制台管理虚拟机
+
+# 5. 实战: 虚拟机镜像文件格式转换
+## 5.1 qcow2 格式转换成 raw
+qemu-img -f qcow2 -O raw 源文件 转换后文件名字
+- f 源镜像的格式
+- O 目标镜像的格式
+```
+[root@localhost ~]# qemu-img convert -f qcow2 -O raw /var/lib/libvirt/images/clone_kvm_centos7.img /var/lib/libvirt/images/clone_kvm_centos7.raw
+
+[root@localhost ~]# qemu-img info /var/lib/libvirt/images/clone_kvm_centos7.raw 
+image: /var/lib/libvirt/images/clone_kvm_centos7.raw
+file format: raw
+virtual size: 10G (10737418240 bytes)
+disk size: 1.2G
+```
+
+## 5.2 其他镜像格式转换方法:
+- 将 vmdk 转换为 qcow2
+```
+qemu-img convert -f vmdk -O qcow2 source-name.vmdk target-name.qcow2
+```
+- 将 qcow2 转换为 vmdk
+```
+qemu-img convert -f qcow2 -O vmdk source-name.qcow2 target-name.vmdk
+```
+
+## 5.3 修改虚拟机配置文件，使用 raw 格式镜像文件，来启劢虚拟机
+- 方法一
+  ```
+  [root@localhost ~]# virsh edit clone_kvm_centos7 
+  """
+    38       <driver name='qemu' type='qcow2'/>
+    39       <source file='/var/lib/libvirt/images/clone_kvm_centos7.img'/>
+  """
+    38       <driver name='qemu' type='raw'/>                                   # 把上面到改成下面的
+    39       <source file='/var/lib/libvirt/images/clone_kvm_centos7.raw'/>
+
+  ```
+- 方法二
+  - vim 直接编辑配置文件/etc/libvirt/qemu/xuegod63-kvm2.xml 不生效 修改后，需要重启服务
+    ```
+    [root@localhost ~]# /etc/init.d/libvirtd restart
+    ```
