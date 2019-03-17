@@ -131,3 +131,16 @@ ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 3702  bytes 267755 (261.4 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
+测试上网是否正常
+```
+[root@server100 ~]# ping baidu.com
+PING baidu.com (123.125.115.110) 56(84) bytes of data.
+64 bytes from 123.125.115.110 (123.125.115.110): icmp_seq=1 ttl=46 time=54.3 ms
+```
+查看桥接的信息
+```
+[root@server100 ~]# brctl show
+bridge name	bridge id		STP enabled	interfaces
+br0		8000.000c29504e8f	no		ens33
+virbr0		8000.5254009c1b42	yes		virbr0-nic
+```
