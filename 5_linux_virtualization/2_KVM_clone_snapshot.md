@@ -83,7 +83,7 @@ autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
 
 目前主要虚拟机的镜像格式:raw，cow， qcow，qcow2，vmdk 
 
-## 2.1 raw 格式镜像
+### 2.1 raw 格式镜像
 - raw:老牌的镜像格式，用一个字来说就是裸，也就是赤裸裸，你随便 dd 一个 file 就模拟了一个 raw 格式的镜像。由于裸的彻底，性能上来说的话还是丌错的。
 - centos6 上 KVM 和 XEN 默认的格式还是这 个格式。centos7 以上默认是 qcow2 。
 - 裸的好处还有就是简单，支持转换成其它格式的虚拟机镜像对裸露的它来说还是很简单的(如果其它 格式需要转换，有时候还是需要它做为中间格式)，空间使用来看，这个很像磁盘，使用多少就是多少(du -h 看到的大小就是使用大小)。
@@ -91,9 +91,19 @@ autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
 - 扩展: 佳能相机上的高保真用的就是这种 raw 格式。RAW 的原意就是“未经加工”。可以理解为:RAW 图像就是 CMOS 或者 CCD 图像感应器将捕捉到的光源信号转化为数字信号的原始数据。RAW 理解为“数 字底片”
 - 缺点:不支持 snapshot 快照。
 
+### 2.2 cow、qcow、qcow2 格式
+1. cow 格式:还没有成熟，就被放弃了。后来被 qcow 格式所取代。
+2. qcow 格式:刚刚出现的时候有比较好的特性，但其性能和 raw 格式对比还是有很大的差距，目 前已经被新版本的 qcow2 取代。
+3. qcow2 格式:现在比较主流的一种虚拟化镜像格式，经过一代的优化，目前 qcow2 的性能上接近 raw 裸格式的性能
 
+- qcow2 格式支持 snapshot，可以在镜像上做 N 多个快照，具有以下优点:
+  - 更小的存储空间
+  - 支持创建 image 镜像
+  - 支持多个 snapshot，对历史snapshot 进行管理， 支持 zlib 的磁盘压缩
+  - 支持 AES 的加密
 
-
+### 2.3 vmdk 格式:
+VMware 的格式，整体性能最好，因为原本 VMware 就是做虚拟化起家。从性能和功能上来说，vmdk应该算最出色的，由于 vmdk 结合了 VMware 的很多能力，目前来看，KVM 和 XEN 使用这种格式的情况不是太多。但就 VMware 的企业级虚拟化 Esxi 来看，它的稳定性和各方面的能力都很好
 
 
 
