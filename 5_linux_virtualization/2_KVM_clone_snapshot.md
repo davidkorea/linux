@@ -269,7 +269,7 @@ qemu-img convert -f qcow2 -O vmdk source-name.qcow2 target-name.vmdk
 
 ## 5.3 修改虚拟机配置文件，使用 raw 格式镜像文件，来启劢虚拟机
 - 方法一
-  ```
+  ```xml
   [root@localhost ~]# virsh edit clone_kvm_centos7 
   """
     38       <driver name='qemu' type='qcow2'/>
