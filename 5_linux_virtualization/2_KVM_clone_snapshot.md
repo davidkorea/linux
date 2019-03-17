@@ -30,3 +30,10 @@ CentOS-7-x86_64-DVD-1810.iso  kvm_centos7.qcow2
 [root@localhost ~]# virt-clone -o kvm_centos7 -n clone_kvm_centos7 -f /var/lib/libvirt/images/clone_kvm_centos7.img
 正在分配 'clone_kvm_ce 18% [===              ]  43 MB/s | 1.9 GB  03:14 ETA 
 ```
+3. 查看克隆后到镜像文件大小
+```
+[root@localhost images]# ll -h
+总用量 12G
+-rw------- 1 root root 1.3G 3月  17 22:42 clone_kvm_centos7.img    # 只有1.3G
+-rwx------ 1 root root  11G 3月  17 22:39 kvm_centos7.qcow2
+```
