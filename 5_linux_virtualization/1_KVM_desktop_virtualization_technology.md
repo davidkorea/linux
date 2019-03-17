@@ -46,5 +46,17 @@ yum install qemu-kvm libvirt libguestfs-tools virt-install virt-manager libvirt-
 - virt-manager: KVM 图形化管理工具
 - libvirt-python : python 调用 libvirt 虚拟化服务的 api 接口库文件
   
-  
+#### 2. 查看安装完KVM后的服务
+```
+systemctl start libvirtd              #开启虚拟化服务
+systemctl enable libvirtd 
+systemctl is-enabled libvirtd enabled
+```
+确定正确加载kvm 模块
+```
+[root@server100 ~]# lsmod | grep kvm
+kvm_intel             183705  0 
+kvm                   615914  1 kvm_intel
+irqbypass              13503  1 kvm
+```
 
