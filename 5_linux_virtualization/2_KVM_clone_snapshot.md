@@ -62,5 +62,19 @@ autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
 打开后，可以正常联网，不用做额外操作
 ![](https://i.loli.net/2019/03/17/5c8e52eb5f097.png)
 
-
-
+之前到版本，开启后查看到到MAC地址和xml配置文件到MAC并不一致，需要修改
+- 在 rhel6 下 kvm 克隆后的操作
+  - 登录新克隆的虚拟机删除原来的 mac 和 IP 地址，让新克隆的机器可以上网
+    ```
+    [root@xuegod63 ~]# rm -rf /etc/udev/rules.d/70-persistent-*
+    [root@xuegod63 ~]#vim /etc/sysconfig/network-scripts/ifcfg-eth0 #写入以下内容
+    ```
+    ![](https://i.loli.net/2019/03/17/5c8e53eb90c5e.png)
+    注: 记得把 ONBOOT="no" 改为: ONBOOT="yes"
+    注: 把原配置文件中的 MAC 和 UUID 地址删除，然后修改一个和原虚拟机不一样的 IP，reboot #重启生效
+  - 方法 2
+    ```
+    [root@xuegod63 ~]# start_udev # 重新启劢 udev 服务，自劢生成刚删除的/etc/udev/rules.d/70-persistent-*文件
+                                  # 新生成的 udev 文件，会使用新系统的 MAC 地址。 
+    [root@xuegod63 ~]# service network restart
+    ```
