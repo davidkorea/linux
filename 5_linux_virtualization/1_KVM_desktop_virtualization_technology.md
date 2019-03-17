@@ -224,7 +224,12 @@ Calling ioctl() to re-read partition table.
 [root@server100 images]# ls
 CentOS-7-x86_64-DVD-1810.iso
 ```
-
+```
+virsh list                    #列出在运行的虚拟机
+virsh start centos7-71        #启劢 centos7-71 虚拟机
+virsh shutdown centos7-71     #关闭 centos7-71 虚拟机 
+virsh autostart centos7-71    #设置 centos7-71 虚拟机为物理机开机
+```
 
 
 
