@@ -35,7 +35,7 @@
   
 # 2. 安装 KVM 虚拟机
 
-#### 1. 安装 KVM 模块、管理工具和 libvirt
+### 1. 安装 KVM 模块、管理工具和 libvirt
 ```
 yum install qemu-kvm libvirt libguestfs-tools virt-install virt-manager libvirt-python -y
 ```
@@ -46,7 +46,7 @@ yum install qemu-kvm libvirt libguestfs-tools virt-install virt-manager libvirt-
 - virt-manager: KVM 图形化管理工具
 - libvirt-python : python 调用 libvirt 虚拟化服务的 api 接口库文件
   
-#### 2. 查看安装完KVM后的服务
+### 2. 查看安装完KVM后的服务
 ```
 systemctl start libvirtd              #开启虚拟化服务
 systemctl enable libvirtd 
@@ -59,4 +59,8 @@ kvm_intel             183705  0
 kvm                   615914  1 kvm_intel
 irqbypass              13503  1 kvm
 ```
+### 3. 使用virt-manager命令建立虚拟机
+
+
+
 
