@@ -143,6 +143,25 @@ Format specific information:
 [root@localhost ~]# virsh snapshot-create-as clone_kvm_centos7 snapshot_1
 已生成域快照 snapshot_1
 ```
+- 比较开关机状态下，快照文件到大小。关机状态下，快照文件几乎不占用空间
+```
+[root@localhost ~]# virsh snapshot-create-as clone_kvm_centos7 snapshow_close
+已生成域快照 snapshow_close
+[root@localhost ~]# qemu-img info /var/lib/libvirt/images/clone_kvm_centos7.img 
+image: /var/lib/libvirt/images/clone_kvm_centos7.img
+file format: qcow2
+virtual size: 10G (10737418240 bytes)
+disk size: 1.6G
+cluster_size: 65536
+Snapshot list:
+ID        TAG                 VM SIZE                DATE       VM CLOCK
+2         snapshot_1             311M 2019-03-17 23:26:13   00:32:19.200
+3         snapshow_close            0 2019-03-17 23:39:45   00:00:00.000
+Format specific information:
+    compat: 1.1
+    lazy refcounts: true
+```
+
 #### 3. 查看虚拟机镜像快照列表
 - 语法: virsh snapshot-list 虚拟机的名字
 ```
