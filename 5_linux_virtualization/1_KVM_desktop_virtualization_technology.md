@@ -27,6 +27,6 @@
     <img src="https://i.loli.net/2019/03/17/5c8dd55b85c0e.png" alt="Sample"  width="500" height="380">
 </p>
 3. 添加一个 20G 的硬盘，用亍存 KVM 虚拟机
-4. 查看 CPU 是否支持硬件虚拟化技术。 CPU 要支持 查看自己的 CPU 是否支持全虚拟化虚拟化技术且是 64 位的。看看 flag 有没有上面的 vmx 戒者是 svm，有的话就是支持全虚拟化技术 
-  - Intel: ```cat /proc/cpuinfo | grep --color vmx```
-  - AMD: ```cat /proc/cpuinfo | grep --color svm```
+4. 查看 CPU 是否支持硬件虚拟化技术。 CPU 要支持 查看自己的 CPU 是否支持全虚拟化虚拟化技术且是 64 位的。看看 flag 有没有上面的 vmx 戒者是 svm，有的话就是支持全虚拟化技术。
+    - Intel: ```cat /proc/cpuinfo | grep --color vmx```
+    - AMD: ```cat /proc/cpuinfo | grep --color svm```
