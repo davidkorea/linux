@@ -37,3 +37,27 @@ CentOS-7-x86_64-DVD-1810.iso  kvm_centos7.qcow2
 -rw------- 1 root root 1.3G 3月  17 22:42 clone_kvm_centos7.img    # 只有1.3G
 -rwx------ 1 root root  11G 3月  17 22:39 kvm_centos7.qcow2
 ```
+### 1.3 KVM 虚拟机组成
+一台 KVM 虚拟机由两部分组成:虚拟机配置文件和镜像img
+1. 查看配置文件
+```
+[root@localhost ~]# ll /etc/libvirt/qemu
+总用量 16
+drwxr-xr-x  2 root root   29 3月  17 17:33 autostart
+-rw-------  1 root root 4465 3月  17 22:42 clone_kvm_centos7.xml
+-rw-------  1 root root 4449 3月  17 17:15 kvm_centos7.xml
+drwx------. 3 root root   42 1月  30 02:34 networks
+```
+2. 查看远虚拟机和克隆虚拟机配置文件到差别
+```
+[root@localhost ~]# cd /etc/libvirt/qemu/
+[root@localhost qemu]# ls
+autostart  clone_kvm_centos7.xml  kvm_centos7.xml  networks
+[root@localhost qemu]# vimdiff kvm_centos7.xml clone_kvm_centos7.xml 
+还有 2 个文件等待编辑
+```
+![](https://i.loli.net/2019/03/17/5c8e50c73b6c1.png)
+
+
+
+
