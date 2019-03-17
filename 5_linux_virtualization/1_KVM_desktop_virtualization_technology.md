@@ -144,3 +144,72 @@ bridge name	bridge id		STP enabled	interfaces
 br0		8000.000c29504e8f	no		ens33
 virbr0		8000.5254009c1b42	yes		virbr0-nic
 ```
+# 4. 实戓2: 创建一台 KVM 虚拟机
+
+### 1. 创建一个分区，用亍存放安装好的 Linux 操作系统
+先删除之前创建的sdb1分区
+```
+[root@server100 ~]# fdisk /dev/sdb
+欢迎使用 fdisk (util-linux 2.23.2)。
+
+更改将停留在内存中，直到您决定将更改写入磁盘。
+使用写入命令前请三思。
+
+
+命令(输入 m 获取帮助)：d
+已选择分区 1
+分区 1 已删除
+
+命令(输入 m 获取帮助)：p
+
+磁盘 /dev/sdb：10.7 GB, 10737418240 字节，20971520 个扇区
+Units = 扇区 of 1 * 512 = 512 bytes
+扇区大小(逻辑/物理)：512 字节 / 512 字节
+I/O 大小(最小/最佳)：512 字节 / 512 字节
+磁盘标签类型：dos
+磁盘标识符：0x2a9c4410
+
+   设备 Boot      Start         End      Blocks   Id  System
+
+命令(输入 m 获取帮助)：w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+正在同步磁盘。
+```
+重新创建分区
+```
+[root@server100 ~]# fdisk /dev/sdb            
+欢迎使用 fdisk (util-linux 2.23.2)。
+
+更改将停留在内存中，直到您决定将更改写入磁盘。
+使用写入命令前请三思。
+
+
+命令(输入 m 获取帮助)：n                           # 全部默认参数
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): 
+Using default response p
+分区号 (1-4，默认 1)：
+起始 扇区 (2048-20971519，默认为 2048)：
+将使用默认值 2048
+Last 扇区, +扇区 or +size{K,M,G} (2048-20971519，默认为 20971519)：
+将使用默认值 20971519
+分区 1 已设置为 Linux 类型，大小设为 10 GiB
+
+命令(输入 m 获取帮助)：w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+正在同步磁盘。
+```
+
+
+
+
+
+
+
+
