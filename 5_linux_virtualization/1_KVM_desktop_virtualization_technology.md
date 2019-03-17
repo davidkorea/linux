@@ -108,3 +108,26 @@ NETMASK=255.255.255.0
 GATEWAY=192.168.0.1
 DNS1=8.8.8.8
 ```
+重启服务
+```
+[root@server100 ~]# systemctl restart NetworkManager      # 貌似这个方法试过之后，ens33和br0都有一样的ip
+
+[root@server100 ~]# service network restart               # 这个方法好用，需要mac给vmware权限
+Restarting network (via systemctl):                        [  确定  ]
+[root@server100 ~]# ifconfig 
+br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.100  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::20c:29ff:fe50:4e8f  prefixlen 64  scopeid 0x20<link>
+        ether 00:0c:29:50:4e:8f  txqueuelen 1000  (Ethernet)
+        RX packets 4  bytes 260 (260.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 33  bytes 4399 (4.2 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        ether 00:0c:29:50:4e:8f  txqueuelen 1000  (Ethernet)
+        RX packets 6498  bytes 9439130 (9.0 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 3702  bytes 267755 (261.4 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
