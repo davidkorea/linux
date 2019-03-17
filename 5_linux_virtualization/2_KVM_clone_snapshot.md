@@ -115,9 +115,9 @@ VMware 的格式，整体性能最好，因为原本 VMware 就是做虚拟化�
 - kvm 快照，分两种:
   - 方法 1:使用 lvm 快照，如果分区是 lvm，可以利用 lvm 迚行 kvm 的快照备份 
   - 方法 2:使用 qcow2 格式的镜像创建快照
-### 3.1 创建 KVM 快照
+## 3.1 创建 KVM 快照
 **要使用快照功能，磁盘格式必须为 qcow2。** 在 centos6 下，kvm 虚拟机默认使用 raw 格式的镜像格式，性能最好，速度最快，它的缺点就是不支持一些新的功能，如支持镜像,zlib 磁盘压缩,AES 加密等。
-1. 查看磁盘格式
+#### 1. 查看磁盘格式
 虽然clone 到时候，镜像命名为img，但实际上还是qcow2到格式
 ```
 [root@localhost ~]# qemu-img info /var/lib/libvirt/images/clone_kvm_centos7.img 
@@ -130,7 +130,7 @@ Format specific information:
     compat: 1.1
     lazy refcounts: true
 ```
-2. 创建快照
+#### 2. 创建快照
 创建快照时丌需要关闭虚拟机，关机创建快照比较快，开机创建快照需要把内存中的内容写到磁盘上，记录虚拟机这一时刻的状态。
 
 - 语法: virsh snapshot-create 虚拟机的名字
@@ -143,8 +143,8 @@ Format specific information:
 [root@localhost ~]# virsh snapshot-create-as clone_kvm_centos7 snapshot_1
 已生成域快照 snapshot_1
 ```
-3. 查看虚拟机镜像快照列表
-语法: virsh snapshot-list 虚拟机的名字
+#### 3. 查看虚拟机镜像快照列表
+- 语法: virsh snapshot-list 虚拟机的名字
 ```
 [root@localhost ~]# virsh snapshot-list clone_kvm_centos7 
  名称               生成时间              状态
@@ -152,5 +152,31 @@ Format specific information:
  1552832632           2019-03-17 23:23:52 +0900 running
  snapshot_1           2019-03-17 23:26:13 +0900 running
 ```
+- 查看最近一次使用的快照版本
+```
+[root@localhost ~]# virsh snapshot-current clone_kvm_centos7 
+<domainsnapshot>
+  <name>snapshot_1</name>
+  <state>running</state>
+  <parent>
+    <name>1552832632</name>
+  </parent>
+... ...
+```
+
+#### 4. 快照配置文件在/var/lib/libvirt/qemu/snapshot/虚拟机名称下
+```
+[root@localhost ~]# ll -h /var/lib/libvirt/qemu/snapshot/clone_kvm_centos7/
+总用量 16K
+-rw------- 1 root root 5.4K 3月  17 23:26 1552832632.xml
+-rw------- 1 root root 5.5K 3月  17 23:26 snapshot_1.xml
+```
+
+## 3.2 恢复虚拟机快照
+
+
+
+
+
 
 
