@@ -128,6 +128,32 @@ ens39: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 126  bytes 18061 (17.6 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
+在做无人值守的时候ftp无法访问192.168.1.10. 检查之前操作，是因为上面只是临时配了192.168.1.10/24这个ip，reboot后就没了ip地址。启动dhcpd服务会报错。
+
+也就是常说的，网卡都没有1网段的ip，dhcp中配置了1网段，服务肯定起不来。自己都不在这个网段，怎么让这个配置文件生效。
+
+所以还是创建ifcfg-ens39网卡配置文件
+```
+TYPE="Ethernet"
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+BOOTPROTO="none"
+DEFROUTE="yes"
+IPV4_FAILURE_FATAL="no"
+IPV6INIT="yes"
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+NAME="ens39"
+DEVICE="ens39"
+ONBOOT="yes"
+IPADDR=192.168.1.10
+PREFIX=24
+GATEWAY=192.168.1.1
+DNS1=114.114.114.114
+DNS2=8.8.8.8
+```
 5. 启动dhcpd服务
 ```
 [root@server162 ~]# systemctl enable dhcpd
@@ -145,8 +171,10 @@ udp        0      0 0.0.0.0:67       0.0.0.0:*      58847/dhcpd
 ```
 
 ## 2.2 配置DHCP Client
-1. VM添加网卡vmnet4（这个可以随便选），但是IP要和服务器是同一个1网段下面
+1. VM添加网卡vmnet4（这个可以随便选），但是IP要和服务器是同一个vmnet下，这样才是同一个网段，开机后才能从dhcp server获取的IP地址。
+
 **其实此时已经获取来192.168.1.100这个网址**，虽然还没有ifcfg-ens38这个网卡配置文件
+
 ```
 [root@client163 ~]# ls /etc/sysconfig/network-scripts/ifcfg-ens*
 /etc/sysconfig/network-scripts/ifcfg-ens33
