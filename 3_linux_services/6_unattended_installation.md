@@ -13,6 +13,8 @@
 
 
 - 更改vsftp设置
+  - 匿名可以直接访问pub
+  - team1 11111 可以向以前一样通过filezilla进行有账户访问/var/www/html
 ```
  12 anonymous_enable=YES
  29 anon_upload_enable=YES
