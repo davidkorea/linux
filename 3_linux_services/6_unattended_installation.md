@@ -151,12 +151,12 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 - ```filename "pxelinux.0"```， 运行 PXE 协议需要设置 DHCP 服务器 和 TFTP 服务器。DHCP 服务器用来给 PXE client（将要安装系统的主机）分配一个 IP 地址，由于是给 PXE client 分配 IP 地址，所以在配置 DHCP 服务器时需要增加相应的 PXE 设置
 
 ## 2.2 配置PXE启动所需的相关文件
-1. 安装服务
+#### 1. 安装服务
 ```
 [root@server162~]# yum -y install system-config-kickstart && syslinux
 ##### 如果syslinux安装不成功，需要单独在yum install -y syslinux安装一下
 ```
-2. 将tftp需要共享出去的文件，存放点tftp根目录/tftpboot
+#### 2. 将tftp需要共享出去的文件，存放点tftp根目录/tftpboot
 ```
 [root@server162~]# mkdir /tftpboot
 [root@server162~]# mkdir /tftpboot/pxelinux.cfg
@@ -176,10 +176,51 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
     `-- default
 ```
 
+#### 3. 修改安装选项default文件
+default配置文件的修改就是通过ftp服务器方式来访问kickstart文件
+```
+[root@server162 ~]# vim /tftpboot/pxelinux.cfg/default 
+  1 default linux       # 此处的linux就是下面61行的label linux入口
 
+ 61 label linux
+ 62   menu label ^Install CentOS 7
+ 63   kernel vmlinuz
+ 64   append initrd=initrd.img inst.repo=ftp://192.168.1.10/pub inst.ks=ftp://192.168.1.10/ks.cfg
+                            # 添加inst.rep 和 inst.ks ks文件路径，使安装程序通过FTP服务器访问kickstart文件
+```
 
+有多种方法可访问kickstart文件
+- 其中最常用的一种方法是通过网络服务器进行，例如：ftp服务器、http WEB服务器或NFS服务器，这种方法非常易于部署，并且也使管理更改变得十分简单。
+- 也可以通过USB磁盘、CD－ROM或本地硬盘。如果USB或CD－ROM中的kickstart文件非常便于访问，只需将kickstart文件放置在用来开始安装的引导介质中。而使用DHCP服务器和TFTP及PXE配置起来更为复杂。
+- 使安装程序指向kickstart文件的书写格式如下：
+  ```  
+  ks=ftp://server/dir/file 如:ks=ftp://ftp服务器IP/ks.cfg
+  ks=http://server/dir/file 如:ks=http://http服务器IP/ks.cfg
+  ks=nfs:server:/dir/file 如:ks=nfs:nfs服务器IP:/var/ftp/pub/ks.cfg
+  ks=hd:device:/dir/file 如:ks=hd:sdb1:/kickstar-files/ks.cfg
+  ks=cdrom:/dir/file 如:ks=cdrom:/kickstart-files/ks.cfg
+  ```
+#### 4. 制作kickstart的无人值守安装文件
+1. 配置ftp形式的yum源
 
+```
+[root@server162 ~]# cd /etc/yum.repos.d/
+[root@server162 yum.repos.d]# ls
+CentOS-7-aliyun.repo  CentOS-CR.repo         CentOS-Media.repo    CentOS-Vault.repo
+CentOS-Base.repo      CentOS-Debuginfo.repo  CentOS-Sources.repo  CentOS-fasttrack.repo
 
+[root@server162 yum.repos.d]# mkdir bak
+[root@server162 yum.repos.d]# mv *.repo  bak/
+[root@server162 yum.repos.d]# ls
+bak  
+[root@server162 yum.repos.d]# vim my.repo
+[development]        
+name=my-centos7-dvd
+baseurl=file:///var/ftp/pub         # 需要将光盘挂载到此路径下
+enabled=1
+gpgcheck=0
 
+[root@server162 yum.repos.d]# yum makecache
+```
 
 
