@@ -81,7 +81,7 @@
 """
 ```
 #### 3. 安装TFTP,修改tftp配置文件及开启服务
-在 PXE client 的 ROM 中，已经存在了 TFTP Client。 PXE Client 通过 TFTP 协议到 TFTP Server 下载所需的文件
+在 PXE client 的ROM中，已经存在了TFTP Client。 PXE Client 通过TFTP协议到TFTP Server下载所需的文件
 
 ```
 [root@server162 ~]# yum install tftp tftp-server xinetd -y
@@ -102,7 +102,7 @@
  10         wait                    = yes
  11         user                    = root
  12         server                  = /usr/sbin/in.tftpd
- 13         server_args             = -s /tftpboot
+ 13         server_args             = -s /tftpboot        # 并不存在，需要自行创建
  14         disable                 = no
  15         per_source              = 11
  16         cps                     = 100 2
@@ -151,11 +151,30 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 - ```filename "pxelinux.0"```， 运行 PXE 协议需要设置 DHCP 服务器 和 TFTP 服务器。DHCP 服务器用来给 PXE client（将要安装系统的主机）分配一个 IP 地址，由于是给 PXE client 分配 IP 地址，所以在配置 DHCP 服务器时需要增加相应的 PXE 设置
 
 ## 2.2 配置PXE启动所需的相关文件
-
-
-
-
-
+1. 安装服务
+```
+[root@server162~]# yum -y install system-config-kickstart && syslinux
+##### 如果syslinux安装不成功，需要单独在yum install -y syslinux安装一下
+```
+2. 将tftp需要共享出去的文件，存放点tftp根目录/tftpboot
+```
+[root@server162~]# mkdir /tftpboot
+[root@server162~]# mkdir /tftpboot/pxelinux.cfg
+[root@server162~]# cp /usr/share/syslinux/pxelinux.0 /tftpboot/    # 只有安装了syslinux软件包，才会有/usr/share/syslinux/目录及
+[root@server162~]# cp /mnt/images/pxeboot/initrd.img  /tftpboot/
+[root@server162~]# cp /mnt/images/pxeboot/vmlinuz  /tftpboot/
+[root@server162~]# cp /mnt/isolinux/isolinux.cfg  /tftpboot/pxelinux.cfg/default
+[root@server162~]# chmod 644  /tftpboot/pxelinux.cfg/default
+```
+```
+[root@server162 ~]# tree /tftpboot/
+/tftpboot/
+|-- initrd.img
+|-- pxelinux.0    
+|-- vmlinuz
+|-- pxelinux.cfg
+    `-- default
+```
 
 
 
