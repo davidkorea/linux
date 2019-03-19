@@ -39,13 +39,16 @@
 [root@server162~]# mount  /dev/cdrom  /mnt
 [root@server162~]# vi /etc/yum.repos.d/serverl.repo #在/etc/yum.repos.d目录下创建以.repo结尾的文件
 ```
-### 2. 
-
-
-
-- 更改vsftp设置
-  - 匿名可以直接访问pub
-  - team1 11111 可以向以前一样通过filezilla进行有账户访问/var/www/html
+### 2. 安装ftp服务以及开启服务，设置为开机自动启动
+- 纯净系统
+```
+[root@server162 ~]# yum install vsftpd -y
+[root@server162 ~]# systemctl start vsftpd
+[root@server162~]# systemctl enable vsftpd
+```
+-之前配置国ftp的清空，更改vsftp设置
+  - 实现匿名可以直接访问pub
+  - team1 11111 依然可以向以前一样通过filezilla进行有账户访问/var/www/html
 ```
  12 anonymous_enable=YES
  29 anon_upload_enable=YES
@@ -73,5 +76,4 @@
 132 rsa_cert_file=/etc/vsftpd/.sslkey/vsftpd.pem
 133 rsa_private_key_file=/etc/vsftpd/.sslkey/vsftpd.pem
 """
-
 ```
