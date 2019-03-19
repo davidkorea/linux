@@ -83,7 +83,7 @@
 ```
 [root@server162 ~]# yum install tftp tftp-server xinetd -y
 ```
-修改第13，14行
+  修改第13，14行
 ```
 [root@server162 ~]# vim /etc/xinetd.d/tftp 
 
@@ -104,7 +104,15 @@
  15         per_source              = 11
  16         cps                     = 100 2
  17         flags                   = IPv4
+ 
+[root@server162 ~]# systemctl start xinetd          # 启动服务
+[root@server162 ~]# lsof -i:69
+COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+xinetd  9102 root    5u  IPv4  51445      0t0  UDP *:tftp 
 ```
+
 - ```server_args = -s /tftpboot```: 是tftp服务器运行时的参数。-s /tftpboot表示服务器默认的目录是 /tftpboot,当执行put a.txt时，文件会被放到服务器的/tftpboot/a.txt，省去你敲put a /tftpboot/的麻烦。你也可以加其它服务器运行参数到这，具体可以执行man tftpd命令查阅。
 
 - 参数-c: 上传文件时，服务器上没有。就自动创建这个文件。默认tftp客户端，只能上传tftp服务器已经有的文件。也就是只能传上去并覆盖服务器上的原文件。如果想上传原来目录中没有的文件，需要修改tftp服务器的配置文件并重起服务。需要修改如下：```server_args = -s /tftpboot -c```
+
+  TFTP (Trivial File Transfer Protocol)，中译简单文件传输协议或小型文件传输协议. 大家一定记得在2003年8月12日全球爆发冲击波（Worm.Blaster）病毒，这种病毒会监听端口69,模拟出一个TFTP服务器，并启动一个攻 击传播线程,不断地随机生成攻击地址，进行入侵。另外tftp被认为是一种不安全的协议而将其关闭，同时也是防火墙打击的对象，这也是有道理的。tftp 在嵌入式linux还是有用武之地的。需要打开防火墙，允许tftp访问网络。
