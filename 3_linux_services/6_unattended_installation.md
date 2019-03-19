@@ -239,16 +239,17 @@ EFI              GPL   Packages  RPM-GPG-KEY-CentOS-Testing-7  images     repoda
 (process:27304): Gtk-WARNING **: 10:41:31.785: Locale not supported by C library.
 	Using the fallback 'C' locale.
 ```
-用xshell远程连接，执行上面的命令可能无法弹出选择框
-- 需要安装gdm ```yum install -y gdm```
-- 在Xstart 里执行
-    ![](https://i.loli.net/2019/03/19/5c9057ead644b.png)
+> 用xshell远程连接，执行上面的命令可能无法弹出选择框
+> - 需要安装gdm ```yum install -y gdm```
+> - 在Xstart 里执行
+>     ![](https://i.loli.net/2019/03/19/5c9057ead644b.png)
     
 ![1.png](https://i.loli.net/2019/03/19/5c905d6f47b7a.png)
 ![2.png](https://i.loli.net/2019/03/19/5c905d7975ade.png)
 ![3.png](https://i.loli.net/2019/03/19/5c905d88be508.png)
 ![4.png](https://i.loli.net/2019/03/19/5c905d90cab4a.png)
 ![5.png](https://i.loli.net/2019/03/19/5c905d987975c.png)
+网络和认证保持默认
 ![6.png](https://i.loli.net/2019/03/19/5c905d9ddf576.png)
 ![7.png](https://i.loli.net/2019/03/19/5c905da457486.png)
 ![8.png](https://i.loli.net/2019/03/19/5c905db8c3d77.png)    
