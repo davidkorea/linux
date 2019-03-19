@@ -8,6 +8,8 @@
 ```shell
 virt-install --name centos7_ks --ram 1024 --vcpus=1 --disk path=/var/lib/libvirt/images/centos7_ks.qcow2,size=13 --accelerate --location=http://192.168.0.162/centos7/ --network bridge=br0 -x "ks=http://192.168.0.162/ks.cfg"
 ```
+![](https://i.loli.net/2019/03/19/5c90bb97c31ab.png)
+
 
 
 - 正常安装，扩大内存至2G，硬盘位20G
@@ -59,6 +61,4 @@ part / --fstype="xfs" --grow --size=1
 @platform-devel
 
 %end
-
-
 ```
