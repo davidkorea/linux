@@ -1,9 +1,9 @@
 # 搭建无人执守安装服务器 - 批量安装
-1. 搭建无人执守安装服务器服务器常见概念
-2. 搭建无人执守安装服务器服务器安装及相关配置文件
+1. 无人执守安装服务器常见概念
+2. 搭建无人执守安装服务器及相关配置文件
 3. 实战：为公司内网搭建一个搭建无人执守安装服务器
 
-# 1. 搭建无人执守安装服务器服务器常见概念
+# 1. 无人执守安装服务器常见概念
 - 需要使用到的服务：PXE + DHCP + TFTP + Kickstart+ FTP/HTTP
 
 - 安装三四十台机器，一般就需要无人值守安装了
@@ -17,7 +17,7 @@
 #### 1. PXE原理和概念：  
 - 严格来说，PXE 并不是一种安装方式，而是一种引导的方式。
 - 进行 PXE 安装的必要条件是要安装的计算机中包含一个 PXE 支持的网卡（NIC），即网卡中必须要有 PXE Client。PXE （Pre-boot Execution Environment）协议使计算机可以通过网络启动。协议分为 client 和 server 端，PXE client 在网卡的 ROM 中，当计算机引导时，BIOS 把 PXE client 调入内存执行，由 PXE client 将放置在远端的文件通过网络下载到本地运行。现在网卡都支持。
-- 运行 PXE 协议需要设置 DHCP 服务器 和 TFTP 服务器。DHCP 服务器用来给 PXE client（将要安装系统的主机）分配一个 IP 地址，由于是给 PXE client 分配 IP 地址，所以在配置 DHCP 服务器时需要增加相应的 PXE 设置。此外，在 PXE client 的 ROM 中，已经存在了 TFTP Client。PXE Client 通过 TFTP 协议到 TFTP Server 上下载所需的文件。
+- 运行 PXE 协议需要设置 DHCP 服务器 和 TFTP 服务器。DHCP 服务器用来给 PXE client（将要安装系统的主机）分配一个 IP 地址，由于是给 PXE client 分配 IP 地址，所以在配置 DHCP 服务器时需要增加相应的 PXE 设置```filename "pxelinux.0"```。此外，在 PXE client 的 ROM 中，已经存在了 TFTP Client。PXE Client 通过 TFTP 协议到 TFTP Server 上下载所需的文件。
 
 #### 2. 什么是KickStart 
 - KickStart是一种无人职守安装方式。KickStart的工作原理是通过记录典型的安装过程中所需人工干预填写的各种参数，并生成一个名为 ks.cfg的文件
@@ -32,14 +32,15 @@
 - KickStart所生成的ks.cfg配置文件；
 - 带有一个 PXE 支持网卡的将安装的主机
 
-# 2. 搭建无人执守安装服务器服务器安装及相关配置文件
+# 2. 搭建无人执守安装服务器及相关配置文件
 
-### 1. 配置yum基本环境
+## 2.1 搭建yum ftp tftp dhcp服务
+#### 1. 配置yum基本环境
 ```
 [root@server162~]# mount  /dev/cdrom  /mnt
 [root@server162~]# vi /etc/yum.repos.d/serverl.repo #在/etc/yum.repos.d目录下创建以.repo结尾的文件
 ```
-### 2. 安装ftp服务以及开启服务，设置为开机自动启动
+#### 2. 安装ftp服务以及开启服务，设置为开机自动启动
 - 纯净系统
 ```
 [root@server162 ~]# yum install vsftpd -y
@@ -79,7 +80,9 @@
 133 rsa_private_key_file=/etc/vsftpd/.sslkey/vsftpd.pem
 """
 ```
-### 3. 安装TFTP,修改tftp配置文件及开启服务
+#### 3. 安装TFTP,修改tftp配置文件及开启服务
+在 PXE client 的 ROM 中，已经存在了 TFTP Client。 PXE Client 通过 TFTP 协议到 TFTP Server 下载所需的文件
+
 ```
 [root@server162 ~]# yum install tftp tftp-server xinetd -y
 ```
@@ -118,7 +121,7 @@ xinetd  9102 root    5u  IPv4  51445      0t0  UDP *:tftp
 TFTP (Trivial File Transfer Protocol)，中译简单文件传输协议或小型文件传输协议. 大家一定记得在2003年8月12日全球爆发冲击波（Worm.Blaster）病毒，这种病毒会监听端口69,模拟出一个TFTP服务器，并启动一个攻 击传播线程,不断地随机生成攻击地址，进行入侵。另外tftp被认为是一种不安全的协议而将其关闭，同时也是防火墙打击的对象，这也是有道理的。tftp 在嵌入式linux还是有用武之地的。需要打开防火墙，允许tftp访问网络。
 
 
-### 4. 安装dhcp，修改配置文件及开启服务
+#### 4. 安装DHCP，修改配置文件及开启服务
 
 参考： [搭建DHCP服务器](https://github.com/davidkorea/linux_study/blob/master/3_linux_services/3_DHCP.md#21-%E9%85%8D%E7%BD%AEdhcp-server)
 1. 安装服务
@@ -140,9 +143,24 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
         default-lease-time 600;
         max-lease-time 7200;
         next-server 192.168.1.10;       # 类似下一跳路由的意思
-        filename "pxelinux.0";          # 读取pxelinux.0文件
+        filename "pxelinux.0";          # 读取pxelinux.0文件，PXE引导启动
 }
 
 ##### 设置完成后，先不启动dhcpd服务，最后全部设置完再次启动 #####
 ```
-- ```filename "pxelinux.0"```
+- ```filename "pxelinux.0"```， 运行 PXE 协议需要设置 DHCP 服务器 和 TFTP 服务器。DHCP 服务器用来给 PXE client（将要安装系统的主机）分配一个 IP 地址，由于是给 PXE client 分配 IP 地址，所以在配置 DHCP 服务器时需要增加相应的 PXE 设置
+
+## 2.2 配置PXE启动所需的相关文件
+
+
+
+
+
+
+
+
+
+
+
+
+
