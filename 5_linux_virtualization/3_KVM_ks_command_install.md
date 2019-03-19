@@ -37,11 +37,32 @@ virt-install --name centos-7 --ram 1024 --vcpus=1 --disk path=/var/lib/libvirt/i
   - 若使用xshell执行该命令，会自动通过xstart连接到图形界面
 
 
+# 2. 使用 ks 文件，无交互字符界面安装
 
+#### 1. 搭建本地yum源
+#### 2. 搭建http
+```
+[root@localhost ~]# yum install httpd -y 
+[root@localhost ~]# systemctl start httpd                     # 目录/var/www/html/会自动生成
+[root@localhost ~]# mkdir /var/www/html/centos7/
+[root@localhost ~]# mount /dev/cdrom /var/www/html/centos7/   # 挂载光盘至该http目录
 
+[root@localhost ~]# iptables -F #关闭防火墙 访问http://192.168.1.10/centos7/
+```
+#### 3. 上传 ks.cfg 文件到/var/www/html/ 下
+修改 ks.cfg 文件
+```
+[root@xuegod63 html]# vim ks.cfg
+改:8 url --url="ftp://192.168.1.10/pub" 
+为:8 url --url="http://192.168.1.10/centos7"
+```
 
+#### 4. 安装虚拟机
+注: 你局域网中的 DHCP 服务器自劢分配的 IP 地址是: 192.168.1.0/24 网段才行。 丌然需要自 己搭建一个 DHCP，这样虚拟机安装过程中才可以一个 192.168.1.0 网段的 IP，才可以访问到 http://192.168.1.10/centos7/
 
------
+- 参考1: [搭建DHCP](https://github.com/davidkorea/linux_study/blob/master/3_linux_services/3_DHCP.md)
+- 参考2: [搭建无人执守安装服务器](https://github.com/davidkorea/linux_study/blob/master/3_linux_services/6_unattended_installation.md)
+
 
 - 报错空间不足
 ```shell
