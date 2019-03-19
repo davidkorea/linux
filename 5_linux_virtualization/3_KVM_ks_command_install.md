@@ -6,6 +6,10 @@
 
 # 1. 在命令行安装 KVM 虚拟机 
 #### 1. 上传centos7 iso镜像到/var/lib/libvirt/images/
+创建并挂载sdb1分区至/var/lib/libvirt/images/，并拷贝iso镜像至该目录
+```
+[root@localhost ~]# mount /dev/sdb1 /var/lib/libvirt/images/
+```
 #### 2. 安装 vnc 客户端软件
 方便后期进程连接正在安装中的虚拟机的安装界面
 ```
