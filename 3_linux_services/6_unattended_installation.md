@@ -252,7 +252,8 @@ EFI              GPL   Packages  RPM-GPG-KEY-CentOS-Testing-7  images     repoda
 网络和认证保持默认
 ![6.png](https://i.loli.net/2019/03/19/5c905d9ddf576.png)
 ![7.png](https://i.loli.net/2019/03/19/5c905da457486.png)
-![8.png](https://i.loli.net/2019/03/19/5c905db8c3d77.png)    
+![8.png](https://i.loli.net/2019/03/19/5c905db8c3d77.png) 
+不挂载cdrom到ftp/pub下，无法看到选择安装deleloment的界面
 ![9.png](https://i.loli.net/2019/03/19/5c905da9889d5.png)
 ![10.png](https://i.loli.net/2019/03/19/5c905db477989.png)
     
