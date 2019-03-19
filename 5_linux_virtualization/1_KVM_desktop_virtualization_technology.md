@@ -98,6 +98,8 @@ irqbypass              13503  1 kvm
 ```
 生成桥设备的配置文件
 ```
+[root@server100 network-scripts]# vim ifcfg-br0
+
 TYPE="Bridge"             # 设备类型为bridge
 DEVICE="br0"
 NM_CONTROLLED="yes"
