@@ -110,7 +110,8 @@ NETMASK=255.255.255.0
 GATEWAY=192.168.0.1
 DNS1=8.8.8.8
 ```
-- ```NM_CONTROLLED```这个属性值，根据RedHat公司的文档是必须设置为“no”的（这个值为“yes”表示可以由服务NetworkManager来管理。NetworkManager服务不支持桥接，所以要设置为“no”。），但实际上发现设置为“yes”没有问题。通讯正常。
+- ```NM_CONTROLLED```这个属性值，根据RedHat公司的文档是必须设置为“no”的（这个值为“yes”表示可以由服务NetworkManager来管理。NetworkManager服务不支持桥接，所以要设置为“no”。），但实际上发现设置为“yes”没有问题。通讯正常。 
+  - 再次测试，新装好的系统，**ens33 和 br0 都需要 ```NM_CONTROLLED="no"``` **， 否则无法联网
 
 重启服务
 ```
