@@ -178,7 +178,7 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 
 #### 3. 修改安装选项default文件
 default配置文件的修改就是通过ftp服务器方式来访问kickstart文件
-```
+```shell
 [root@server162 ~]# vim /tftpboot/pxelinux.cfg/default 
   1 default linux       # 此处的linux就是下面61行的label linux入口
 
@@ -201,7 +201,7 @@ default配置文件的修改就是通过ftp服务器方式来访问kickstart文�
   ks=cdrom:/dir/file 如:ks=cdrom:/kickstart-files/ks.cfg
   ```
 #### 4. 制作kickstart的无人值守安装文件
-1. 配置ftp形式的yum源
+1. 配置ftp形式的yum源，将光盘挂载到ftp pub目录下
 
 ```
 [root@server162 ~]# cd /etc/yum.repos.d/
@@ -210,15 +210,23 @@ CentOS-7-aliyun.repo  CentOS-CR.repo         CentOS-Media.repo    CentOS-Vault.r
 CentOS-Base.repo      CentOS-Debuginfo.repo  CentOS-Sources.repo  CentOS-fasttrack.repo
 
 [root@server162 yum.repos.d]# mkdir bak
-[root@server162 yum.repos.d]# mv *.repo  bak/
+[root@server162 yum.repos.d]# mv *.repo  bak/         # 这样做是避免其他yum文件的影响
 [root@server162 yum.repos.d]# ls
 bak  
 [root@server162 yum.repos.d]# vim my.repo
-[development]        
-name=my-centos7-dvd
-baseurl=file:///var/ftp/pub         # 需要将光盘挂载到此路径下
-enabled=1
-gpgcheck=0
+  [development]        
+  name=my-centos7-dvd
+  baseurl=file:///var/ftp/pub                           # 需要将光盘挂载到此路径下
+  enabled=1
+  gpgcheck=0
+
+[root@server162 ~]# mount /dev/cdrom /var/ftp/pub     # 缺少这一步，下面kickstart中无法选择安装包
+                                                      # 并且 makecache 也会报错
+
+[root@server162 ~]# cd /var/ftp/pub/
+[root@server162 pub]# ls
+CentOS_BuildTag  EULA  LiveOS    RPM-GPG-KEY-CentOS-7          TRANS.TBL  isolinux
+EFI              GPL   Packages  RPM-GPG-KEY-CentOS-Testing-7  images     repodata
 
 [root@server162 yum.repos.d]# yum makecache
 ```
