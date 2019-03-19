@@ -79,3 +79,32 @@
 133 rsa_private_key_file=/etc/vsftpd/.sslkey/vsftpd.pem
 """
 ```
+### 3. 安装TFTP,修改tftp配置文件及开启服务
+```
+[root@server162 ~]# yum install tftp tftp-server xinetd -y
+```
+修改第13，14行
+```
+[root@server162 ~]# vim /etc/xinetd.d/tftp 
+
+  1 # default: off
+  2 # description: The tftp server serves files using the trivial file transfer \
+  3 #       protocol.  The tftp protocol is often used to boot diskless \
+  4 #       workstations, download configuration files to network-aware printers, \
+  5 #       and to start the installation process for some operating systems.
+  6 service tftp
+  7 {
+  8         socket_type             = dgram
+  9         protocol                = udp
+ 10         wait                    = yes
+ 11         user                    = root
+ 12         server                  = /usr/sbin/in.tftpd
+ 13         server_args             = -s /tftpboot
+ 14         disable                 = no
+ 15         per_source              = 11
+ 16         cps                     = 100 2
+ 17         flags                   = IPv4
+```
+- ```server_args = -s /tftpboot```: 是tftp服务器运行时的参数。-s /tftpboot表示服务器默认的目录是 /tftpboot,当执行put a.txt时，文件会被放到服务器的/tftpboot/a.txt，省去你敲put a /tftpboot/的麻烦。你也可以加其它服务器运行参数到这，具体可以执行man tftpd命令查阅。
+
+- 参数-c: 上传文件时，服务器上没有。就自动创建这个文件。默认tftp客户端，只能上传tftp服务器已经有的文件。也就是只能传上去并覆盖服务器上的原文件。如果想上传原来目录中没有的文件，需要修改tftp服务器的配置文件并重起服务。需要修改如下：```server_args = -s /tftpboot -c```
