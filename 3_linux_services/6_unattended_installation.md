@@ -1,7 +1,7 @@
 # 搭建无人执守安装服务器 - 批量安装
 1. 无人执守安装服务器常见概念
 2. 搭建无人执守安装服务器及相关配置文件
-3. 实战：为公司内网搭建一个搭建无人执守安装服务器
+3. 扩展：Cobbler比Kickstart更为简单和智能的自动化安装系统的工具
 
 # 1. 无人执守安装服务器常见概念
 - 需要使用到的服务：PXE + DHCP + TFTP + Kickstart+ FTP/HTTP
@@ -266,3 +266,10 @@ ks.cfg就是无人值守安装时要用的Kickstart文件。要对应/tftpboot/p
 ```
 [root@server162 ~]# systemctl start dhcpd
 ```
+
+# 3. 扩展：Cobbler比Kickstart更为简单和智能的自动化安装系统的工具
+
+
+http://www.osyunwei.com/archives/7606.html
+http://os.51cto.com/art/201109/288604.htm
+
