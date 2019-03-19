@@ -44,12 +44,14 @@
 ```
 [root@server162 ~]# yum install vsftpd -y
 [root@server162 ~]# systemctl start vsftpd
-[root@server162~]# systemctl enable vsftpd
+[root@server162 ~]# systemctl enable vsftpd
 ```
--之前配置国ftp的清空，更改vsftp设置
+- 之前配置国ftp的清空，更改vsftp设置
   - 实现匿名可以直接访问pub
   - team1 11111 依然可以向以前一样通过filezilla进行有账户访问/var/www/html
 ```
+[root@server162 ~]# vim /etc/vsftpd/vsftpd.conf 
+
  12 anonymous_enable=YES
  29 anon_upload_enable=YES
  33 anon_mkdir_write_enable=YES
