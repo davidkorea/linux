@@ -243,4 +243,19 @@ EFI              GPL   Packages  RPM-GPG-KEY-CentOS-Testing-7  images     repoda
 - 需要安装gdm ```yum install -y gdm```
 - 在Xstart 里执行
     ![](https://i.loli.net/2019/03/19/5c9057ead644b.png)
+    
+![1.png](https://i.loli.net/2019/03/19/5c905d6f47b7a.png)
+![2.png](https://i.loli.net/2019/03/19/5c905d7975ade.png)
+![3.png](https://i.loli.net/2019/03/19/5c905d88be508.png)
+![4.png](https://i.loli.net/2019/03/19/5c905d90cab4a.png)
+![5.png](https://i.loli.net/2019/03/19/5c905d987975c.png)
+![6.png](https://i.loli.net/2019/03/19/5c905d9ddf576.png)
+![7.png](https://i.loli.net/2019/03/19/5c905da457486.png)
+![8.png](https://i.loli.net/2019/03/19/5c905db8c3d77.png)    
+![9.png](https://i.loli.net/2019/03/19/5c905da9889d5.png)
+![10.png](https://i.loli.net/2019/03/19/5c905db477989.png)
+    
 
+```
+[root@server162 ~]#cp ks.cfg /var/ftp
+```
