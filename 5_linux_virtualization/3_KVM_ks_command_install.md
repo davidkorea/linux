@@ -4,6 +4,19 @@
 2. 在命令行无人执守安装 KVM 虚拟机 
 3. 阿里云主机使用方法 
 
+# 1. 在命令行安装 KVM 虚拟机 
+#### 1. 上传centos7 iso镜像到/var/lib/libvirt/images/
+#### 2. 安装 vnc 客户端软件
+方便后期进程连接正在安装中的虚拟机的安装界面
+```
+[root@localhost ~]# yum install tigervnc -y       # vnc 进程桌面客户端 
+[root@localhost ~]# yum install virt-viewer -y    # 后面安装虚拟机时，需要使用 
+```
+
+
+
+
+
 - 报错空间不足
 ```shell
 virt-install --name centos7_ks --ram 1024 --vcpus=1 --disk path=/var/lib/libvirt/images/centos7_ks.qcow2,size=13 --accelerate --location=http://192.168.0.162/centos7/ --network bridge=br0 -x "ks=http://192.168.0.162/ks.cfg"
