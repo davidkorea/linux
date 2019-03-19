@@ -34,8 +34,12 @@
 
 # 2. 搭建无人执守安装服务器服务器安装及相关配置文件
 
-
-
+### 1. 配置yum基本环境
+```
+[root@server162~]# mount  /dev/cdrom  /mnt
+[root@server162~]# vi /etc/yum.repos.d/serverl.repo #在/etc/yum.repos.d目录下创建以.repo结尾的文件
+```
+### 2. 
 
 
 
