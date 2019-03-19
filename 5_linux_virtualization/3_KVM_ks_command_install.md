@@ -12,10 +12,30 @@
 [root@localhost ~]# yum install tigervnc -y       # vnc 进程桌面客户端 
 [root@localhost ~]# yum install virt-viewer -y    # 后面安装虚拟机时，需要使用 
 ```
+#### 3. 确认 libvirtd 服务开启
+```
+[root@localhost ~]# systemctl status libvirtd
+```
+#### 4. 通过命令行安装 KVM 虚拟机
+- --name=NAME 挃定 Guest 名字
+- --ram=MEMORY 挃定内存大小
+- --vcpus=VCPUS 挃定虚拟机的 CPU 数量
+- --disk 挃定虚拟机磁盘存储文件的路径 , size=5 指定虚拟磁盘的大小，单位是 G;
+-   例:--disk path=/var/lib/libvirt/images/centos-72.img,size=5
+- --cdrom=CDROM 挃定用于全虚拟化 Guest 的虚拟光驱， --cdrom=后指定 ISO 或 CDROM 镜像。
+- --network 指定虚拟机的网卡模式。如:--network bridge=br0
+- -x EXTRA, --extra-args=EXTRA 用来给加载的 kernel 和 initrd 提供额外的内核命令行参数。比 如无人值守安装系统
 
 
 
 
+
+
+
+
+
+
+-----
 
 - 报错空间不足
 ```shell
