@@ -115,4 +115,34 @@ xinetd  9102 root    5u  IPv4  51445      0t0  UDP *:tftp
 
 - 参数-c: 上传文件时，服务器上没有。就自动创建这个文件。默认tftp客户端，只能上传tftp服务器已经有的文件。也就是只能传上去并覆盖服务器上的原文件。如果想上传原来目录中没有的文件，需要修改tftp服务器的配置文件并重起服务。需要修改如下：```server_args = -s /tftpboot -c```
 
-  TFTP (Trivial File Transfer Protocol)，中译简单文件传输协议或小型文件传输协议. 大家一定记得在2003年8月12日全球爆发冲击波（Worm.Blaster）病毒，这种病毒会监听端口69,模拟出一个TFTP服务器，并启动一个攻 击传播线程,不断地随机生成攻击地址，进行入侵。另外tftp被认为是一种不安全的协议而将其关闭，同时也是防火墙打击的对象，这也是有道理的。tftp 在嵌入式linux还是有用武之地的。需要打开防火墙，允许tftp访问网络。
+TFTP (Trivial File Transfer Protocol)，中译简单文件传输协议或小型文件传输协议. 大家一定记得在2003年8月12日全球爆发冲击波（Worm.Blaster）病毒，这种病毒会监听端口69,模拟出一个TFTP服务器，并启动一个攻 击传播线程,不断地随机生成攻击地址，进行入侵。另外tftp被认为是一种不安全的协议而将其关闭，同时也是防火墙打击的对象，这也是有道理的。tftp 在嵌入式linux还是有用武之地的。需要打开防火墙，允许tftp访问网络。
+
+
+### 4. 安装dhcp，修改配置文件及开启服务
+
+参考： [搭建DHCP服务器](https://github.com/davidkorea/linux_study/blob/master/3_linux_services/3_DHCP.md#21-%E9%85%8D%E7%BD%AEdhcp-server)
+1. 安装服务
+```
+[root@server162~]# yum install dhcp -y
+```
+2. 添加一块信网卡vmnet4，并设置固定IP 192.168.1.10（写入ifcfg-ens39配置文件），不要仅仅临时``` ifconfig ens39 192.168.1.10/24```
+3. 配置DHCP
+```shell
+[root@server162~]# cp /usr/share/doc/dhcp-4.1.1/dhcpd.conf.sample /etc/dhcp/dhcpd.conf   # 生成配置文件
+cp: overwrite `/etc/dhcp/dhcpd.conf'? y
+
+subnet 192.168.1.0 netmask 255.255.255.0 {
+        range 192.168.1.100 192.168.1.200;
+        option domain-name-servers 192.168.1.1;
+        option domain-name "xerox.kr";
+        option routers 192.168.1.1;
+        option broadcast-address 192.168.1.255;
+        default-lease-time 600;
+        max-lease-time 7200;
+        next-server 192.168.1.10;       # 类似下一跳路由的意思
+        filename "pxelinux.0";          # 读取pxelinux.0文件
+}
+
+##### 设置完成后，先不启动dhcpd服务，最后全部设置完再次启动 #####
+```
+- ```filename "pxelinux.0"```
