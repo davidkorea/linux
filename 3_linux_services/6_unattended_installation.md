@@ -258,5 +258,11 @@ EFI              GPL   Packages  RPM-GPG-KEY-CentOS-Testing-7  images     repoda
     
 
 ```
-[root@server162 ~]#cp ks.cfg /var/ftp
+[root@server162 ~]# cp ks.cfg /var/ftp
+```
+ks.cfg就是无人值守安装时要用的Kickstart文件。要对应/tftpboot/pxelinux.cfg/default文件中设置过ks=ftp://192.168.1.10/ks.cfg
+
+最后，启动DHCP
+```
+[root@server162 ~]# systemctl start dhcpd
 ```
