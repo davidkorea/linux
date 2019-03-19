@@ -25,15 +25,16 @@
 - --name=NAME 挃定 Guest 名字
 - --ram=MEMORY 挃定内存大小
 - --vcpus=VCPUS 挃定虚拟机的 CPU 数量
-- --disk 挃定虚拟机磁盘存储文件的路径 , size=5 指定虚拟磁盘的大小，单位是 G;
--   例:--disk path=/var/lib/libvirt/images/centos-72.img,size=5
+- --disk path 指定虚拟机磁盘存储文件的路径, size=5 指定虚拟磁盘的大小，单位是G。例:--disk path=/var/lib/libvirt/images/centos-72.img,size=5
 - --cdrom=CDROM 挃定用于全虚拟化 Guest 的虚拟光驱， --cdrom=后指定 ISO 或 CDROM 镜像。
 - --network 指定虚拟机的网卡模式。如:--network bridge=br0
 - -x EXTRA, --extra-args=EXTRA 用来给加载的 kernel 和 initrd 提供额外的内核命令行参数。比 如无人值守安装系统
 
-
-
-
+```
+virt-install --name centos-7 --ram 1024 --vcpus=1 --disk path=/var/lib/libvirt/images/centos-72.img,size=5 --accelerate --cdrom /var/lib/libvirt/images/CentOS-7.4-x86_64-DVD.iso --network bridge=br0 --graphics vnc
+```
+  - 可以通过```virt-viewer```或者```vncviewer 127.0.0.1```实时查看安装进度
+  - 若使用xshell执行该命令，会自动通过xstart连接到图形界面
 
 
 
