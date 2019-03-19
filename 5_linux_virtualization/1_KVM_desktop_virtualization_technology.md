@@ -102,7 +102,7 @@ irqbypass              13503  1 kvm
 
 TYPE="Bridge"             # 设备类型为bridge
 DEVICE="br0"
-NM_CONTROLLED="yes"
+NM_CONTROLLED="no"        # 如果重启服务后不能连接外网，ens33也添加这一行
 ONBOOT="yes"
 BOOTPROTO=none
 IPADDR=192.168.0.100
@@ -110,6 +110,8 @@ NETMASK=255.255.255.0
 GATEWAY=192.168.0.1
 DNS1=8.8.8.8
 ```
+- ```NM_CONTROLLED```这个属性值，根据RedHat公司的文档是必须设置为“no”的（这个值为“yes”表示可以由服务NetworkManager来管理。NetworkManager服务不支持桥接，所以要设置为“no”。），但实际上发现设置为“yes”没有问题。通讯正常。
+
 重启服务
 ```
 [root@server100 ~]# systemctl restart NetworkManager      # 貌似这个方法试过之后，ens33和br0都有一样的ip
