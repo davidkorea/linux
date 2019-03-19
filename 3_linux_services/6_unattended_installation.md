@@ -180,6 +180,7 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 default配置文件的修改就是通过ftp服务器方式来访问kickstart文件
 ```shell
 [root@server162 ~]# vim /tftpboot/pxelinux.cfg/default 
+
   1 default linux       # 此处的linux就是下面61行的label linux入口
 
  61 label linux
@@ -231,4 +232,15 @@ EFI              GPL   Packages  RPM-GPG-KEY-CentOS-Testing-7  images     repoda
 [root@server162 yum.repos.d]# yum makecache
 ```
 
+#### 5. 通过system-config-kickstart制作ks.cfg文件
+```
+[root@server162 ~]# system-config-kickstart 
+
+(process:27304): Gtk-WARNING **: 10:41:31.785: Locale not supported by C library.
+	Using the fallback 'C' locale.
+```
+用xshell远程连接，执行上面的命令可能无法弹出选择框
+- 需要安装gdm ```yum install -y gdm```
+- 在Xstart 里执行
+    ![](https://i.loli.net/2019/03/19/5c9057ead644b.png)
 
