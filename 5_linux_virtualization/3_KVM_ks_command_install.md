@@ -16,6 +16,7 @@
 [root@localhost ~]# yum install tigervnc -y       # vnc 进程桌面客户端 
 [root@localhost ~]# yum install virt-viewer -y    # 后面安装虚拟机时，需要使用 
 ```
+扩展: vmware 迁移到 kvm ，需要使用 virt-v2v ,安装: ```yum install virt-v2v```
 #### 3. 确认 libvirtd 服务开启
 ```
 [root@localhost ~]# systemctl status libvirtd
