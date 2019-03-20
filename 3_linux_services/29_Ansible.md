@@ -154,10 +154,10 @@ and check to make sure that only the key(s) you wanted were added.
 ```
 
 ## 2.4 在Ansible服务端运行命令
-command模块执行shell命令，command作为ansible的默认模块，可以运行远程权限范围内的所有shell命令
+command模块执行shell命令，command作为ansible -m的默认模块，可以运行远程权限范围内的所有shell命令
 
 #### 1. ping模块检查网络连通性
-
+此处 -m 的参数为 ping 模块，不是默认的command模块
 - ```[root@server15 ~]# ansible -i /etc/ansible/hosts 'web-servers' -m  ping```
 ```
 [root@server15 ~]# ansible web-servers -m ping      # 不指定，默认使用/etc/ansible/hosts文件
@@ -173,6 +173,15 @@ command模块执行shell命令，command作为ansible的默认模块，可以运
 
 #### 2. 检查Ansible节点的运行时间（uptime）
 
+- ```[root@server15 ~]# ansible web-servers -m command -a 'uptime'```
+```
+[root@server15 ~]# ansible web-servers -a "uptime"      # -m command是默认参数，可以不写
+192.168.0.12 | CHANGED | rc=0 >>
+ 23:05:32 up 35 min,  4 users,  load average: 0.00, 0.01, 0.05
+
+192.168.0.15 | CHANGED | rc=0 >>
+ 23:05:32 up 28 min,  4 users,  load average: 0.16, 0.07, 0.06
+```
 
 #### 3. 检查节点的内核版本
 
