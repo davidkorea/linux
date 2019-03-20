@@ -163,5 +163,5 @@ command模块执行shell命令，command:作为ansible的默认模块，可以�
 #### 2. 检查Ansible节点的运行时间（uptime）
 
 
-
+#### 3. 检查节点的内核版本
 
