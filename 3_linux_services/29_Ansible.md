@@ -72,6 +72,13 @@ ansible 2.7.8
       44 [web-servers]      # 主机组 名
       45 192.168.0.12 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=11111
     ```
+    ```
+    [root@server15 ~]# ansible -i /etc/ansible/hosts web-servers -m ping
+    192.168.0.12 | SUCCESS => {
+    "changed": false, 
+    "ping": "pong"
+    }
+    ```
     - 如果报错
       ```
       "msg": "Using a SSH password instead of a key is not possible because Host Key checking is enabled 
@@ -89,7 +96,54 @@ ansible 2.7.8
       ```
 #### 2. 基于ssh密钥来访问定义主机清单
 
+一般来说，使用明文密码不安全，所以增加主机无密码访问。在Ansible服务端生成密钥，并且复制公钥到节点中。
+```
+[root@server15 ~]# ssh-keygen                                                 # 一直回车
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/.ssh/id_rsa.
+Your public key has been saved in /root/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:d7FGRNKTCZqCjUfNHgzpONe/SLEsfZ+9BIb6dEiKHUQ root@server15
+The key's randomart image is:
++---[RSA 2048]----+
+|      o*E o+oo   |
+|     =..=o o=    |
+|    oo+o+.  o.   |
+|    o.oo+  o o   |
+|     o oS++ *    |
+|      .o=*o= .   |
+|      .o+ooo.o.  |
+|        .o..o..  |
+|          .   .. |
++----[SHA256]-----+
 
+[root@server15 ~]# ssh-copy-id root@192.168.0.15                              # 复制公钥到server15
+The authenticity of host '192.168.0.15 (192.168.0.15)' can't be established.
+ECDSA key fingerprint is SHA256:7fRdUzAvYC2iJTVAev67cLTPRS0FQ7sy4FiN0g9ToI8.
+ECDSA key fingerprint is MD5:e6:f1:11:b9:b5:37:4e:89:df:94:72:63:5d:22:f2:82.
+Are you sure you want to continue connecting (yes/no)? yes
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@192.168.0.15's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'root@192.168.0.15'"
+and check to make sure that only the key(s) you wanted were added.
+
+[root@server15 ~]# ssh-copy-id root@192.168.0.12                              # 复制公钥到client12
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 1 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+root@192.168.0.12's password: 
+
+Number of key(s) added: 1
+
+Now try logging into the machine, with:   "ssh 'root@192.168.0.12'"
+and check to make sure that only the key(s) you wanted were added.
+```
 
 
 
