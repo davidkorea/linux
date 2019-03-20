@@ -184,8 +184,32 @@ command模块执行shell命令，command作为ansible -m的默认模块，可以
 ```
 
 #### 3. 检查节点的内核版本
+```
+[root@server15 ~]# ansible web-servers -a 'uname -r'
+192.168.0.15 | CHANGED | rc=0 >>
+3.10.0-957.el7.x86_64
 
+192.168.0.12 | CHANGED | rc=0 >>
+3.10.0-957.el7.x86_64
+```
 #### 4. 给节点增加用户
+```
+[root@server15 ~]# ansible web-servers -a "useradd test_user"
+192.168.0.15 | CHANGED | rc=0 >>
+
+
+192.168.0.12 | CHANGED | rc=0 >>
+
+```
+查看添加成功
+```
+[root@server15 ~]# ansible web-servers -a "tail -1 /etc/passwd"
+192.168.0.15 | CHANGED | rc=0 >>
+test_user:x:1001:1001::/home/test_user:/bin/bash
+
+192.168.0.12 | CHANGED | rc=0 >>
+test_user:x:1001:1001::/home/test_user:/bin/bash
+```
 #### 5. 将df命令在所有节点执行后，重定向输出到本机的/tmp/command-output.txt文件中
 
 
