@@ -40,3 +40,22 @@ ansible 2.7.8
   executable location = /usr/bin/ansible
   python version = 2.7.5 (default, Oct 30 2018, 23:45:53) [GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]
 ```
+### 2.2 ansible命令参数
+- anisble命令语法： ```ansible [-i 主机文件] [-f 批次] [组名] [-m 模块名称] [-a 模块参数]```
+  - ```ansible -i /etc/ansible/hosts 'web-servers'  -m ping```
+- ansible详细参数：
+  - v,–verbose   #  详细模式，如果命令执行成功，输出详细的结果 (-vv –vvv -vvvv)
+  - i PATH, -inventory=PATH      #  指定 host 文件的路径，默认是在 /etc/ansible/hosts. inventory[ˈɪnvəntri]  库存
+  - f NUM,-forks=NUM     # NUM 是指定一个整数，默认是 5 ，指定 fork 开启同步进程的个数。
+  - m NAME,-module-name=NAME    #   指定使用的 module 名称，默认使用 command模块
+  - a,MODULE_ARGS   #指定 module 模块的参数
+  - k,-ask-pass           #提示输入 ssh 的密码，而不是使用基于 ssh 的密钥认证
+  - sudo          # 指定使用 sudo 获得 root 权限
+  - K,-ask-sudo-pass             #提示输入 sudo 密码，与 -sudo 一起使用
+  - u USERNAME,-user=USERNAME          # 指定移动端的执行用户
+  - C,–check             #测试此命令执行会改变什么内容，不会真正的去执行
+- ansible-doc详细参数：
+  - ansible-doc -l           #列出所有的模块列表
+  - ansible-doc -s 模块名    #查看指定模块的参数 -s, --snippet[ˈsnɪpɪt]片断```ansible-doc -s service```
+
+
