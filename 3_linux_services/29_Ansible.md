@@ -24,7 +24,7 @@ ansible服务端: xuegod63 	 192.168.1.63
 ansible节点1: xuegod63    192.168.1.63
 ansible节点2: xuegod62  	192.168.1.62
 
-### 2.1 服务端安装Ansible
+## 2.1 服务端安装Ansible
 Ansible默认不在yum仓库中，因此我们需要使用下面的命令启用epel仓库。
 
 ```
@@ -40,7 +40,7 @@ ansible 2.7.8
   executable location = /usr/bin/ansible
   python version = 2.7.5 (default, Oct 30 2018, 23:45:53) [GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]
 ```
-### 2.2 ansible命令参数
+## 2.2 ansible命令参数
 - anisble命令语法： ```ansible [-i 主机文件] [-f 批次] [组名] [-m 模块名称] [-a 模块参数]```
   - ```ansible -i /etc/ansible/hosts 'web-servers'  -m ping```
 - ansible详细参数：
@@ -57,5 +57,31 @@ ansible 2.7.8
 - ansible-doc详细参数：
   - ansible-doc -l           #列出所有的模块列表
   - ansible-doc -s 模块名    #查看指定模块的参数 -s, --snippet[ˈsnɪpɪt]片断```ansible-doc -s service```
+
+## 2.3 定义主机清单/etc/ansible/hosts
+#### 1. 基于端口，用户，密码定义主机清单
+  - ansible基于ssh连接-i （inventory）参数后指定的远程主机时，也可以写端口，用户，密码。
+  - 格式：
+    - ansible_ssh_port:指定ssh端口   
+    - ansible_ssh_user:指定 ssh 用户 
+    - ansible_ssh_pass:指定 ssh 用户登录是认证密码（明文密码不安全）  
+    - ansible_sudo_pass:指明 sudo 时候的密码
+  - 文件 /etc/ansible/hosts 维护着Ansible中服务器的清单, 在文件最后追加以下内容
+    ```
+    [web-servers]                 # 主机组 名
+    192.168.1.64  ansible_ssh_port=22  ansible_ssh_user=root  ansible_ssh_pass=123456
+    ```
+#### 2. 基于ssh密钥来访问定义主机清单
+
+
+
+
+
+
+
+
+
+
+
 
 
