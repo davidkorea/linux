@@ -96,7 +96,7 @@ ansible 2.7.8
       ```
 #### 2. 基于ssh密钥来访问定义主机清单
 
-一般来说，使用明文密码不安全，所以增加主机无密码访问。在Ansible服务端生成密钥，并且复制公钥到节点中。
+一般来说，使用明文密码不安全，所以增加主机无密码访问。在Ansible服务端生成密钥，并且复制公钥到所有需要被远程控制到机器。
 ```
 [root@server15 ~]# ssh-keygen                                                 # 一直回车
 Generating public/private rsa key pair.
@@ -144,7 +144,15 @@ Number of key(s) added: 1
 Now try logging into the machine, with:   "ssh 'root@192.168.0.12'"
 and check to make sure that only the key(s) you wanted were added.
 ```
+修改host配置文件
+```
+[root@server15 ~]# vim /etc/ansible/hosts       # zhushi
+ 44 [web-servers]
+ 45 # 192.168.0.12 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=11111
+ 46 192.168.0.12
+ 47 192.168.0.15
 
+```
 
 
 
