@@ -146,12 +146,11 @@ and check to make sure that only the key(s) you wanted were added.
 ```
 修改host配置文件
 ```
-[root@server15 ~]# vim /etc/ansible/hosts       # zhushi
+[root@server15 ~]# vim /etc/ansible/hosts       # 注释掉或者删除掉之前那一行，重新写入需要远程控制到主机ip
  44 [web-servers]
  45 # 192.168.0.12 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=11111
  46 192.168.0.12
  47 192.168.0.15
-
 ```
 
 
