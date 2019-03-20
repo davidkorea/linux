@@ -17,3 +17,26 @@ Ansible 在管理节点将 Ansible 模块通过 SSH 协议推送到被管理端�
 - Plugins ：      完成模块功能的补充，包括连接插件、邮件插件等
 - Playbooks ：   剧本；定义 Ansible 多任务配置文件，由Ansible 自动执行
 - Inventory ：    定义 Ansible 管理主机的清单  [ˈɪnvəntri] 清单
+
+# 2. 实战-安装并配置Ansible管理两个节点
+
+ansible服务端: xuegod63 	 192.168.1.63
+ansible节点1: xuegod63    192.168.1.63
+ansible节点2: xuegod62  	192.168.1.62
+
+### 2.1 服务端安装Ansible
+Ansible默认不在yum仓库中，因此我们需要使用下面的命令启用epel仓库。
+
+```
+[root@localhost ~]# yum install epel-release -y
+
+[root@localhost ~]# yum install ansible -y 
+
+[root@localhost ~]# ansible --version
+ansible 2.7.8
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = [u'/root/.ansible/plugins/modules', u'/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python2.7/site-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 2.7.5 (default, Oct 30 2018, 23:45:53) [GCC 4.8.5 20150623 (Red Hat 4.8.5-36)]
+```
