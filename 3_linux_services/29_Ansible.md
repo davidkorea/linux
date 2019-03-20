@@ -20,9 +20,9 @@ Ansible 在管理节点将 Ansible 模块通过 SSH 协议推送到被管理端�
 
 # 2. 实战-安装并配置Ansible管理两个节点
 
-ansible服务端: xuegod63 	 192.168.1.63
-ansible节点1: xuegod63    192.168.1.63
-ansible节点2: xuegod62  	192.168.1.62
+- ansible服务端:  xuegod63 	 192.168.1.63
+  - ansible节点1: xuegod63    192.168.1.63
+  - ansible节点2: xuegod62  	192.168.1.62
 
 ## 2.1 服务端安装Ansible
 Ansible默认不在yum仓库中，因此我们需要使用下面的命令启用epel仓库。
@@ -60,17 +60,33 @@ ansible 2.7.8
 
 ## 2.3 定义主机清单/etc/ansible/hosts
 #### 1. 基于端口，用户，密码定义主机清单
-  - ansible基于ssh连接-i （inventory）参数后指定的远程主机时，也可以写端口，用户，密码。
-  - 格式：
-    - ansible_ssh_port:指定ssh端口   
-    - ansible_ssh_user:指定 ssh 用户 
-    - ansible_ssh_pass:指定 ssh 用户登录是认证密码（明文密码不安全）  
-    - ansible_sudo_pass:指明 sudo 时候的密码
+- ansible基于ssh连接-i （inventory）参数后指定的远程主机时，也可以写端口，用户，密码。
+- 格式：
+  - ansible_ssh_port:指定ssh端口   
+  - ansible_ssh_user:指定 ssh 用户 
+  - ansible_ssh_pass:指定 ssh 用户登录是认证密码（明文密码不安全）  
+  - ansible_sudo_pass:指明 sudo 时候的密码
   - 文件 /etc/ansible/hosts 维护着Ansible中服务器的清单, 在文件最后追加以下内容
     ```
-    [web-servers]                 # 主机组 名
-    192.168.1.64  ansible_ssh_port=22  ansible_ssh_user=root  ansible_ssh_pass=123456
+    [root@server15 ~]# vim /etc/ansible/hosts re 
+      44 [web-servers]      # 主机组 名
+      45 192.168.0.12 ansible_ssh_port=22 ansible_ssh_user=root ansible_ssh_pass=11111
     ```
+    - 如果报错
+      ```
+      "msg": "Using a SSH password instead of a key is not possible because Host Key checking is enabled 
+      and sshpass does not support this.  Please add this host's fingerprint to your known_hosts file to 
+      manage this host."
+      ```
+    - 那么，手动连接一下/etc/ansible/hosts主机清单中的主机，这样就可以在ansible服务器上保存目标主机的fingerprint
+       
+      ```
+      [root@server15 ~]# ssh 192.168.0.12
+      The authenticity of host '192.168.0.12 (192.168.0.12)' can't be established.
+      ECDSA key fingerprint is SHA256:agsHE/bUbZGaFrQ8tZyxnaiQTg6rYkvGh5+9MjRXLUo.
+      ECDSA key fingerprint is MD5:a6:37:b6:d2:00:9e:f1:a0:78:73:8c:48:4e:28:4b:de.
+      Are you sure you want to continue connecting (yes/no)? yes
+      ```
 #### 2. 基于ssh密钥来访问定义主机清单
 
 
