@@ -212,7 +212,31 @@ test_user:x:1001:1001::/home/test_user:/bin/bash
 ```
 #### 5. 将df命令在所有节点执行后，重定向输出到本机的/tmp/command-output.txt文件中
 
-
+```
+[root@server15 ~]# ansible web-servers -a "df -h" > /tmp/dfh.txt
+[root@server15 ~]# cat /tmp/dfh.txt 
+192.168.0.12 | CHANGED | rc=0 >>
+文件系统        容量  已用  可用 已用% 挂载点
+/dev/sda2        10G  4.8G  5.3G   48% /
+devtmpfs        2.0G     0  2.0G    0% /dev
+tmpfs           2.0G     0  2.0G    0% /dev/shm
+tmpfs           2.0G   13M  2.0G    1% /run
+tmpfs           2.0G     0  2.0G    0% /sys/fs/cgroup
+/dev/sda1       197M  141M   56M   72% /boot
+tmpfs           394M  4.0K  394M    1% /run/user/42
+tmpfs           394M   36K  394M    1% /run/user/0
+192.168.0.15 | CHANGED | rc=0 >>
+文件系统                 容量  已用  可用 已用% 挂载点
+/dev/mapper/centos-root   78G  4.4G   74G    6% /
+devtmpfs                 2.0G     0  2.0G    0% /dev
+tmpfs                    2.0G  124K  2.0G    1% /dev/shm
+tmpfs                    2.0G   13M  2.0G    1% /run
+tmpfs                    2.0G     0  2.0G    0% /sys/fs/cgroup
+/dev/sda1                497M  159M  339M   32% /boot
+tmpfs                    394M  4.0K  394M    1% /run/user/42
+tmpfs                    394M   28K  394M    1% /run/user/0
+/dev/sr0                 4.3G  4.3G     0  100% /run/media/root/CentOS 7 x86_64
+```
 
 
 
