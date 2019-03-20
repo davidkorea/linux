@@ -155,6 +155,8 @@ and check to make sure that only the key(s) you wanted were added.
 
 ## 2.4 在Ansible服务端运行命令
 
+#### 1. ping模块检查网络连通性
+command模块执行shell命令，command:作为ansible的默认模块，可以运行远程权限范围内的所有shell命令
 
 
 
