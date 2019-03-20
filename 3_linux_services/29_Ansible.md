@@ -153,6 +153,7 @@ and check to make sure that only the key(s) you wanted were added.
  47 192.168.0.15
 ```
 
+## 2.4 在Ansible服务端运行命令
 
 
 
