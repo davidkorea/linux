@@ -347,5 +347,6 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 ```
 ## 3.5 get_url模块实现远程主机下载指定url到本地，支持sha256sum文件校验
 ```
-
+[root@server162 ~]# ansible web-servers -m get_url -a "url=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm dest=/tmp/ mode=0440 force=yes"
 ```
+- 如果force=yes，当下载文件时，如果所下的内容和原目录下的文件内容不一样，则替换原文件，如果一样，就不下载了。
