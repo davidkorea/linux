@@ -425,7 +425,7 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 - name： task description     #任务描述信息
 - module_name: module_args    #需要使用的模块名字：  模块参数
 #### 2. ansible-playbook 执行命令
-```[root@server162 ~]# ansible-playbook site.yml```
+ ```[root@server162 ~]# ansible-playbook site.yml```
 - playbook是由一个或多个"play"组成的列表。play的主要功能在于将事先归为一组的主机装扮成事先通过ansible中的task定义好的角色。
 - github上提供了大量的实例供大家参考  https://github.com/ansible/ansible-examples
 #### 3. Playbook常用文件夹作用： 
@@ -436,3 +436,12 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 - templates：用于执行lamp安装的模板文件，一般为脚本
 - vars：本次安装定义的变量
 
+## 4.2 服务器上测试安装LAMP环境
+我们可以在ansible服务器上安装LAMP环境，然后，再将配置文件通过ansible拷贝到远程主机上
+#### 1. 安装httpd软件
+
+#### 2. 安装MySQL
+
+#### 3. 安装PHP和php-mysql模块
+
+#### 4. 提供php的测试页
