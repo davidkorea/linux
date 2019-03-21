@@ -258,24 +258,72 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 
 ## 3.1 3个远程命令模块的区别
 #### 1. command模块
-为ansible默认模块，不指定-m参数时，使用的就是command模块； comand模块比较简单，常见的命令都可以使用，但其命令的执行不是通过shell执行的，所以，像这些 "<", ">", "|", and "&"操作都不可以，当然，也就不支持管道； 缺点：不支持管道，没法批量执行命令；
-#### 2. shell模块
-使用shell模块，在远程命令通过/bin/sh来执行；所以，我们在终端输入的各种命令方式，都可以使用。
-例1：运行free -m 命令
-[root@xuegod63 ~]# ansible -i /etc/ansible/hosts  web-servers -m shell -a "free -m"
-注：但是我们自己定义在~/.bashrc或~/.bash_profile中的环境变量shell模块由于没有加载，所以无法识别；如果需要使用自定义的环境变量，就需要在最开始，执行加载自定义脚本的语句；
-对shell模块的使用可以分成两块： 
-1) 如果待执行的语句少，可以直接写在一句话中：
-[root@xuegod63 ~]# ansible -i /etc/ansible/hosts  web-servers -m shell -a "source  ~/.bash_profile && df -h | grep sda3" 
-2) 如果在远程待执行的语句比较多，可写成一个脚本，通过copy模块传到远端，然后再执行；但这样就又涉及到两次ansible调用；对于这种需求，ansible已经为我们考虑到了，script模块就是干这事的；
-#### 3. scripts模块
-使用scripts模块可以在本地写一个脚本，在远程服务器上执行：
-[root@xuegod63 ~]# vim  /etc/ansible/net.sh
-#!/bin/bash
-date
-hostname
-[root@xuegod63 ~]# ansible -i /etc/ansible/hosts  web-servers -m script -a "/etc/ansible/net.sh"
+为ansible默认模块，不指定-m参数时，使用的就是command模块； comand模块比较简单，常见的命令都可以使用，但其命令的执行不是通过shell执行的，所以，像这些 "<", ">", "|", and "&"操作都不可以，当然，也就不支持管道； 缺点：不支持管道，没法批量执行命令。
 
+话虽如此，但这样也成功了
+```
+[root@server162 ~]# ansible web-servers -a "netstat -anutp | grep httpd"
+```
+#### 2. shell模块
+使用shell模块，在远程命令通过/bin/sh来执行；所以，我们在终端输入的各种命令方式，都可以使用
+```
+[root@server162 ~]# ansible -i /etc/ansible/hosts  web-servers -m shell -a "free -m"
+```
+注：但是我们自己定义(alias 自定义变量)在~/.bashrc或~/.bash_profile中的环境变量shell模块由于没有加载，所以无法识别；如果需要使用自定义的环境变量，就需要在最开始，执行加载自定义脚本的语句
+- 对shell模块的使用可以分成两块： 
+  - 如果待执行的语句少，可以直接写在一句话中
+    ```
+    [root@server162 ~]# ansible  web-servers -a "source  ~/.bash_profile && df -h | grep sda2"
+    192.168.0.162 | FAILED | rc=2 >>
+    [Errno 2] No such file or directory
+                                                    # 果然，不用shell模块，执行会报错
+    192.168.0.163 | FAILED | rc=2 >>
+    [Errno 2] No such file or directory
+
+    [root@server162 ~]# ansible  web-servers -m shell -a "source  ~/.bash_profile && df -h | grep sda2"
+    192.168.0.162 | FAILED | rc=1 >>
+    non-zero return code                  # 162只用来sda1
+
+    192.168.0.163 | CHANGED | rc=0 >>
+    /dev/sda2        10G  4.8G  5.3G  48% /
+    ```
+  - 如果在远程待执行的语句比较多，可写成一个脚本，通过copy模块传到远端，然后再执行；但这样就又涉及到两次ansible调用；对于这种需求，ansible已经为我们考虑到了，script模块就是干这事的
+#### 3. scripts模块
+使用scripts模块可以在本地写一个脚本，在远程服务器上执行
+```
+[root@server162 ~]# vim  /etc/ansible/net.sh
+  #!/bin/bash
+  date
+  hostname
+
+[root@server162 ~]# ansible web-servers -m script -a "/etc/ansible/net.sh"
+192.168.0.162 | CHANGED => {
+    "changed": true, 
+    "rc": 0, 
+    "stderr": "Shared connection to 192.168.0.162 closed.\r\n", 
+    "stderr_lines": [
+        "Shared connection to 192.168.0.162 closed."
+    ], 
+    "stdout": "Thu Mar 21 11:29:53 CST 2019\r\nserver162\r\n", 
+    "stdout_lines": [
+        "Thu Mar 21 11:29:53 CST 2019", 
+        "server162"
+    ]
+}
+192.168.0.163 | CHANGED => {
+    "changed": true, 
+    "rc": 0, 
+    "stderr": "Shared connection to 192.168.0.163 closed.\r\n", 
+    "stderr_lines": [
+        "Shared connection to 192.168.0.163 closed."
+    ], 
+    "stdout": "Thu Mar 21 11:29:53 CST 2019\r\nclient163\r\n", 
+    "stdout_lines": [
+        "Thu Mar 21 11:29:53 CST 2019", 
+        "client163"
+    ]
+}
+```
 
 
 
