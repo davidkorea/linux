@@ -589,24 +589,12 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
 ```
 
 #### 3. 构建httpd的任务tasks，构建httpd的handlers
+复制所需文件
 ```
 [root@server162 ~]# cp /var/www/html/index.php /etc/ansible/lamp/roles/httpd/files/
 [root@server162 ~]# cp /etc/httpd/conf/httpd.conf /etc/ansible/lamp/roles/httpd/files/
-
-[root@server162 ~]# tree /etc/ansible/lamp/roles/
-/etc/ansible/lamp/roles/
-|-- httpd
-|   |-- default
-|   |-- files
-|   |   |-- httpd.conf
-|   |   `-- index.php
-|   |-- handlers
-|   |-- meta
-|   |-- tasks
-|   |   `-- main.yml
-|   |-- templates
-|   `-- var
 ```
+创建tasks main.yml
 ```
 [root@server162 ~]# vim /etc/ansible/lamp/roles/httpd/tasks/main.yml
 - name: web server install
@@ -621,10 +609,28 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
   copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf    # 提供httpd的配置文件
   notify: restart httpd                        # 当前面的copy复制成功后，通过notify通知名字为restart httpd的handlers运行
 ```
+创建handlers main.yml
 ```
 [root@server162 ~]# vim /etc/ansible/lamp/roles/httpd/handlers/main.yml
 - name: restart httpd                          # 创建tasks/main.yml调用的notify
   service: name=httpd enabled=yes state=restarted
+```
+最终文件目录如下
+```
+[root@server162 ~]# tree /etc/ansible/lamp/roles/
+/etc/ansible/lamp/roles/
+|-- httpd
+|   |-- default
+|   |-- files
+|   |   |-- httpd.conf
+|   |   `-- index.php
+|   |-- handlers
+|   |   `-- main.yml
+|   |-- meta
+|   |-- tasks
+|   |   `-- main.yml
+|   |-- templates
+|   `-- vars
 ```
 - 扩展：notify和handlers
   - notify调用的命令，需要在handlers里面也定义。之一名字一定要一致
@@ -634,3 +640,7 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
     - 不管有多少个通知者进行了notify，等到 play 中的所有 task 执行完成之后,handlers 也只会被执行一次。
     - Handlers 最佳的应用场景是用来重启服务,或者触发系统重启操作.除此以外很少用到了。
 
+#### 4. 构建MySQL的任务
+```
+
+```
