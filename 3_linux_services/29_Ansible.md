@@ -152,6 +152,18 @@ and check to make sure that only the key(s) you wanted were added.
  46 192.168.0.12
  47 192.168.0.15
 ```
+```
+[root@server162 ~]# ansible -m ping web-servers
+192.168.0.162 | SUCCESS => {
+    "changed": false, 
+    "ping": "pong"
+}
+192.168.0.163 | UNREACHABLE! => {
+    "changed": false, 
+    "msg": "Failed to connect to the host via ssh: ssh: connect to host 192.168.0.163 port 22: Connection timed out", 
+    "unreachable": true
+}
+```
 
 ## 2.4 在Ansible服务端运行命令
 command模块执行shell命令，command作为ansible -m的默认模块，可以运行远程权限范围内的所有shell命令
