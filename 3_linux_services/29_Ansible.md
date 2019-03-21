@@ -327,13 +327,18 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 ## 3.2 copy模块:实现主控端向目标主机拷贝文件，类似scp功能
 
 ```
-[root@server162 ~]# ansible web-servers -m copy -a "src=/etc/hosts dest=/tmp owner=root group=root mode=755"
+[root@server162 ~]# ansible web-servers -m copy -a "src=/etc/hosts dest=/tmp owner=root group=root mode=0755"
 ```
 ```
 [root@client163 tmp]# ll hosts 
 -rwxr-xr-x 1 root root 234 3月  21 11:35 hosts
 ```
-
-
-
+## 3.3 file模块设置文件属性
+```
+[root@server162 ~]# ansible web-servers -m file -a "path=/tmp/hosts mode=0777"
+```
+```
+[root@client163 tmp]# ll hosts 
+-rwxrwxrwx 1 root root 234 3月  21 11:35 hosts
+```
 
