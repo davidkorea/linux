@@ -165,6 +165,39 @@ and check to make sure that only the key(s) you wanted were added.
 }
 ```
 
+# Issue： 两台centos交换了ip，之前有互相ssh过，再ssh登录失败
+```
+[root@server162 ~]# ssh-copy-id root@192.168.0.163
+/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "/root/.ssh/id_rsa.pub"
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+
+/usr/bin/ssh-copy-id: ERROR: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ERROR: @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+ERROR: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ERROR: IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+ERROR: Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+ERROR: It is also possible that a host key has just been changed.
+ERROR: The fingerprint for the ECDSA key sent by the remote host is
+ERROR: SHA256:2jRM2HatzcmG7TN+NPtKjv9LTQkNSuhDKGby2x+JrRI.
+ERROR: Please contact your system administrator.
+ERROR: Add correct host key in /root/.ssh/known_hosts to get rid of this message.
+ERROR: Offending ECDSA key in /root/.ssh/known_hosts:1
+ERROR: ECDSA host key for 192.168.0.163 has changed and you have requested strict checking.
+ERROR: Host key verification failed.
+
+[root@server162 ~]# cd .ssh/
+[root@server162 .ssh]# ls
+authorized_keys  id_rsa  id_rsa.pub  known_hosts
+[root@server162 .ssh]# cat known_hosts 
+192.168.0.163 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPozdnsoHUKZ7BGlf7DH5dr/dOJynC/i90b8m+UI2Hysa7PiHf6VYTJveDuefthzKiFTW1dbmXDjrzBT5SqhlxE=
+192.168.0.162 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBPozdnsoHUKZ7BGlf7DH5dr/dOJynC/i90b8m+UI2Hysa7PiHf6VYTJveDuefthzKiFTW1dbmXDjrzBT5SqhlxE=
+[root@server162 .ssh]# rm -rf known_hosts 
+
+[root@server162 .ssh]# ssh-copy-id root@192.168.0.163
+##### FIXED #####
+```
+
+
 ## 2.4 在Ansible服务端运行命令
 command模块执行shell命令，command作为ansible -m的默认模块，可以运行远程权限范围内的所有shell命令
 
