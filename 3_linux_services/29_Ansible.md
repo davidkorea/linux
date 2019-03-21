@@ -693,3 +693,111 @@ fatal: [192.168.0.163]: FAILED! => {"changed": true, "cmd": "wget -O /etc/yum.re
 </p>
 
 ![](https://i.loli.net/2019/03/21/5c933739d55a2.png)
+
+测试发现client163，无法连接外网。删掉医用yum源之后，创建新的repo，但是里面的配置内容没有从阿里云下载到本地。导致之后的模块安装失败。
+
+测试后br0里面的DNS不能填写114，填写8.8.8.8才可以连接外网。
+
+```
+[root@server162 ~]# ansible-playbook /etc/ansible/lamp/roles/site.yml
+
+PLAY [LAMP build] ****************************************************************
+
+TASK [Gathering Facts] ***********************************************************
+ok: [192.168.0.162]
+ok: [192.168.0.163]
+
+TASK [prepare : delete yum config] ***********************************************
+ [WARNING]: Consider using the file module with state=absent rather than running
+'rm'.  If you need to use command because file is insufficient you can add 'warn:
+false' to this command task or set 'command_warnings=False' in ansible.cfg to get
+rid of this message.
+
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [prepare : provide yum repo file] *******************************************
+ [WARNING]: Consider using the get_url or uri module rather than running 'wget'.
+If you need to use command because get_url or uri is insufficient you can add
+'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg
+to get rid of this message.
+
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [prepare : clean the yum repo] **********************************************
+ [WARNING]: Consider using the yum module rather than running 'yum'.  If you need
+to use command because yum is insufficient you can add 'warn: false' to this
+command task or set 'command_warnings=False' in ansible.cfg to get rid of this
+message.
+
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [prepare : clean iptables] **************************************************
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [mysql : install the mysql] *************************************************
+ok: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [mysql : mkdir date directory] **********************************************
+ [WARNING]: Consider using the file module with state=directory rather than
+running 'mkdir'.  If you need to use command because file is insufficient you can
+add 'warn: false' to this command task or set 'command_warnings=False' in
+ansible.cfg to get rid of this message.
+
+changed: [192.168.0.163]
+changed: [192.168.0.162]
+
+TASK [mysql : provide configration file] *****************************************
+ok: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [mysql : chage the owner] ***************************************************
+ [WARNING]: Consider using the file module with owner rather than running
+'chown'.  If you need to use command because file is insufficient you can add
+'warn: false' to this command task or set 'command_warnings=False' in ansible.cfg
+to get rid of this message.
+
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [mysql : start mariadb] *****************************************************
+ok: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [php : install php] *********************************************************
+ok: [192.168.0.162]
+ok: [192.168.0.163]
+
+TASK [php : install php-mysql] ***************************************************
+ok: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [httpd : web server install] ************************************************
+ok: [192.168.0.162]
+ok: [192.168.0.163]
+
+TASK [httpd : provide test page] *************************************************
+ok: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [httpd : delete apache config] **********************************************
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+TASK [httpd : provide configuration file] ****************************************
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+RUNNING HANDLER [httpd : restart httpd] ******************************************
+changed: [192.168.0.162]
+changed: [192.168.0.163]
+
+PLAY RECAP ***********************************************************************
+192.168.0.162              : ok=17   changed=9    unreachable=0    failed=0   
+192.168.0.163              : ok=17   changed=14   unreachable=0    failed=0   
+```
+访问http://192.168.0.163/ PHP页面显示成功
