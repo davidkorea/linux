@@ -391,3 +391,31 @@ tmpfs                    394M   28K  394M    1% /run/user/0
     "changed": true
 }
 ```
+## 3.10 user模块远程主机用户管理
+```
+[root@server162 ~]# ansible web-servers -m user -a "name=xerox state=present"
+192.168.0.162 | SUCCESS => {
+    "append": false, 
+    "changed": false, 
+    "comment": "xerox", 
+    "group": 1000, 
+    "home": "/home/xerox", 
+    "move_home": false, 
+    "name": "xerox", 
+    "shell": "/bin/bash", 
+    "state": "present", 
+    "uid": 1000
+}
+192.168.0.163 | SUCCESS => {
+    "append": false, 
+    "changed": false, 
+    "comment": "xerox", 
+    "group": 1000, 
+    "home": "/home/xerox", 
+    "move_home": false, 
+    "name": "xerox", 
+    "shell": "/bin/bash", 
+    "state": "present", 
+    "uid": 1000
+}
+```
