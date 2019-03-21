@@ -357,5 +357,13 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 
 ```
 [root@server162 ~]# ansible web-servers -m yum -a "name=php state=latest"
-
+```
+## 3.7 cron模块远程主机crontab配置
+```
+[root@server162 ~]# ansible web-servers -m cron -a "name='list dir' minute='*/30' job='ls /tmp'"
+```
+```
+[root@server162 ~]# crontab -l
+#Ansible: list dir
+*/30 * * * * ls /tmp
 ```
