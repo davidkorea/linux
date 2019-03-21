@@ -256,7 +256,7 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 
 # 3. Ansible常见模块高级使用方法
 
-## 3.1 3个远程命令模块的区别
+## 3.1 三个远程命令模块的区别
 #### 1. command模块
 为ansible默认模块，不指定-m参数时，使用的就是command模块； comand模块比较简单，常见的命令都可以使用，但其命令的执行不是通过shell执行的，所以，像这些 "<", ">", "|", and "&"操作都不可以，当然，也就不支持管道； 缺点：不支持管道，没法批量执行命令。
 
@@ -324,10 +324,15 @@ tmpfs                    394M   28K  394M    1% /run/user/0
     ]
 }
 ```
+## 3.2 copy模块:实现主控端向目标主机拷贝文件，类似scp功能
 
-
-
-
+```
+[root@server162 ~]# ansible web-servers -m copy -a "src=/etc/hosts dest=/tmp owner=root group=root mode=755"
+```
+```
+[root@client163 tmp]# ll hosts 
+-rwxr-xr-x 1 root root 234 3月  21 11:35 hosts
+```
 
 
 
