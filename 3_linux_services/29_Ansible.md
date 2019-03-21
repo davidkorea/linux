@@ -686,11 +686,19 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
 ansible-playbook -i /etc/ansible/hosts  /etc/ansible/lamp/roles/site.yml
 ```
 
-<style>p{color:red;}</style>
-<p>
-changed: [192.168.0.162]
-fatal: [192.168.0.163]: FAILED! => {"changed": true, "cmd": "wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo", "delta": "0:00:20.090072", "end": "2019-03-21 14:42:55.928290", "msg": "non-zero return code", "rc": 4, "start": "2019-03-21 14:42:35.838218", "stderr": "--2019-03-21 14:42:35--  http://mirrors.aliyun.com/repo/Centos-7.repo\nResolving mirrors.aliyun.com (mirrors.aliyun.com)... failed: Name or service not known.\nwget: unable to resolve host address 'mirrors.aliyun.com'", "stderr_lines": ["--2019-03-21 14:42:35--  http://mirrors.aliyun.com/repo/Centos-7.repo", "Resolving mirrors.aliyun.com (mirrors.aliyun.com)... failed: Name or service not known.", "wget: unable to resolve host address 'mirrors.aliyun.com'"], "stdout": "", "stdout_lines": []}
-</p>
+```diff
+- ERROR
+- changed: [192.168.0.162]fatal: [192.168.0.163]: FAILED! => {"changed": true, "cmd": 
+- "wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo", 
+- "delta": "0:00:20.090072", "end": "2019-03-21 14:42:55.928290", "msg": "non-zero return code",
+- "rc": 4, "start": "2019-03-21 14:42:35.838218", "stderr": "--2019-03-21 14:42:35--  
+- http://mirrors.aliyun.com/repo/Centos-7.repo\nResolving mirrors.aliyun.com (mirrors.aliyun.com)... 
+- failed: Name or service not known.\nwget: unable to resolve host address 'mirrors.aliyun.com'", 
+- "stderr_lines": ["--2019-03-21 14:42:35--  http://mirrors.aliyun.com/repo/Centos-7.repo", 
+- "Resolving mirrors.aliyun.com (mirrors.aliyun.com)... failed: Name or service not known.", 
+- "wget: unable to resolve host address 'mirrors.aliyun.com'"], "stdout": "", "stdout_lines": []}
+```
+
 
 ![](https://i.loli.net/2019/03/21/5c933739d55a2.png)
 
