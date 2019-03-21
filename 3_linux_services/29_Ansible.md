@@ -420,7 +420,7 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 }
 ```
 # 4. 实战-使用Playbook批量部署多台LAMP环境
-## 4.1 playbooks使用步骤：
+## 4.1 playbooks使用步骤
 #### 1. 在playbooks 中定义任务
 - name： task description     #任务描述信息
 - module_name: module_args    #需要使用的模块名字：  模块参数
@@ -488,3 +488,19 @@ yum install php php-mysql -y
 [root@server162 ~]# iptables -F
 ```
   - http://192.168.0.162/index.php 访问成功
+
+## 4.3 实战playbook
+### 4.3.1 Ansible基本设定
+#### 1. /etc/ansible/hosts
+```
+[root@server162 ~]# vim /etc/ansible/hosts 
+  [web-servers]
+  192.168.0.162
+  192.168.0.163
+```
+#### 2. ssh-keygen
+```
+[root@server162 ~]# ssh-keygen 
+[root@server162 ~]# ssh-copy-id root@192.168.0.162
+[root@server162 ~]# ssh-copy-id root@192.168.0.163
+```
