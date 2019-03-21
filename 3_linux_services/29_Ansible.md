@@ -350,3 +350,12 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 [root@server162 ~]# ansible web-servers -m get_url -a "url=https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm dest=/tmp/ mode=0440 force=yes"
 ```
 - 如果force=yes，当下载文件时，如果所下的内容和原目录下的文件内容不一样，则替换原文件，如果一样，就不下载了。
+## 3.6 yum模块linux平台软件包管理
+- yum模块可以提供的status状态： 
+  - latest，present，installed  # 这3个代表安装；
+  - removed, absent # 这2个是卸载
+
+```
+[root@server162 ~]# ansible web-servers -m yum -a "name=php state=latest"
+
+```
