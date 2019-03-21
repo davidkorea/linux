@@ -419,3 +419,13 @@ tmpfs                    394M   28K  394M    1% /run/user/0
     "uid": 1000
 }
 ```
+# 4. 实战-使用Playbook批量部署多台LAMP环境
+## 4.1 playbooks使用步骤：
+#### 1. 在playbooks 中定义任务
+- name： task description     #任务描述信息
+- module_name: module_args    #需要使用的模块名字：  模块参数
+#### 2. ansible-playbook 执行命令
+```[root@server162 ~]# ansible-playbook site.yml```
+- playbook是由一个或多个"play"组成的列表。play的主要功能在于将事先归为一组的主机装扮成事先通过ansible中的task定义好的角色。
+- github上提供了大量的实例供大家参考  https://github.com/ansible/ansible-examples
+
