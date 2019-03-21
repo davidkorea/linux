@@ -504,3 +504,120 @@ yum install php php-mysql -y
 [root@server162 ~]# ssh-copy-id root@192.168.0.162
 [root@server162 ~]# ssh-copy-id root@192.168.0.163
 ```
+### 4.3.2 使用playbook构建LAMP任务
+#### 1. 创建相关目录文件
+```
+mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templates,vars,meta,default,handlers}
+```
+```
+[root@server162 ~]# tree /etc/ansible/lamp/
+/etc/ansible/lamp/
+`-- roles
+    |-- httpd
+    |   |-- default
+    |   |-- files
+    |   |-- handlers
+    |   |-- meta
+    |   |-- tasks
+    |   |-- templates
+    |   `-- vars
+    |-- mysql
+    |   |-- default
+    |   |-- files
+    |   |-- handlers
+    |   |-- meta
+    |   |-- tasks
+    |   |-- templates
+    |   `-- vars
+    |-- php
+    |   |-- default
+    |   |-- files
+    |   |-- handlers
+    |   |-- meta
+    |   |-- tasks
+    |   |-- templates
+    |   `-- vars
+    `-- prepare
+        |-- default
+        |-- files
+        |-- handlers
+        |-- meta
+        |-- tasks
+        |-- templates
+        `-- vars
+
+33 directories, 0 files
+```
+将上一步测试搭建成功的httpd和MySQL的配置文件拷贝到LAMP对应目录下
+```
+[root@server162 ~]# cp /etc/my.cnf /etc/ansible/lamp/roles/mysql/files/
+```
+```
+/etc/ansible/lamp/
+`-- roles
+    |-- httpd
+    |   |-- default
+    |   |-- files
+    |   |   `-- httpd.conf
+    |   |-- handlers
+    |   |-- meta
+    |   |-- tasks
+    |   |-- templates
+    |   `-- vars
+    |-- mysql
+    |   |-- default
+    |   |-- files
+    |   |   `-- my.cnf
+    |   |-- handlers
+    |   |-- meta
+    |   |-- tasks
+    |   |-- templates
+    |   `-- vars
+```
+#### 2. 写prepare角色的playbooks
+```
+[root@server162 ~]# vim /etc/ansible/lamp/roles/prepare/tasks/main.yml
+
+- name: delete yum config
+  shell: rm -rf /etc/yum.repos.d/*
+- name: provide yum repo file
+  shell: wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+- name: clean the yum repo
+  shell: yum clean all
+- name: clean iptables
+  shell: iptables -F
+```
+
+#### 3. 构建httpd的任务
+```
+[root@server162 ~]# cp /var/www/html/index.php /etc/ansible/lamp/roles/httpd/files/
+[root@server162 ~]# cp /etc/httpd/conf/httpd.conf /etc/ansible/lamp/roles/httpd/files/
+
+[root@server162 ~]# tree /etc/ansible/lamp/roles/
+/etc/ansible/lamp/roles/
+|-- httpd
+|   |-- default
+|   |-- files
+|   |   |-- httpd.conf
+|   |   `-- index.php
+|   |-- handlers
+|   |-- meta
+|   |-- tasks
+|   |   `-- main.yml
+|   |-- templates
+|   `-- var
+```
+```
+[root@server162 ~]# vim /etc/ansible/lamp/roles/httpd/tasks/main.yml
+- name: web server install
+  yum: name=httpd state=present                  # 安装httpd服务
+- name: provide test page
+  copy: src=index.php dest=/var/www/html         # 提供测试页，将上面拷贝到files的文件复制到客户端
+- name: delete apache config
+  shell: rm -rf  /etc/httpd/conf/httpd.conf      # 删除原有的apache配置文件，如果不删除，下面的copy任务是不会执行的
+                                                 # 因为当源文件httpd.conf和目标文件一样时，copy命令是不执行的
+                                                 # 如果copy命令不执行，那么notify将不调用handler
+- name: provide configuration file
+  copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf    # 提供httpd的配置文件
+  notify: restart httpd                          # 当前面的copy复制成功后，通过notify通知名字为restart httpd的handlers运行
+```
