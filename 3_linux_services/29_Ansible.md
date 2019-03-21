@@ -341,4 +341,11 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 [root@client163 tmp]# ll hosts 
 -rwxrwxrwx 1 root root 234 3月  21 11:35 hosts
 ```
+## 3.4 stat模块获取远程文件信息
+```
+[root@server162 ~]# ansible web-servers -m stat -a "path=/tmp/hosts"
+```
+## 3.5 get_url模块实现远程主机下载指定url到本地，支持sha256sum文件校验
+```
 
+```
