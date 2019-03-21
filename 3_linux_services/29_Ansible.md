@@ -380,4 +380,14 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 [root@server162 ~]# ansible web-servers -m service -a "name=httpd state=restarted"
 ```
 
-
+## 3.9 sysctl模块远程主机sysctl配置
+?????干什么用
+```
+[root@server162 ~]# ansible web-servers -m sysctl -a "name=net.ipv4.ip_forward value=1 reload=yes"
+192.168.0.162 | CHANGED => {
+    "changed": true
+}
+192.168.0.163 | CHANGED => {
+    "changed": true
+}
+```
