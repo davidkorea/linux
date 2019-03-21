@@ -548,32 +548,6 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
 
 33 directories, 0 files
 ```
-将上一步测试搭建成功的httpd和MySQL的配置文件拷贝到LAMP对应目录下
-```
-[root@server162 ~]# cp /etc/my.cnf /etc/ansible/lamp/roles/mysql/files/
-```
-```
-/etc/ansible/lamp/
-`-- roles
-    |-- httpd
-    |   |-- default
-    |   |-- files
-    |   |   `-- httpd.conf
-    |   |-- handlers
-    |   |-- meta
-    |   |-- tasks
-    |   |-- templates
-    |   `-- vars
-    |-- mysql
-    |   |-- default
-    |   |-- files
-    |   |   `-- my.cnf
-    |   |-- handlers
-    |   |-- meta
-    |   |-- tasks
-    |   |-- templates
-    |   `-- vars
-```
 #### 2. 写prepare角色的playbooks
 ```
 [root@server162 ~]# vim /etc/ansible/lamp/roles/prepare/tasks/main.yml
@@ -641,6 +615,21 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
     - Handlers 最佳的应用场景是用来重启服务,或者触发系统重启操作.除此以外很少用到了。
 
 #### 4. 构建MySQL的任务
+拷贝文件
 ```
-
+[root@server162 ~]# cp /etc/my.cnf /etc/ansible/lamp/roles/mysql/files/
+```
+创建tasks main.yml
+```
+[root@server162 ~]# vim /etc/ansible/lamp/roles/mysql/tasks/main.yml
+- name: install the mysql
+  yum: name=mariadb-server state=present             # 安装mysql服务
+- name: mkdir date directory
+  shell: mkdir -p /mydata/data                       # 创建挂载点目录
+- name: provide configration file
+  copy: src=my.cnf dest=/etc/my.cnf                  # 提供mysql的配置文件
+- name: chage the owner
+  shell: chown -R mysql:mysql /mydata/*              # 更改属主和属组
+- name: start mariadb
+  service: name=mariadb enabled=yes state=started    # 启动mysql服务，不适应notify调用handlers，直接运行更简单
 ```
