@@ -367,3 +367,17 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 #Ansible: list dir
 */30 * * * * ls /tmp
 ```
+
+## 3.8 service模块远程主机系统服务管理
+- service模块常用参数：
+  - name参数：此参数用于指定需要操作的服务名称，比如 nginx，httpd。 
+  - state参数：此参数用于指定服务的状态，比如，我们想要启动远程主机中的httpd，则可以将 state 的值设置为 started；如果想要停止远程主机中的服务，则可以将 state 的值设置为 stopped。此参数的可用值有 started、stopped、restarted（重启）、reloaded。 
+  - enabled参数：此参数用于指定是否将服务设置为开机 启动项，设置为 yes 表示将对应服务设置为开机启动，设置为 no 表示不会开机启动。
+  
+注：想使用service模块启动服务，被启动的服务，必须可以使用service 命令启动或关闭，只能systemctl的服务不可以
+
+```
+[root@server162 ~]# ansible web-servers -m service -a "name=httpd state=restarted"
+```
+
+
