@@ -633,3 +633,55 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
 - name: start mariadb
   service: name=mariadb enabled=yes state=started    # 启动mysql服务，不适应notify调用handlers，直接运行更简单
 ```
+```
+[root@server162 ~]# tree /etc/ansible/lamp/roles/
+/etc/ansible/lamp/roles/
+|-- mysql
+|   |-- default
+|   |-- files
+|   |   `-- my.cnf
+|   |-- handlers
+|   |-- meta
+|   |-- tasks
+|   |   `-- main.yml
+|   |-- templates
+|   `-- vars
+```
+#### 5. 构建PHP的任务
+```
+[root@server162 ~]# vim /etc/ansible/lamp/roles/php/tasks/main.yml
+- name: install php
+  yum: name=php state=present                 # 安装php，一个name下只能执行一种操作，所以分开安装
+- name: install php-mysql
+  yum: name=php-mysql state=present           # 安装php与mysql交互的插件
+```
+```
+[root@server162 ~]# tree /etc/ansible/lamp/roles/
+/etc/ansible/lamp/roles/
+|-- php
+|   |-- default
+|   |-- files
+|   |-- handlers
+|   |-- meta
+|   |-- tasks
+|   |   `-- main.yml
+|   |-- templates
+|   `-- vars
+```
+
+#### 6. 定义整个的任务，开始部署
+```
+[root@server162 ~]# vim /etc/ansible/lamp/roles/site.yml
+- name: LAMP build
+  remote_user: root
+  hosts: web-servers
+  roles:
+    - prepare
+    - mysql
+    - php 
+    - httpd
+```
+开始部署
+```
+ansible-playbook -i /etc/ansible/hosts  /etc/ansible/lamp/roles/site.yml
+```
