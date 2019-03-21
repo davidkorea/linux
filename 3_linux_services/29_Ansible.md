@@ -588,7 +588,7 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
   shell: iptables -F
 ```
 
-#### 3. 构建httpd的任务
+#### 3. 构建httpd的任务tasks，构建httpd的handlers
 ```
 [root@server162 ~]# cp /var/www/html/index.php /etc/ansible/lamp/roles/httpd/files/
 [root@server162 ~]# cp /etc/httpd/conf/httpd.conf /etc/ansible/lamp/roles/httpd/files/
@@ -610,23 +610,27 @@ mkdir -pv /etc/ansible/lamp/roles/{prepare,httpd,mysql,php}/{tasks,files,templat
 ```
 [root@server162 ~]# vim /etc/ansible/lamp/roles/httpd/tasks/main.yml
 - name: web server install
-  yum: name=httpd state=present                  # 安装httpd服务
+  yum: name=httpd state=present                # 安装httpd服务
 - name: provide test page
-  copy: src=index.php dest=/var/www/html         # 提供测试页，将上面拷贝到files的文件复制到客户端
+  copy: src=index.php dest=/var/www/html       # 提供测试页，将上面拷贝到files的文件复制到客户端
 - name: delete apache config
-  shell: rm -rf  /etc/httpd/conf/httpd.conf      # 删除原有的apache配置文件，如果不删除，下面的copy任务是不会执行的
-                                                 # 因为当源文件httpd.conf和目标文件一样时，copy命令是不执行的
-                                                 # 如果copy命令不执行，那么notify将不调用handler
+  shell: rm -rf  /etc/httpd/conf/httpd.conf    # 删除原有的apache配置文件，如果不删除，下面的copy任务是不会执行的
+                                               # 因为当源文件httpd.conf和目标文件一样时，copy命令是不执行的
+                                               # 如果copy命令不执行，那么notify将不调用handler
 - name: provide configuration file
   copy: src=httpd.conf dest=/etc/httpd/conf/httpd.conf    # 提供httpd的配置文件
-  notify: restart httpd                          # 当前面的copy复制成功后，通过notify通知名字为restart httpd的handlers运行
+  notify: restart httpd                        # 当前面的copy复制成功后，通过notify通知名字为restart httpd的handlers运行
 ```
-
+```
+[root@server162 ~]# vim /etc/ansible/lamp/roles/httpd/handlers/main.yml
+- name: restart httpd                          # 创建tasks/main.yml调用的notify
+  service: name=httpd enabled=yes state=restarted
+```
 - 扩展：notify和handlers
+  - notify调用的命令，需要在handlers里面也定义。之一名字一定要一致
   - notify： 这个action可用于在每个play的最后被触发，这样可以避免多次有改变发生时，每次都执行指定的操作，取而代之，仅在所有的变化发生完成后一次性地执行指定操作。在notify中列出的操作称为handler，也即notify中调用handler中定义的操作。
   - handlers概述：
     - Handlers 也是一些 task 的列表,通过名字来引用,它们和一般的 task 并没有什么区别。Handlers 是由通知者进行notify, 如果没有被 notify，handlers 不会执行。
     - 不管有多少个通知者进行了notify，等到 play 中的所有 task 执行完成之后,handlers 也只会被执行一次。
     - Handlers 最佳的应用场景是用来重启服务,或者触发系统重启操作.除此以外很少用到了。
-
 
