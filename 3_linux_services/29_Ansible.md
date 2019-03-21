@@ -439,8 +439,38 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 ## 4.2 服务器上测试安装LAMP环境
 我们可以在ansible服务器上安装LAMP环境，然后，再将配置文件通过ansible拷贝到远程主机上
 #### 1. 安装httpd软件
+```
+yum install httpd -y
+```
+#### 2. 安装MySQL服务端和客户端
+```
+yum install mariadb-server  mariadb  -y
+```
+```
+[root@server162 ~]# mkdir -p /mydata/data
 
-#### 2. 安装MySQL
+[root@server162 ~]# chown -R mysql:mysql /mydata/
+[root@server162 ~]# ll /mydata/
+total 0
+drwxr-xr-x 2 mysql mysql 6 Mar 21 13:27 data
+
+[root@server162 ~]# vim /etc/my.cnf
+  1 [mysqld]
+  2 datadir=/mydata/data                   # 更改存放数据的路径
+
+[root@server162 ~]# systemctl start mariadb
+您在 /var/spool/mail/root 中有新邮件
+[root@server162 ~]# ll /mydata/data/       # 必须先更改存放路径，否则启动服务后自动会生成数据不会到新的目录
+total 37852
+-rw-rw---- 1 mysql mysql    16384 Mar 21 13:31 aria_log.00000001
+-rw-rw---- 1 mysql mysql       52 Mar 21 13:31 aria_log_control
+-rw-rw---- 1 mysql mysql  5242880 Mar 21 13:31 ib_logfile0
+-rw-rw---- 1 mysql mysql  5242880 Mar 21 13:31 ib_logfile1
+-rw-rw---- 1 mysql mysql 18874368 Mar 21 13:31 ibdata1
+drwx------ 2 mysql mysql     4096 Mar 21 13:31 mysql
+drwx------ 2 mysql mysql     4096 Mar 21 13:31 performance_schema
+drwx------ 2 mysql mysql        6 Mar 21 13:31 test
+```
 
 #### 3. 安装PHP和php-mysql模块
 
