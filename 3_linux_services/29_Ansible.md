@@ -428,4 +428,11 @@ tmpfs                    394M   28K  394M    1% /run/user/0
 ```[root@server162 ~]# ansible-playbook site.yml```
 - playbook是由一个或多个"play"组成的列表。play的主要功能在于将事先归为一组的主机装扮成事先通过ansible中的task定义好的角色。
 - github上提供了大量的实例供大家参考  https://github.com/ansible/ansible-examples
+#### 3. Playbook常用文件夹作用： 
+- files：存放需要同步到异地服务器的源码文件及配置文件
+- tasks：需要进行的执行的任务
+- handlers：当服务的配置文件发生变化时需要进行的操作，比如：重启服务，重新加载配置文件 ['hændləz] 处理程序
+- meta：角色定义，可留空
+- templates：用于执行lamp安装的模板文件，一般为脚本
+- vars：本次安装定义的变量
 
