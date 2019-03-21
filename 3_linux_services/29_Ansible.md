@@ -471,7 +471,20 @@ drwx------ 2 mysql mysql     4096 Mar 21 13:31 mysql
 drwx------ 2 mysql mysql     4096 Mar 21 13:31 performance_schema
 drwx------ 2 mysql mysql        6 Mar 21 13:31 test
 ```
-
 #### 3. 安装PHP和php-mysql模块
-
+```
+yum install php php-mysql -y
+```
 #### 4. 提供php的测试页
+```
+[root@server162 ~]# vim /var/www/html/index.php
+<?php
+        phpinfo();
+?>
+```
+#### 5. 启动httpd服务，在浏览器中访问http://192.168.0.162/
+```
+[root@server162 ~]# systemctl restart httpd 
+[root@server162 ~]# iptables -F
+```
+  - http://192.168.0.162/index.php 访问成功
