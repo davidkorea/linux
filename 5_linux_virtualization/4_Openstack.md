@@ -68,7 +68,7 @@ Ceilometer  [sɪ'lɒmɪtə]  云幂测量仪
 #### 8. 数据库（Trove）
 为关系型数据库和非关系型数据库引擎提供可扩展的和可靠的云数据库服务，并继续改进其功能齐全、可扩展的开源框架。Trove  [trəʊv] 宝库
 
-[](https://i.loli.net/2019/03/22/5c9459a84104b.png)
+![](https://i.loli.net/2019/03/22/5c9459a84104b.png)
 
 ## 1.3 Openstack的网络模式有5种
 1. Local模式：一般测试时使用，只需一台物理机即可。
@@ -388,6 +388,6 @@ export OS_IDENTITY_API_VERSION=3
 export OS_REGION_NAME=RegionOne
 ```
 
+![](https://i.loli.net/2019/03/22/5c9484c33d1a3.png)
 
-
-[](https://i.loli.net/2019/03/21/5c93b3f3ac779.png)
+![](https://i.loli.net/2019/03/21/5c93b3f3ac779.png)
