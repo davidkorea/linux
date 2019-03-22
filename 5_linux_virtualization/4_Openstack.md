@@ -130,8 +130,23 @@ server162
 192.168.0.163 client163.com client163
 ```
 
+#### 6.同步时间
+```
+[root@xuegod63 ~]# yum install ntp
+[root@xuegod63 ~]# systemctl enable ntpd.service
+[root@xuegod63 ~]# systemctl start ntpd.service
+```
+#### 7.配置 pip 镜像源，方便快速下载python库（这一步很重要）
+并没有做
+```
+[root@xuegod63 ~]# mkdir ~/.pip
+[root@xuegod63 ~]# vim  ~/.pip/pip.conf  #写入下以内容
 
-
+[global]
+index-url = http://mirrors.aliyun.com/pypi/simple/
+[install]
+trusted-host=mirrors.aliyun.com
+```
 
 
 
