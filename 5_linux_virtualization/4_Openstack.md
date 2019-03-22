@@ -91,7 +91,44 @@ Ceilometer  [sɪ'lɒmɪtə]  云幂测量仪
 5. 高级定制 Puppet、Chef
 6. kolla 基于docker安装openstack ，把openstack每个组件做成docker实例 
 
-选择基于docker的kolla方式，优点是占用内存资源少，一般8G内存即可。社区手册方法至少12G内存
+**选择基于docker的kolla方式，优点是占用内存资源少，一般8G内存即可。社区手册方法至少12G内存**
+
+
+# 2.  Kolla概述 和 openstack all-in-one初始配置
+
+kolla是openstack下面用于自动化部署的一个项目，它基于docker和ansible来实现，docker主要负责镜像制作，容器管理。而ansible主要负责环境的部署和管理。
+
+Kolla实际上是分为两大块的，一部分，Kolla提供了生产环境级别的镜像，涵盖了Openstack用到的各个服务，另一部分是自动化的部署，也就是上面说的ansible部分。最开始两个部分是在一个项目中的（也就是Kolla），从O版本开始将两个部分独立开来，Kolla项目用来构建所有服务的镜像，Kolla-ansible用来执行自动化部署。
+
+## 5.1   linux系统环境配置
+
+#### 1. 关闭Selinux和防火墙
+```
+[root@server162 ~]# vim /etc/selinux/config
+SELINUX=disabled
+[root@server162 ~]# reboot   #如果原来的系统开着selinux，那么需要重启，才能关闭selinux  
+```
+#### 2.关闭Firewalld
+```
+[root@server162 ~]# systemctl stop firewalld
+[root@server162 ~]# systemctl disable firewalld
+[root@server162 ~]# systemctl status firewalld
+```
+#### 3.安装 Epel源
+```
+[root@server162 ~]# yum install epel-release -y
+```
+#### 4.配置 Hostname
+```
+[root@server162 ~]# cat /etc/hostname
+server162
+```
+#### 5.配置/etc/hosts
+```
+[root@server162 ~]# cat /etc/hosts     # 添加以下两行
+192.168.0.162 server162.com server162
+192.168.0.163 client163.com client163
+```
 
 
 
@@ -120,12 +157,4 @@ Ceilometer  [sɪ'lɒmɪtə]  云幂测量仪
 
 
 
-
-
-
-
-
-
-
-kolla基于docker的安装方式8G内存就够了，要是按照社区方法安装，至少12G，都不一定够用
 [](https://i.loli.net/2019/03/21/5c93b3f3ac779.png)
