@@ -362,11 +362,31 @@ kolla/centos-binary-cron   pike      659fa47c7d43        About an hour ago   455
 ```
 因为前面已经下载的镜像，所以这时，安装会快一些。如果前面没有下载镜像，那么这时，还会边下载各种openstack相关的镜像边部署docker实例。
 
+#### iv. 验证部署
+```
+[root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one  post-deploy
+```
+```
+PLAY RECAP ***********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0 
+```
+这样就创建 /etc/kolla/admin-openrc.sh 文件
+```
+[root@server162 ~]# ll /etc/kolla/admin-openrc.sh
+-rw-r--r-- 1 root root 323 Mar 22 14:40 /etc/kolla/admin-openrc.sh
 
-
-
-
-
+[root@server162 ~]# cat /etc/kolla/admin-openrc.sh                   # 查看openstack登录帐号
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=admin
+export OS_TENANT_NAME=admin
+export OS_USERNAME=admin
+export OS_PASSWORD=11111
+export OS_AUTH_URL=http://192.168.0.162:35357/v3
+export OS_INTERFACE=internal
+export OS_IDENTITY_API_VERSION=3
+export OS_REGION_NAME=RegionOne
+```
 
 
 
