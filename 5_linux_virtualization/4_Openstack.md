@@ -19,7 +19,10 @@ OpenStack是一个云平台管理的项目，它不是一个软件。这个项�
   - OpenShift是自由和开放源码的云计算平台，它可以使开发人员能够创建、测试和运行他们的应用程序，并且可以把它们部署到云中。Openshift广泛支持多种编程语言和框架，如Java，Ruby和PHP等。另外它还提供了多种集成开发工具如Eclipse integration，JBoss Developer Studio和 Jenkins等。OpenShift 基于一个开源生态系统为移动应用，数据库服务等，提供支持。
 - SaaS是Software-as-a-Service的简称。docs.google.com或 微软的office  365
 
-
+- 按拥有者分类：
+  - 公有云（Public Cloud）、私有云（Private Cloud）、混合云（Hybrid Cloud）
+  - 按照技术厂商分类：VMware vSphere、微软云计算解决方案、亚马逊AWS、OpenStack等
+  - 注：国内云平台使用opensctack二次开发比较多。
 
 
 
