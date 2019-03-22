@@ -306,12 +306,12 @@ EOF
 
 ```
 ## 2.5 开始基于kolla-ansible安装openstack私有云
-#### 1. 生成SSH Key，并授信本节点：
+### 1. 生成SSH Key，并授信本节点：
 ```
 [root@server162 ~]# ssh-keygen
 [root@server162 ~]# ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.162
 ```
-#### 2. 配置单节点清单文件
+### 2. 配置单节点主机清单文件
 ```
 [root@server162 kolla]# vim /etc/kolla/all-in-one           # 把localhost替换成server162
 
@@ -336,14 +336,14 @@ server162
 [deployment]
 server162       
 ```
-#### 3. 开始部署OpenStack
+### 3. 开始部署OpenStack
 以下命令中的```-i /etc/kolla/all-in-one```可以省略
-##### 1. 对主机进行预部署检查
+#### i. 对主机进行预部署检查
 ```
 [root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one prechecks
 ```
 有可能会报错，不用管，继续下面步骤
-##### 2. 拉取镜像
+#### ii. 拉取镜像
 ```
 [root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one  pull
 ```
@@ -356,7 +356,7 @@ kolla/centos-binary-cron   pike      659fa47c7d43        About an hour ago   455
 [root@server162 ~]# docker images | wc -l          # 整个过程，会下载了32个镜像
 30
 ```
-##### 3. 最后进入实际的OpenStack部署
+#### iii. 最后进入实际的OpenStack部署
 ```
 [root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one deploy 
 ```
