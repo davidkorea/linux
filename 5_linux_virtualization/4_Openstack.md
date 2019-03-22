@@ -256,10 +256,46 @@ virt_type=qemu
 cpu_mode = none
 EOF
 ```
+## 2.4 自定义kolla-ansible安装openstack的相关配置文件
+
+#### 1. 自动生成openstack各服务的密码文件
+```diff
+[root@xuegod63 kolla-ansible]# kolla-genpwd         # /etc/kolla/passwords.yml自动为该文件生产随机密码
+
+[root@xuegod63 ~]# vim /etc/kolla/passwords.yml
+
+- 158 keystone_admin_password: HsPbEQHxTqmewKYNoRPpIOyQNdEYpHy36OX67TG3
++ 158 keystone_admin_password: 11111 
+```
+这是登录Dashboard，admin使用的密码，你可以根据自己需要进行修改。
+
+#### 2. 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
+```diff
+[root@xuegod63 ~]# vim /etc/kolla/globals.yml      # 配置openstack安装中的参数
+- 15 #kolla_base_distro: "centos"                  # 选择下载的镜像为基于centos版本的镜像
++ 15 kolla_base_distro: "centos"
+
+- 18 #kolla_install_type: "binary"                 # 去了前面的#号，使用yum安装二进制包安装
++ 18 kolla_install_type: "binary"                  # 源码安装，指的是使用git clone源码安装
+
+- 21 #openstack_release: ""                        # 指定安装pike版本的openstack，       
++ 21 openstack_release: "pike"                     # 后期下载的openstack相关的docker镜像的tag标记也都为pike
+
+  23 # Location of configuration overrides
+  24 #node_custom_config: "/etc/kolla/config"      # 配置文件的位置
+
+- 31 kolla_internal_vip_address: "10.10.10.254"    # 我们没有启用高可用，所以这里的IP可以和ens33一样
++ 31 kolla_internal_vip_address: "192.168.0.162"   # 也可以独立写一个和ens33同网段的IP
+                                                   # 如果配置了高可用，这里要使用一个没被占用的IP,
+                                                   # 这个IP是搭建HA高可用的浮动IP,
+                                                   # 此IP将由keepalived管理以提供高可用性,
+                                                   # 应设置为和network_interface ens33 同一个网段的地址
+
+- 73 #network_interface: "eth0"                    # Kolla-Ansible需要设置一些网络选项。
++ 73 network_interface: "ens33"                    # 这是openstack内部多个管理类型网络的默认接口
 
 
 
-
-
+```
 
 [](https://i.loli.net/2019/03/21/5c93b3f3ac779.png)
