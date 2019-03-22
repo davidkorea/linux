@@ -224,19 +224,19 @@ EOF
 #### 2. 安装 kolla-ansible
 1. 下载kolla-ansible的代码
 ```
-[root@xuegod63 ~]# cd /root
-[root@xuegod63 ~]# git clone http://git.trystack.cn/openstack/kolla-ansible -b stable/pike    # 下载pike版本
+[root@server162 ~]# cd /root
+[root@server162 ~]# git clone http://git.trystack.cn/openstack/kolla-ansible -b stable/pike    # 下载pike版本
 ```
 2. 安装kolla-ansible需要依赖包
 ```
-[root@xuegod63 ~]# cd /root/kolla-ansible
-[root@xuegod63 kolla-ansible]# pip install .    #这里.代表当前目录 安装目录下所有requirements.txt文件
+[root@server162 ~]# cd /root/kolla-ansible
+[root@server162 kolla-ansible]# pip install .    #这里.代表当前目录 安装目录下所有requirements.txt文件
 ```
 3. 复制kolla-ansible的相关配置文件
 ```
-[root@xuegod63 kolla-ansible]# cp -r etc/kolla /etc/kolla/
-[root@xuegod63 kolla-ansible]# cp ansible/inventory/* /etc/kolla/
-[root@xuegod63 kolla-ansible]# ls /etc/kolla/
+[root@server162 kolla-ansible]# cp -r etc/kolla /etc/kolla/
+[root@server162 kolla-ansible]# cp ansible/inventory/* /etc/kolla/
+[root@server162 kolla-ansible]# ls /etc/kolla/
 all-in-one  globals.yml  multinode  passwords.yml
 ```
   - all-in-one #安装单节点openstack的ansible自动安装配置文件
@@ -244,8 +244,18 @@ all-in-one  globals.yml  multinode  passwords.yml
   - globals.yml #openstack 部署的自定义配置文件 
   - passwords.yml  #openstack中各个服务的密码
 
+#### 3. 修改虚拟机类型为qemu
+**如果vmware开了“虚拟化Intel VT”功能，就不用写这个了**
 
-
+注：如果是在虚拟机里装kolla，希望可以启动再启动虚拟机，那么你需要把virt_type=qemu，默认是kvm。
+```
+[root@server162 kolla-ansible]# mkdir -p /etc/kolla/config/nova
+[root@server162 kolla-ansible]# cat << EOF > /etc/kolla/config/nova/nova-compute.conf
+[libvirt]
+virt_type=qemu
+cpu_mode = none
+EOF
+```
 
 
 
