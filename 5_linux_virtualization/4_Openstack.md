@@ -337,29 +337,30 @@ server162
 server162       
 ```
 #### 3. 开始部署OpenStack
-一下命令中的```-i /etc/kolla/all-in-one```可以省略
-1. 对主机进行预部署检查
+以下命令中的```-i /etc/kolla/all-in-one```可以省略
+##### 1. 对主机进行预部署检查
 ```
 [root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one prechecks
 ```
 有可能会报错，不用管，继续下面步骤
-2. 拉取镜像
+##### 2. 拉取镜像
 ```
 [root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one  pull
 ```
-3. 查看下载到的镜像
 ```
-[root@server162 ~]# docker images 
+[root@server162 ~]# docker images                 # 查看下载到的镜像
 REPOSITORY              TAG       IMAGE ID            CREATED             SIZE
 kolla/centos-binary-cron   pike      659fa47c7d43        About an hour ago   455MB
 ... ...
 
-[root@xuegod63 ~]# docker images | wc -l         # 整个过程，会下载了32个镜像
+[root@server162 ~]# docker images | wc -l          # 整个过程，会下载了32个镜像
 30
 ```
-
-
-
+##### 3. 最后进入实际的OpenStack部署
+```
+[root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one deploy 
+```
+因为前面已经下载的镜像，所以这时，安装会快一些。如果前面没有下载镜像，那么这时，还会边下载各种openstack相关的镜像边部署docker实例。
 
 
 
