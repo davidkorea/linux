@@ -1,10 +1,10 @@
-# 使用Kolla部署Pike版本的OpenStack-allinone云平台
+# 使用Kolla部署Pike版本的OpenStack all-in-one云平台
 
 1. openstack 概述
-5. Kolla 概述和 openstack 所有结点 linux 系统初始配置
-6. 安装 kolla-ansible
-7. 自定义 kolla-ansible 安装 openstack 的相关配置文件
-8. 开始基于 kolla-ansible 安装 openstack 私有云
+2. Kolla 概述和 openstack 所有结点 linux 系统初始配置
+3. 安装 kolla-ansible
+4. 自定义 kolla-ansible 安装 openstack 的相关配置文件
+5. 开始基于 kolla-ansible 安装 openstack 私有云
 
 # 1. openstack概述
 
@@ -94,7 +94,7 @@ Ceilometer  [sɪ'lɒmɪtə]  云幂测量仪
 **选择基于docker的kolla方式，优点是占用内存资源少，一般8G内存即可。社区手册方法至少12G内存**
 
 
-# 2.  Kolla概述 和 openstack all-in-one初始配置
+# 2. Openstack all-in-one 配置
 
 kolla是openstack下面用于自动化部署的一个项目，它基于docker和ansible来实现，docker主要负责镜像制作，容器管理。而ansible主要负责环境的部署和管理。
 
@@ -313,7 +313,7 @@ EOF
 ```
 #### 2. 配置单节点清单文件
 ```
-[root@xuegod63 kolla]# vim /etc/kolla/all-in-one           # 把localhost替换成server162
+[root@server162 kolla]# vim /etc/kolla/all-in-one           # 把localhost替换成server162
 
 :1,$s/localhost/server162/
 
