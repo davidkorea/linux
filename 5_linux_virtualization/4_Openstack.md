@@ -100,7 +100,7 @@ kolla是openstack下面用于自动化部署的一个项目，它基于docker和
 
 Kolla实际上是分为两大块的，一部分，Kolla提供了生产环境级别的镜像，涵盖了Openstack用到的各个服务，另一部分是自动化的部署，也就是上面说的ansible部分。最开始两个部分是在一个项目中的（也就是Kolla），从O版本开始将两个部分独立开来，Kolla项目用来构建所有服务的镜像，Kolla-ansible用来执行自动化部署。
 
-## 5.1  linux系统环境配置
+## 2.1  linux系统环境配置
 
 #### 1.关闭Selinux和防火墙
 ```
@@ -167,7 +167,7 @@ ens34
   ONBOOT=yes
 ````
 
-## 5.2 安装基础包和docker服务
+## 2.2 安装基础包和docker服务
 #### 1. 安装基础包
 ```
 [root@server162 ~]# yum install python-devel libffi-devel gcc openssl-devel git python-pip -y
@@ -216,12 +216,33 @@ EOF
 }
 ```
 
-
-
-
-
-
-
+## 2.3 安装kolla-ansible
+#### 1. 安装 ansible
+```
+[root@server162 ~]# yum install ansible -y
+```
+#### 2. 安装 kolla-ansible
+1. 下载kolla-ansible的代码
+```
+[root@xuegod63 ~]# cd /root
+[root@xuegod63 ~]# git clone http://git.trystack.cn/openstack/kolla-ansible -b stable/pike    # 下载pike版本
+```
+2. 安装kolla-ansible需要依赖包
+```
+[root@xuegod63 ~]# cd /root/kolla-ansible
+[root@xuegod63 kolla-ansible]# pip install .    #这里.代表当前目录 安装目录下所有requirements.txt文件
+```
+3. 复制kolla-ansible的相关配置文件
+```
+[root@xuegod63 kolla-ansible]# cp -r etc/kolla /etc/kolla/
+[root@xuegod63 kolla-ansible]# cp ansible/inventory/* /etc/kolla/
+[root@xuegod63 kolla-ansible]# ls /etc/kolla/
+all-in-one  globals.yml  multinode  passwords.yml
+```
+  - all-in-one #安装单节点openstack的ansible自动安装配置文件
+  - multinode #安装多节点openstack的ansible自动安装配置文件
+  - globals.yml #openstack 部署的自定义配置文件 
+  - passwords.yml  #openstack中各个服务的密码
 
 
 
