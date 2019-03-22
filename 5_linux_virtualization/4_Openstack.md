@@ -70,10 +70,28 @@ Ceilometer  [sɪ'lɒmɪtə]  云幂测量仪
 
 [](https://i.loli.net/2019/03/22/5c9459a84104b.png)
 
+## 1.3 Openstack的网络模式有5种
+1. Local模式：一般测试时使用，只需一台物理机即可。
+2. GRE模式：隧道模式， VLAN数量没有限制，性能有点问题。
+3. Vlan模式：vlan数量有4096的限制
+4. VXlan模式：vlan数量没有限制，性能比GRE好。
+5. Flat模式：管理员创建租户直接到外网，不需要NAT。
 
+- XLAN概述，VXLAN是由思科与VMware提出。VLAN与VXLAN之间有何区别：VXLAN显然更具可扩展性(4,096个VLAN网 vs 1600万个VXLAN网)
+  - LAN     局域网
+  - VLAN    虚拟局域网
+  - VXLAN   虚拟扩展局域网
+  - VXLAN (Virtual Extensible LAN，虚拟扩展局域网) 它是一种在UDP中封装MAC的简单机制，可以创建跨多个物理IP子网的虚拟2层子网
+## 1.4  OpenStack部署方法，
 
+1. 社区手册http://docs.openstack.org
+2. RDOhttps://www.rdoproject.org（http://openstack.redhat.com）
+3. RedHat Enterprise Linux OpenStack Platform  （E210 考试）http://www.redhat.com/en/technologies/linux-platforms/openstack-platform
+4. Mirantis（Fuel）https://www.mirantis.com
+5. 高级定制 Puppet、Chef
+6. kolla 基于docker安装openstack ，把openstack每个组件做成docker实例 
 
-
+选择基于docker的kolla方式，优点是占用内存资源少，一般8G内存即可。社区手册方法至少12G内存
 
 
 
