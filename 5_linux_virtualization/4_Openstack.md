@@ -147,8 +147,25 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 ```
-
-
+#### 8. ens33, ens34
+ens33
+```
+[root@server162 ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33
+  BOOTPROTO="none"        # 添加双网卡，此处自动被更改为dhcp，所以手动改回none会static
+  IPADDR=192.168.0.162
+  GATEWAY=192.168.0.1
+  DNS1=168.126.63.1
+  DNS2=164.124.101.2
+```
+ens34
+```
+[root@server162 kolla]# vim /etc/sysconfig/network-scripts/ifcfg-ens34
+  TYPE=Ethernet
+  BOOTPROTO=none
+  NAME=ens34
+  DEVICE=ens34
+  ONBOOT=yes
+````
 
 
 
