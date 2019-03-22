@@ -100,9 +100,9 @@ kolla是openstack下面用于自动化部署的一个项目，它基于docker和
 
 Kolla实际上是分为两大块的，一部分，Kolla提供了生产环境级别的镜像，涵盖了Openstack用到的各个服务，另一部分是自动化的部署，也就是上面说的ansible部分。最开始两个部分是在一个项目中的（也就是Kolla），从O版本开始将两个部分独立开来，Kolla项目用来构建所有服务的镜像，Kolla-ansible用来执行自动化部署。
 
-## 5.1   linux系统环境配置
+## 5.1  linux系统环境配置
 
-#### 1. 关闭Selinux和防火墙
+#### 1.关闭Selinux和防火墙
 ```
 [root@server162 ~]# vim /etc/selinux/config
 SELINUX=disabled
@@ -132,15 +132,15 @@ server162
 
 #### 6.同步时间
 ```
-[root@xuegod63 ~]# yum install ntp
-[root@xuegod63 ~]# systemctl enable ntpd.service
-[root@xuegod63 ~]# systemctl start ntpd.service
+[root@server162 ~]# yum install ntp
+[root@server162 ~]# systemctl enable ntpd.service
+[root@server162 ~]# systemctl start ntpd.service
 ```
 #### 7.配置 pip 镜像源，方便快速下载python库（这一步很重要）
 并没有做
 ```
-[root@xuegod63 ~]# mkdir ~/.pip
-[root@xuegod63 ~]# vim  ~/.pip/pip.conf  #写入下以内容
+[root@server162 ~]# mkdir ~/.pip
+[root@server162 ~]# vim  ~/.pip/pip.conf  #写入下以内容
 
 [global]
 index-url = http://mirrors.aliyun.com/pypi/simple/
@@ -167,9 +167,26 @@ ens34
   ONBOOT=yes
 ````
 
+## 5.2 安装基础包和docker服务
+#### 1. 安装基础包
+```
+[root@server162 ~]# yum install python-devel libffi-devel gcc openssl-devel git python-pip -y
+[root@server162 ~]# pip install -U pip      # 升级一下pip，不然后，后期安装会报警告
+[root@server162 ~]# yum install -y yum-utils device-mapper-persistent-data lvm2   # 安装必要的一些系统工具
+```
+#### 2. 添加docker yum源并安装docker
+```
+[root@server162 ~]# systemctl stop libvirtd && systemctl disable libvirtd && systemctl status libvirtd
+                          # 停止kvm的服务libvirt，否则和docker不兼容
+[root@server162 ~]# yum remove  docker docker-io docker-selinux python-docker-py 
+                          # 如果有的话，卸载旧的Docker，否则可能会不兼容
+                          
+[root@server162 ~]# yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+[root@server162 ~]# cat /etc/yum.repos.d/docker-ce.repo  # 查看新生成的yum源配置文件 
 
-
-
+[root@server162 ~]# yum -y install docker-ce             # 安装 Docker-CE社区版本
+[root@server162 ~]# systemctl start docker && systemctl enable docker && systemctl status docker   # 启动Docker服务
+```
 
 
 
