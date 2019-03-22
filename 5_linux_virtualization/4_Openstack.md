@@ -260,9 +260,9 @@ EOF
 
 #### 1. 自动生成openstack各服务的密码文件
 ```diff
-[root@xuegod63 kolla-ansible]# kolla-genpwd         # /etc/kolla/passwords.yml自动为该文件生产随机密码
+[root@server162 kolla-ansible]# kolla-genpwd         # /etc/kolla/passwords.yml自动为该文件生产随机密码
 
-[root@xuegod63 ~]# vim /etc/kolla/passwords.yml
+[root@server162 ~]# vim /etc/kolla/passwords.yml
 
 - 158 keystone_admin_password: HsPbEQHxTqmewKYNoRPpIOyQNdEYpHy36OX67TG3
 + 158 keystone_admin_password: 11111 
@@ -271,7 +271,7 @@ EOF
 
 #### 2. 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
 ```diff
-[root@xuegod63 ~]# vim /etc/kolla/globals.yml      # 配置openstack安装中的参数
+[root@server162 ~]# vim /etc/kolla/globals.yml      # 配置openstack安装中的参数
 - 15 #kolla_base_distro: "centos"                  # 选择下载的镜像为基于centos版本的镜像
 + 15 kolla_base_distro: "centos"
 
@@ -305,18 +305,58 @@ EOF
 + 151 enable_haproxy: "no"                         # 去了前面的#号，改yes为no，关闭高可用
 
 ```
+## 2.5 开始基于kolla-ansible安装openstack私有云
+#### 1. 生成SSH Key，并授信本节点：
+```
+[root@server162 ~]# ssh-keygen
+[root@server162 ~]# ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.0.162
+```
+#### 2. 配置单节点清单文件
+```
+[root@xuegod63 kolla]# vim /etc/kolla/all-in-one           # 把localhost替换成server162
 
+:1,$s/localhost/server162/
 
+:1,$s/ansible_connection=local//   
 
+# 将以下[]中的组件，都安装到server162这台机器上
 
+[control]
+server162     
 
+[network]
+server162     
 
+[compute]
+server162     
 
+[storage]
+server162     
 
+[deployment]
+server162       
+```
+#### 3. 开始部署OpenStack
+一下命令中的```-i /etc/kolla/all-in-one```可以省略
+1. 对主机进行预部署检查
+```
+[root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one prechecks
+```
+有可能会报错，不用管，继续下面步骤
+2. 拉取镜像
+```
+[root@server162 ~]# kolla-ansible -i /etc/kolla/all-in-one  pull
+```
+3. 查看下载到的镜像
+```
+[root@server162 ~]# docker images 
+REPOSITORY              TAG       IMAGE ID            CREATED             SIZE
+kolla/centos-binary-cron   pike      659fa47c7d43        About an hour ago   455MB
+... ...
 
-
-
-
+[root@xuegod63 ~]# docker images | wc -l         # 整个过程，会下载了32个镜像
+30
+```
 
 
 
