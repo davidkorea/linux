@@ -294,8 +294,39 @@ EOF
 - 73 #network_interface: "eth0"                    # Kolla-Ansible需要设置一些网络选项。
 + 73 network_interface: "ens33"                    # 这是openstack内部多个管理类型网络的默认接口
 
+- 88 #neutron_external_interface: "eth1"           # 所需的第二个接口专用于Neutron外部（或公共）网络，可以是vlan或flat
++ 88 neutron_external_interface: "ens34"           # 此接口应在没有IP地址的情况下处于活动状态
+                                                   # 如果不是，openstack云平台中的云主机实例将无法访问外部网络
+                                                   # 只要网卡启动着，就可以了，不要给IP，有IP时br-ex桥接就不成功了
 
+  135 #enable_cinder: "no"                         # 先不开启cinder
+
+- 151 #enable_haproxy: "yes"
++ 151 enable_haproxy: "no"                         # 去了前面的#号，改yes为no，关闭高可用
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 [](https://i.loli.net/2019/03/21/5c93b3f3ac779.png)
