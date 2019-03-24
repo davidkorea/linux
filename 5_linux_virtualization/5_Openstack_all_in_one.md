@@ -102,7 +102,12 @@ pip install --ignore-installed  python-openstackclient
 ![](https://i.loli.net/2019/03/24/5c97800b81617.png)
 ![](https://i.loli.net/2019/03/24/5c97802ed0a95.png)
 
+测试在物理机可以ping通，内网和外网地址
+```
+DaviddeMacBook-Pro:~ david$ ping 192.168.0.115
 
+DaviddeMacBook-Pro:~ david$ ping 10.0.0.17
+```
 
 
 
