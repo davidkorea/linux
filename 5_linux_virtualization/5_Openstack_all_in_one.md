@@ -109,10 +109,14 @@ DaviddeMacBook-Pro:~ david$ ping 192.168.0.115
 DaviddeMacBook-Pro:~ david$ ping 10.0.0.17
 ```
 
+# 2. 查看openstack项目中的信息和云主机网络连通性
 
-
-
-
+## 2.1 查看路由信息
+```
+[root@server15 ~]# source /etc/kolla/admin-openrc.sh 
+[root@server15 ~]# openstack router list
+```
+![](https://i.loli.net/2019/03/24/5c9781f001abb.png)
 
 
 
