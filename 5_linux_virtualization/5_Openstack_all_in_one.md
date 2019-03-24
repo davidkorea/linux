@@ -122,7 +122,13 @@ DaviddeMacBook-Pro:~ david$ ping 10.0.0.17
 ```
 ![](https://i.loli.net/2019/03/24/5c97828d878dd.png)
 
+## 2.2 查看网络列表
+```
+[root@server15 ~]# openstack network list
 
+[root@server15 ~]# openstack subnet list
+```
+![](https://i.loli.net/2019/03/24/5c9783bde6f71.png)
 
 
 
