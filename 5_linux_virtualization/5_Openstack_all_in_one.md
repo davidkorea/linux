@@ -97,6 +97,9 @@ pip install -U decorator                 # Fixed
 # 或者
 pip install --ignore-installed  python-openstackclient 
 ```
+#### 3. 给云主机分配浮劢 IP 地址
+
+![](https://i.loli.net/2019/03/24/5c97800b81617.png)
 
 
 
@@ -116,7 +119,4 @@ pip install --ignore-installed  python-openstackclient
 
 
 
-
-
-# 2. 
 
