@@ -1,5 +1,70 @@
 # openstack-allinone-使用方法
-tired
+
+1. 安装 OpenStack 客户端并创建一个cirros demo1云主机
+2. 查看创建好的 openstack 项目中的信息和云主机网络连通性
+3. openstack web 界面使用方法
+
+
+
+# 1. 安装 OpenStack 客户端并创建一个cirros demo1云主机
+## 1.1 安装 OpenStack client 端
+安装 OpenStack client 端，方便后期使用命令行操作 openstack
+
+### 1. pip install python-openstackclient
+```
+[root@server15 ~]# pip install python-openstackclient 
+Found existing installation: PyYAML 3.10
+Cannot uninstall 'PyYAML'. It is a distutils installed project and thus we cannot accurately determine which files belong to it which would lead to only a partial uninstall.
+
+[root@server15 ~]# pip install PyYAML --ignore-installed PyYAML
+
+[root@server15 ~]# pip install python-openstackclient        # 再次安装
+Found existing installation: ipaddress 1.0.16
+Cannot uninstall 'ipaddress'. It is a distutils installed project and thus we cannot
+accurately determine which files belong to it which would lead to only a partial uninstall. 
+
+[root@server15 ~]# pip install ipaddress --ignore-installed ipaddress 
+
+[root@server15 ~]# pip install python-openstackclient        # 再次安装 ok
+```
+### 2. pip install python-neutronclient
+安装 openstack 网络相关的命令
+```
+[root@server15 ~]# pip install python-neutronclient 
+[root@server15 ~]# pip install pyinotify --ignore-installed pyinotify 
+[root@server15 ~]# pip install python-neutronclient         # 再次安装成功。
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # 1. 
 ```
 pip install python-openstackclient 
