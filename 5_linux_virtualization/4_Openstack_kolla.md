@@ -248,13 +248,13 @@ all-in-one  globals.yml  multinode  passwords.yml
 # 这一步超级重要！！！
 ```diff
 - **如果vmware开了“虚拟化Intel VT”功能，就不用写这个了**
-+ 简直不要太重要了，不设置qemu，取法启动虚拟机，卡到硬盘启动grub位置。
++ 简直不要太重要了，不设置qemu，无法启动虚拟机，卡到硬盘启动grub位置。
 + 所以之后ping网络不同，内网10地址和外网192地址都不同。只有网络拓扑中显示的网关可以10.0.0.1和192.168.0.103可以
 ```
 ![](https://i.loli.net/2019/03/24/5c97798f3e10b.png)
 
 
-注：如果是在虚拟机里装kolla，希望可以启动再启动虚拟机，那么你需要把virt_type=qemu，默认是kvm。
+注：如果是在**虚拟机里装kolla，希望可以再启动虚拟机**，那么你需要把virt_type=qemu，默认是kvm。
 ```
 [root@server162 kolla-ansible]# mkdir -p /etc/kolla/config/nova
 [root@server162 kolla-ansible]# cat << EOF > /etc/kolla/config/nova/nova-compute.conf
@@ -263,6 +263,7 @@ virt_type=qemu
 cpu_mode = none
 EOF
 ```
+
 ## 2.4 自定义kolla-ansible安装openstack的相关配置文件
 
 #### 1. 自动生成openstack各服务的密码文件
