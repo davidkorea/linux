@@ -130,9 +130,14 @@ DaviddeMacBook-Pro:~ david$ ping 10.0.0.17
 ```
 ![](https://i.loli.net/2019/03/24/5c9783bde6f71.png)
 
+## 2.3 查看云主机实例的信息
+```
+[root@server15 ~]# openstack server list
 
+[root@server15 ~]# openstack server show demo1
+```
 
-
+![](https://i.loli.net/2019/03/24/5c978439e607f.png)
 
 
 
