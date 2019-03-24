@@ -117,7 +117,10 @@ DaviddeMacBook-Pro:~ david$ ping 10.0.0.17
 [root@server15 ~]# openstack router list
 ```
 ![](https://i.loli.net/2019/03/24/5c9781f001abb.png)
-
+```
+[root@server15 ~]# openstack router show demo-router
+```
+![](https://i.loli.net/2019/03/24/5c97828d878dd.png)
 
 
 
