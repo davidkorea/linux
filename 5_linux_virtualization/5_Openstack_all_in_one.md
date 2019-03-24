@@ -137,9 +137,14 @@ DaviddeMacBook-Pro:~ david$ ping 10.0.0.17
 [root@server15 ~]# openstack server show demo1
 ```
 
-![](https://i.loli.net/2019/03/24/5c978439e607f.png)
+![](https://i.loli.net/2019/03/24/5c9784a543f70.png)
 
-
+## 2.4 查看云主机实例的信息
+```
+[root@server15 ~]# ip netns
+qrouter-e55fd4db-5b92-45ef-93ff-13d15d281cc4 (id: 1)
+qdhcp-3b04f928-a1bb-4e6f-8fd8-6c7f31261ca5 (id: 0)
+```
 
 
 
