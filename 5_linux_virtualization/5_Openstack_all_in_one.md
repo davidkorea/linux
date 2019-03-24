@@ -139,12 +139,43 @@ DaviddeMacBook-Pro:~ david$ ping 10.0.0.17
 
 ![](https://i.loli.net/2019/03/24/5c9784a543f70.png)
 
-## 2.4 查看云主机实例的信息
+## 2.4 查看已有网络的NameSpace
 ```
 [root@server15 ~]# ip netns
 qrouter-e55fd4db-5b92-45ef-93ff-13d15d281cc4 (id: 1)
 qdhcp-3b04f928-a1bb-4e6f-8fd8-6c7f31261ca5 (id: 0)
 ```
+```
+[root@server15 ~]# ip netns exec qrouter-e55fd4db-5b92-45ef-93ff-13d15d281cc4 ping 192.168.0.115
+PING 192.168.0.115 (192.168.0.115) 56(84) bytes of data.
+64 bytes from 192.168.0.115: icmp_seq=1 ttl=64 time=9.65 ms
+64 bytes from 192.168.0.115: icmp_seq=2 ttl=64 time=1.28 ms
+^C
+--- 192.168.0.115 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 1.283/5.468/9.654/4.186 ms
 
-
+[root@server15 ~]# ip netns exec qrouter-e55fd4db-5b92-45ef-93ff-13d15d281cc4 ping 10.0.0.17
+PING 10.0.0.17 (10.0.0.17) 56(84) bytes of data.
+64 bytes from 10.0.0.17: icmp_seq=1 ttl=64 time=0.726 ms
+64 bytes from 10.0.0.17: icmp_seq=2 ttl=64 time=1.27 ms
+^C
+--- 10.0.0.17 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 0.726/0.998/1.271/0.274 ms
+```
+## 2.5 通过“Floating IP”访问虚拟机
+- 用户名"cirros"，密码"cubswin:)"
+```
+[root@server15 ~]# ssh cirros@192.168.0.115
+$ pwd
+/home/cirros
+$ ping baidu.com
+PING baidu.com (220.181.57.216): 56 data bytes
+64 bytes from 220.181.57.216: seq=0 ttl=44 time=76.601 ms
+^C
+--- baidu.com ping statistics ---
+2 packets transmitted, 1 packets received, 50% packet loss
+round-trip min/avg/max = 76.601/76.601/76.601 ms
+```
 
