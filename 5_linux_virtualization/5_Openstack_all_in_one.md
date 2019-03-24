@@ -38,4 +38,6 @@ pip install decorate        # no use
 pip install decorator       # iinstalled already, no use
 
 pip install -U decorator    # Fixed！！！！！ 
+# 或者
+pip install --ignore-installed  python-openstackclient 
 ```
