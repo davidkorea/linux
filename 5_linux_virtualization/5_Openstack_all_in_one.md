@@ -10,7 +10,7 @@
 ## 1.1 安装 OpenStack client 端
 安装 OpenStack client 端，方便后期使用命令行操作 openstack
 
-### 1. pip install python-openstackclient
+#### 1. pip install python-openstackclient
 ```
 [root@server15 ~]# pip install python-openstackclient 
 Found existing installation: PyYAML 3.10
@@ -27,20 +27,26 @@ accurately determine which files belong to it which would lead to only a partial
 
 [root@server15 ~]# pip install python-openstackclient        # 再次安装 ok
 ```
-### 2. pip install python-neutronclient
+#### 2. pip install python-neutronclient
 安装 openstack 网络相关的命令
 ```
 [root@server15 ~]# pip install python-neutronclient 
 [root@server15 ~]# pip install pyinotify --ignore-installed pyinotify 
 [root@server15 ~]# pip install python-neutronclient         # 再次安装成功。
 ```
+## 1.2 使用 init-runonce 脚本创建一个 openstack 云项目
 
+修改 init-runonce 脚本，指定浮劢 IP 地址范围，浮劢 IP 就是云主机的公网 IP。init-runonce 是在 openstack 中快速创建一个云项目例子的脚本。
 
-
-
-
-
-
+```diff
+- 12 EXT_NET_CIDR='10.0.2.0/24'
+- 13 EXT_NET_RANGE='start=10.0.2.150,end=10.0.2.199' 
+- 14 EXT_NET_GATEWAY='10.0.2.1'
+ 
++ EXT_NET_CIDR='192.168.0.0/24' 
++ EXT_NET_RANGE='start=192.168.0.100,end=192.168.0.200' 
++ EXT_NET_GATEWAY='192.168.0.1'
+```
 
 
 
