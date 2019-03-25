@@ -27,3 +27,10 @@ client163                  : ok=29   changed=20   unreachable=0    failed=0
 client164                  : ok=29   changed=20   unreachable=0    failed=0   
 server162                  : ok=53   changed=30   unreachable=0    failed=1   
 ```
+reboot and try again
+```
+RUNNING HANDLER [mariadb : Waiting for master mariadb] *************************
+FAILED - RETRYING: Waiting for master mariadb (10 retries left).
+FAILED - RETRYING: Waiting for master mariadb (9 retries left).
+FAILED - RETRYING: Waiting for master mariadb (8 retries left).
+```
