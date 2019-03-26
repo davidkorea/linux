@@ -4,7 +4,7 @@
 1. 准备 openstack 多结点实验环境
 2. 安装 kolla-ansible
 3. 自定义 kolla-ansible 安装 openstack 的相关配置文件
-4. 开始基亍 kolla-ansible 安装 openstack 私有于
+4. 开始基亍 kolla-ansible 安装 openstack 私有云
 5. OpenStack 使用方法
 6. 查看创建好的 openstack 项目中的信息和于主机网络连
 
@@ -293,8 +293,16 @@ EOF
  30 
 ```
 
+# 4. 开始基亍kolla-ansible安装openstack私有云
 
-
+## 4.1 生成 SSH Key，并授信所有节点
+```
+[root@server162 ~]# ssh-keygen
+[root@server162 ~]# ssh-copy-id -i ~/.ssh/id_rsa.pub root@server162
+[root@server162 ~]# ssh-copy-id -i ~/.ssh/id_rsa.pub root@client163
+[root@server162 ~]# ssh-copy-id -i ~/.ssh/id_rsa.pub root@client164
+```
+注：ssh-copy-id 复制公钥时，后面要写主机名，不要写 IP。因为后期 ansible 自劢安装节点，主机清单中写的是主机名不是 IP。
 
 
 
