@@ -13,11 +13,11 @@
 ## 1.1 准备硬件环境
 新创建 3 台虚拟机，分别作为 controller节点，compute节点，storage节点。其中controller节点 2 张网卡，compute、storage 节点各 1 张网卡。操作系统为 centos7.5. 注：controller 节点 也作为安装结点
 
-|主机名| IP |角色| 内存| 网卡类型|
-|-|-|-|-|-|
-|server162| 192.168.0.162| controller节点| 8G| ens33 和 ens34 都桥接|
-|client163| 192.168.0.163| compute节点| 4G| ens33| 桥接|
-|client164| 192.168.0.164| storage节点| 4G| ens33| 桥接|
+|主机名| IP |角色| 内存| 网卡类型|硬盘|
+|-|-|-|-|-|-|
+|server162| 192.168.0.162| controller节点| 8G| ens33 和 ens34 都桥接|1 * 100G|
+|client163| 192.168.0.163| compute节点| 4G| ens33| 桥接|1 * 20G|
+|client164| 192.168.0.164| storage节点| 4G| ens33| 桥接|2 * 20G, 作为cinder的lvm后端|
 
 
 
