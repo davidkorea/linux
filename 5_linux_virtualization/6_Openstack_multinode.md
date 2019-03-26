@@ -99,9 +99,48 @@ ens34
   DEVICE=ens34
   ONBOOT=yes
 ````
-### 1.2.2 docker环境
+### 1.2.2 docker环境 - All Nodes
 
-#### 1.
+#### 1. 安装基础包（all）
+```
+[root@server162 ~]# yum install python-devel libffi-devel gcc openssl-devel git python-pip -y
+[root@server162 ~]# pip install -U pip      # 升级一下pip，不然后，后期安装会报警告
+[root@server162 ~]# yum install -y yum-utils device-mapper-persistent-data lvm2   # 安装必要的一些系统工具
+```
+#### 2. 添加docker yum源并安装docker（all）
+```
+[root@server162 ~]# systemctl stop libvirtd && systemctl disable libvirtd && systemctl status libvirtd
+                          # 停止kvm的服务libvirt，否则和docker不兼容
+[root@server162 ~]# yum remove  docker docker-io docker-selinux python-docker-py 
+                          # 如果有的话，卸载旧的Docker，否则可能会不兼容
+                          
+[root@server162 ~]# yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+[root@server162 ~]# cat /etc/yum.repos.d/docker-ce.repo  # 查看新生成的yum源配置文件 
+
+[root@server162 ~]# yum -y install docker-ce             # 安装 Docker-CE社区版本
+[root@server162 ~]# systemctl start docker && systemctl enable docker && systemctl status docker   # 启动Docker服务
+```
+#### 3. 设置docker volume卷挂载方式（all）
+```
+[root@server162 ~]# mkdir /etc/systemd/system/docker.service.d
+[root@server162 ~]# tee /etc/systemd/system/docker.service.d/kolla.conf << 'EOF'
+[Service]
+MountFlags=shared
+EOF
+```
+注：加上MountFlags=shared后，当docker宿主机新增分区时，docker服务不用重启。如果不加docker服务服务重启，docker中的实例才可以使用新加的磁盘或分区。 添加这个参考后，后期在openstack中使用cinder存储服务时，新加磁盘比较方便。
+#### 4. 指定docker 镜像加速器 （很重要，不然后期从国外下载docker镜像会直接报错，而且速度慢） 
+并没有做
+```
+[root@server162 ~]# mkdir /etc/docker/             # 安装docker之后会自动创建该目录，没有的话需要手动创建
+[root@server162 ~]# vim /etc/docker/daemon.json
+{
+  "registry-mirrors": ["https://e9yneuy4.mirror.aliyuncs.com"]  
+}
+
+[root@server162 ~]# systemctl daemon-reload        # 修改了启动脚本，需要执行
+[root@server162 ~]# systemctl enable docker && systemctl restart docker && systemctl status docker
+```
 
 
 - 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
