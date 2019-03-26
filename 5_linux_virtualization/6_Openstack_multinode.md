@@ -21,23 +21,23 @@
 
 ## 1.2 linux系统环境配置 - All Nodes
 ### 1.2.1 基本环境
-#### 1.关闭Selinux和防火墙（all） 
+#### 1.（all）关闭Selinux和防火墙
 ```
 [root@server162 ~]# vim /etc/selinux/config
 SELINUX=disabled
 [root@server162 ~]# reboot   #如果原来的系统开着selinux，那么需要重启，才能关闭selinux  
 ```
-#### 2.关闭Firewalld（all）
+#### 2.（all）关闭Firewalld
 ```
 [root@server162 ~]# systemctl stop firewalld
 [root@server162 ~]# systemctl disable firewalld
 [root@server162 ~]# systemctl status firewalld
 ```
-#### 3.安装 Epel源（all）
+#### 3.（all）安装 Epel源
 ```
 [root@server162 ~]# yum install epel-release -y
 ```
-#### 4.配置 Hostname（all）
+#### 4.（all）配置 Hostname
 ```
 [root@server162 ~]# cat /etc/hostname
 server162
@@ -50,7 +50,7 @@ client163
 [root@client164 ~]# cat /etc/hostname
 client164
 ```
-#### 5.配置/etc/hosts（all）
+#### 5.（all）配置/etc/hosts
 hosts 文件中的短主机名，给 rabbitmq 使用的, rabbitmq 服务会使用短主机域名
 ```
 [root@server162 ~]# cat /etc/hosts     # 添加以下两行
@@ -63,13 +63,13 @@ hosts 文件中的短主机名，给 rabbitmq 使用的, rabbitmq 服务会使�
 [root@server162 ~]# scp /etc/hosts 192.168.0.164:/etc/
 ```
 
-#### 6.同步时间（all）
+#### 6.（all）同步时间
 ```
 [root@server162 ~]# yum install ntp
 [root@server162 ~]# systemctl enable ntpd.service
 [root@server162 ~]# systemctl start ntpd.service
 ```
-#### 7.配置 pip 镜像源，方便快速下载python库（这一步很重要）（all）
+#### 7.（all）配置 pip 镜像源，方便快速下载python库（这一步很重要）
 并没有做
 ```
 [root@server162 ~]# mkdir ~/.pip
@@ -81,7 +81,7 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 trusted-host=mirrors.aliyun.com
 ```
 #### 8. ens33（all）, ens34（controller ONLY）
-ens33
+- ens33
 ```
 [root@server162 ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33
   BOOTPROTO="none"        # 添加双网卡，此处自动被更改为dhcp，所以手动改回none会static
@@ -90,7 +90,7 @@ ens33
   DNS1=168.126.63.1
   DNS2=164.124.101.2
 ```
-ens34
+- ens34
 ```
 [root@server162 kolla]# vim /etc/sysconfig/network-scripts/ifcfg-ens34
   TYPE=Ethernet
@@ -101,13 +101,13 @@ ens34
 ````
 ### 1.2.2 docker环境 - All Nodes
 
-#### 1. 安装基础包（all）
+#### 1.（all）安装基础包
 ```
 [root@server162 ~]# yum install python-devel libffi-devel gcc openssl-devel git python-pip -y
 [root@server162 ~]# pip install -U pip      # 升级一下pip，不然后，后期安装会报警告
 [root@server162 ~]# yum install -y yum-utils device-mapper-persistent-data lvm2   # 安装必要的一些系统工具
 ```
-#### 2. 添加docker yum源并安装docker（all）
+#### 2.（all）添加docker yum源并安装docker
 ```
 [root@server162 ~]# systemctl stop libvirtd && systemctl disable libvirtd && systemctl status libvirtd
                           # 停止kvm的服务libvirt，否则和docker不兼容
@@ -120,7 +120,7 @@ ens34
 [root@server162 ~]# yum -y install docker-ce             # 安装 Docker-CE社区版本
 [root@server162 ~]# systemctl start docker && systemctl enable docker && systemctl status docker   # 启动Docker服务
 ```
-#### 3. 设置docker volume卷挂载方式（all）
+#### 3.（all）设置docker volume卷挂载方式
 ```
 [root@server162 ~]# mkdir /etc/systemd/system/docker.service.d
 [root@server162 ~]# tee /etc/systemd/system/docker.service.d/kolla.conf << 'EOF'
@@ -129,7 +129,7 @@ MountFlags=shared
 EOF
 ```
 注：加上MountFlags=shared后，当docker宿主机新增分区时，docker服务不用重启。如果不加docker服务服务重启，docker中的实例才可以使用新加的磁盘或分区。 添加这个参考后，后期在openstack中使用cinder存储服务时，新加磁盘比较方便。
-#### 4. 指定docker 镜像加速器 （很重要，不然后期从国外下载docker镜像会直接报错，而且速度慢） 
+#### 4. （all）指定docker 镜像加速器 （很重要，不然后期从国外下载docker镜像会直接报错，而且速度慢） 
 并没有做
 ```
 [root@server162 ~]# mkdir /etc/docker/             # 安装docker之后会自动创建该目录，没有的话需要手动创建
@@ -142,6 +142,29 @@ EOF
 [root@server162 ~]# systemctl daemon-reload        # 修改了启动脚本，需要执行
 [root@server162 ~]# systemctl enable docker && systemctl restart docker && systemctl status docker
 ```
+#### 5. storage配置cinder存储信息
+```
+[root@client163 ~]# ls /dev/sdb*
+/dev/sdb
+[root@client163 ~]# pvcreate /dev/sdb
+Physical volume "/dev/sdb" successfully created.
+
+[root@client163 ~]# vgcreate cinder-volumes /dev/sdb  	  # 创建名字为cinder-volumes的卷组，给后期cinder使用
+Volume group "cinder-volumes" successfully created
+
+[root@client163 ~]# systemctl enable lvm2-lvmetad.service
+[root@client163 ~]# vgs
+VG #PV #LV #SN Attr VSize VFree
+cinder-volumes 1 0 0 wz--n- <20.00g <20.00g
+```
+
+到此 3 台机器的基础软件包环境已经安装好。
+
+
+
+
+
+
 
 
 - 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
