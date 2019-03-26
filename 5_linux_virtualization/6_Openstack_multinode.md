@@ -1,4 +1,66 @@
 
+- 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
+```diff
+[root@server162 ~]# vim /etc/kolla/globals.yml      # 配置openstack安装中的参数
+- 15 #kolla_base_distro: "centos"                  # 选择下载的镜像为基于centos版本的镜像
++ 15 kolla_base_distro: "centos"
+
+- 18 #kolla_install_type: "binary"                 # 去了前面的#号，使用yum安装二进制包安装
++ 18 kolla_install_type: "binary"                  # 源码安装，指的是使用git clone源码安装
+
+- 21 #openstack_release: ""                        # 指定安装pike版本的openstack，       
++ 21 openstack_release: "pike"                     # 后期下载的openstack相关的docker镜像的tag标记也都为pike
+
+  23 # Location of configuration overrides
+  24 #node_custom_config: "/etc/kolla/config"      # 配置文件的位置
+
+- 31 kolla_internal_vip_address: "10.10.10.254"    # 我们没有启用高可用，所以这里的IP可以和ens33一样
++ 31 kolla_internal_vip_address: "192.168.0.162"   # 也可以独立写一个和ens33同网段的IP
+                                                   # 如果配置了高可用，这里要使用一个没被占用的IP,
+                                                   # 这个IP是搭建HA高可用的浮动IP,
+                                                   # 此IP将由keepalived管理以提供高可用性,
+                                                   # 应设置为和network_interface ens33 同一个网段的地址
+
+- 73 #network_interface: "eth0"                    # Kolla-Ansible需要设置一些网络选项。
++ 73 network_interface: "ens33"                    # 这是openstack内部多个管理类型网络的默认接口
+
+- 88 #neutron_external_interface: "eth1"           # 所需的第二个接口专用于Neutron外部（或公共）网络，可以是vlan或flat
++ 88 neutron_external_interface: "ens34"           # 此接口应在没有IP地址的情况下处于活动状态
+                                                   # 如果不是，openstack云平台中的云主机实例将无法访问外部网络
+                                                   # 只要网卡启动着，就可以了，不要给IP，有IP时br-ex桥接就不成功了
+
+- 135 #enable_cinder: "no"                         # 开启cinder
++ 135 enable_cinder: "yes"
+
+140 #enable_cinder_backend_lvm: "no"
+
+
+- 151 #enable_haproxy: "yes"
++ 151 enable_haproxy: "no"                         # 去了前面的#号，改yes为no，关闭高可用
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 1. kolla-ansible -i /etc/kolla/multinode prechecks
