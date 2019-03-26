@@ -1,4 +1,4 @@
-### Error when install kolla-ansible by pip, need to get by clone from github
+### Error when install kolla-ansible by pip, need to get by clone from github -> [Issue](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/6_Openstack_multinode.md#issue-%E6%8C%89%E7%85%A7%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3pip-install-kolla-ansible-%E5%85%A8%E6%98%AF%E9%94%99)
 # 使用Kolla部署Pike版本的OpenStack多节点云平台
 
 1. 准备 openstack 多结点实验环境
@@ -167,6 +167,8 @@ cinder-volumes 1 0 0 wz--n- <20.00g <20.00g
 ## 2.2 安装 kolla-ansible
 
 > [官方文档 ](https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html)推荐使用```pip install kolla-ansible```来安装，但是，对于pike OpenStack，千万不要pip安装。报错一大堆，已知bug，并没被解决。还是安装下面git clone的方法进行配置，与all-in-one操作相同。
+>
+> [Issue](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/6_Openstack_multinode.md#issue-%E6%8C%89%E7%85%A7%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3pip-install-kolla-ansible-%E5%85%A8%E6%98%AF%E9%94%99)
 
 #### 1. 下载kolla-ansible的代码
 ```
@@ -294,6 +296,8 @@ EOF
 ```
 
 # 4. 开始基亍kolla-ansible安装openstack私有云
+
+[Issue](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/6_Openstack_multinode.md#issue-%E6%8C%89%E7%85%A7%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3pip-install-kolla-ansible-%E5%85%A8%E6%98%AF%E9%94%99)
 
 #### 1. 生成 SSH Key，并授信所有节点
 ```
