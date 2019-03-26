@@ -201,32 +201,20 @@ cpu_mode=none
 EOF
 ```
 
+# 3. kolla-ansible自定义安装openstack的相关配置文件
+## 3.1 自动生成openstack各服务的密码文件
+```diff
+[root@server162 kolla-ansible]# kolla-genpwd         # /etc/kolla/passwords.yml自动为该文件生产随机密码
 
+[root@server162 ~]# vim /etc/kolla/passwords.yml
 
+- 158 keystone_admin_password: HsPbEQHxTqmewKYNoRPpIOyQNdEYpHy36OX67TG3
++ 158 keystone_admin_password: 11111 
+```
+这是登录Dashboard，admin使用的密码，你可以根据自己需要进行修改。
 
+## 3.2 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-- 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
 ```diff
 [root@server162 ~]# vim /etc/kolla/globals.yml      # 配置openstack安装中的参数
 - 15 #kolla_base_distro: "centos"                  # 选择下载的镜像为基于centos版本的镜像
@@ -269,11 +257,12 @@ EOF
 + 294 cinder_volume_group: "cinder-volumes"	   # 取消前面的#号，这个卷组的名字是在 client163 上创建的
 
 ```
+## 3.3 配置 multinode 多结点清单文件
 
--  [root@server162 kolla]# vim multinode 
+此处为git clone获得的清单文件，与直接pip install获得的清单文件稍有不同
 
 ```
- 2 # additional groups are for more control of the environment.
+  2 # additional groups are for more control of the environment.
   3 [control]
   4 # These hostname must be resolvable from your deployment host
   5 server162
