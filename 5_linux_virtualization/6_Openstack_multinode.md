@@ -345,7 +345,7 @@ export OS_AUTH_URL=http://192.168.0.162:35357/v3
 export OS_INTERFACE=internal
 export OS_IDENTITY_API_VERSION=3
 export OS_REGION_NAME=RegionOne
-
+```
 
 
 
