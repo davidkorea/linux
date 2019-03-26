@@ -160,6 +160,74 @@ cinder-volumes 1 0 0 wz--n- <20.00g <20.00g
 到此 3 台机器的基础软件包环境已经安装好。
 
 # 2. 安装 kolla-ansible
+## 2.1 安装 ansible
+```
+[root@server162 ~]# yum install ansible -y
+```
+## 2.2 安装 kolla-ansible
+> [官方文档](https://docs.openstack.org/kolla-ansible/latest/user/quickstart.html)推荐使用```pip install kolla-ansible```来安装，但是，对于pike OpenStack，千万不要pip安装。报错一大堆，已知bug，并没被解决。
+
+#### 1. 下载kolla-ansible的代码
+```
+[root@server162 ~]# cd /root
+[root@server162 ~]# git clone http://git.trystack.cn/openstack/kolla-ansible -b stable/pike    # 下载pike版本
+```
+#### 2. 安装kolla-ansible需要依赖包
+```
+[root@server162 ~]# cd /root/kolla-ansible
+[root@server162 kolla-ansible]# pip install .    #这里.代表当前目录 安装目录下所有requirements.txt文件
+```
+#### 3. 复制kolla-ansible的相关配置文件
+```
+[root@server162 kolla-ansible]# cp -r etc/kolla /etc/kolla/
+[root@server162 kolla-ansible]# cp ansible/inventory/* /etc/kolla/
+[root@server162 kolla-ansible]# ls /etc/kolla/
+all-in-one  globals.yml  multinode  passwords.yml
+```
+  - all-in-one #安装单节点openstack的ansible自动安装配置文件
+  - multinode #安装多节点openstack的ansible自动安装配置文件
+  - globals.yml #openstack 部署的自定义配置文件 
+  - passwords.yml  #openstack中各个服务的密码
+
+#### 3. 修改虚拟机类型为qemu
+# 这一步超级重要！！！
+```diff
+- **如果vmware开了“虚拟化Intel VT”功能，就不用写这个了**
++ 简直不要太重要了，不设置qemu，无法启动虚拟机，卡到硬盘启动grub位置。
++ 所以之后ping网络不同，内网10地址和外网192地址都不同。只有网络拓扑中显示的网关可以10.0.0.1和192.168.0.103可以
+```
+![](https://i.loli.net/2019/03/24/5c97798f3e10b.png)
+
+
+注：如果是在**虚拟机里装kolla，希望可以再启动虚拟机**，那么你需要把virt_type=qemu，默认是kvm。
+```
+[root@server162 kolla-ansible]# mkdir -p /etc/kolla/config/nova
+[root@server162 kolla-ansible]# cat << EOF > /etc/kolla/config/nova/nova-compute.conf
+[libvirt]
+virt_type=qemu
+cpu_mode = none
+EOF
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
