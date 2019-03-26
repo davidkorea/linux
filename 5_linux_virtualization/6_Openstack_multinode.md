@@ -1,6 +1,23 @@
 ### Error when install kolla-ansible by pip, need to get by clone from github
 # 使用Kolla部署Pike版本的OpenStack多节点云平台
 
+1. 准备 openstack 多结点实验环境
+2. 安装 kolla-ansible
+3. 自定义 kolla-ansible 安装 openstack 的相关配置文件
+4. 开始基亍 kolla-ansible 安装 openstack 私有于
+5. OpenStack 使用方法
+6. 查看创建好的 openstack 项目中的信息和于主机网络连
+
+
+
+
+
+
+
+
+
+
+
 - 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
 ```diff
 [root@server162 ~]# vim /etc/kolla/globals.yml      # 配置openstack安装中的参数
