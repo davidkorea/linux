@@ -130,7 +130,6 @@ EOF
 ```
 注：加上MountFlags=shared后，当docker宿主机新增分区时，docker服务不用重启。如果不加docker服务服务重启，docker中的实例才可以使用新加的磁盘或分区。 添加这个参考后，后期在openstack中使用cinder存储服务时，新加磁盘比较方便。
 #### 4. （all）指定docker 镜像加速器 （很重要，不然后期从国外下载docker镜像会直接报错，而且速度慢） 
-并没有做
 ```
 [root@server162 ~]# mkdir /etc/docker/             # 安装docker之后会自动创建该目录，没有的话需要手动创建
 [root@server162 ~]# vim /etc/docker/daemon.json
@@ -139,10 +138,10 @@ EOF
 }
 ```
 ```
-[root@server162 ~]# systemctl daemon-reload        # 修改了启动脚本，需要执行
+[root@server162 ~]# systemctl daemon-reload        # 修改了启动脚本，需要执行。否则之后precheck会报错
 [root@server162 ~]# systemctl enable docker && systemctl restart docker && systemctl status docker
 ```
-#### 5. storage配置cinder存储信息
+#### 5. （cinder ONLY）storage配置存储信息
 ```
 [root@client163 ~]# ls /dev/sdb*
 /dev/sdb
@@ -160,7 +159,7 @@ cinder-volumes 1 0 0 wz--n- <20.00g <20.00g
 
 到此 3 台机器的基础软件包环境已经安装好。
 
-
+# 2. 安装 kolla-ansible
 
 
 
