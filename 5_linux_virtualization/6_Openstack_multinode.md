@@ -137,7 +137,8 @@ EOF
 {
   "registry-mirrors": ["https://e9yneuy4.mirror.aliyuncs.com"]  
 }
-
+```
+```
 [root@server162 ~]# systemctl daemon-reload        # 修改了启动脚本，需要执行
 [root@server162 ~]# systemctl enable docker && systemctl restart docker && systemctl status docker
 ```
