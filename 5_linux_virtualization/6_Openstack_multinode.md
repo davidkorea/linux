@@ -19,8 +19,8 @@
 |client163| 192.168.0.163| compute| 4G| ens33 桥接| 1 \* 20G |
 |client164| 192.168.0.164| storage| 4G| ens33 桥接| 2 \* 20G, 作为cinder的lvm后端 |
 
-## 1.2 linux 系统环境配置
-#### 1.关闭Selinux和防火墙
+## 1.2 linux 系统环境配置 - All Nodes
+#### 1.关闭Selinux和防火墙 
 ```
 [root@server162 ~]# vim /etc/selinux/config
 SELINUX=disabled
@@ -50,10 +50,16 @@ client163
 client164
 ```
 #### 5.配置/etc/hosts
+hosts 文件中的短主机名，给 rabbitmq 使用的, rabbitmq 服务会使用短主机域名
 ```
 [root@server162 ~]# cat /etc/hosts     # 添加以下两行
 192.168.0.162 server162.com server162
 192.168.0.163 client163.com client163
+192.168.0.164 client164.com client164
+```
+```
+[root@server162 ~]# scp /etc/hosts 192.168.0.163:/etc/
+[root@server162 ~]# scp /etc/hosts 192.168.0.164:/etc/
 ```
 
 #### 6.同步时间
