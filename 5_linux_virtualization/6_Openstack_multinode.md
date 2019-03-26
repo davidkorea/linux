@@ -317,9 +317,34 @@ EOF
 因为此时边下载各种 openstack 相关的镜像并部署 docker 实例，会比较慢。等待 30 分钟左右。就可以了。配置了 docker镜像加速结点，会比较快
 
 #### 3. 验证部署
-```
 [root@server162 ~]# kolla-ansible -i /etc/kolla/multinode post-deploy
-```
+Post-Deploying Playbooks : ansible-playbook -i /etc/kolla/multinode -e @/etc/kolla/globals.yml -e @/etc/kolla/passwords.yml -e CONFIG_DIR=/etc/kolla  /usr/share/kolla-ansible/ansible/post-deploy.yml 
+
+PLAY [Creating admin openrc file on the deploy node] ***************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [localhost]
+
+TASK [template] ****************************************************************
+changed: [localhost]
+
+PLAY RECAP *********************************************************************
+localhost                  : ok=2    changed=1    unreachable=0    failed=0   
+
+[root@server162 ~]# ls /etc/kolla/admin-openrc.sh 
+/etc/kolla/admin-openrc.sh
+[root@server162 ~]# cat !$
+cat /etc/kolla/admin-openrc.sh
+export OS_PROJECT_DOMAIN_NAME=Default
+export OS_USER_DOMAIN_NAME=Default
+export OS_PROJECT_NAME=admin
+export OS_TENANT_NAME=admin
+export OS_USERNAME=admin
+export OS_PASSWORD=11111
+export OS_AUTH_URL=http://192.168.0.162:35357/v3
+export OS_INTERFACE=internal
+export OS_IDENTITY_API_VERSION=3
+export OS_REGION_NAME=RegionOne
 
 
 
