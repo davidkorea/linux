@@ -32,11 +32,14 @@
 - 135 #enable_cinder: "no"                         # 开启cinder
 + 135 enable_cinder: "yes"
 
-140 #enable_cinder_backend_lvm: "no"
-
+- 140 #enable_cinder_backend_lvm: "no"
++ 140 enable_cinder_backend_lvm: "yes"		   # cinder 后端用 lvm			
 
 - 151 #enable_haproxy: "yes"
 + 151 enable_haproxy: "no"                         # 去了前面的#号，改yes为no，关闭高可用
+
+- 294 #cinder_volume_group: "cinder-volumes"
++ 294 cinder_volume_group: "cinder-volumes"	   # 取消前面的#号，这个卷组的名字是在 client163 上创建的
 
 ```
 
