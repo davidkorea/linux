@@ -45,5 +45,12 @@ PLAY RECAP *********************************************************************
 client163                  : ok=24   changed=0    unreachable=0    failed=0   
 client164                  : ok=24   changed=0    unreachable=0    failed=0   
 server162                  : ok=48   changed=2    unreachable=0    failed=1   
+```
+3. kolla-ansible -i ./multinode bootstrap-servers
 
+```
+PLAY RECAP *********************************************************************
+client163                  : ok=37   changed=6    unreachable=0    failed=0   
+client164                  : ok=37   changed=6    unreachable=0    failed=0   
+server162                  : ok=38   changed=18   unreachable=0    failed=0   
 ```
