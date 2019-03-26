@@ -19,24 +19,25 @@
 |client163| 192.168.0.163| compute| 4G| ens33 桥接| 1 \* 20G |
 |client164| 192.168.0.164| storage| 4G| ens33 桥接| 2 \* 20G, 作为cinder的lvm后端 |
 
-## 1.2 linux 系统环境配置 - All Nodes
-#### 1.关闭Selinux和防火墙 
+## 1.2 linux系统环境配置 - All Nodes
+### 1.2.1 基本环境
+#### 1.关闭Selinux和防火墙（all） 
 ```
 [root@server162 ~]# vim /etc/selinux/config
 SELINUX=disabled
 [root@server162 ~]# reboot   #如果原来的系统开着selinux，那么需要重启，才能关闭selinux  
 ```
-#### 2.关闭Firewalld
+#### 2.关闭Firewalld（all）
 ```
 [root@server162 ~]# systemctl stop firewalld
 [root@server162 ~]# systemctl disable firewalld
 [root@server162 ~]# systemctl status firewalld
 ```
-#### 3.安装 Epel源
+#### 3.安装 Epel源（all）
 ```
 [root@server162 ~]# yum install epel-release -y
 ```
-#### 4.配置 Hostname
+#### 4.配置 Hostname（all）
 ```
 [root@server162 ~]# cat /etc/hostname
 server162
@@ -49,7 +50,7 @@ client163
 [root@client164 ~]# cat /etc/hostname
 client164
 ```
-#### 5.配置/etc/hosts
+#### 5.配置/etc/hosts（all）
 hosts 文件中的短主机名，给 rabbitmq 使用的, rabbitmq 服务会使用短主机域名
 ```
 [root@server162 ~]# cat /etc/hosts     # 添加以下两行
@@ -62,13 +63,13 @@ hosts 文件中的短主机名，给 rabbitmq 使用的, rabbitmq 服务会使�
 [root@server162 ~]# scp /etc/hosts 192.168.0.164:/etc/
 ```
 
-#### 6.同步时间
+#### 6.同步时间（all）
 ```
 [root@server162 ~]# yum install ntp
 [root@server162 ~]# systemctl enable ntpd.service
 [root@server162 ~]# systemctl start ntpd.service
 ```
-#### 7.配置 pip 镜像源，方便快速下载python库（这一步很重要）
+#### 7.配置 pip 镜像源，方便快速下载python库（这一步很重要）（all）
 并没有做
 ```
 [root@server162 ~]# mkdir ~/.pip
@@ -79,7 +80,7 @@ index-url = http://mirrors.aliyun.com/pypi/simple/
 [install]
 trusted-host=mirrors.aliyun.com
 ```
-#### 8. ens33, ens34
+#### 8. ens33（all）, ens34（controller ONLY）
 ens33
 ```
 [root@server162 ~]# vim /etc/sysconfig/network-scripts/ifcfg-ens33
@@ -98,8 +99,9 @@ ens34
   DEVICE=ens34
   ONBOOT=yes
 ````
+### 1.2.2 docker环境
 
-
+#### 1.
 
 
 - 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
