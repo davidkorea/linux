@@ -303,14 +303,23 @@ EOF
 [root@server162 ~]# ssh-copy-id -i ~/.ssh/id_rsa.pub root@client164
 ```
 注：ssh-copy-id 复制公钥时，后面要写主机名，不要写 IP。因为后期 ansible 自劢安装节点，主机清单中写的是主机名不是 IP。
+## 4.2 开始部署 OpenStack
 
+#### 1. 对主机进行预部署检查
+```
+[root@server162 kolla]# kolla-ansible -i /etc/kolla/multinode prechecks
+```
 
+#### 2. OpenStack部署
+```
+[root@server162 ~]# kolla-ansible -i /etc/kolla/multinode deploy 
+```
+因为此时边下载各种 openstack 相关的镜像并部署 docker 实例，会比较慢。等待 30 分钟左右。就可以了。配置了 docker镜像加速结点，会比较快
 
-
-
-
-
-
+#### 3. 验证部署
+```
+[root@server162 ~]# kolla-ansible -i /etc/kolla/multinode post-deploy
+```
 
 
 
