@@ -15,12 +15,12 @@
 
 |主机名| IP |角色| 内存| 网卡类型|硬盘|
 |-|-|-|-|-|-|
-|server162| 192.168.0.162| controller节点| 8G| ens33 和 ens34 都桥接|1 * 100G|
-|client163| 192.168.0.163| compute节点| 4G| ens33| 桥接|1 * 20G|
-|client164| 192.168.0.164| storage节点| 4G| ens33| 桥接|2 * 20G, 作为cinder的lvm后端|
+|server162| 192.168.0.162| controller节点| 8G| ens33 和 ens34 都桥接|1 \* 100G|
+|client163| 192.168.0.163| compute节点| 4G| ens33 桥接| 1 \* 20G |
+|client164| 192.168.0.164| storage节点| 4G| ens33 桥接| 2 \* 20G, 作为cinder的lvm后端 |
 
 
-
+## 1.2 linux 系统环境配置
 
 
 
