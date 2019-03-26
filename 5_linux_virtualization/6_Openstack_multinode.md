@@ -43,7 +43,39 @@
 
 ```
 
+-  [root@server162 kolla]# vim multinode 
 
+```
+ 2 # additional groups are for more control of the environment.
+  3 [control]
+  4 # These hostname must be resolvable from your deployment host
+  5 server162
+  6 
+  7 # The above can also be specified as follows:
+  8 #control[01:03]     ansible_user=kolla
+  9 
+ 10 # The network nodes are where your l3-agent and loadbalancers will run
+ 11 # This can be the same as a host in the control group
+ 12 [network]
+ 13 server162
+ 14 
+ 15 [compute]
+ 16 client164
+ 17 
+ 18 [monitoring]
+ 19 server162
+ 20 
+ 21 # When compute nodes and control nodes use different interfaces,
+ 22 # you can specify "api_interface" and other interfaces like below:
+ 23 #compute01 neutron_external_interface=eth0 api_interface=em1 storage_i    nterface=em1 tunnel_interface=em1
+ 24 
+ 25 [storage]
+ 26 client163
+ 27 
+ 28 [deployment]
+ 29 server162
+ 30 
+```
 
 
 
