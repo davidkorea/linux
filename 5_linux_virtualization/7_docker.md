@@ -65,6 +65,7 @@ Server Version: 1.13.1
 INDEX      NAME                               DESCRIPTION                    STARS  OFFICIAL  AUTOMATED
 docker.io  docker.io/centos                   The official build of CentOS.  5273   [OK]       
 docker.io  docker.io/ansible/centos7-ansible  Ansible on Centos7             121              [OK]
+... ...
 ```
 #### 2. 下载pull镜像
 ```
@@ -77,13 +78,16 @@ latest: Pulling from docker.io/library/centos
 Digest: sha256:8d487d68857f5bc9595793279b33d082b03713341ddec91054382641d14db861
 Status: Downloaded newer image for docker.io/centos:latest```
 ```
-查看本地已有镜像
+- 查看本地已有镜像
 ```
 [root@server15 ~]# docker images
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 docker.io/centos    latest              9f38484d220f        12 days ago         202 MB
 ```
-
+- 把提前下载好的 image 镜像导入docker image
+  - 把 docker.io-centos.tar 镜像上传到 linux 上
+  - 参数: -i " docker.io-centos.tar " 挃定载入的镜像归档。 
+    - ```[root@server15 ~]# docker load -i /root/docker.io-centos.tar```
 
 
 
