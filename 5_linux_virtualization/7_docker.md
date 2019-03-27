@@ -59,7 +59,8 @@ Server Version: 1.13.1
 ... ...
 ```
 ## 2.2 下载 docker 镜像
-#### 1. 搜索镜像
+#### 1. 官方下载
+- 搜索镜像
 ```
 [root@server15 ~]# docker search centos
 INDEX      NAME                               DESCRIPTION                    STARS  OFFICIAL  AUTOMATED
@@ -67,7 +68,7 @@ docker.io  docker.io/centos                   The official build of CentOS.  527
 docker.io  docker.io/ansible/centos7-ansible  Ansible on Centos7             121              [OK]
 ... ...
 ```
-#### 2. 下载pull镜像
+- 下载pull镜像
 ```
 [root@server15 ~]# docker pull docker.io/centos 
 
@@ -84,12 +85,14 @@ Status: Downloaded newer image for docker.io/centos:latest```
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 docker.io/centos    latest              9f38484d220f        12 days ago         202 MB
 ```
-- 把提前下载好的 image 镜像导入docker image
-  - 把 docker.io-centos.tar 镜像上传到 linux 上
-  - 参数: -i " docker.io-centos.tar " 挃定载入的镜像归档。 
-    - ```[root@server15 ~]# docker load -i /root/docker.io-centos.tar```
+#### 2. 把提前下载好的镜像导入docker image
+- 把本地 docker.io-centos.tar 镜像上传到 linux 上
+- 参数: -i " docker.io-centos.tar " 指定载入的镜像
 
+```[root@server15 ~]# docker load -i /root/docker.io-centos.tar```
 
+#### 3. 下载其他站点的镜像
+```[root@server15 ~]# docker pull hub.c.163.com/library/tomcat:latest ```
 
 
 
