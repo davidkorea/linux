@@ -173,6 +173,51 @@ Stop the container before attempting removal or use -f
 
 # 4. docker镜像制作方法
 
+- 方法 1: docker commit  # 保存 container 的当前状态到 image 后，然后生成对应的 image 
+- 方法 2: docker build   # 使用 Dockerfile 文件自劢化制作 image
+
+## 4.1 docker commit
+1. 启动一个docker实例，安装apache
+```
+[root@server15 ~]# docker run -it docker.io/centos:latest /bin/bash
+[root@681cded12b1f /]# yum install -y httpd
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: ftp.neowiz.com
+ * extras: ftp.neowiz.com
+ * updates: data.aonenetworks.kr
+ ... ...
+ Complete!
+ 
+[root@681cded12b1f /]# exit
+```
+2. 查看刚关闭动docker实例动id
+```
+[root@server15 ~]# docker ps -a
+CONTAINER ID        IMAGE                  
+681cded12b1f        docker.io/centos:latest     
+```
+3. 根据id，commit一个新动镜像
+```docker commit 容器id 新生成的镜像名称:tag```
+```
+[root@server15 ~]# docker commit 681cded12b1f docker.io/centos:apache
+sha256:fb5cf00cfd4c5bf4e6c45a480ff3c33876046bcd17572d45dfa89eeb5dd2bf0a
+[root@server15 ~]# docker images
+REPOSITORY          TAG         IMAGE ID            CREATED             SIZE
+docker.io/centos    apache      fb5cf00cfd4c        6 seconds ago       318 MB
+docker.io/centos    latest      9f38484d220f        12 days ago         202 MB
+```
+
+
+
+
+
+
+
+
+
+
+
 
 
 
