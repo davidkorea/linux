@@ -513,7 +513,7 @@ $ pwd
 [root@server162 ~]# openstack router set --external-gateway public_network demo_router
 ```
 
-
+![](https://i.loli.net/2019/03/27/5c9adf353875f.png)
 
 
 
