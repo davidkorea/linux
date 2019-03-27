@@ -522,6 +522,13 @@ $ pwd
 
 > 오류: 인스턴스 "cirros_demo"에 대해 요청된 동작 수행 실패, 인스턴스에 에러 상태가 있습니다.: 다음에 다시 시도하십시오 [오류: No valid host was found. There are not enough hosts available.].
 
+![](https://i.loli.net/2019/03/27/5c9b0e77189f0.png)
+
+
+1. expand compute-node RAM 4G -> 6.5G
+2. vgextend cinder-node lvm 1.9G free -> 41.9G free
+
+still error
 
 
 
@@ -531,11 +538,7 @@ $ pwd
 
 
 
-
-
-
-
-
+-----
 
 # [Issue] 按照官方文档pip install kolla-ansible 全是错
 1. kolla-ansible -i ./multinode bootstrap-servers
