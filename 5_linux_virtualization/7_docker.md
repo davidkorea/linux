@@ -139,11 +139,24 @@ CONTAINER ID  IMAGE                    COMMAND     CREATED             STATUS   
 c21529149f63  docker.io/centos:latest  "/bin/bash" About a minute ago  Exited (0) 59 seconds ago         hardcore_jennings
 ``` 
 
+## 3.2 后台运行一个docker实例
+在 container 中启动一个长久运行的进程，不断向 stdin 输出 hello world 。模拟一个后台运行的服务
 
+- docker run 常用参数:
+  - ```-d``` 后台运行容器，并返回容器 ID
+  - ```-c``` 后面跟待完成的命令
 
+```
+[root@server15 ~]# docker run -d docker.io/centos:latest /bin/bash -c "while true;do echo hello world; sleep 1;done"
+072cf4be4881083f806f8b448ab1dd302a18b1c402ecf76d84cffe101dd0a521
 
-
-
+[root@server15 ~]# docker logs 072cf4be4881083f
+hello world
+hello world
+hello world
+hello world
+... ...
+```
 
 
 
