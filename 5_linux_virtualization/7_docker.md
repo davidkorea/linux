@@ -94,8 +94,23 @@ docker.io/centos    latest              9f38484d220f        12 days ago         
 #### 3. 下载其他站点的镜像
 ```[root@server15 ~]# docker pull hub.c.163.com/library/tomcat:latest ```
 
+## 2.3 开启劢网络转发功能
+- 开启劢网络转发功能，默认会自劢开启
+```
+[root@server15 ~]# cat /proc/sys/net/ipv4/ip_forward
+1
+```
+- 手动开启
+```
+[root@server15 ~]# vim /etc/sysctl.conf 
+net.ipv4.ip_forward = 1                 # 输入
 
+[root@server15 ~]# sysctl -p            # 生效 
+net.ipv4.ip_forward = 1
 
+[root@server15 ~]# cat /proc/sys/net/ipv4/ip_forward 
+1
+```
 
 
 
