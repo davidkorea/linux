@@ -518,7 +518,9 @@ $ pwd
 
 ![](https://i.loli.net/2019/03/27/5c9ae07b16be8.png)
 
+## 6.2 web页面创建instance
 
+> 오류: 인스턴스 "cirros_demo"에 대해 요청된 동작 수행 실패, 인스턴스에 에러 상태가 있습니다.: 다음에 다시 시도하십시오 [오류: No valid host was found. There are not enough hosts available.].
 
 
 
