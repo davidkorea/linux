@@ -226,11 +226,50 @@ Dockerfile 有点像源码编译时./configure 后产生的 Makefile
   ADD start.sh /usr/local/bin/start.sh          # ADD 将文件<src>拷贝到新产生的镜像的文件系统对应的路径<dest>
   ADD index.html /var/www/html/index.html       # 所有拷贝到新镜像中的文件和文件夹权限为0755,uid和gid为0
 
+[root@server15 docker-build]# echo "/usr/bin/httpd -DFOREGROUND" > start.sh   # 相当于执行了systemctl start httpd
+[root@server15 docker-build]# chmod +x start.sh 
+[root@server15 docker-build]# echo "docker build image test" > index.html
 ```
 
+语法: ```docker build -t 新生成的镜像名:tag Dockerfile文件所在路径```
 
+```
+[root@server15 docker-build]# docker build -t docker.io/centos:httpd ./
+Sending build context to Docker daemon 4.096 kB
+Step 1/5 : FROM docker.io/centos:latest
+ ---> 9f38484d220f
+Step 2/5 : MAINTAINER david
+ ---> Running in 621396f530ff
+ ---> 5369cc9c74cd
+Removing intermediate container 621396f530ff
+Step 3/5 : RUN yum install -y httpd
+ ---> Running in 9c2b1baaff9e
 
-
+Loaded plugins: fastestmirror, ovl
+Determining fastest mirrors
+ * base: mirror.kakao.com
+ * extras: mirror.kakao.com
+ * updates: mirror.kakao.com
+ ... ...
+Complete!
+ ---> b5574c71a17a
+Removing intermediate container 9c2b1baaff9e
+Step 4/5 : ADD start.sh /usr/local/bin/start.sh
+ ---> a614a36d4a6b
+Removing intermediate container 418be398d33d
+Step 5/5 : ADD index.html /var/www/html/index.html
+ ---> 675757eae28c
+Removing intermediate container 2c39911488dc
+Successfully built 675757eae28c
+```
+查看已创建出新的镜像 docker.io/centos：httpd
+```
+[root@server15 docker-build]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+docker.io/centos    httpd               675757eae28c        28 seconds ago      318 MB
+docker.io/centos    apache              fb5cf00cfd4c        17 minutes ago      318 MB
+docker.io/centos    latest              9f38484d220f        12 days ago 
+```
 
 
 
