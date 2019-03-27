@@ -62,14 +62,27 @@ Server Version: 1.13.1
 #### 1. 搜索镜像
 ```
 [root@server15 ~]# docker search centos
-INDEX      NAME                               DESCRIPTION                     STARS   OFFICIAL   AUTOMATED
-docker.io  docker.io/centos                   The official build of CentOS.   5273    [OK]       
-docker.io  docker.io/ansible/centos7-ansible  Ansible on Centos7              121                [OK]
+INDEX      NAME                               DESCRIPTION                    STARS  OFFICIAL  AUTOMATED
+docker.io  docker.io/centos                   The official build of CentOS.  5273   [OK]       
+docker.io  docker.io/ansible/centos7-ansible  Ansible on Centos7             121              [OK]
 ```
+#### 2. 下载pull镜像
+```
+[root@server15 ~]# docker pull docker.io/centos 
 
-
-
-
+Using default tag: latest
+Trying to pull repository docker.io/library/centos ... 
+latest: Pulling from docker.io/library/centos
+8ba884070f61: Pull complete 
+Digest: sha256:8d487d68857f5bc9595793279b33d082b03713341ddec91054382641d14db861
+Status: Downloaded newer image for docker.io/centos:latest```
+```
+查看本地已有镜像
+```
+[root@server15 ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+docker.io/centos    latest              9f38484d220f        12 days ago         202 MB
+```
 
 
 
