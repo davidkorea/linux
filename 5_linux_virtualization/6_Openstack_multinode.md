@@ -536,7 +536,12 @@ still error
 
 [root@server162 nova]# vim nova-conductor.log 
 NoValidHost: No valid host was found. There are not enough hosts available.
-2019-03-27 13:46:07.746 23 ERROR nova.scheduler.utils [req-c51e031d-623a-44cb-b9fd-71da8a8ee34e e41eb00d7d1145ebaf4d00de0a4a7422 4ff1fb42b3904f0b8020b6512ef14ae8 - default default] [instance: e315713a-be7c-4edf-8cd8-25b68d9d4a3b] Error from last host: client164 (node client164.com): [u'Traceback (most recent call last):\n', u'  File "/usr/lib/python2.7/site-packages/nova/compute/manager.py", line 1858, in _do_build_and_run_instance\n    filter_properties)\n', u'  File "/usr/lib/python2.7/site-packages/nova/compute/manager.py", line 2097, in _build_and_run_instance\n    instance_uuid=instance.uuid, reason=six.text_type(e))\n', u'RescheduledException: Build of instance e315713a-be7c-4edf-8cd8-25b68d9d4a3b was re-scheduled: Volume device not found at .\n']
+2019-03-27 13:46:07.746 23 ERROR nova.scheduler.utils [req-c51e031d-623a-44cb-b9fd-71da8a8ee34e e41eb00d7d1145ebaf4d00de0a4a7422 
+4ff1fb42b3904f0b8020b6512ef14ae8 - default default] [instance: e315713a-be7c-4edf-8cd8-25b68d9d4a3b] Error from last host: client164 
+(node client164.com): [u'Traceback (most recent call last):\n', u'  File "/usr/lib/python2.7/site-packages/nova/compute/manager.py", 
+line 1858, in _do_build_and_run_instance\n    filter_properties)\n', u'  File "/usr/lib/python2.7/site-
+packages/nova/compute/manager.py", line 2097, in _build_and_run_instance\n    instance_uuid=instance.uuid, reason=six.text_type(e))\n',
+u'RescheduledException: Build of instance e315713a-be7c-4edf-8cd8-25b68d9d4a3b was re-scheduled: Volume device not found at .\n']
 ```
 
 
