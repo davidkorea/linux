@@ -413,6 +413,48 @@ openstack server create \
     --key-name mykey \
     --nic net-id=a0cbe0d4-3f7d-4275-856b-5d810c7a1297 \
     demo1
+    
+[root@server162 kolla-ansible]# openstack server create \
+>     --image cirros \
+>     --flavor m1.tiny \
+>     --key-name mykey \
+>     --nic net-id=a0cbe0d4-3f7d-4275-856b-5d810c7a1297 \
+>     demo1
++-------------------------------------+-----------------------------------------------+
+| Field                               | Value                                         |
++-------------------------------------+-----------------------------------------------+
+| OS-DCF:diskConfig                   | MANUAL                                        |
+| OS-EXT-AZ:availability_zone         |                                               |
+| OS-EXT-SRV-ATTR:host                | None                                          |
+| OS-EXT-SRV-ATTR:hypervisor_hostname | None                                          |
+| OS-EXT-SRV-ATTR:instance_name       |                                               |
+| OS-EXT-STS:power_state              | NOSTATE                                       |
+| OS-EXT-STS:task_state               | scheduling                                    |
+| OS-EXT-STS:vm_state                 | building                                      |
+| OS-SRV-USG:launched_at              | None                                          |
+| OS-SRV-USG:terminated_at            | None                                          |
+| accessIPv4                          |                                               |
+| accessIPv6                          |                                               |
+| addresses                           |                                               |
+| adminPass                           | 5d8WtK6wUYVi                                  |
+| config_drive                        |                                               |
+| created                             | 2019-03-26T09:13:37Z                          |
+| flavor                              | m1.tiny (1)                                   |
+| hostId                              |                                               |
+| id                                  | fbc4742b-ad4c-4797-8e17-25923a6ed101          |
+| image                               | cirros (3c23cb2a-9951-4cb6-866e-696c663e6c3e) |
+| key_name                            | mykey                                         |
+| name                                | demo1                                         |
+| progress                            | 0                                             |
+| project_id                          | 4ff1fb42b3904f0b8020b6512ef14ae8              |
+| properties                          |                                               |
+| security_groups                     | name='default'                                |
+| status                              | BUILD                                         |
+| updated                             | 2019-03-26T09:13:37Z                          |
+| user_id                             | e41eb00d7d1145ebaf4d00de0a4a7422              |
+| volumes_attached                    |                                               |
++-------------------------------------+-----------------------------------------------+
+
 ```
 
 
