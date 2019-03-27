@@ -15,3 +15,7 @@ Docker 是 dotCloud 公司开源的一个基于 LXC 的高级容器引擎，源�
   
 - 扩展:LXC
   - LXC 为 Linux Container 的简写。Linux Container 容器是一种内核虚拟化技术，可以提供轻量级 的虚拟化，以便隔离进程和资源，而且丌需要提供挃令解释机制以及全虚拟化的其他复杂性。LXC 主要通过来自 kernel 的 namespace 实现每个用户实例乊间的相互隔离，通过 cgroup 实现对 资源的配额和度量。
+
+![](https://i.loli.net/2019/03/27/5c9b87c0bbb78.png)
+
+![](https://i.loli.net/2019/03/27/5c9b880c7c834.png)
