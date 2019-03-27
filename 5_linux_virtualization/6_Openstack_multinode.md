@@ -489,11 +489,29 @@ $ pwd
 ```
 [root@server162 ~]# source /etc/kolla/admin-openrc.sh 
 ```
-
-
-
-
-
+## 6.1 创建网络
+#### 1. 创建外网
+```
+[root@server162 ~]# openstack network create --external --provider-physical-network physnet1 --provider-network-type flat public_network
+```
+```
+[root@server162 ~]# openstack subnet create --no-dhcp --allocation-pool 'start=192.168.0.10,end=192.168.0.20' --network public_network --subnet-range 192.168.0.0/24 --gateway 192.168.0.1 public_subnet
+```
+#### 2. 创建内网
+```
+[root@server162 ~]# openstack network create --provider-network-type vxlan demo_network
+```
+```
+[root@server162 ~]# openstack subnet create --subnet-range 10.0.0.0/24 --network demo_network --gateway 10.0.0.1 --dns-nameserver 8.8.8.8 demo_subnet
+```
+#### 3. 内网，外网之间创建路由
+```
+[root@server162 ~]# openstack router create demo_router
+```
+```
+[root@server162 ~]# openstack router add subnet demo_router demo_subnet
+[root@server162 ~]# openstack router set --external-gateway public_network demo_router
+```
 
 
 
