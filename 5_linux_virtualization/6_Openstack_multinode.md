@@ -5,8 +5,7 @@
 2. 安装 kolla-ansible
 3. 自定义 kolla-ansible 安装 openstack 的相关配置文件
 4. 开始基亍 kolla-ansible 安装 openstack 私有云
-5. OpenStack 使用方法
-6. 查看创建好的 openstack 项目中的信息和于主机网络连
+5. 实戓-通过命令行来创建自己的网络拓扑图
 
 # 1. 准备 openstack 多结点实验环境
 
@@ -481,8 +480,14 @@ $ pwd
 /home/cirros
 ```
 
+# 6. 实戓-通过命令行来创建自己的网络拓扑图
 
+先删除已创建的demo1云主机以及所有网络和路由。
 
+运行source openers.sh 脚本，添加可用openstack环境变量
+```
+[root@server162 ~]# source /etc/kolla/admin-openrc.sh 
+```
 
 
 
