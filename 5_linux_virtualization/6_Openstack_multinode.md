@@ -454,8 +454,55 @@ openstack server create \
 | user_id                             | e41eb00d7d1145ebaf4d00de0a4a7422              |
 | volumes_attached                    |                                               |
 +-------------------------------------+-----------------------------------------------+
-
 ```
+## 5.3 查看已创建openstack demo项目信息和云主机网络连通性
+#### 1. command查看网络信息
+```
+[root@server162 ~]# source /etc/kolla/admin-openrc.sh 		# 要读一下这个环境变量配置文件
+
+[root@server162 ~]# openstack router list 			# 查看路由信息
+[root@server162 ~]# openstack router show demo-router 		# 查看 demo-router 路由信
+[root@server162 ~]# openstack network list 			# 查看网络信息
+[root@server162 ~]# openstack server show demo1 		# 查看名字为 demo1 的虚拟机信息
+```
+分配浮动ip，测试远程连接虚拟机，成功
+```
+[root@server162 ~]# ssh 192.168.0.13
+The authenticity of host '192.168.0.13 (192.168.0.13)' can't be established.
+RSA key fingerprint is SHA256:xy5AkUHiLMOb2cCdrV3XpLF34sMUAvNqB+0XfPJwuHA.
+RSA key fingerprint is MD5:ed:c1:ad:a8:69:a3:4f:5c:a2:75:8f:5f:b0:7d:e3:df.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.0.13' (RSA) to the list of known hosts.
+Please login as 'cirros' user, not as root
+
+Connection to 192.168.0.13 closed.
+[root@server162 ~]# ssh cirros@192.168.0.13
+$ pwd
+/home/cirros
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
