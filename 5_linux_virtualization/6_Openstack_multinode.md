@@ -5,7 +5,7 @@
 2. 安装 kolla-ansible
 3. 自定义 kolla-ansible 安装 openstack 的相关配置文件
 4. 开始基亍 kolla-ansible 安装 openstack 私有云
-5. 实戓-通过命令行来创建自己的网络拓扑图
+5. 实战-通过命令行来创建自己的网络拓扑图
 
 # 1. 准备 openstack 多结点实验环境
 
@@ -480,7 +480,7 @@ $ pwd
 /home/cirros
 ```
 
-# 6. 实戓-通过命令行来创建自己的网络拓扑图
+# 6. 实战-通过命令行来创建自己的网络拓扑图
 
 先删除已创建的demo1云主机，管理员菜单下删除路由，以及所有网络。顺序一定是先删除路由，才能删除网络，否则先删除网络会报错删不掉
 
@@ -489,7 +489,8 @@ $ pwd
 ```
 [root@server162 ~]# source /etc/kolla/admin-openrc.sh 
 ```
-## 6.1 创建网络
+## 6.1 创建网络拓扑
+网络拓扑**必须**在**命令行**下运行。在 web界面创建的网络拓扑图，上不了外网。因为在网页上无法设置桥接到物理网络上
 #### 1. 创建外网
 ```
 [root@server162 ~]# openstack network create --external --provider-physical-network physnet1 --provider-network-type flat public_network
