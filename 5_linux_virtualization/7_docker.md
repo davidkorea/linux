@@ -159,12 +159,19 @@ hello world
 ```
 因为是run -d 后台执行，所以需要手动关闭docker
 ```
-[root@server15 ~]# docker kill 072cf4be4881
+[root@server15 ~]# docker kill 072cf4be4881     # 或者 docker stop 072cf4be4881
 ```
 
+## 3.3 删除一个docker实例
+```
+[root@server15 ~]# docker rm 562a6c6eda2a
+Error response from daemon: You cannot remove a running container 562a6c6eda2a8d1ab3311d5411190f0e7fb774432edd4d0b06255c20f8ef976c. 
+Stop the container before attempting removal or use -f
 
+[root@server15 ~]# docker rm -f 562a6c6eda2a
+```
 
-
+# 4. docker镜像制作方法
 
 
 
