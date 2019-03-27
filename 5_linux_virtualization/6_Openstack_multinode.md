@@ -218,7 +218,7 @@ EOF
 ## 3.2 编辑 /etc/kolla/globals.yml 自定义openstack中部署事项
 
 ```diff
-[root@server162 ~]# vim /etc/kolla/globals.yml      # 配置openstack安装中的参数
+[root@server162 ~]# vim /etc/kolla/globals.yml     # 配置openstack安装中的参数
 - 15 #kolla_base_distro: "centos"                  # 选择下载的镜像为基于centos版本的镜像
 + 15 kolla_base_distro: "centos"
 
@@ -295,7 +295,7 @@ EOF
  30 
 ```
 
-# 4. 开始基亍kolla-ansible安装openstack私有云
+# 4. 开始基于kolla-ansible安装openstack私有云
 
 [Issue: 按照官方文档pip install kolla-ansible 全是错](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/6_Openstack_multinode.md#issue-%E6%8C%89%E7%85%A7%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3pip-install-kolla-ansible-%E5%85%A8%E6%98%AF%E9%94%99)
 
@@ -355,17 +355,65 @@ export OS_REGION_NAME=RegionOne
 http://192.168.0.162/auth/login/?next=/home/ 访问成功
 
 # 5. init-runonce 创建测试云主机demo1
+## 5.1 安装 OpenStack client 端
+方便后期使用命令行操作 openstack
+```
+[root@server162 ~]# pip install python-openstackclient python-glanceclient python-neutronclient
+```
+```
+[root@server162 ~]# pip install ipaddress --ignore-installed ipaddress 
+[root@server162 ~]# pip install python-openstackclient python-glanceclient
+python-neutronclient
+```
+```
+[root@server162 ~]# pip install PyYAML --ignore-installed PyYAML
+[root@server162 ~]# pip install python-openstackclient python-glanceclient
+python-neutronclient
+```
+```
+[root@server162 ~]# pip install pyinotify --ignore-installed pyinotify 
+[root@server162 ~]# pip install python-openstackclient python-glanceclient
+python-neutronclient
+```
 
+## 5.2 使用 init-runonce 脚本创建openstack demo项目
+#### 1. 修改 init-runonce
+init-runonce 是在 openstack 中快速创建一个于项目例子的脚本
+```diff
+[root@server162 ~]# vim /usr/share/kolla-ansible/init-runonce
 
+- 12 EXT_NET_CIDR='10.0.2.0/24'
+- 13 EXT_NET_RANGE='start=10.0.2.150,end=10.0.2.199' 
+- 14 EXT_NET_GATEWAY='10.0.2.1'
+ 
++ EXT_NET_CIDR='192.168.0.0/24' 
++ EXT_NET_RANGE='start=192.168.0.10,end=192.168.0.20' 
++ EXT_NET_GATEWAY='192.168.0.1'
+```
+注：192.168.0.0 的网络，就是上面 ens34 接入的局域网中的地址，这个网络是通过局域网络中的路由器访问互联网。配置好这个，装完虚拟机就可以直接 ping 通
 
+#### 2. 开始创建demo
 
+> [Issue：ImportError: cannot import name decorate](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/5_Openstack_all_in_one.md#issueimporterror-cannot-import-name-decorate)
+> 
+> fixed: ```pip install -U decorator```
 
+```
+[root@server162 ~]# source /etc/kolla/admin-openrc.sh  # 先加载这个文件，把环境变量加入系统中，才有权限执行下面的命令
+[root@server162 ~]# cd /usr/share/kolla-ansible 
+[root@server162 kolla-ansible]# ./init-runonce         # 最后弹出以下命令，复制后直接执行即可
 
+Done.
 
+To deploy a demo instance, run:
 
-
-
-
+openstack server create \
+    --image cirros \
+    --flavor m1.tiny \
+    --key-name mykey \
+    --nic net-id=a0cbe0d4-3f7d-4275-856b-5d810c7a1297 \
+    demo1
+```
 
 
 
