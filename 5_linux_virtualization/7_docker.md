@@ -44,7 +44,7 @@ Docker 核心技术
 - 一个容器的镜像通常都徆小，不适合存大量数据，存储可以通过外部挂载的方式使用。比如使用: NFS，ipsan，MFS 等, -v 映射磁盘分区
 - 一句话:docker 叧用于计算，存储交给别人。oracle 不适合使用 docker 来运行，太大了，存储的数据太多。
 # 2. 部署docker容器虚拟化平台
-
+## 2.1 安装docker
 - ```yum install -y docker```
 - ```systemctl start docker && systenctl enable docker && systemctl status docker```
 - ```docker version```
@@ -58,9 +58,14 @@ Images: 0
 Server Version: 1.13.1
 ... ...
 ```
-
-
-
+## 2.2 下载 docker 镜像
+#### 1. 搜索镜像
+```
+[root@server15 ~]# docker search centos
+INDEX      NAME                               DESCRIPTION                     STARS   OFFICIAL   AUTOMATED
+docker.io  docker.io/centos                   The official build of CentOS.   5273    [OK]       
+docker.io  docker.io/ansible/centos7-ansible  Ansible on Centos7              121                [OK]
+```
 
 
 
