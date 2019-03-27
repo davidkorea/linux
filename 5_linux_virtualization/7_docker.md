@@ -150,14 +150,17 @@ c21529149f63  docker.io/centos:latest  "/bin/bash" About a minute ago  Exited (0
 [root@server15 ~]# docker run -d docker.io/centos:latest /bin/bash -c "while true;do echo hello world; sleep 1;done"
 072cf4be4881083f806f8b448ab1dd302a18b1c402ecf76d84cffe101dd0a521
 
-[root@server15 ~]# docker logs 072cf4be4881083f
+[root@server15 ~]# docker logs 072cf4be4881
 hello world
 hello world
 hello world
 hello world
 ... ...
 ```
-
+因为是run -d 后台执行，所以需要手动关闭docker
+```
+[root@server15 ~]# docker kill 072cf4be4881
+```
 
 
 
