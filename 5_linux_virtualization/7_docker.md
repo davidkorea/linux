@@ -115,13 +115,29 @@ net.ipv4.ip_forward = 1
 # 3. docker 平台基本使用方法
 
 ## 3.1 运行一个docker实例
+运行一个 container 并加载镜像 centos，运行起来这个实例后，在实例中执行 /bin/bash
+
 - docker 常用参数:
   - ```run -it```
     - ```-i``` 以交互模式运行容器，通常与 -t 同时使用;
     - ```-t``` 为容器重新分配一个伪输入终端，通常与 -i 同时使用
 
+```
+[root@server15 ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+docker.io/centos    latest              9f38484d220f        12 days ago         202 MB
 
-
+[root@server15 ~]# docker run -it docker.io/centos:latest /bin/bash
+[root@c21529149f63 /]# cat /etc/redhat-release 
+CentOS Linux release 7.6.1810 (Core) 
+[root@c21529149f63 /]# exit
+exit
+```
+```
+[root@server15 ~]# docker ps -a
+CONTAINER ID  IMAGE                    COMMAND     CREATED             STATUS                     PORTS  NAMES
+c21529149f63  docker.io/centos:latest  "/bin/bash" About a minute ago  Exited (0) 59 seconds ago         hardcore_jennings
+``` 
 
 
 
