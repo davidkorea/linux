@@ -39,6 +39,8 @@ accurately determine which files belong to it which would lead to only a partial
 修改 init-runonce 脚本，指定浮劢 IP 地址范围，浮劢 IP 就是云主机的公网 IP。init-runonce 是在 openstack 中快速创建一个云项目例子的脚本。
 
 ```diff
+[root@server15 ~]# vim /usr/share/kolla-ansible/init-runonce
+
 - 12 EXT_NET_CIDR='10.0.2.0/24'
 - 13 EXT_NET_RANGE='start=10.0.2.150,end=10.0.2.199' 
 - 14 EXT_NET_GATEWAY='10.0.2.1'
