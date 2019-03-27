@@ -207,9 +207,26 @@ REPOSITORY          TAG         IMAGE ID            CREATED             SIZE
 docker.io/centos    apache      fb5cf00cfd4c        6 seconds ago       318 MB
 docker.io/centos    latest      9f38484d220f        12 days ago         202 MB
 ```
+4. 测试新创建的镜像可用
+```
+[root@server15 ~]# docker run -it docker.io/centos:apache /bin/bash
+[root@826378b093df /]# rpm -qa httpd
+httpd-2.4.6-88.el7.centos.x86_64
+```
+## 4.2 docker build by Dockerfile
+Dockerfile 有点像源码编译时./configure 后产生的 Makefile
+```
+[root@server15 ~]# mkdir /docker-build
+[root@server15 ~]# cd /docker-build/
+[root@server15 docker-build]# touch Dockerfile
+[root@server15 docker-build]# vim Dockerfile 
+  FROM docker.io/centos:latest                  # FROM 基于哪个镜像
+  MAINTAINER david                              # MAINTAINER 镜像创建者  
+  RUN yum install -y httpd                      # RUN 安装软件用
+  ADD start.sh /usr/local/bin/start.sh          # ADD 将文件<src>拷贝到新产生的镜像的文件系统对应的路径<dest>
+  ADD index.html /var/www/html/index.html       # 所有拷贝到新镜像中的文件和文件夹权限为0755,uid和gid为0
 
-
-
+```
 
 
 
