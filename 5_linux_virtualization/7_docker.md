@@ -43,3 +43,53 @@ Docker 核心技术
 - Docker 用于应用程序时是最有用的，但并丌包含数据。日志，跟踪和数据库等通常应放在 Docker 容器外。 
 - 一个容器的镜像通常都徆小，不适合存大量数据，存储可以通过外部挂载的方式使用。比如使用: NFS，ipsan，MFS 等, -v 映射磁盘分区
 - 一句话:docker 叧用于计算，存储交给别人。oracle 不适合使用 docker 来运行，太大了，存储的数据太多。
+# 2. 部署docker容器虚拟化平台
+
+- ```yum install -y docker```
+- ```systemctl start docker && systenctl enable docker && systemctl status docker```
+- ```docker version```
+```
+[root@server15 ~]# docker info
+Containers: 0
+ Running: 0
+ Paused: 0
+ Stopped: 0
+Images: 0
+Server Version: 1.13.1
+... ...
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
