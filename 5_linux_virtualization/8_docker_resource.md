@@ -12,6 +12,21 @@ cgroup 是 Control Groups 的缩写，是 Linux 内核提供的一种可以限�
 为什么要迚行硬件配额？ 当多个容器运行时，防止某容器把所有的硬件都占用了。（比如一台被黑的容器）
 
 # 1. CPU配额 
+
+```
+[root@server162 ~]# docker run --help | grep cpu
+      --cpu-count int                         CPU count (Windows only)
+      --cpu-percent int                       CPU percent (Windows only)
+      --cpu-period int                        Limit CPU CFS (Completely Fair Scheduler) period
+      --cpu-quota int                         Limit CPU CFS (Completely Fair Scheduler) quota
+      --cpu-rt-period int                     Limit CPU real-time period in microseconds
+      --cpu-rt-runtime int                    Limit CPU real-time runtime in microseconds
+  -c, --cpu-shares int                        CPU shares (relative weight)
+      --cpus decimal                          Number of CPUs (default 0.000)
+      --cpuset-cpus string                    CPUs in which to allow execution (0-3, 0,1)
+      --cpuset-mems string                    MEMs in which to allow execution (0-3, 0,1)
+```
+
 ## 1.1 cpu-shares
 ```
 [root@server162 ~]# docker run --help | grep cpu-shares
@@ -52,3 +67,36 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 [root@0363ce23f262 /]# cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us
 200000
 ```
+# 1.3 CPU core 核心控制
+
+```
+[root@server162 ~]# docker run --help | grep cpu
+      --cpuset-cpus string                    CPUs in which to allow execution (0-3, 0,1)
+      --cpuset-mems string                    MEMs in which to allow execution (0-3, 0,1)
+```
+参数--cpuset 可以绑定 CPU, 对多核 CPU 的服务器，docker 还可以控制容器运行限定使用哪些 cpu 内核和内存节点，即使用–cpuset-cpus 和–cpuset-mems 参数。 对具有 NUMA 拓扑（具有多 CPU、多内存节点）的服务器尤其有用，可以对需要高性能计算的容器迚行性能最优的配置。如果服务器只有一个内存节点，则-cpuset-mems 的配置基本上不会有明显效果。
+
+服务器架构，商用服务器大体可以分为三类： SMP、 NUMA、 MPP 
+1. 即对称多处理器结构(SMP ： Symmetric Multi-Processor) 例： x86 服务器，双路服务器。主板上有两个物理 cpu
+2. 非一致存储访问结构 (NUMA ：Non-Uniform Memory Access) 例： IBM 小型机 pSeries690
+3. 海量幵行处理结构 (MPP ： Massive ParallelProcessing) 。 例： 大型机
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
