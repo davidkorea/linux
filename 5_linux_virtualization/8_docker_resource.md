@@ -11,7 +11,8 @@ cgroup 是 Control Groups 的缩写，是 Linux 内核提供的一种可以限�
 
 为什么要迚行硬件配额？ 当多个容器运行时，防止某容器把所有的硬件都占用了。（比如一台被黑的容器）
 
-# 1. CPU配额 cpu-shares
+# 1. CPU配额 
+## 1.1 cpu-shares
 ```
 [root@server162 ~]# docker run --help | grep cpu-shares
   -c, --cpu-shares int      CPU shares (relative weight)  # 在创建容器时指定容器所使用的 CPU份额值
@@ -30,10 +31,15 @@ cgroup 是 Control Groups 的缩写，是 Linux 内核提供的一种可以限�
 
 - 问：两个容器 A、 B 的 cpu 份额分别为 1000 和 500， 1000+500> 1024 是超出了吗？
   - 答：没有。 A 使用 1024 的 2/3, B 使用 1024 的 1/3
+## 1.2 CPU 周期控制
+docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可以分配到的 CPU 时钟周期。
+```
+[root@server162 ~]# docker run --help | grep cpu-
+--cpu-quota int                Limit CPU CFS (Completely Fair Scheduler) quota
+--cpu-rt-period int            Limit CPU real-time period in microseconds
+```
 
-- CPU 周期控制, docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可以分配到的 CPU 时钟周期。
-  - ```--cpu-period``` 是用来挃定容器对 CPU 的使用要在多长时间内做一次重新分配。 指定周期
-  - ```--cpu-quota``` 是用来挃定在这个周期内，最多可以有多少时间片断用来跑这个容器。 指定在这个周期中使用多少时间片
-  - 与```--cpu-shares``` 不同，--cpu-period 和--cpu-quota 是指定一个绝对值，而且没有弹性在里面，容器对 CPU 资源的使用绝对不会超过配置的值。
-  - cpu-period 和 cpu-quota 的单位为微秒（μs）。 cpu-period 的最小值为 1000 微秒，最大值为 1秒（10^6 μs），默认值为 0.1 秒（100000 μs）。 cpu-quota 的值默认为-1，表示不做控制。
-1 秒=1000 毫秒 1 毫秒=1000 微秒
+- ```--cpu-period``` 是用来挃定容器对 CPU 的使用要在多长时间内做一次重新分配。 指定周期
+- ```--cpu-quota``` 是用来挃定在这个周期内，最多可以有多少时间片断用来跑这个容器。 指定在这个周期中使用多少时间片
+- 与```--cpu-shares``` 不同，--cpu-period 和--cpu-quota 是指定一个绝对值，而且没有弹性在里面，容器对 CPU 资源的使用绝对不会超过配置的值。
+- cpu-period 和 cpu-quota 的单位为微秒（μs）。 cpu-period 的最小值为 1000 微秒，最大值为 1秒（10^6 μs），默认值为 0.1 秒（100000 μs）。 cpu-quota 的值默认为-1，表示不做控制。1 秒=1000 毫秒 1 毫秒=1000 微秒
