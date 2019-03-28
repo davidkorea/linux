@@ -145,7 +145,8 @@ linux 系统压力测试软件 Stress 。 stress 可以测试 Linux 系统 cpu/m
 
 
 stress 参数解释
-1. 时间
+1. 时间 
+- ```-t```
 - ```--timeout N``` 指定运行 N 秒后停止, 时间单位可以为秒 s，分 m，小时 h，天 d，年 y
 - ```--backoff N``` 等待 N 微妙后开始运行
 2. cpu
@@ -162,12 +163,58 @@ stress 参数解释
 ```
 [root@server162 ~]# stress -c 2 -i 2 --verbose --timeout 20s
 ```
-![](https://i.loli.net/2019/03/28/5c9c8de64b970.png)
+### 1.4.2 实例1
 
+创建两个容器实例:docker10 和 docker20。 让 docker10 和 docker20 只运行在 cpu0和 cpu1 上，最终测试一下 docker10 和 docker20 使用 cpu 的百分比。
+1. 创建容器
+```
+[root@server162 ~]# docker run -itd --name docker10 --cpuset-cpus 0,1 --cpu-shares 512 centos:httpd 
+8979a8a492f9a409daf263124c3ec25cfb0a68f041eabe35c9d51bd1610c5d23
+[root@server162 ~]# docker run -itd --name docker20 --cpuset-cpus 0,1 --cpu-shares 1024 centos:httpd 
+01fab4b74f5c155613c857f7b8602246af99692d9e1984551e1dabd44201d55e
+```
+2.  迚入 docker10，使用 stress 测试进程只在 cpu0,1 上运行
+```
+[root@server162 ~]# docker exec -it docker10 /bin/bash
+[root@8979a8a492f9 /]# yum install -y epel-release
+[root@8979a8a492f9 /]# yum install -y stress
+[root@8979a8a492f9 /]# stress -c 2 -v -t 10m
 
+================================================================================
+top - 17:22:22 up  5:38,  3 users,  load average: 0.33, 0.13, 0.15
+Tasks: 258 total,   3 running, 255 sleeping,   0 stopped,   0 zombie
+%Cpu0  :100.0 us,  0.0 sy,  0.0 ni,  0.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :100.0 us,  0.0 sy,  0.0 ni,  0.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu2  :  0.0 us,  0.3 sy,  0.0 ni, 99.3 id,  0.0 wa,  0.0 hi,  0.3 si,  0.0 st
+%Cpu3  :  0.0 us,  0.0 sy,  0.0 ni, 99.7 id,  0.0 wa,  0.0 hi,  0.3 si,  0.0 st
+KiB Mem :  8164928 total,  6801148 free,   465532 used,   898248 buff/cache
+KiB Swap
+================================================================================
+```
+3. 迚入 docker20，使用 stress 测试迚程是丌是只在 cpu0,1 上运行，且 docker20 上运行的 stress 使用 cpu 百分比是 docker10 的 2 倍
+```
+[root@server162 ~]# docker exec -it docker10 /bin/bash
+[root@8979a8a492f9 /]# stress -c 2 -v -t 10m
 
+[root@server162 ~]# docker exec -it docker20 /bin/bash
+[root@01fab4b74f5c /]# stress -c 2 -v -t 10m
 
+top - 17:31:15 up  5:47,  3 users,  load average: 3.15, 1.52, 0.71
+Tasks: 264 total,   5 running, 259 sleeping,   0 stopped,   0 zombie
+%Cpu0  :100.0 us,  0.0 sy,  0.0 ni,  0.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu1  :100.0 us,  0.0 sy,  0.0 ni,  0.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+%Cpu2  :  0.3 us,  1.0 sy,  0.0 ni, 98.0 id,  0.0 wa,  0.0 hi,  0.7 si,  0.0 st
+%Cpu3  :  0.3 us,  0.3 sy,  0.0 ni, 99.0 id,  0.0 wa,  0.0 hi,  0.3 si,  0.0 st
+KiB Mem :  8164928 total,  6661936 free,   479484 used,  1023508 buff/cache
+KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem 
 
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND                     
+16202 root      20   0    7308    100      0 R  66.7  0.0   0:28.96 stress                      
+16203 root      20   0    7308    100      0 R  66.7  0.0   0:28.89 stress                      
+16067 root      20   0    7308     96      0 R  33.3  0.0   3:14.71 stress                      
+16068 root      20   0    7308     96      0 R  33.3  0.0   3:14.68 stress   
+```
+![](https://i.loli.net/2019/03/28/5c9c9521126f6.png)
 
 
 
