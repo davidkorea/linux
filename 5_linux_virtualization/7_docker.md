@@ -170,7 +170,7 @@ Stop the container before attempting removal or use -f
 
 [root@server15 ~]# docker rm -f 562a6c6eda2a
 ```
-## 3.4 删除全部已有容器container
+## 3.4 删除全部已有实例
 ```
 [root@server162 ~]# docker ps -a -q               # 过滤出全部容器id
 1ea49e301c43
@@ -191,7 +191,7 @@ abfc748b2421
 [root@server162 ~]# docker ps -a
 CONTAINER ID      IMAGE      COMMAND      CREATED     STATUS      PORTS      NAMES
 ```
-## 3.5 删除一个docker image
+## 3.5 删除一个docker image镜像
 ```docker rmi IMAGEID```
 ```
 [root@server162 ~]# docker images
