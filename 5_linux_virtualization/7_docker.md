@@ -360,4 +360,26 @@ REPOSITORY          TAG                 IMAGE ID            CREATED             
 centos              httpd               fecffc9b8493        8 minutes ago       318 MB
 docker.io/centos    latest              9f38484d220f        13 days ago         202 MB
 ```
+#### 2. push dockerhub
+```
+[root@server162 ~]# docker login -u ... -p ...
+Login Succeeded
 
+[root@server162 ~]# docker push centos:httpd 
+Error response from daemon: You cannot push a "root" repository. Please rename your repository to docker.io/<user>/<repo> (ex: docker.io/a406622768/centos)
+
+[root@server162 ~]# docker tag centos:httpd docker.io/a406622768/centos       # tag用于重命名
+[root@server162 ~]# docker images
+REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
+centos                        httpd               fecffc9b8493        17 minutes ago      318 MB
+docker.io/a406622768/centos   latest              fecffc9b8493        17 minutes ago      318 MB
+docker.io/centos              latest              9f38484d220f        13 days ago         202 MB
+
+[root@server162 ~]# docker push docker.io/a406622768/centos
+The push refers to a repository [docker.io/a406622768/centos]
+0254331b8688: Pushed 
+cc20756b914f: Pushed 
+5b9e4ba712e0: Pushed 
+d69483a6face: Mounted from library/centos 
+latest: digest: sha256:765082fc00ec6d56fbacb498cb3e19498224050b25700bf0f65d96a5953b0d57 size: 1155
+```
