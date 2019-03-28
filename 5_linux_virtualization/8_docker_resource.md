@@ -145,19 +145,24 @@ linux 系统压力测试软件 Stress 。 stress 可以测试 Linux 系统 cpu/m
 
 
 stress 参数解释
-- ```-t --timeout N``` 指定运行 N 秒后停止, 时间单位可以为秒 s，分 m，小时 h，天 d，年 y
+1. 时间
+- ```--timeout N``` 指定运行 N 秒后停止, 时间单位可以为秒 s，分 m，小时 h，天 d，年 y
 - ```--backoff N``` 等待 N 微妙后开始运行
+2. cpu
 - ```-c``` 产生 n 个迚程 每个迚程都反复不停的计算随机数的平方根，测试 cpu
+3. 硬盘io
 - ```-i``` 产生 n 个迚程 每个进程反复调用 sync()，sync()用于将内存上的内容写到硬盘上，测试 io
-- ```-m ```
-      - ```--vm n``` 产生 n 个迚程,每个迚程不断调用内存分配 malloc 和内存释放 free 函数 ，测试内存
-      - ```--vm-bytes B``` 指定 malloc 时内存的字节数 （默认 256MB）
-      - ```--vm-hang N``` 指定在 free 栈的秒数
+4. memory
+- ```--vm n``` 产生 n 个迚程,每个迚程不断调用内存分配 malloc 和内存释放 free 函数 ，测试内存
+- ```--vm-bytes B``` 指定 malloc 时内存的字节数 （默认 256MB）
+- ```--vm-hang N``` 指定在 free 栈的秒数
 
 
-
-
-
+产生 2 个 cpu 迚程，2 个 io 迚程，20 秒后停止运行
+```
+[root@server162 ~]# stress -c 2 -i 2 --verbose --timeout 20s
+```
+![](https://i.loli.net/2019/03/28/5c9c8de64b970.png)
 
 
 
