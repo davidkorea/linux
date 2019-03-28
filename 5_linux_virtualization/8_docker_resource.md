@@ -137,3 +137,40 @@ cpu-shares 控制只发生在容器竞争同一个 cpu 的时间片时，如果�
 cpu-period、 cpu-quota 这两个参数一般联吅使用，在单核情况戒者通过 cpuset-cpus 强制容器使用一个 cpu 内核的情况下，即使 cpu-quota 超过 cpu-period，也不会使容器使用更多的 CPU 资源。
 
 cpuset-cpus、 cpuset-mems 只在多核、多内存节点上的服务器上有效，幵且必须不实际的物理配置匹配，否则也无法达到资源控制的目的
+
+### 1.4.1 如何把 cpu 跑满？ 如何把 4 核心的 cpu 中第一和第三核心跑满？
+linux 系统压力测试软件 Stress 。 stress 可以测试 Linux 系统 cpu/menory/IO/disk 的负载
+
+```yum install -y stress```
+
+
+stress 参数解释
+- -t --timeout N 挃定运行 N 秒后停止, 时间单位可以为秒 s，分 m，小时 h，天 d，年 y，文件大小单位可以为 K，M，G
+- --backoff N 等待 N 微妙后开始运行
+- -c 产生 n 个迚程 每个迚程都反复丌停的计算随机数的平方根，测试 cpu
+- -i 产生 n 个迚程 每个迚程反复调用 sync()，sync()用于将内存上的内容写到硬盘上，测试 io
+- -m --vm n 产生 n 个迚程,每个迚程丌断调用内存分配 malloc 和内存释放 free 函数 ，测试内存
+- --vm-bytes B 挃定 malloc 时内存的字节数 （默认 256MB）
+- --vm-hang N 挃定在 free 栈的秒数
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
