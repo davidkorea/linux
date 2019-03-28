@@ -318,6 +318,46 @@ docker.io/centos    latest              9f38484d220f        12 days ago
 - 方法 1：Save Image To tar包
 - 方法 2：Push Image To Docker Hub
 
+#### 1. 报错docker image为tar
+```docker save -o 保存后的名字.tar 需保存的镜像名:tag ```
+```
+[root@server162 docker-build]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              httpd               fecffc9b8493        36 seconds ago      318 MB
+docker.io/centos    latest              9f38484d220f        13 days ago         202 MB
+[root@server162 docker-build]# docker save -o docker-centos-httpd.tar centos:httpd 
 
+[root@server162 docker-build]# ll docker-centos-httpd.tar 
+-rw------- 1 root root 326070272 3月  28 10:30 docker-centos-httpd.tar
+```
+导出后的tar，再导入为docker image
+```
+[root@server162 docker-build]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              httpd               fecffc9b8493        7 minutes ago       318 MB
+docker.io/centos    latest              9f38484d220f        13 days ago         202 MB
+[root@server162 docker-build]# docker rmi centos:httpd                                # 先删除已存在的http镜像
+Untagged: centos:httpd
+Deleted: sha256:fecffc9b84934dddb9ac0a10dc0e7deb2907dc046dd04b1d065b83291b6fab5f
+Deleted: sha256:ca0307f983100b0efbdedc052e480c95a863e480e57f0f30bf8702f7363456c9
+Deleted: sha256:5bbb2864e30b14d1a492fd8595c4fb3f553cacf4a79c8612294c1551b1c2da0f
+Deleted: sha256:223625e510bb2a0a45f6ea43e1af5cb79b6e0d4483d0f24621408956d23ae69b
+Deleted: sha256:a5de51627549729321de8ac9704b380043c826e6e1f1f9becef7573b2ee5fc50
+Deleted: sha256:a35e841920ed4ef53bab979161bcb1aec6ea5fd2b1c8f057e1b3472556cfabdd
+Deleted: sha256:daeef8bb05be6fcfc08405da81b0d4eaf81753ca4162f38d4e1a718fdb1f1a82
+[root@server162 docker-build]# docker images                                          # 删除成功
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+docker.io/centos    latest              9f38484d220f        13 days ago         202 MB
 
+[root@server162 docker-build]# docker load -i docker-centos-httpd.tar                 # 导人tar为docker image
+5b9e4ba712e0: Loading layer 116.6 MB/116.6 MB
+cc20756b914f: Loading layer 3.584 kB/3.584 kB
+0254331b8688: Loading layer 3.584 kB/3.584 kB
+Loaded image: centos:httpd
+
+[root@server162 docker-build]# docker images                                          # 导入成功
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+centos              httpd               fecffc9b8493        8 minutes ago       318 MB
+docker.io/centos    latest              9f38484d220f        13 days ago         202 MB
+```
 
