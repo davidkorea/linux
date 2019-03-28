@@ -220,25 +220,34 @@ Stop the container before attempting removal or use -f
 1ea49e301c43
 8b2b3a8b89fe
 5a8e334f4547
-6293ac9d8cbd
-abfc748b2421
-18ff9dc2f10a
-5a209db13389
 [root@server162 ~]# docker rm $(docker ps -a -q)
 1ea49e301c43
 8b2b3a8b89fe
 5a8e334f4547
-6293ac9d8cbd
-abfc748b2421
-18ff9dc2f10a
-5a209db13389
 [root@server162 ~]# docker ps -a
 CONTAINER ID      IMAGE      COMMAND      CREATED     STATUS      PORTS      NAMES
 ```
-## 3.5 删除一个docker image镜像
+## 3.6 当容器命令运行结束后，自劢删除容器
+
+- 应用场景：在某些环境下，可能需要大量的新建 docker 实例，然后仅仅运行几秒钟，然后就彻底删除。 如运行单元测试戒测试弹性云计算。
+  - 阿里云要模拟双 11 的压力，需要快速创建 1 万实例，运行 ab 命令，拼命访问 tmall.com 首页，运行 1 个小时，1 小时后自劢删除。
+```
+[root@server162 ~]# docker run -d --rm --name aotorm centos:httpd sleep 30
+8176cfcdfffba940631d0ba0465559778c29dfab93a27e7f2e71d0b8c4fe2e5b
+[root@server162 ~]# docker ps
+CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS         PORTS     NAMES
+8176cfcdfffb   centos:httpd   "sleep 30"    4 seconds ago   Up 3 seconds             aotorm
+```
+30sec later
+```
+[root@server162 ~]# docker ps -a    # 通过-a 来查询停止的容器，也找不到，说明已经删除
+CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS         PORTS     NAMES
+```
+
+## 3.7 删除一个docker image镜像
 ```docker rmi IMAGEID```
 ```
-[root@server162 ~]# docker images
+[root@server162 ~]# docker images 
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
 docker.io/centos    latest              4ef1e5c4b172        17 hours ago        318 MB
 docker.io/centos    <none>              9f38484d220f        13 days ago         202 MB
