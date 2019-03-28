@@ -170,7 +170,7 @@ Stop the container before attempting removal or use -f
 
 [root@server15 ~]# docker rm -f 562a6c6eda2a
 ```
-## 3.4 删除全部已有容器
+## 3.4 删除全部已有容器container
 ```
 [root@server162 ~]# docker ps -a -q               # 过滤出全部容器id
 1ea49e301c43
@@ -191,8 +191,30 @@ abfc748b2421
 [root@server162 ~]# docker ps -a
 CONTAINER ID      IMAGE      COMMAND      CREATED     STATUS      PORTS      NAMES
 ```
+## 3.5 删除一个docker image
+```docker rmi IMAGEID```
+```
+[root@server162 ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+docker.io/centos    latest              4ef1e5c4b172        17 hours ago        318 MB
+docker.io/centos    <none>              9f38484d220f        13 days ago         202 MB
 
-# 4. docker镜像制作方法
+[root@server162 ~]# docker rmi 4ef1e5c4b172
+Untagged: docker.io/centos:latest
+Deleted: sha256:4ef1e5c4b17240411af513a37bf7eb0aac7a64a1183d5885b46b61e8780dd3b9
+Deleted: sha256:bdd846fc53d84188a6af2507b46bbd7e219a04ab963f8571cf089f71351cf25a
+Deleted: sha256:98424b457ac5255b8ba10ebdc3fb85080281364031aa4d9085a1c9e802c68895
+Deleted: sha256:1dcb115a137dc4a44736046bb61621b4a41824c989bc7de1c85b828ec9b09fbe
+Deleted: sha256:7d05b419a39b25e92bacbb253926e08ca2c5a7ce216c84129e7394424a2d10fe
+Deleted: sha256:08e6c6eaf3b53eab6e5bc7fcaa37456612c084377de55b947d8dc6fc1143af1a
+Deleted: sha256:a43a310f927513c6c18c9e853aa3e3dec24f2de0f3810671fac0d0010402dac3
+
+[root@server162 ~]# docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+docker.io/centos    <none>              9f38484d220f        13 days ago         202 MB
+```
+
+# 4. docker镜像制作及发布
 
 - 方法 1: docker commit  # 保存 container 的当前状态到 image 后，然后生成对应的 image 
 - 方法 2: docker build   # 使用 Dockerfile 文件自劢化制作 image
@@ -291,9 +313,10 @@ docker.io/centos    httpd               675757eae28c        28 seconds ago      
 docker.io/centos    apache              fb5cf00cfd4c        17 minutes ago      318 MB
 docker.io/centos    latest              9f38484d220f        12 days ago 
 ```
+## 4.3 Docker Image 的发布
 
-
-
+- 方法 1：Save Image To tar包
+- 方法 2：Push Image To Docker Hub
 
 
 
