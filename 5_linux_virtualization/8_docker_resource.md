@@ -43,3 +43,12 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 - ```--cpu-quota``` 是用来挃定在这个周期内，最多可以有多少时间片断用来跑这个容器。 指定在这个周期中使用多少时间片
 - 与```--cpu-shares``` 不同，--cpu-period 和--cpu-quota 是指定一个绝对值，而且没有弹性在里面，容器对 CPU 资源的使用绝对不会超过配置的值。
 - cpu-period 和 cpu-quota 的单位为微秒（μs）。 cpu-period 的最小值为 1000 微秒，最大值为 1秒（10^6 μs），默认值为 0.1 秒（100000 μs）。 cpu-quota 的值默认为-1，表示不做控制。1 秒=1000 毫秒 1 毫秒=1000 微秒
+
+如果容器迚程需要每 1 秒使用单个 CPU 的 0.2 秒时间，可以将 cpu-period 设置为 1000000（即 1 秒），cpu-quota 设置为 200000（0.2 秒）。
+```
+[root@server162 ~]# docker run -it --cpu-period 1000000 --cpu-quota 200000 centos:httpd /bin/bash
+[root@0363ce23f262 /]# cat /sys/fs/cgroup/cpu/cpu.cfs_period_us 
+1000000
+[root@0363ce23f262 /]# cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us
+200000
+```
