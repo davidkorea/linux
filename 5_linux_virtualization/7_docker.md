@@ -135,13 +135,13 @@ CentOS Linux release 7.6.1810 (Core)
 [root@c21529149f63 /]# exit
 exit
 ```
-docker随机生成容器的名称
+- 默认docker随机生成容器的名称
 ```
 [root@server15 ~]# docker ps -a
 CONTAINER ID  IMAGE                    COMMAND     CREATED             STATUS                     PORTS  NAMES
 c21529149f63  docker.io/centos:latest  "/bin/bash" About a minute ago  Exited (0) 59 seconds ago         hardcore_jennings
 ``` 
-指定启动容器名称，以及指定容器中的主机名
+- 指定启动容器名称--name，以及指定容器中的主机名-h 
 ```
 [root@server162 ~]# docker run -it --name docker1 -h docker1.com centos:httpd /bin/bash
 [root@docker1 /]# cat /etc/hostname 
@@ -161,6 +161,14 @@ exit
 CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS                     PORTS   NAMES
 5ff4a449f432   centos:httpd   "/bin/bash"   21 seconds ago  Exited (0) 6 seconds ago           docker1
 ```
+- 更改容器名称docker rename oldname newname
+```
+[root@server162 ~]# docker rename docker1 docker2
+[root@server162 ~]# docker ps -a
+CONTAINER ID   IMAGE          COMMAND        CREATED        STATUS                     PORTS   NAMES
+5ff4a449f432   centos:httpd   "/bin/bash"    5 minutes ago  Exited (0) 5 minutes ago           docker2
+```
+但是改变镜像的名称需要```docker tag oldname:oldtag newname:newtag```
 
 ## 3.2 后台运行一个docker实例
 在 container 中启动一个长久运行的进程，不断向 stdin 输出 hello world 。模拟一个后台运行的服务
@@ -198,7 +206,7 @@ CONTAINER ID  IMAGE         COMMAND                  CREATED         STATUS     
 index.html
 ```
 
-## 3.4 删除一个docker实例
+## 3.4 删除一个docker实例/容器
 ```
 [root@server15 ~]# docker rm 562a6c6eda2a
 Error response from daemon: You cannot remove a running container 562a6c6eda2a8d1ab3311d5411190f0e7fb774432edd4d0b06255c20f8ef976c. 
@@ -206,7 +214,7 @@ Stop the container before attempting removal or use -f
 
 [root@server15 ~]# docker rm -f 562a6c6eda2a
 ```
-## 3.5 删除全部已有实例
+## 3.5 删除全部已有实例/容器
 ```
 [root@server162 ~]# docker ps -a -q               # 过滤出全部容器id
 1ea49e301c43
