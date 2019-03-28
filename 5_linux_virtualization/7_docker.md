@@ -384,3 +384,37 @@ cc20756b914f: Pushed
 d69483a6face: Mounted from library/centos 
 latest: digest: sha256:765082fc00ec6d56fbacb498cb3e19498224050b25700bf0f65d96a5953b0d57 size: 1155
 ```
+
+# 5. Container容器端口映射
+```docker run -d -p 实体机port:docker内port centos:httpd /bin/bash -c /usr/local/bin/start.sh
+```
+[root@server162 ~]# docker run -d -p 80:80 centos:httpd /bin/bash -c /usr/local/bin/start.sh
+90553ae86c511640ae8150688171052eb4ccdaff323ba57c9d36857b0e53d85e
+```
+```
+[root@server162 ~]# netstat -anutp | grep 80
+tcp6       0      0 :::80                   :::*                    LISTEN      22018/docker-proxy- 
+```
+访问http://192.168.0.162/ 成功
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
