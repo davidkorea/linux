@@ -27,7 +27,7 @@ cgroup 是 Control Groups 的缩写，是 Linux 内核提供的一种可以限�
       --cpuset-mems string                    MEMs in which to allow execution (0-3, 0,1)
 ```
 
-## 1.1 cpu-shares
+## 1.1 docker cpu-shares
 ```
 [root@server162 ~]# docker run --help | grep cpu-shares
   -c, --cpu-shares int      CPU shares (relative weight)  # 在创建容器时指定容器所使用的 CPU份额值
@@ -46,7 +46,7 @@ cgroup 是 Control Groups 的缩写，是 Linux 内核提供的一种可以限�
 
 - 问：两个容器 A、 B 的 cpu 份额分别为 1000 和 500， 1000+500> 1024 是超出了吗？
   - 答：没有。 A 使用 1024 的 2/3, B 使用 1024 的 1/3
-## 1.2 CPU 周期控制
+## 1.2 docker CPU周期控制
 docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可以分配到的 CPU 时钟周期。
 ```
 [root@server162 ~]# docker run --help | grep cpu-
@@ -67,7 +67,7 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 [root@0363ce23f262 /]# cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us
 200000
 ```
-## 1.3 CPU core 核心控制
+## 1.3 docker CPU core 核心控制
 
 ```
 [root@server162 ~]# docker run --help | grep cpu
@@ -84,7 +84,9 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 ## 1.4 taskset 命令
 taskset 设定 cpu 亲和力，taskset 能够将一个戒多个迚程绑定到一个戒多个处理器上运行
 
-
+参数
+-  ```-p, --pid```               在存在的给定 pid 上操作
+-  ```-c, --cpu-list```          以列表格式显示和指定 CPU
 
 
 
