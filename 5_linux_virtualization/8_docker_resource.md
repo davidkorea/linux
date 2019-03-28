@@ -90,9 +90,17 @@ taskset 设定 cpu 亲和力，taskset 能够将一个或多个迚程绑定到�
 
 #### 1. 设置只在 1 和 2 号 cpu 运行 sshd 迚程程序
 
+```
+[root@server162 ~]# ps -aux | grep sshd
+root      9294  0.0  0.0 112756  4324 ?        Ss   11:44   0:00 /usr/sbin/sshd -D
+root     12438  0.0  0.0 163444  6236 ?        Ss   13:57   0:01 sshd: root@pts/0
+root     14113  0.0  0.0 112728   988 pts/0    S+   15:37   0:00 grep --color=auto sshd
 
-
-
+[root@server162 ~]# taskset -cp 1,2 9294  
+pid 9294's current affinity list: 0-3
+pid 9294's new affinity list: 1,2
+```
+affinity [əˈfɪnəti] 密切关系
 
 
 
