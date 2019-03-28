@@ -82,13 +82,13 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 3. 海量幵行处理结构 (MPP ： Massive ParallelProcessing)  例： 大型机
 
 ## 1.4 taskset 命令
-taskset 设定 cpu 亲和力，taskset 能够将一个戒多个迚程绑定到一个戒多个处理器上运行
+taskset 设定 cpu 亲和力，taskset 能够将一个或多个迚程绑定到一个戒多个处理器上运行
 
 参数
 -  ```-p, --pid```               在存在的给定 pid 上操作
 -  ```-c, --cpu-list```          以列表格式显示和指定 CPU
 
-
+#### 1. 设置只在 1 和 2 号 cpu 运行 sshd 迚程程序
 
 
 
