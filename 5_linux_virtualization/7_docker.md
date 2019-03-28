@@ -313,12 +313,14 @@ docker.io/centos    httpd               675757eae28c        28 seconds ago      
 docker.io/centos    apache              fb5cf00cfd4c        17 minutes ago      318 MB
 docker.io/centos    latest              9f38484d220f        12 days ago 
 ```
+启动该镜像为container测试httpd -> [Container容器端口映射](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/7_docker.md#5-container%E5%AE%B9%E5%99%A8%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84)
+
 ## 4.3 Docker Image 的发布
 
 - 方法 1：Save Image To tar包
 - 方法 2：Push Image To Docker Hub
 
-#### 1. 报错docker image为tar
+#### 1. 保存docker image为tar
 ```docker save -o 保存后的名字.tar 需保存的镜像名:tag ```
 ```
 [root@server162 docker-build]# docker images
@@ -386,7 +388,8 @@ latest: digest: sha256:765082fc00ec6d56fbacb498cb3e19498224050b25700bf0f65d96a59
 ```
 
 # 5. Container容器端口映射
-```docker run -d -p 实体机port:docker内port centos:httpd /bin/bash -c /usr/local/bin/start.sh
+```docker run -d -p 实体机port:docker内port centos:httpd /bin/bash -c /usr/local/bin/start.sh```
+
 ```
 [root@server162 ~]# docker run -d -p 80:80 centos:httpd /bin/bash -c /usr/local/bin/start.sh
 90553ae86c511640ae8150688171052eb4ccdaff323ba57c9d36857b0e53d85e
