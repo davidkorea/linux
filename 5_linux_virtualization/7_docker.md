@@ -384,7 +384,7 @@ Login Succeeded
 Error response from daemon: You cannot push a "root" repository. Please rename your repository 
 to docker.io/<user>/<repo> (ex: docker.io/a406622768/centos)
 
-[root@server162 ~]# docker tag centos:httpd docker.io/a406622768/centos:httpd       # tag用于重命名
+[root@server162 ~]# docker tag centos:httpd docker.io/a406622768/centos:httpd    # tag用于镜像重命名，容器重命名rename
 [root@server162 ~]# docker images
 REPOSITORY                    TAG                 IMAGE ID            CREATED             SIZE
 centos                        httpd               fecffc9b8493        17 minutes ago      318 MB
