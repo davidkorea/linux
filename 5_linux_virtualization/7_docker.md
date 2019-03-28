@@ -121,6 +121,8 @@ net.ipv4.ip_forward = 1
   - ```run -it```
     - ```-i``` 以交互模式运行容器，通常与 -t 同时使用;
     - ```-t``` 为容器重新分配一个伪输入终端，通常与 -i 同时使用
+    - ```--name``` 指定容器启动后的名称
+    - ```-h``` 指定容器启动后的hostname
 
 ```
 [root@server15 ~]# docker images
@@ -133,11 +135,32 @@ CentOS Linux release 7.6.1810 (Core)
 [root@c21529149f63 /]# exit
 exit
 ```
+docker随机生成容器的名称
 ```
 [root@server15 ~]# docker ps -a
 CONTAINER ID  IMAGE                    COMMAND     CREATED             STATUS                     PORTS  NAMES
 c21529149f63  docker.io/centos:latest  "/bin/bash" About a minute ago  Exited (0) 59 seconds ago         hardcore_jennings
 ``` 
+指定启动容器名称，以及指定容器中的主机名
+```
+[root@server162 ~]# docker run -it --name docker1 -h docker1.com centos:httpd /bin/bash
+[root@docker1 /]# cat /etc/hostname 
+docker1.com
+[root@docker1 /]# cat /etc/hosts       
+127.0.0.1       localhost
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+172.17.0.2      docker1.com
+[root@docker1 /]# exit 
+exit
+
+[root@server162 ~]# docker ps -a
+CONTAINER ID   IMAGE          COMMAND       CREATED         STATUS                     PORTS   NAMES
+5ff4a449f432   centos:httpd   "/bin/bash"   21 seconds ago  Exited (0) 6 seconds ago           docker1
+```
 
 ## 3.2 后台运行一个docker实例
 在 container 中启动一个长久运行的进程，不断向 stdin 输出 hello world 。模拟一个后台运行的服务
