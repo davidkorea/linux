@@ -161,8 +161,21 @@ hello world
 ```
 [root@server15 ~]# docker kill 072cf4be4881     # 或者 docker stop 072cf4be4881
 ```
+## 3.3 访问后台运行的容器
+```docker exec -it CONTAINER ID /bin/bash```
 
-## 3.3 删除一个docker实例
+```
+[root@server162 ~]# docker ps
+CONTAINER ID  IMAGE         COMMAND                  CREATED         STATUS         PORTS                NAMES
+90553ae86c51  centos:httpd  "/bin/bash -c /usr..."   11 minutes ago  Up 11 minutes  0.0.0.0:80->80/tcp   adoring_hugle
+
+[root@server162 ~]# docker exec -it 90553ae86c51 /bin/bash
+[root@90553ae86c51 /]# cd /var/www/html/
+[root@90553ae86c51 html]# ls
+index.html
+```
+
+## 3.4 删除一个docker实例
 ```
 [root@server15 ~]# docker rm 562a6c6eda2a
 Error response from daemon: You cannot remove a running container 562a6c6eda2a8d1ab3311d5411190f0e7fb774432edd4d0b06255c20f8ef976c. 
@@ -170,7 +183,7 @@ Stop the container before attempting removal or use -f
 
 [root@server15 ~]# docker rm -f 562a6c6eda2a
 ```
-## 3.4 删除全部已有实例
+## 3.5 删除全部已有实例
 ```
 [root@server162 ~]# docker ps -a -q               # 过滤出全部容器id
 1ea49e301c43
