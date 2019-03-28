@@ -15,6 +15,10 @@ cgroup 是 Control Groups 的缩写，是 Linux 内核提供的一种可以限�
 ```
 [root@server162 ~]# docker run --help | grep cpu-shares
   -c, --cpu-shares int      CPU shares (relative weight)  # 在创建容器时指定容器所使用的 CPU份额值
+
+[root@server162 ~]# docker run -it --cpu-shares 512 centos:httpd 
+[root@327b9a2bea85 /]# cat /sys/fs/cgroup/cpu/cpu.shares 
+512
 ```
 - cpu-shares 的值不能保证可以获得1个vcpu或者多少GHz的 CPU 资源，仅仅只是一个弹性的加权值
 
@@ -26,4 +30,4 @@ cgroup 是 Control Groups 的缩写，是 Linux 内核提供的一种可以限�
 
 - 问：两个容器 A、 B 的 cpu 份额分别为 1000 和 500， 1000+500> 1024 是超出了吗？
   - 答：没有。 A 使用 1024 的 2/3, B 使用 1024 的 1/3
-  
+
