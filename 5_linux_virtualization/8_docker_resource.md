@@ -67,7 +67,7 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 [root@0363ce23f262 /]# cat /sys/fs/cgroup/cpu/cpu.cfs_quota_us
 200000
 ```
-# 1.3 CPU core 核心控制
+## 1.3 CPU core 核心控制
 
 ```
 [root@server162 ~]# docker run --help | grep cpu
@@ -77,12 +77,12 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 参数--cpuset 可以绑定 CPU, 对多核 CPU 的服务器，docker 还可以控制容器运行限定使用哪些 cpu 内核和内存节点，即使用–cpuset-cpus 和–cpuset-mems 参数。 对具有 NUMA 拓扑（具有多 CPU、多内存节点）的服务器尤其有用，可以对需要高性能计算的容器迚行性能最优的配置。如果服务器只有一个内存节点，则-cpuset-mems 的配置基本上不会有明显效果。
 
 服务器架构，商用服务器大体可以分为三类： SMP、 NUMA、 MPP 
-1. 即对称多处理器结构(SMP ： Symmetric Multi-Processor) 例： x86 服务器，双路服务器。主板上有两个物理 cpu
-2. 非一致存储访问结构 (NUMA ：Non-Uniform Memory Access) 例： IBM 小型机 pSeries690
-3. 海量幵行处理结构 (MPP ： Massive ParallelProcessing) 。 例： 大型机
+1. 即对称多处理器结构(SMP ： Symmetric Multi-Processor)  例： x86 服务器，双路服务器。主板上有两个物理 cpu
+2. 非一致存储访问结构 (NUMA ：Non-Uniform Memory Access)  例： IBM 小型机 pSeries690
+3. 海量幵行处理结构 (MPP ： Massive ParallelProcessing)  例： 大型机
 
-
-
+## 1.4 taskset 命令
+taskset 设定 cpu 亲和力，taskset 能够将一个戒多个迚程绑定到一个戒多个处理器上运行
 
 
 
