@@ -130,7 +130,10 @@ pid 1's current affinity list: 0-2
 [root@8b61a7fde237 /]# ps -aux | grep 1
 root         1  0.2  0.0  11820  1940 ?        Ss   07:59   0:00 /bin/bash
 ```
+## 1.4 CPU 配额控制参数的混吅使用
 
+cpu-shares 控制只发生在容器竞争同一个 cpu 的时间片时，如果通过cpuset-cpus 挃定容器 A 使用 cpu 0，容器 B 只是用 cpu1，在主机上只有这两个容器使用对应内核的情况，它们各自占用全部的内核资源，cpu-shares 没有明显效果。
 
+cpu-period、 cpu-quota 这两个参数一般联吅使用，在单核情况戒者通过 cpuset-cpus 强制容器使用一个 cpu 内核的情况下，即使 cpu-quota 超过 cpu-period，也不会使容器使用更多的 CPU 资源。
 
-
+cpuset-cpus、 cpuset-mems 只在多核、多内存节点上的服务器上有效，幵且必须不实际的物理配置匹配，否则也无法达到资源控制的目的
