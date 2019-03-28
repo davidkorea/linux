@@ -81,7 +81,7 @@ docker 提供了--cpu-period(周期)、 --cpu-quota 两个参数控制容器可�
 2. 非一致存储访问结构 (NUMA ：Non-Uniform Memory Access)  例： IBM 小型机 pSeries690
 3. 海量幵行处理结构 (MPP ： Massive ParallelProcessing)  例： 大型机
 
-## 1.4 taskset 命令
+## 1.4 taskset 命令 & docker cpuset-cpus
 taskset 设定 cpu 亲和力，taskset 能够将一个或多个迚程绑定到一个戒多个处理器上运行
 
 参数
@@ -117,7 +117,7 @@ worker_cpu_affinity 0001 0010 0100 1000;
 
 这里 0001 0010 0100 1000 是掩码，分别代表第 1、 2、 3、 4 颗 cpu 核心。重启 nginx 后，4 个工作迚程就可以各自用各自的 CPU 了。
 
-
+#### 3. 物理机一共有 16 个核心，创建的容器只能用 0、 1、 2 这三个核心
 
 
 
