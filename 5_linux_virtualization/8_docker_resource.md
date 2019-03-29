@@ -226,6 +226,15 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 ```
 # 3. docker容器资源配额控制 - IO
 
+```
+[root@server162 ~]# docker run --help | grep device
+      --blkio-weight-device weighted-device   Block IO weight (relative device weight) (default [])
+      --device list                           Add a host device to the container (default [])
+      --device-read-bps throttled-device      Limit read rate (bytes per second) from a device (default [])
+      --device-read-iops throttled-device     Limit read rate (IO per second) from a device (default [])
+      --device-write-bps throttled-device     Limit write rate (bytes per second) to a device (default [])
+      --device-write-iops throttled-device    Limit write rate (IO per second) to a device (default [])
+```
 
 - ```--device-write-bps value Limit write rate (bytes per second) to a device(default [])``` # 限制此设备上的写速度（bytes per second），单位可以是 kb、 mb 戒者 gb。
 - ```--device-read-bps value``` # 限制此设备上的读速度（bytes per second），单位可以是 kb mb gb
@@ -235,10 +244,7 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 ```
 [root@server162 ~]# docker run -it --name iotest -v /var/www/html/:/var/www/html --device /dev/sda:/dev/sda --device-write-bps /dev/sda:1mb centos:httpd /bin/bash
 ```
-- -v: volume
-- -device: device
-- --device-write-bps
-
+映射volume是，前提是docker container已经安装来httpd。即此目录存在，否则无法映射
 ```
 [root@server162 ~]# ll -h /var/www/html/
 总用量 54M
@@ -258,17 +264,3 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 [root@server162 ~]# ll -h /var/www/html/
 ```
 
-
-
-
-
-```
-[root@44b68a113b24 /]# cd /var/www/html/
-[root@44b68a113b24 html]# ls
-[root@44b68a113b24 html]# echo "docker volume mount" > index.html
-[root@44b68a113b24 html]# exit
-exit
-[root@server162 ~]# ll /var/www/html/
-总用量 4
--rw-r--r-- 1 root root 20 3月  29 09:55 index.html
-```
