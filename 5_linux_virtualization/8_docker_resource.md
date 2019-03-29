@@ -224,10 +224,11 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 [root@689929eb1db5 /]# cat /sys/fs/cgroup/memory/memory.limit_in_bytes 
 134217728
 ```
+# 3. docker容器资源配额控制 - IO
 
 
-
-
+- ```--device-write-bps value Limit write rate (bytes per second) to a device(default [])``` # 限制此设备上的写速度（bytes per second），单位可以是 kb、 mb 戒者 gb。
+- ```--device-read-bps value``` # 限制此设备上的读速度（bytes per second），单位可以是 kb mb gb
 
 
 
