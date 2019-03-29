@@ -18,10 +18,9 @@
 
 ## 1.1  配置桥接网络
 桥接本地物理网络的目的,是为了局域网内用户方便访问 docker 实例中服务,不需要各种端口映射即可访问服务。 但是这样做,又违背了 docker 容器的安全隔离的原则,工作中辩证的选择.
-#### 1. 创建桥设备
-1. 挂载cdrom后，安装bridge-utils
+#### 1. 挂载cdrom后，安装bridge-utils
 ```rpm -ivh /mnt/Packages/bridge-utils-1.5-9.el7.x86_64.rpm```
-2. 配置原有ens33网卡
+#### 2. 配置原有ens33网卡
 ```diff
   TYPE="Ethernet"
   PROXY_METHOD="none"
@@ -44,7 +43,7 @@
 - DNS2=164.124.101.2
 + BRIDGE="br0"
 ```
-3. 创建网桥ifcfg-br0配置文件
+#### 3. 创建网桥ifcfg-br0配置文件
 ```diff
 + TYPE="Bridge"
 + DEVICE="br0"
@@ -56,23 +55,23 @@
 + DNS1=168.126.63.1
 + DNS2=164.124.101.2
 ```
-4. 重启网络
+#### 4. 重启网络
 ```
 [root@server162 network-scripts]# service network restart
 Restarting network (via systemctl):             [ 确定 ]
 ```
-#### 2 pipework 工具包
-1. 下载
+## 1.2 pipework 工具包
+#### 1. 下载
 ```
 [root@server162 ~]# git clone https://github.com/jpetazzo/pipework.git
 ```
-2. 复制pipework脚本至/usr/local/bin/ 
+#### 2. 复制pipework脚本至/usr/local/bin/ 
 pipwork是一个shell脚本，所以不用安装，把脚本复制到/usr/local/bin下即可使用pipwork命令
 ```
 [root@server162 ~]#  cp /root/pipework/pipework /usr/local/bin/
 ```
 
-#### 3. 配置docker静态ip
+## 1.3 配置docker静态ip
 
 - 一定要保持docker容器-d运行，否则```Docker inspect returned invalid PID 0```报错
 - 有没有docker --privileged都可以
@@ -106,5 +105,18 @@ bb9eda1d51a6        centos:httpd        "bash"              4 seconds ago       
 PING 192.168.0.13 (192.168.0.13) 56(84) bytes of data.
 64 bytes from 192.168.0.13: icmp_seq=1 ttl=64 time=0.501 ms
 ```
+
+## 1.4 实战： 使用静态IP 启动一个web服务器
+
+
+
+
+
+
+
+
+
+
+
 
 
