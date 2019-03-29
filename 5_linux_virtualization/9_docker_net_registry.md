@@ -56,10 +56,17 @@
 + DNS1=168.126.63.1
 + DNS2=164.124.101.2
 ```
-
-
-
-
+4. 重启网络
+```
+[root@server162 network-scripts]# service network restart
+Restarting network (via systemctl):             [ 确定 ]
+```
+## 1.2 pipework 工具包
+1. 下载
+```
+[root@server162 ~]# git clone https://github.com/jpetazzo/pipework.git
+```
+pipwork是一个shell脚本，所以不用安装，把脚本复制到/usr/local/bin下即可使用pipwork命令
 
 
 
