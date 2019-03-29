@@ -1,4 +1,4 @@
-# 配置 docker 静态 IP 地址-配置 docker 私有仓库
+# 配置docker静态IP地址 & 配置docker私有仓库
 
 1. 创建 docker 静态化 IP
 2. 创建 docker 私有化仓库
@@ -17,10 +17,77 @@
 - Pipework 有个缺陷，容器重吭后 IP 设置会自动消失，需要重新设置。
 
 ## 1.1  配置桥接网络
+桥接本地物理网络的目的,是为了局域网内用户方便访问 docker 实例中服务,不需要各种端口映射即可访问服务。 但是这样做,又违背了 docker 容器的安全隔离的原则,工作中辩证的选择.
+#### 1. 创建桥设备
+1. 挂载cdrom后，安装bridge-utils
+```rpm -ivh /mnt/Packages/bridge-utils-1.5-9.el7.x86_64.rpm```
+2. 配置原有ens33网卡
+```diff
+  TYPE="Ethernet"
+  PROXY_METHOD="none"
+  BROWSER_ONLY="no"
+  BOOTPROTO="none"
+  DEFROUTE="yes"
+  IPV4_FAILURE_FATAL="no"
+  IPV6INIT="yes"
+  IPV6_AUTOCONF="yes"
+  IPV6_DEFROUTE="yes"
+  IPV6_FAILURE_FATAL="no"
+  IPV6_ADDR_GEN_MODE="stable-privacy"
+  NAME="ens33"
+  UUID="d42fbd6a-105b-4925-a39e-35a7b8101e72"
+  DEVICE="ens33"
+  ONBOOT="yes"
+- IPADDR=192.168.0.162
+- GATEWAY=192.168.0.1
+- DNS1=168.126.63.1
+- DNS2=164.124.101.2
++ BRIDGE="br0"
+```
+3. 创建网桥ifcfg-br0配置文件
+```
++ TYPE="Bridge"
++ DEVICE="br0"
++ NM_CONTROLLED="yes"
++ ONBOOT="yes"
++ BOOTPROTO=none
++ IPADDR=192.168.0.162
++ GATEWAY=192.168.0.1
++ DNS1=168.126.63.1
++ DNS2=164.124.101.2
+```
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
 
 有没有privilege都可以，容器id或者name都可以指定
 ```
