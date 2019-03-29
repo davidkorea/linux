@@ -218,7 +218,12 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 
 
 
-
+# 2. docker容器资源配额控制 - 内存
+```
+[root@server162 ~]# docker run -it --name mem128 -m 128m centos:httpd /bin/bash
+[root@689929eb1db5 /]# cat /sys/fs/cgroup/memory/memory.limit_in_bytes 
+134217728
+```
 
 
 
