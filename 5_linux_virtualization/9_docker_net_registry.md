@@ -61,42 +61,24 @@
 [root@server162 network-scripts]# service network restart
 Restarting network (via systemctl):             [ 确定 ]
 ```
-## 1.2 pipework 工具包
+#### 2 pipework 工具包
 1. 下载
 ```
 [root@server162 ~]# git clone https://github.com/jpetazzo/pipework.git
 ```
+2. 复制pipework脚本至/usr/local/bin/ 
 pipwork是一个shell脚本，所以不用安装，把脚本复制到/usr/local/bin下即可使用pipwork命令
+```
+[root@server162 ~]#  cp /root/pipework/pipework /usr/local/bin/
+```
 
+#### 3. 配置docker静态ip
 
+- **一定要保持docker容器-d运行，否则```Docker inspect returned invalid PID 0```报错 **
+- **有没有docker --privileged都可以**
+- **pipework可以指定容器id或者name**
+- pipework语法：```pipework 网桥名 容器实ID或name 分配给容器的IP/掩码@网关```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------
-
-有没有privilege都可以，容器id或者name都可以指定
 ```
 [root@server162 ~]# docker run -itd --privileged centos:httpd bash
 566fc8a03074a875cfb8a9370cae6679c49a1f7115d61e3744ae74b6faac716f
@@ -122,7 +104,5 @@ bb9eda1d51a6        centos:httpd        "bash"              4 seconds ago       
 PING 192.168.0.13 (192.168.0.13) 56(84) bytes of data.
 64 bytes from 192.168.0.13: icmp_seq=1 ttl=64 time=0.501 ms
 ```
-一定哟啊保持docker容器运行，否则报错
-```
-Docker inspect returned invalid PID 0
-```
+
+
