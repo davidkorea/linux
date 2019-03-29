@@ -230,5 +230,45 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 - ```--device-write-bps value Limit write rate (bytes per second) to a device(default [])``` # 限制此设备上的写速度（bytes per second），单位可以是 kb、 mb 戒者 gb。
 - ```--device-read-bps value``` # 限制此设备上的读速度（bytes per second），单位可以是 kb mb gb
 
+为什么阿云平台上 普通云盘的 IO 为： 1000 IOPS ，为什么这么小？原因是 云存储 给 2000 台云主机使用，需要控制一下 。 防止某台云主机吃光你的磁盘 I / O 资源
+
+```
+[root@server162 ~]# docker run -it --name iotest -v /var/www/html/:/var/www/html --device /dev/sda:/dev/sda --device-write-bps /dev/sda:1mb centos:httpd /bin/bash
+```
+- -v: volume
+- -device: device
+- --device-write-bps
+
+```
+[root@server162 ~]# ll -h /var/www/html/
+总用量 54M
+-rw-r--r-- 1 root root   20 3月  29 09:55 index.html
+-rw-r--r-- 1 root root 2.0M 3月  29 10:05 iotest.out
+-rw-r--r-- 1 root root  50M 3月  29 10:04 test.out
+[root@server162 ~]# ll -h /var/www/html/
+总用量 55M
+-rw-r--r-- 1 root root   20 3月  29 09:55 index.html
+-rw-r--r-- 1 root root 3.0M 3月  29 10:05 iotest.out
+-rw-r--r-- 1 root root  50M 3月  29 10:04 test.out
+[root@server162 ~]# ll -h /var/www/html/
+总用量 56M
+-rw-r--r-- 1 root root   20 3月  29 09:55 index.html
+-rw-r--r-- 1 root root 4.0M 3月  29 10:05 iotest.out
+-rw-r--r-- 1 root root  50M 3月  29 10:04 test.out
+[root@server162 ~]# ll -h /var/www/html/
+```
 
 
+
+
+
+```
+[root@44b68a113b24 /]# cd /var/www/html/
+[root@44b68a113b24 html]# ls
+[root@44b68a113b24 html]# echo "docker volume mount" > index.html
+[root@44b68a113b24 html]# exit
+exit
+[root@server162 ~]# ll /var/www/html/
+总用量 4
+-rw-r--r-- 1 root root 20 3月  29 09:55 index.html
+```
