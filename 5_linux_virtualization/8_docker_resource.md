@@ -241,10 +241,18 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 
 为什么阿云平台上 普通云盘的 IO 为： 1000 IOPS ，为什么这么小？原因是 云存储 给 2000 台云主机使用，需要控制一下 。 防止某台云主机吃光你的磁盘 I / O 资源
 
+- 映射文件目录，挂载硬盘
+映射volume时，前提是docker container已经安装来httpd。即此目录存在，否则无法映射。**docker用来做计算，存储外挂**
 ```
 [root@server162 ~]# docker run -it --name iotest -v /var/www/html/:/var/www/html --device /dev/sda:/dev/sda --device-write-bps /dev/sda:1mb centos:httpd /bin/bash
 ```
-映射volume是，前提是docker container已经安装来httpd。即此目录存在，否则无法映射
+测试写入
+```
+[root@ab55b48f9bb0 /]# time dd if=/dev/sda of=/var/www/html/test.out bs=1M count=50 oflag=direct,monblock
+```
+- direct：读写数据采用直接 IO 方式；
+- nonblock：读写数据采用非阻塞 IO 方式
+
 ```
 [root@server162 ~]# ll -h /var/www/html/
 总用量 54M
