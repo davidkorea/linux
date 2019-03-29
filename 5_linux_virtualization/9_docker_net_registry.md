@@ -108,15 +108,89 @@ PING 192.168.0.13 (192.168.0.13) 56(84) bytes of data.
 
 ## 1.4 实战： 使用静态IP 启动一个web服务器
 
+#### 0. systemctl start httpd 等同 httpd
+```
+[root@server162 ~]# systemctl status httpd
+● httpd.service - The Apache HTTP Server
+   Loaded: loaded (/usr/lib/systemd/system/httpd.service; disabled; vendor preset: disabled)
+   Active: inactive (dead)
+     Docs: man:httpd(8)
+           man:apachectl(8)
+[root@server162 ~]# netstat -anutp | grep 80
+tcp        0      0 0.0.0.0:6000            0.0.0.0:*               LISTEN      9480/X              
+tcp6       0      0 :::6000                 :::*                    LISTEN      9480/X    
 
+[root@server162 ~]# httpd
+[root@server162 ~]# netstat -anutp | grep 80
+tcp        0      0 0.0.0.0:6000            0.0.0.0:*               LISTEN      9480/X              
+tcp6       0      0 :::80                   :::*                    LISTEN      10443/httpd         
+tcp6       0      0 :::6000                 :::*                    LISTEN      9480/X              
+```
 
+#### 1. 运行docker并安装httpd
 
+```
+[root@server162 ~]# docker run -itd --name webserver centos:httpd 
+d72c7e99a3ba1c688a886ad19e242976631d7b8973d9a128b8f0dcb81b704e78
+[root@server162 ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+d72c7e99a3ba        centos:httpd        "/bin/bash"         8 seconds ago       Up 5 seconds                            webserver
 
+[root@server162 ~]# docker exec -it webserver bash
+[root@d72c7e99a3ba /]# ifconfig
+bash: ifconfig: command not found
+```
+#### 2. 安装net-tools工具
+```
+[root@d72c7e99a3ba /]# yum install -y net-tools
+... ...
+Installed:
+  net-tools.x86_64 0:2.0-0.24.20131004git.el7                                     
 
+Complete!
+[root@d72c7e99a3ba /]# ifconfig 
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:acff:fe11:2  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 160  bytes 342129 (334.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 150  bytes 11324 (11.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+[root@d72c7e99a3ba /]# exit
+exit
+```
+#### 3. 配置静态ip
+```
+[root@server162 ~]# pipework br0 webserver 192.168.0.12/24@192.168.0.1
+[root@server162 ~]# ping 192.168.0.12
+PING 192.168.0.12 (192.168.0.12) 56(84) bytes of data.
+64 bytes from 192.168.0.12: icmp_seq=1 ttl=64 time=0.299 ms
+```
 
+#### 4. 启动httpd服务
+有没有privilege都无法使用systemctl start httpd
+```
+[root@server162 ~]# docker exec -it webserver bash
+[root@d72c7e99a3ba /]# systemctl start httpd
+Failed to get D-Bus connection: Operation not permitted
+[root@d72c7e99a3ba /]# netstat -anutp | grep 80           # 查询为空白
 
+[root@d72c7e99a3ba /]# httpd
+AH00558: httpd: Could not reliably determine the server's fully qualified domain name, using 172.17.0.2. 
+Set the 'ServerName' directive globally to suppress this message
+[root@d72c7e99a3ba /]# netstat -anutp | grep 80
+tcp6       0      0 :::80            :::*             LISTEN      72/httpd   
+```
 
-
-
+访问 http://192.168.0.12/ 成功
 
