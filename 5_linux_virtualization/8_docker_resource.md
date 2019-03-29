@@ -241,8 +241,7 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 
 为什么阿云平台上 普通云盘的 IO 为： 1000 IOPS ，为什么这么小？原因是 云存储 给 2000 台云主机使用，需要控制一下 。 防止某台云主机吃光你的磁盘 I / O 资源
 
-- 映射文件目录，挂载硬盘
-映射volume时，前提是docker container已经安装来httpd。即此目录存在，否则无法映射。**docker用来做计算，存储外挂**
+- 映射文件目录，挂载硬盘 **docker用来做计算，存储外挂**
 ```
 [root@server162 ~]# docker run -it --name iotest -v /var/www/html/:/var/www/html --device /dev/sda:/dev/sda --device-write-bps /dev/sda:1mb centos:httpd /bin/bash
 ```
@@ -271,4 +270,16 @@ KiB Swap:  2097148 total,  2097148 free,        0 used.  7363188 avail Mem
 -rw-r--r-- 1 root root  50M 3月  29 10:04 test.out
 [root@server162 ~]# ll -h /var/www/html/
 ```
+# 4. 挂载
 
+可以通过-v参数直接将物理机的目录挂载到docker容器中，容器中可以没有该目录
+```
+[root@server162 ~]# docker run -it -v /var/www/html:/var/www/html centos:stress /bin/bash
+[root@ffda77465ffc /]# ll /var/www/html/
+total 101380
+-rw-r--r-- 1 root root       20 Mar 29 01:55 index.html
+-rw-r--r-- 1 root root 51380224 Mar 29 02:05 iotest.out
+-rw-r--r-- 1 root root 52428800 Mar 29 02:04 test.out
+[root@ffda77465ffc /]# which httpd
+bash: which: command not found
+```
