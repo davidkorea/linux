@@ -4,7 +4,7 @@
 2. 创建 docker 私有化仓库
 3. 使用阿里云私有仓库存储自己的 docker 镜像
 
-# 1. 创建 docker 静态化 IP
+# 1. 创建docker静态IP
 
 - Docker 的 4 种网络模式
   1. host 模式，使用--net=host 指定
@@ -175,6 +175,35 @@ exit
 [root@server162 ~]# ping 192.168.0.12
 PING 192.168.0.12 (192.168.0.12) 56(84) bytes of data.
 64 bytes from 192.168.0.12: icmp_seq=1 ttl=64 time=0.299 ms
+
+[root@server162 ~]# docker exec -it webserver bash
+[root@d72c7e99a3ba /]# ifconfig 
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 0.0.0.0
+        inet6 fe80::42:acff:fe11:2  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 160  bytes 342129 (334.1 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 150  bytes 11324 (11.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.12  netmask 255.255.255.0  broadcast 192.168.0.255
+        inet6 fe80::9cc1:94ff:fea6:bd5e  prefixlen 64  scopeid 0x20<link>
+        ether 9e:c1:94:a6:bd:5e  txqueuelen 1000  (Ethernet)
+        RX packets 4226  bytes 396324 (387.0 KiB)
+        RX errors 0  dropped 518  overruns 0  frame 0
+        TX packets 42  bytes 4539 (4.4 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 
 #### 4. 启动httpd服务
