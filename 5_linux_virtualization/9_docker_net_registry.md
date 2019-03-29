@@ -45,7 +45,7 @@
 + BRIDGE="br0"
 ```
 3. 创建网桥ifcfg-br0配置文件
-```
+```diff
 + TYPE="Bridge"
 + DEVICE="br0"
 + NM_CONTROLLED="yes"
