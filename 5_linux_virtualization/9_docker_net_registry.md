@@ -231,10 +231,10 @@ tcp6       0      0 :::80            :::*             LISTEN      72/httpd
 
 **不能关闭防火墙，因为 docker 5000端口转发，需要使用 firewalld**
 
-#### 1. linux环境准备
+### 1. linux环境准备
 - ```systemctl start firewalld```
 - 关闭```selinux```
-#### 2. 修改 docker 配置文件，指定私有仓库 url
+### 2. 修改 docker 配置文件，指定私有仓库 url
 
 > 需要安装 docker-common-1.12.6-11.el7.centos.x86_64 不然没有配置文件。其实并不需要，该配置文件目录默认已存在
 
@@ -253,7 +253,7 @@ tcp6       0      0 :::80            :::*             LISTEN      72/httpd
 ```
 [root@server15 ~]# systemctl restart docker
 ```
-#### 3. pull registry and busybox image
+### 3. pull registry and busybox image
 ```
 [root@server15 ~]# docker pull registry
 [root@server15 ~]# docker pull busybox
@@ -268,7 +268,7 @@ https://busybox.net/
 
 BusyBox 概述: BusyBox 是一个集成了一百多个最常用 Linux 命令和工具的软件。BusyBox 包含了 BusyBox 包含了一些简单的工具，例如 ls、cat 和 echo 等等，还包含了一些更大、更复杂的工具， 例 grep、find、mount 以及 telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说 BusyBox 就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统的自 带的 shell。
 
-#### 4. 使用registry镜像搭建一个私有仓库
+### 4. 使用registry镜像搭建一个私有仓库
 使用 registry 镜像搭建一个私有仓库。 registry 镜像中已经把搭建私有库程序安装好了，我只需要 使用 registry 镜像运行一个 docker 实例就可以了。
 
 默认情况下，Registry 程序的存放镜像的目录是 容器中/var/lib/registry 目录下，这样如果容器被删除，则存放于容器中的镜像也会丢失，所以我们一般情况下会指定本地物理机一个目录如/opt/registry 挂载到容器的/var/lib/registry 下，这样两个目录下都有!
@@ -283,8 +283,62 @@ CONTAINER ID        IMAGE                COMMAND                  CREATED       
 [root@server15 ~]# netstat -anutp | grep 5000
 tcp6       0      0 :::5000         :::*          LISTEN      13040/docker-proxy- 
 ```
+### 5. 把docker 镜像推到私有仓库
 
+先改名，把镜像的名称改为私有仓库名+镜像名 192.168.0.15:5000/busybox:latest
+```
+[root@server15 ~]# docker tag docker.io/busybox:latest 192.168.0.15:5000/busybox:latest
+[root@server15 ~]# docker images
+REPOSITORY                  TAG        IMAGE ID            CREATED             SIZE
+192.168.0.15:5000/busybox   latest     d8233ab899d4        6 weeks ago         1.2 MB
+docker.io/busybox           latest     d8233ab899d4        6 weeks ago         1.2 MB
+```
+执行推送命令
+```
+[root@server15 ~]# docker push 192.168.0.15:5000/busybox:latest 
+The push refers to a repository [192.168.0.15:5000/busybox]
+adab5d09ba79: Pushed 
+latest: digest: sha256:4415a904b1aca178c2450fd54928ab362825e863c0ad5452fd020e92f7a6a47e size: 527
+```
+查看本地路径/opt/registry/docker/registry/v2/repositories/确实已存在
+```
+[root@server15 ~]# tree /opt/registry/docker/
+/opt/registry/docker/
+└── registry
+    └── v2
+        ├── blobs
+        │   └── sha256
+        │       ├── 44
+        │       │   └── 4415a904b...
+        │       │       └── data
+        │       ├── 69
+        │       │   └── 697743189...
+        │       │       └── data
+        │       └── d8
+        │           └── d8233ab8...
+        │               └── data
+        └── repositories
+            └── busybox
+                ├── _layers
+                │   └── sha256
+                │       ├── 6977431...
+                │       │   └── link
+                │       └── d8233ab8...
+                │           └── link
+                ├── _manifests
+                │   ├── revisions
+                │   │   └── sha256
+                │   │       └── 4415a90...
+                │   │           └── link
+                │   └── tags
+                │       └── latest
+                │           ├── current
+                │           │   └── link
+                │           └── index
+                │               └── sha256
+                │                   └── 4415a904...
+                │                       └── link
+                └── _uploads
+```
 
-
-
-
+## 2.2 配置client16从私有仓库pull image
