@@ -227,18 +227,28 @@ tcp6       0      0 :::80            :::*             LISTEN      72/httpd
 
 有时候使用 Docker Hub 这样的公共仓库可能不方便（有时候无法访问），用户可以创建一个本地仓库供私人使用，这里使用官方提供的工具docker-registry镜像来配置私有库。私有仓库好处：节约带宽，可以自己定制系统。
 
+## 2.1 配置 server15 为 docker 私有仓库
 
+**不能关闭防火墙，因为 docker 5000端口转发，需要使用 firewalld**
 
+#### 1. linux环境准备
+- ```systemctl start firewalld```
+- 关闭```selinux```
+- ```systemctl start docker```
 
+#### 2. pull registry image
+```
+[root@server15 ~]# docker pull registry
 
-
-
-
-
-
-
-
-
+[root@server15 ~]# docker images
+REPOSITORY           TAG        IMAGE ID        CREATED         SIZE
+docker.io/registry   latest     f32a97de94e1    3 weeks ago     25.8 MB
+```
+#### 3. pull another image for testing - busybox
+```
+[root@server15 ~]# docker pull busybox
+```
+BusyBox 概述: BusyBox 是一个集成了一百多个最常用 Linux 命令和工具的软件。BusyBox 包含了 BusyBox 包含了一些简单的工具，例如 ls、cat 和 echo 等等，还包含了一些更大、更复杂的工具， 例 grep、find、mount 以及 telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说 BusyBox 就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统的自 带的 shell。
 
 
 
