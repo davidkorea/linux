@@ -10,7 +10,7 @@
   1. host 模式，使用--net=host 指定
   2. container 模式，使用--net=container:NAME_or_ID 指定
   3. none 模式，使用--net=none 指定
-  4. bridge 模式，使用--net=bridge 指定，默认设置。默认选择 bridge 的情况下，容器启动后会通过 DHCP 获取一个地址，这可能丌是我们想要的，在centos7 系统上， docker 环境下可以使用 pipework 脚本对容器分配固定 IP（这个 IP 可以是和物理机同网段 IP）
+  4. bridge 模式，使用--net=bridge 指定，默认设置。默认选择 bridge 的情况下，容器启动后会通过 DHCP 获取一个地址，这可能不是我们想要的，在centos7 系统上， docker 环境下可以使用 pipework 脚本对容器分配固定 IP（这个 IP 可以是和物理机同网段 IP）
 
 - docker 默认是 bridge（--net=bridge）模式，相当于 VMware 中 NAT 模式。
 - docker 环境下可以使用 pipework 脚本对容器分配固定 IP，相当于 VMware 中桥接模式。
