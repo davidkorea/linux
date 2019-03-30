@@ -279,6 +279,9 @@ BusyBox 概述: BusyBox 是一个集成了一百多个最常用 Linux 命令和�
 [root@server15 ~]# docker ps
 CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                    NAMES
 4966725fa48c        docker.io/registry   "/entrypoint.sh /e..."   5 seconds ago       Up 3 seconds        0.0.0.0:5000->5000/tcp   quirky_tesla
+
+[root@server15 ~]# netstat -anutp | grep 5000
+tcp6       0      0 :::5000         :::*          LISTEN      13040/docker-proxy- 
 ```
 
 
