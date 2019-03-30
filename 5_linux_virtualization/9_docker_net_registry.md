@@ -368,3 +368,9 @@ Status: Downloaded newer image for 192.168.0.15:5000/busybox:latest
 REPOSITORY                  TAG          IMAGE ID            CREATED             SIZE
 192.168.0.15:5000/busybox   latest       d8233ab899d4        6 weeks ago         1.2 MB
 ```
+### 3. 测试启动容器
+测试从私有仓库pull的镜像可以正常启动容器并执行命令
+```
+[root@client16 ~]# docker run --rm 192.168.0.15:5000/busybox echo hello world
+hello world
+```
