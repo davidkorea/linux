@@ -268,9 +268,18 @@ https://busybox.net/
 
 BusyBox 概述: BusyBox 是一个集成了一百多个最常用 Linux 命令和工具的软件。BusyBox 包含了 BusyBox 包含了一些简单的工具，例如 ls、cat 和 echo 等等，还包含了一些更大、更复杂的工具， 例 grep、find、mount 以及 telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说 BusyBox 就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统的自 带的 shell。
 
+#### 4. 使用registry镜像搭建一个私有仓库
+使用 registry 镜像搭建一个私有仓库。 registry 镜像中已经把搭建私有库程序安装好了，我只需要 使用 registry 镜像运行一个 docker 实例就可以了。
 
+默认情况下，Registry 程序的存放镜像的目录是 容器中/var/lib/registry 目录下，这样如果容器被删除，则存放于容器中的镜像也会丢失，所以我们一般情况下会指定本地物理机一个目录如/opt/registry 挂载到容器的/var/lib/registry 下，这样两个目录下都有!
 
-
+```
+[root@server15 ~]# docker run -d -p 5000:5000 -v /opt/registry:/var/lib/registry docker.io/registry
+4966725fa48c69545e74e5d351949c15eb466594856809212b180a270aca1743
+[root@server15 ~]# docker ps
+CONTAINER ID        IMAGE                COMMAND                  CREATED             STATUS              PORTS                    NAMES
+4966725fa48c        docker.io/registry   "/entrypoint.sh /e..."   5 seconds ago       Up 3 seconds        0.0.0.0:5000->5000/tcp   quirky_tesla
+```
 
 
 
