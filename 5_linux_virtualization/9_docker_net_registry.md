@@ -76,7 +76,7 @@ pipwork是一个shell脚本，所以不用安装，把脚本复制到/usr/local/
 - 一定要保持docker容器-d运行，否则```Docker inspect returned invalid PID 0```报错
 - 有没有docker --privileged都可以
   - --privileged=true, 允许开启特权功能。大约在 docker 0.6 版以后，privileged 被引入 docker。使用该参数，container 内的 root 拥有真
-正的 root 权限。否则，container 内的 root 只是外部的一个普通用户权限。使用 privileged 的容器，可以看到徆多 host 上的设备，并且可以执行 mount。甚至允许你在 docker容器中启动docker 容器。
+正的 root 权限。否则，container 内的 root 只是外部的一个普通用户权限。使用 privileged 的容器，可以看到很多 host 上的设备，并且可以执行 mount。甚至允许你在 docker容器中启动docker 容器。
 - pipework可以指定容器id或者name
 - pipework语法：```pipework 网桥名 容器实ID或name 分配给容器的IP/掩码@网关```
 
