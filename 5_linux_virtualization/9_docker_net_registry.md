@@ -342,3 +342,29 @@ latest: digest: sha256:4415a904b1aca178c2450fd54928ab362825e863c0ad5452fd020e92f
 ```
 
 ## 2.2 配置client16从私有仓库pull image
+### 1. (同上)修改 docker 配置文件，指定私有仓库url
+
+```diff
+[root@server15 ~]# vim /etc/sysconfig/docker
+  3 # Modify these options if you want to change the way the docker daemon runs
+- 4 OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false'
++ 4 OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false --insecure-registry=192.168.0.15:5000'
+```
+```
+[root@client16 ~]# systemctl restart docker
+```
+### 2. pull image
+
+```
+[root@client16 ~]# docker pull 192.168.0.15:5000/busybox
+Using default tag: latest
+Trying to pull repository 192.168.0.15:5000/busybox ... 
+latest: Pulling from 192.168.0.15:5000/busybox
+697743189b6d: Pull complete 
+Digest: sha256:4415a904b1aca178c2450fd54928ab362825e863c0ad5452fd020e92f7a6a47e
+Status: Downloaded newer image for 192.168.0.15:5000/busybox:latest
+
+[root@client16 ~]# docker images
+REPOSITORY                  TAG          IMAGE ID            CREATED             SIZE
+192.168.0.15:5000/busybox   latest       d8233ab899d4        6 weeks ago         1.2 MB
+```
