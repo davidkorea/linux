@@ -234,20 +234,38 @@ tcp6       0      0 :::80            :::*             LISTEN      72/httpd
 #### 1. linux环境准备
 - ```systemctl start firewalld```
 - 关闭```selinux```
-- ```systemctl start docker```
+#### 2. 修改 docker 配置文件，指定私有仓库 url
 
-#### 2. pull registry image
+> 需要安装 docker-common-1.12.6-11.el7.centos.x86_64 不然没有配置文件。其实并不需要，该配置文件目录默认已存在
+
+```diff
+[root@server15 ~]# vim /etc/sysconfig/docker
+  3 # Modify these options if you want to change the way the docker daemon runs
+- 4 OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false'
++ 4 OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false --insecure-registry=192.168.0.15:5000'
+  5 if [ -z "${DOCKER_CERT_PATH}" ]; then
+  6     DOCKER_CERT_PATH=/etc/docker
+  7 fi
+```
+在原文件后，追加--insecure-registry 不安全的注册，即通信使用 http 协议。默认使用安全的通信https，所以一定要有这个参数
+
+修改完配置文件后需要重启docker服务
+```
+[root@server15 ~]# systemctl restart docker
+```
+#### 3. pull registry and busybox image
 ```
 [root@server15 ~]# docker pull registry
+[root@server15 ~]# docker pull busybox
 
 [root@server15 ~]# docker images
 REPOSITORY           TAG        IMAGE ID        CREATED         SIZE
 docker.io/registry   latest     f32a97de94e1    3 weeks ago     25.8 MB
+docker.io/busybox    latest     d8233ab899d4    6 weeks ago     1.2 MB
 ```
-#### 3. pull another image for testing - busybox
-```
-[root@server15 ~]# docker pull busybox
-```
+
+https://busybox.net/
+
 BusyBox 概述: BusyBox 是一个集成了一百多个最常用 Linux 命令和工具的软件。BusyBox 包含了 BusyBox 包含了一些简单的工具，例如 ls、cat 和 echo 等等，还包含了一些更大、更复杂的工具， 例 grep、find、mount 以及 telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说 BusyBox 就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统的自 带的 shell。
 
 
