@@ -61,6 +61,7 @@ tcp        0      0 127.0.0.1:47070         127.0.0.1:2379          ESTABLISHED 
 tcp        0      0 192.168.0.15:59138      192.168.0.15:2379       ESTABLISHED 14664/etcd          
 tcp        0      0 127.0.0.1:2379          127.0.0.1:47070         ESTABLISHED 14664/etcd  
 ```
+检查 etcd 集群成员列表，这里只有一台
 ```
 [root@k8s-master ~]# etcdctl member list
 8e9e05c52164694d: name=default peerURLs=http://localhost:2380 clientURLs=http://192.168.0.15:2379 isLeader=true
