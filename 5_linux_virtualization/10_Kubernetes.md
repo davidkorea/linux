@@ -162,7 +162,7 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 
 
 
-# 2. node1 + node2
+# 2. node1
 ```
 yum install kubernetes flannel ntp -y
 ```
@@ -237,5 +237,19 @@ tcp        0      0 192.168.0.16:51182      192.168.0.15:8080       ESTABLISHED 
 tcp        0      0 192.168.0.16:51180      192.168.0.15:8080       ESTABLISHED 15630/kube-proxy    
 ```
  
- 
-  
+# node2
+
+```
+[root@k8s-node1 ~]# scp /etc/sysconfig/flanneld 192.168.0.17:/etc/sysconfig/flanneld 
+```
+```
+[root@k8s-node1 ~]# scp /etc/kubernetes/config 192.168.0.17:/etc/kubernetes/
+```
+```diff
+[root@k8s-node1 ~]# scp /etc/kubernetes/kubelet 192.168.0.17:/etc/kubernetes/
+
+[root@k8s-node2 ~]# vim /etc/kubernetes/kubelet 
+- 11 KUBELET_HOSTNAME="--hostname-override=k8s-node1"
++ 11 KUBELET_HOSTNAME="--hostname-override=k8s-node2"
+```
+
