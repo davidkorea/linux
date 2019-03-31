@@ -119,8 +119,13 @@ KUBE_API_ARGS=""
 - ```KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"``` #不做限制，允讲所有节点可以访问 apiserver ，对所有请求开绿灯。
 ### 3. kube-controller-manager 配置文件
 
+默认不需要修改
 
-
+```
+[root@k8s-master ~]# grep -v ^# /etc/kubernetes/controller-manager 
+KUBE_CONTROLLER_MANAGER_ARGS=""
+```
+### 4. kube-scheduler 配置文件
 
 
 
