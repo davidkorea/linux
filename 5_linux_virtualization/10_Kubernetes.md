@@ -52,7 +52,15 @@ ETCD_ADVERTISE_CLIENT_URLS="http://192.168.0.15:2379"
 [root@k8s-master ~]# systemctl start etcd
 [root@k8s-master ~]# systemctl enable etcd
 ```
-
+```
+[root@k8s-master ~]# netstat -anutp | grep 2379
+tcp        0      0 127.0.0.1:2379          0.0.0.0:*               LISTEN      14664/etcd          
+tcp        0      0 192.168.0.15:2379       0.0.0.0:*               LISTEN      14664/etcd          
+tcp        0      0 192.168.0.15:2379       192.168.0.15:59138      ESTABLISHED 14664/etcd          
+tcp        0      0 127.0.0.1:47070         127.0.0.1:2379          ESTABLISHED 14664/etcd          
+tcp        0      0 192.168.0.15:59138      192.168.0.15:2379       ESTABLISHED 14664/etcd          
+tcp        0      0 127.0.0.1:2379          127.0.0.1:47070         ESTABLISHED 14664/etcd  
+```
 
 
 
