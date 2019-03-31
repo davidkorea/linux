@@ -192,7 +192,7 @@ yum install kubernetes flannel ntp -y
 KUBE_PROXY_ARGS=""
 ```
 ### 3. kubelet
-
+Kubelet 运行在 minion 节点上。Kubelet 组件管理 Pod、Pod 中容器及容器的镜像和卷等信息
 ```diff
 [root@k8s-node1 ~]# vim /etc/kubernetes/kubelet 
 -  5 KUBELET_ADDRESS="--address=127.0.0.1"
@@ -210,11 +210,10 @@ KUBE_PROXY_ARGS=""
   17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
  ```
  
- 
- 
- 
- 
- 
+- ```KUBELET_ADDRESS="--address=0.0.0.0"``` #默认只监听 127.0.0.1，要改成:0.0.0.0，因为后期要使用 kubectl 进程连接到 kubelet 服务上，来查看 pod 及 pod 中容器的状态。如果是 127 就无法进程连接 kubelet 服务。
+- ```KUBELET_HOSTNAME="--hostname-override=node1"``` # minion 的主机名，设置 成和本主机机名一样，便于识别。
+- ```KUBELET_API_SERVER="--api-servers=http://192.168.1.63:8080"``` #批定 apiserver 的地址
+- ```KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redh at.com/rhel7/pod-infrastructure:latest"``` infrastructure [ˈɪnfrəstrʌktʃə(r)] 基础设施 KUBELET_POD_INFRA_CONTAINER 指定 pod 基础容器镜像地址。这个是一个基础容器，每一个Pod 启动的时候都会启动一个这样的容器。如果你的本地没有这个镜像，kubelet 会连接外网把这个镜像 下载下来。最开始的时候是在 Google 的 registry 上，因此国内因为 GFW 都下载丌了导致 Pod 运行丌 起来。现在每个版本的 Kubernetes 都把这个镜像地址改成红帽的地址了。你也可以提前传到自己的 registry 上，然后再用这个参数指定成自己的镜像链接。
  
  
  
