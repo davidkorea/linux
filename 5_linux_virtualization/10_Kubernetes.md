@@ -37,6 +37,27 @@ etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，
 #### 4. container 
 容器 ，可以运行服务和程序
 
+## 1.4 图片中为包括的几个名次
+#### 1. Services 
+Services 是 Kubernetes 最外围的单元，通过虚拟一个访问 IP 及服务端口，可以 访问我们定义好的 Pod 资源，目前的版本是通过 iptables 的 nat 转发来实现，转发的目标端口为 Kube_proxy 生成的随机端口。
+#### 2. Labels 标签
+Labels 是用于区分 Pod、Service、Replication Controller 的 key/value 键值对，仅使用在Pod、Service、 Replication Controller 乊间的关系识别，但对这些单元本身迚行操作时得使用 name 标签。
+#### 3. Deployment
+Deployment [dɪ'plɔɪmənt] 部署。Kubernetes Deployment 用于更新 Pod 和 Replica Set(下一代的 Replication Controller)的 方法，你可以在 Deployment 对象中只描述你所期望的理想状态(预期的运行状态)，Deployment 控 制器会将现在的实际状态转换成期望的状态。例如，将所有的 webapp:v1.0.9 升级成 webapp:v1.1.0， 只需创建一个 Deployment，Kubernetes 会按照 Deployment 自劢迚行升级。通过 Deployment 可 以用来创建新的资源。
+Deployment 可以帮我们实现无人值守的上线，大大降低我们的上线过程的复杂沟通、操作风险。 
+#### 4. Kubelet 命令 
+Kubelet 和 Kube-proxy 都运行在 minion 节点上。Kube-proxy 实现 Kubernetes 网络相关内容。Kubelet 命令管理 Pod、Pod 中容器及容器的镜像和卷等信息。
+
+## 总结
+各组件之间的关系
+1. Kubernetes 的架构由一个 master 和多个 minion 组成，master 通过 api 提供服务，接受 kubectl 的请求来调度管理整个集群。 kubectl: 是 k8s 平台的一个管理命令。
+2. Replication controller 定义了多个 pod 戒者容器需要运行，如果当前集群中运行的 pod 或容器达不到配置的数量，replication controller 会调度容器在多个 minion 上运行，保证集群中的 pod 数 量。
+3. service 则定义真实对外提供的服务，一个 service 会对应后端运行的多个 container。
+4. Kubernetes 是个管理平台，minion 上的 kube-proxy 拥有提供真实服务公网 IP。客户端访问 kubernetes 中提供的服务，是直接访问到 kube-proxy 上的。
+5. 在 Kubernetes 中 pod 是一个基本单元，一个 pod 可以是提供相同功能的多个 container，这 些容器会被部署在同一个 minion 上。minion 是运行 Kubelet 中容器的物理机。minion 接受 master 的指令创建 pod 戒者容器。
+
+
+
 ## 拓扑结构
 - master - 192.168.0.15
 - node1  - 192.168.0.16
