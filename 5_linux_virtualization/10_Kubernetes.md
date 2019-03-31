@@ -19,10 +19,11 @@
 
 
 # 1. master + etcd
-
 ```
 yum install -y kubernetes etcd flannel ntp
 ```
+## 1.1 etcd
+
 ```diff
 
    3 ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
@@ -35,7 +36,13 @@ yum install -y kubernetes etcd flannel ntp
 - 21 ETCD_ADVERTISE_CLIENT_URLS="http://localhost:2379"
 + 21 ETCD_ADVERTISE_CLIENT_URLS="http://192.168.0.15:2379"
 ```
-
+```
+[root@k8s-master ~]# grep -v ^# /etc/etcd/etcd.conf 
+ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
+ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://192.168.0.15:2379"
+ETCD_NAME="default"
+ETCD_ADVERTISE_CLIENT_URLS="http://192.168.0.15:2379"
+```
 
 
 
