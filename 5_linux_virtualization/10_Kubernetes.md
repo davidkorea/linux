@@ -221,9 +221,21 @@ Kubelet 运行在 minion 节点上。Kubelet 组件管理 Pod、Pod 中容器及
 [root@k8s-node1 ~]# systemctl enable flanneld kube-proxy kubelet docker
 [root@k8s-node1 ~]# systemctl status flanneld kube-proxy kubelet docker
 ```
- 
- 
- 
+```
+[root@k8s-node1 ~]# ifconfig 
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 10.255.3.1  netmask 255.255.255.0  broadcast 0.0.0.0
+
+flannel0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1472
+        inet 10.255.3.0  netmask 255.255.0.0  destination 10.255.3.0
+```
+
+```
+[root@k8s-node1 ~]# netstat -anutp | grep proxy
+tcp        0      0 127.0.0.1:10249         0.0.0.0:*               LISTEN      15630/kube-proxy    
+tcp        0      0 192.168.0.16:51182      192.168.0.15:8080       ESTABLISHED 15630/kube-proxy    
+tcp        0      0 192.168.0.16:51180      192.168.0.15:8080       ESTABLISHED 15630/kube-proxy    
+```
  
  
   
