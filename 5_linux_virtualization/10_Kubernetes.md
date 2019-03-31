@@ -43,7 +43,10 @@ ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://192.168.0.15:2379"
 ETCD_NAME="default"
 ETCD_ADVERTISE_CLIENT_URLS="http://192.168.0.15:2379"
 ```
-
+- ```ETCD_NAME="etcd"``` etcd 节点名称，如果 etcd 集群只有一台 etcd，这一项可以注释丌用配置，默认名称为 default，这个名字后面会用到。
+- ```ETCD_DATA_DIR="/var/lib/etcd/default.etcd"```etcd 存储数据的目录 
+- ```ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://192.168.1.63:2379" ```etcd 对外服务监听地址，一般指定 2379 端口，如果为 0.0.0.0 将会监听所有接口 
+- ```ETCD_ARGS=""```需要额外添加的参数，可以自己添加，etcd 的所有参数可以通过 etcd -h 查看。
 
 
 
