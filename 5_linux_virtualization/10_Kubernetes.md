@@ -265,7 +265,13 @@ docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 flannel0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1472
         inet 10.255.79.0  netmask 255.255.0.0  destination 10.255.79.0
 ```
-
+go back to master 192.168.0.15查看整个集群的运行状态
+```
+[root@k8s-master ~]# kubectl get nodes
+NAME        STATUS    AGE
+k8s-node1   Ready     18m
+k8s-node2   Ready     1m
+```
 
 
 
