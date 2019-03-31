@@ -9,6 +9,7 @@
 Kubernetes 是 Google 开源的容器集群管理系统，基于 Docker 构建一个容器的调度服务，提供资 源调度、均衡容灾、服务注册、劢态扩缩容等功能套件。 基于容器的云平台。Kubernetes 基于 docker 容器的云平台，简写成: k8s 。 openstack 基于 kvm 虚拟机云平台。
 
 Kubernetes 常见组件介绍
+![](https://res.cloudinary.com/dukp6c7f7/image/upload/f_auto,fl_lossy,q_auto/s3-ghost/2016/06/o7leok.png)
 ![](https://upload.wikimedia.org/wikipedia/commons/b/be/Kubernetes.png)
 ![](https://i.loli.net/2019/03/31/5ca08077d63b1.jpeg)
 
