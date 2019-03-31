@@ -252,4 +252,8 @@ tcp        0      0 192.168.0.16:51180      192.168.0.15:8080       ESTABLISHED 
 - 11 KUBELET_HOSTNAME="--hostname-override=k8s-node1"
 + 11 KUBELET_HOSTNAME="--hostname-override=k8s-node2"
 ```
-
+```
+[root@k8s-node2 ~]# systemctl restart flanneld kube-proxy kubelet docker
+[root@k8s-node2 ~]# systemctl enable flanneld kube-proxy kubelet docker
+[root@k8s-node2 ~]# systemctl status flanneld kube-proxy kubelet docker
+```
