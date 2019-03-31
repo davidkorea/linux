@@ -10,6 +10,8 @@ Kubernetes 是 Google 开源的容器集群管理系统，基于 Docker 构建�
 
 Kubernetes 常见组件介绍
 ![](https://upload.wikimedia.org/wikipedia/commons/b/be/Kubernetes.png)
+![](https://i.loli.net/2019/03/31/5ca08077d63b1.jpeg)
+
 ## 1.1 master
 kubernetes管理结点
 #### 1. apiserver 
