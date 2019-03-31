@@ -84,8 +84,29 @@ cluster is healthy
 + 22 KUBE_MASTER="--master=http://192.168.0.15:8080"
  ```
 
+apiserver
+```diff
+
+-  8 KUBE_API_ADDRESS="--insecure-bind-address=127.0.0.1"
++  8 KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0"
+  
+- 17 KUBE_ETCD_SERVERS="--etcd-servers=http://127.0.0.1:2379"
++ 17 KUBE_ETCD_SERVERS="--etcd-servers=http://192.168.0.15:2379"
 
 
+  20 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"
+
+- 23 KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,NamespaceExists,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
++ 23 KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"
+```
+```
+[root@k8s-master ~]# grep -v ^# /etc/kubernetes/apiserver 
+KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0"
+KUBE_ETCD_SERVERS="--etcd-servers=http://192.168.0.15:2379"
+KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"
+KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"
+KUBE_API_ARGS=""
+```
 
 
 
