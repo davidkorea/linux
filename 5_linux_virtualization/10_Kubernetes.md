@@ -18,13 +18,40 @@
 
 
 
-1. master + etcd
+# 1. master + etcd
 
 ```
 yum install -y kubernetes etcd flannel ntp
 ```
+```diff
 
-2. node1 + node2
+   3 ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
+
+-  6 ETCD_LISTEN_CLIENT_URLS="http://localhost:2379"
++  6 ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://192.168.0.15:2379"
+
+   9 ETCD_NAME="default"      # default可以改成ectd
+
+- 21 ETCD_ADVERTISE_CLIENT_URLS="http://localhost:2379"
++ 21 ETCD_ADVERTISE_CLIENT_URLS="http://192.168.0.15:2379"
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 2. node1 + node2
 ```
 yum install kubernetes flannel ntp -y
 ```
