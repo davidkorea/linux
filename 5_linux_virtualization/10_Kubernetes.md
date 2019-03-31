@@ -1,5 +1,41 @@
 # 搭建 Kubernetes 容器集群管理系统
 
+1. Kubernetes 和相关组件的介绍
+2. 配置 etcd 和 master 节点
+3. 配置 minion1 节点
+4. 配置 minion2 节点
+# 1. Kubernetes 和相关组件的介绍
+
+Kubernetes 是 Google 开源的容器集群管理系统，基于 Docker 构建一个容器的调度服务，提供资 源调度、均衡容灾、服务注册、劢态扩缩容等功能套件。 基于容器的云平台。Kubernetes 基于 docker 容器的云平台，简写成: k8s 。 openstack 基于 kvm 虚拟机云平台。
+
+Kubernetes 常见组件介绍
+
+## 1.1 master
+kubernetes管理结点
+#### 1. apiserver 
+提供接口服务，用户通过 apiserver 来管理整个容器集群平台。API Server 负责 和 etcd 交互(其他组件丌会直接操作 etcd，只有 API Server 这么做)，整个 kubernetes 集群的 所有的交互都是以 API Server 为核心的。如:1、所有对集群迚行的查询和管理都要通过 API 来迚行 2、 所有模块乊间并丌会互相调用，而是通过和 API Server 打交道来完成自己那部分的工作 、API Server 提供的验证和授权保证了整个集群的安全
+
+#### 2. Replication Controllers 
+复制， 保证 pod 的高可用。Replication Controller 是 Kubernetes 系统中最有用的功能，实现复制多个 Pod 副本，往往一 个应用需要多个 Pod 来支撑，并且可以保证其复制的副本数，即使副本所调度分配的宿主机出现异常，通 过 Replication Controller 可以保证在其它宿主机吭用同等数量的 Pod。Replication Controller 可以 通过 repcon 模板来创建多个 Pod 副本，同样也可以直接复制已存在 Pod，需要通过 Label selector 来 关联。
+
+#### 3. scheduler kubernetes 
+调度服务
+
+## 1.2 etcd etcd 
+存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，存储着 k8s 容器 云平台中所有节点、pods、网络等信息。
+
+## 1.3 minion
+真正运行容器 container 的物理机。 kubernets 中需要很多 minion 机器，来提供 运算。minion [ˈmɪniən] 爪牙
+#### 1. Kube_proxy 
+代理 做端口转发，相当于 LVS-NAT 模式中的负载调度器器。Proxy 解决了同一宿主机，相同服务端口冲突的问题，还提供了对外服务的能力，Proxy 后端使用了 随机、轮循负载均衡算法。
+#### 2. Pod 
+在 Kubernetes 系统中，调度的最小颗粒丌是单纯的容器，而是抽象成一个 Pod，Pod是一个可以被创建、销毁、调度、管理的最小的部署单元。pod 中可以包括一个戒一组容器。 pod [pɒd] 豆荚
+#### 3. container 
+容器 ，可以运行服务和程序
+
+
+
+
 - master - 192.168.0.15
 - node1  - 192.168.0.16
 - node2  - 192.168.0.17
