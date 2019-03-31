@@ -15,7 +15,7 @@ kubernetes管理结点
 #### 1. apiserver 
 提供接口服务，用户通过 apiserver 来管理整个容器集群平台。API Server 负责 和 etcd 交互(其他组件丌会直接操作 etcd，只有 API Server 这么做)，整个 kubernetes 集群的 所有的交互都是以 API Server 为核心的。如:1、所有对集群迚行的查询和管理都要通过 API 来迚行 2、 所有模块乊间并丌会互相调用，而是通过和 API Server 打交道来完成自己那部分的工作 、API Server 提供的验证和授权保证了整个集群的安全
 
-#### 2. Replication Controllers 
+#### 2. Replication Controllers / Controller Manager
 复制， 保证 pod 的高可用。Replication Controller 是 Kubernetes 系统中最有用的功能，实现复制多个 Pod 副本，往往一 个应用需要多个 Pod 来支撑，并且可以保证其复制的副本数，即使副本所调度分配的宿主机出现异常，通 过 Replication Controller 可以保证在其它宿主机吭用同等数量的 Pod。Replication Controller 可以 通过 repcon 模板来创建多个 Pod 副本，同样也可以直接复制已存在 Pod，需要通过 Label selector 来 关联。
 
 #### 3. scheduler kubernetes 
@@ -169,7 +169,8 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 - + 7 KUBE_SCHEDULER_ARGS="--address=0.0.0.0"     # 监听地址,默认是 127.0.0.1
 + 7 KUBE_SCHEDULER_ARGS="0.0.0.0"                 # 直接写0.0.0.0，否则scheduler服务启动报错
 ```
-### 5. 配置 etcd，指定容器云中 docker 的 IP 网段
+## 1.3 配置网络
+### 1. 配置 etcd，指定容器云中 docker 的 IP 网段
 
 ```
 [root@k8s-master ~]# etcdctl mkdir /k8s/network
@@ -181,7 +182,7 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 [root@k8s-master ~]# systemctl status flanneld
 ```
 
-### 6. 配置一下 flanneld 服务
+### 2. 配置 flanneld 服务
 
 ```diff
 [root@k8s-master ~]# vim /etc/sysconfig/flanneld 
