@@ -133,7 +133,19 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 - + 7 KUBE_SCHEDULER_ARGS="--address=0.0.0.0"     # 监听地址,默认是 127.0.0.1
 + 7 KUBE_SCHEDULER_ARGS="0.0.0.0"                 # 直接写0.0.0.0，否则scheduler服务启动报错
 ```
-### 5. 配置一下 flanneld 网络服务
+### 5. 配置 etcd，指定容器云中 docker 的 IP 网段
+
+```
+[root@k8s-master ~]# etcdctl mkdir /k8s/network
+[root@k8s-master ~]# etcdctl set /k8s/network/config '{"Network": "10.255.0.0/16"}'
+{"Network": "10.255.0.0/16"}
+[root@k8s-master ~]#  etcdctl get /k8s/network/config
+{"Network": "10.255.0.0/16"}
+[root@k8s-master ~]# systemctl restart flanneld
+[root@k8s-master ~]# systemctl status flanneld
+```
+
+### 6. 配置一下 flanneld 服务
 
 ```diff
 [root@k8s-master ~]# vim /etc/sysconfig/flanneld 
@@ -150,19 +162,46 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 
 
 
-
-  b,b
-
-
-
-
-
-
-
-
-
-
 # 2. node1 + node2
 ```
 yum install kubernetes flannel ntp -y
 ```
+### 1. kubernetes config
+```diff
+[root@k8s-node1 ~]# vim /etc/kubernetes/config 
+  13 KUBE_LOGTOSTDERR="--logtostderr=true"
+  
+  16 KUBE_LOG_LEVEL="--v=0"
+  
+  19 KUBE_ALLOW_PRIV="--allow-privileged=false"
+  
+- 22 KUBE_MASTER="--master=http://127.0.0.1:8080"
++ 22 KUBE_MASTER="--master=http://192.168.0.15:8080"        # 设置同上master节点
+ ```
+### 2. proxy
+同上，不做任何改动
+```
+[root@k8s-node1 ~]# cat /etc/kubernetes/proxy 
+###
+# kubernetes proxy config
+
+# default config should be adequate
+
+# Add your own!
+KUBE_PROXY_ARGS=""
+```
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
