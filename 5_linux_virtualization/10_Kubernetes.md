@@ -264,6 +264,11 @@ docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
 
 flannel0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1472
         inet 10.255.79.0  netmask 255.255.0.0  destination 10.255.79.0
+        
+[root@k8s-node2 ~]# ping 10.255.3.1                         # ping node1的docker网段正常
+PING 10.255.3.1 (10.255.3.1) 56(84) bytes of data.
+64 bytes from 10.255.3.1: icmp_seq=1 ttl=62 time=1.02 ms
+64 bytes from 10.255.3.1: icmp_seq=2 ttl=62 time=1.83 ms
 ```
 go back to master 192.168.0.15查看整个集群的运行状态
 ```
