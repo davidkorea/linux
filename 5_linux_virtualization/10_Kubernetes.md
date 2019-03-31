@@ -72,6 +72,12 @@ member 8e9e05c52164694d is healthy: got healthy result from http://192.168.0.15:
 cluster is healthy
 ```
 ## 1.2 master
+```
+[root@k8s-master ~]# vim /etc/kubernetes/
+apiserver           controller-manager  proxy               
+config              kubelet             scheduler  
+```
+### 1. kubernetes 全局配置文件
 ```diff
 [root@k8s-master ~]# vim /etc/kubernetes/config 
   13 KUBE_LOGTOSTDERR="--logtostderr=true"
@@ -84,7 +90,7 @@ cluster is healthy
 + 22 KUBE_MASTER="--master=http://192.168.0.15:8080"
  ```
 
-apiserver
+### 2. apiserver
 ```diff
 
 -  8 KUBE_API_ADDRESS="--insecure-bind-address=127.0.0.1"
@@ -107,6 +113,25 @@ KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"
 KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"
 KUBE_API_ARGS=""
 ```
+- ```KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0"``` #监听的接口，如果配置为 127.0.0.1 则只监听 localhost，配置为 0.0.0.0 会监听所有接口，这里配置为 0.0.0.0
+- ```KUBE_ETCD_SERVERS="--etcd-servers=http://192.168.1.63:2379"``` #etcd 服务地址，前面 已经启动了 etcd 服务
+- ```KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"``` #kubernetes 可以分配的 ip 的范围，kubernetes 启动的每一个 pod 以及 serveice 都会分配一个 ip 地址，将从这个 范围中分配 IP。
+- ```KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"``` #不做限制，允讲所有节点可以访问 apiserver ，对所有请求开绿灯。
+### 3. kube-controller-manager 配置文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
