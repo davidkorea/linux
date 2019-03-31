@@ -130,7 +130,8 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 ```diff
 
 - 7 KUBE_SCHEDULER_ARGS=""
-+ 7 KUBE_SCHEDULER_ARGS="--address=0.0.0.0"     # 监听地址,默认是 127.0.0.1
+- + 7 KUBE_SCHEDULER_ARGS="--address=0.0.0.0"     # 监听地址,默认是 127.0.0.1
++ 7 KUBE_SCHEDULER_ARGS="0.0.0.0"                 # 直接写0.0.0.0，否则scheduler服务启动报错
 ```
 ### 5. 配置一下 flanneld 网络服务
 
