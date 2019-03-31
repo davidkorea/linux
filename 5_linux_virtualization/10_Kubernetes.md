@@ -127,7 +127,11 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 ```
 ### 4. kube-scheduler 配置文件
 
+```diff
 
+- 7 KUBE_SCHEDULER_ARGS=""
++ 7 KUBE_SCHEDULER_ARGS="--address=0.0.0.0"     # 监听地址,默认是 127.0.0.1
+```
 
 
 
