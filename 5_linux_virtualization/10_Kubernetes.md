@@ -193,7 +193,22 @@ KUBE_PROXY_ARGS=""
 ```
 ### 3. kubelet
 
+```diff
+[root@k8s-node1 ~]# vim /etc/kubernetes/kubelet 
+-  5 KUBELET_ADDRESS="--address=127.0.0.1"
++  5 KUBELET_ADDRESS="--address=0.0.0.0"
 
+  10 # You may leave this blank to use the actual hostname
+- 11 KUBELET_HOSTNAME="--hostname-override=127.0.0.1"
++ 11 KUBELET_HOSTNAME="--hostname-override=k8s-node1"
+
+  13 # location of the api-server
+- 14 KUBELET_API_SERVER="--api-servers=http://127.0.0.1:8080"
++ 14 KUBELET_API_SERVER="--api-servers=http://192.168.0.15:8080"
+
+  16 # pod infrastructure container
+  17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
+ ```
  
  
  
