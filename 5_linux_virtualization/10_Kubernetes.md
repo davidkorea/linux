@@ -178,8 +178,9 @@ yum install kubernetes flannel ntp -y
 - 22 KUBE_MASTER="--master=http://127.0.0.1:8080"
 + 22 KUBE_MASTER="--master=http://192.168.0.15:8080"        # 设置同上master节点
  ```
-### 2. proxy
-同上，不做任何改动
+### 2. proxy 同上，不做任何改动，默认就是监听所有 ip
+
+主要是负责 service 的实现，具体来说，就是实现了内部从 pod 到 service
 ```
 [root@k8s-node1 ~]# cat /etc/kubernetes/proxy 
 ###
@@ -190,7 +191,9 @@ yum install kubernetes flannel ntp -y
 # Add your own!
 KUBE_PROXY_ARGS=""
 ```
- 
+### 3. kubelet
+
+
  
  
  
