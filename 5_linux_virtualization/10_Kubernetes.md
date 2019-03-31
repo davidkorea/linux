@@ -9,7 +9,7 @@
 Kubernetes 是 Google 开源的容器集群管理系统，基于 Docker 构建一个容器的调度服务，提供资 源调度、均衡容灾、服务注册、劢态扩缩容等功能套件。 基于容器的云平台。Kubernetes 基于 docker 容器的云平台，简写成: k8s 。 openstack 基于 kvm 虚拟机云平台。
 
 Kubernetes 常见组件介绍
-
+![](https://upload.wikimedia.org/wikipedia/commons/b/be/Kubernetes.png)
 ## 1.1 master
 kubernetes管理结点
 #### 1. apiserver 
@@ -21,8 +21,8 @@ kubernetes管理结点
 #### 3. scheduler kubernetes 
 调度服务
 
-## 1.2 etcd etcd 
-存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，存储着 k8s 容器 云平台中所有节点、pods、网络等信息。
+## 1.2 etcd 
+etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，存储着 k8s 容器 云平台中所有节点、pods、网络等信息。
 
 ## 1.3 minion
 真正运行容器 container 的物理机。 kubernets 中需要很多 minion 机器，来提供 运算。minion [ˈmɪniən] 爪牙
