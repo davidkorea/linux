@@ -132,11 +132,25 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 - 7 KUBE_SCHEDULER_ARGS=""
 + 7 KUBE_SCHEDULER_ARGS="--address=0.0.0.0"     # 监听地址,默认是 127.0.0.1
 ```
+### 5. 配置一下 flanneld 网络服务
+
+```diff
+[root@k8s-master ~]# vim /etc/sysconfig/flanneld 
+
+-  4 FLANNEL_ETCD_ENDPOINTS="http://127.0.0.1:2379"
++  4 FLANNEL_ETCD_ENDPOINTS="http://192.168.0.15:2379"
+
+-  8 FLANNEL_ETCD_PREFIX="/atomic.io/network"
++  8 FLANNEL_ETCD_PREFIX="/k8s/network"
+
+- 11 #FLANNEL_OPTIONS=""
++ 11 FLANNEL_OPTIONS="--iface=ens33"         # 指定通信的物理网卡 
+```
 
 
 
 
-
+  b,b
 
 
 
