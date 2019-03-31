@@ -48,7 +48,10 @@ ETCD_ADVERTISE_CLIENT_URLS="http://192.168.0.15:2379"
 - ```ETCD_LISTEN_CLIENT_URLS="http://localhost:2379,http://192.168.1.63:2379" ```etcd 对外服务监听地址，一般指定 2379 端口，如果为 0.0.0.0 将会监听所有接口 
 - ```ETCD_ARGS=""```需要额外添加的参数，可以自己添加，etcd 的所有参数可以通过 etcd -h 查看。
 
-
+```
+[root@k8s-master ~]# systemctl start etcd
+[root@k8s-master ~]# systemctl enable etcd
+```
 
 
 
