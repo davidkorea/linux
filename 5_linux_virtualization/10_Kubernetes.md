@@ -25,7 +25,7 @@ yum install -y kubernetes etcd flannel ntp
 ## 1.1 etcd
 
 ```diff
-
+[root@k8s-master ~]# vim /etc/etcd/etcd.conf 
    3 ETCD_DATA_DIR="/var/lib/etcd/default.etcd"
 
 -  6 ETCD_LISTEN_CLIENT_URLS="http://localhost:2379"
@@ -72,7 +72,17 @@ member 8e9e05c52164694d is healthy: got healthy result from http://192.168.0.15:
 cluster is healthy
 ```
 ## 1.2 master
-
+```diff
+[root@k8s-master ~]# vim /etc/kubernetes/config 
+  13 KUBE_LOGTOSTDERR="--logtostderr=true"
+  
+  16 KUBE_LOG_LEVEL="--v=0"
+  
+  19 KUBE_ALLOW_PRIV="--allow-privileged=false"
+  
+- 22 KUBE_MASTER="--master=http://127.0.0.1:8080"
++ 22 KUBE_MASTER="--master=http://192.168.0.15:8080"
+ ```
 
 
 
