@@ -26,7 +26,7 @@ kubernetes管理结点
 ## 1.2 etcd 
 etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，存储着 k8s 容器 云平台中所有节点、pods、网络等信息。
 
-## 1.3 minion
+## 1.3 minion / Nodes
 真正运行容器 container 的物理机。 kubernets 中需要很多 minion 机器，来提供 运算。minion [ˈmɪniən] 爪牙
 #### 1. Kubelet 
 组件管理 Pod、Pod 中容器及容器的镜像和卷等信息
