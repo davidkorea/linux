@@ -37,9 +37,7 @@ etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，
 #### 4. container 
 容器 ，可以运行服务和程序
 
-
-
-
+## 拓扑结构
 - master - 192.168.0.15
 - node1  - 192.168.0.16
 - node2  - 192.168.0.17
@@ -56,13 +54,12 @@ etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，
 192.168.0.17 k8s-node2
 ```
 
+# 2. 配置 etcd 和 master 节点
 
-
-# 1. master + etcd
 ```
 yum install -y kubernetes etcd flannel ntp
 ```
-## 1.1 etcd
+## 2.1 etcd
 
 ```diff
 [root@k8s-master ~]# vim /etc/etcd/etcd.conf 
@@ -111,13 +108,13 @@ tcp        0      0 127.0.0.1:2379          127.0.0.1:47070         ESTABLISHED 
 member 8e9e05c52164694d is healthy: got healthy result from http://192.168.0.15:2379
 cluster is healthy
 ```
-## 1.2 master
+## 2.2 master
 ```
 [root@k8s-master ~]# vim /etc/kubernetes/
 apiserver           controller-manager  proxy               
 config              kubelet             scheduler  
 ```
-### 1. kubernetes 全局配置文件
+### 1. kubernetes config全局配置文件
 ```diff
 [root@k8s-master ~]# vim /etc/kubernetes/config 
   13 KUBE_LOGTOSTDERR="--logtostderr=true"
@@ -132,6 +129,7 @@ config              kubelet             scheduler
 
 ### 2. apiserver
 ```diff
+[root@k8s-master ~]# vim /etc/kubernetes/apiserver
 
 -  8 KUBE_API_ADDRESS="--insecure-bind-address=127.0.0.1"
 +  8 KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0"
@@ -154,8 +152,8 @@ KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"
 KUBE_API_ARGS=""
 ```
 - ```KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0"``` #监听的接口，如果配置为 127.0.0.1 则只监听 localhost，配置为 0.0.0.0 会监听所有接口，这里配置为 0.0.0.0
-- ```KUBE_ETCD_SERVERS="--etcd-servers=http://192.168.1.63:2379"``` #etcd 服务地址，前面 已经启动了 etcd 服务
-- ```KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"``` #kubernetes 可以分配的 ip 的范围，kubernetes 启动的每一个 pod 以及 serveice 都会分配一个 ip 地址，将从这个 范围中分配 IP。
+- ```KUBE_ETCD_SERVERS="--etcd-servers=http://192.168.0.15:2379"``` #etcd 服务地址，前面 已经启动了 etcd 服务
+- ```KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"``` #kubernetes 可以分配的 ip 的范围，kubernetes 启动的每一个 pod 以及 serveice 都会分配一个 ip 地址，将从这个范围中分配 IP。
 - ```KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"``` #不做限制，允讲所有节点可以访问 apiserver ，对所有请求开绿灯。
 ### 3. kube-controller-manager 配置文件
 
@@ -168,13 +166,14 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 ### 4. kube-scheduler 配置文件
 
 ```diff
-
+[root@k8s-master ~]# vim /etc/kubernetes/scheduler
 - 7 KUBE_SCHEDULER_ARGS=""
 - + 7 KUBE_SCHEDULER_ARGS="--address=0.0.0.0"     # 监听地址,默认是 127.0.0.1
 + 7 KUBE_SCHEDULER_ARGS="0.0.0.0"                 # 直接写0.0.0.0，否则scheduler服务启动报错
 ```
-## 1.3 配置网络
-### 1. 配置 etcd，指定容器云中 docker 的 IP 网段
+## 2.3 配置网络
+### 1. 配置 etcd
+指定容器云中 docker 的 IP 网段
 
 ```
 [root@k8s-master ~]# etcdctl mkdir /k8s/network
@@ -203,7 +202,7 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 
 
 
-# 2. node1
+# 3. 配置node1
 ```
 yum install kubernetes flannel ntp -y
 ```
@@ -253,7 +252,7 @@ Kubelet 运行在 minion 节点上。Kubelet 组件管理 Pod、Pod 中容器及
  
 - ```KUBELET_ADDRESS="--address=0.0.0.0"``` #默认只监听 127.0.0.1，要改成:0.0.0.0，因为后期要使用 kubectl 进程连接到 kubelet 服务上，来查看 pod 及 pod 中容器的状态。如果是 127 就无法进程连接 kubelet 服务。
 - ```KUBELET_HOSTNAME="--hostname-override=node1"``` # minion 的主机名，设置 成和本主机机名一样，便于识别。
-- ```KUBELET_API_SERVER="--api-servers=http://192.168.1.63:8080"``` #批定 apiserver 的地址
+- ```KUBELET_API_SERVER="--api-servers=http://192.168.0.15:8080"``` #指定 apiserver 的地址
 - ```KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redh at.com/rhel7/pod-infrastructure:latest"``` infrastructure [ˈɪnfrəstrʌktʃə(r)] 基础设施 KUBELET_POD_INFRA_CONTAINER 指定 pod 基础容器镜像地址。这个是一个基础容器，每一个Pod 启动的时候都会启动一个这样的容器。如果你的本地没有这个镜像，kubelet 会连接外网把这个镜像 下载下来。最开始的时候是在 Google 的 registry 上，因此国内因为 GFW 都下载丌了导致 Pod 运行丌 起来。现在每个版本的 Kubernetes 都把这个镜像地址改成红帽的地址了。你也可以提前传到自己的 registry 上，然后再用这个参数指定成自己的镜像链接。
  
 ### 4. 启动服务
@@ -278,8 +277,8 @@ tcp        0      0 192.168.0.16:51182      192.168.0.15:8080       ESTABLISHED 
 tcp        0      0 192.168.0.16:51180      192.168.0.15:8080       ESTABLISHED 15630/kube-proxy    
 ```
  
-# node2
-
+# 4. 配置node2
+从node1 拷贝配置文件至node2
 ```
 [root@k8s-node1 ~]# scp /etc/sysconfig/flanneld 192.168.0.17:/etc/sysconfig/flanneld 
 ```
