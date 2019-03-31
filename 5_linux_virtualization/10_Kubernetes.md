@@ -28,11 +28,13 @@ etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，
 
 ## 1.3 minion
 真正运行容器 container 的物理机。 kubernets 中需要很多 minion 机器，来提供 运算。minion [ˈmɪniən] 爪牙
-#### 1. Kube_proxy 
+#### 1. Kubelet 
+组件管理 Pod、Pod 中容器及容器的镜像和卷等信息
+#### 2. Kube_proxy 
 代理 做端口转发，相当于 LVS-NAT 模式中的负载调度器器。Proxy 解决了同一宿主机，相同服务端口冲突的问题，还提供了对外服务的能力，Proxy 后端使用了 随机、轮循负载均衡算法。
-#### 2. Pod 
+#### 3. Pod 
 在 Kubernetes 系统中，调度的最小颗粒丌是单纯的容器，而是抽象成一个 Pod，Pod是一个可以被创建、销毁、调度、管理的最小的部署单元。pod 中可以包括一个戒一组容器。 pod [pɒd] 豆荚
-#### 3. container 
+#### 4. container 
 容器 ，可以运行服务和程序
 
 
