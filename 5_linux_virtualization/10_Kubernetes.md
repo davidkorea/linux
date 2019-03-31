@@ -66,6 +66,11 @@ tcp        0      0 127.0.0.1:2379          127.0.0.1:47070         ESTABLISHED 
 [root@k8s-master ~]# etcdctl member list
 8e9e05c52164694d: name=default peerURLs=http://localhost:2380 clientURLs=http://192.168.0.15:2379 isLeader=true
 ```
+```
+[root@k8s-master ~]# etcdctl cluster-health
+member 8e9e05c52164694d is healthy: got healthy result from http://192.168.0.15:2379
+cluster is healthy
+```
 ## 1.2 master
 
 
