@@ -167,6 +167,31 @@ nginx        10.254.86.32   <nodes>       80:31001/TCP   18s
 > ```[root@server162 ~]# kubectl delete svc nginx ```，删除即可
 
 
+> 排错
+
+> ```
+>  [root@k8s-master ~]# ifconfig 
+>  docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+>          inet 10.255.31.1  netmask 255.255.255.0  broadcast 0.0.0.0
+>
+>  ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+>          inet 192.168.0.15  netmask 255.255.255.0  broadcast 192.168.0.255
+>
+>  flannel0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1472
+>          inet 10.255.63.0  netmask 255.255.0.0  destination 10.255.63.0
+>  ```
+> 检查了所有配置文件包括flannel和etcd以及所有kubernetes，全部正确。最后重启服务kube_proxy后正常.
+> ```
+>  [root@k8s-master flannel]# systemctl restart flanneld kube-proxy kubelet docker
+>  [root@k8s-master flannel]# ifconfig 
+>  docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+>          inet 10.255.63.1  netmask 255.255.255.0  broadcast 0.0.0.0
+>
+>  flannel0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1472
+>          inet 10.255.63.0  netmask 255.255.0.0  destination 10.255.63.0
+>  ```
+
+
 **注：如果只是创建 deployment设备硬件资源，没有对应 service 服务，不能直接在外网迚行访问 Nginx服务**
 
 此时访问任何一个node都可以正常打开nginx页面http://192.168.0.163:31001/ ， http://192.168.0.164:31001/
