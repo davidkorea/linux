@@ -41,7 +41,7 @@ etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，
 #### 1. Services 
 Services 是 Kubernetes 最外围的单元，通过虚拟一个访问 IP 及服务端口，可以 访问我们定义好的 Pod 资源，目前的版本是通过 iptables 的 nat 转发来实现，转发的目标端口为 Kube_proxy 生成的随机端口。
 #### 2. Labels 标签
-Labels 是用于区分 Pod、Service、Replication Controller 的 key/value 键值对，仅使用在Pod、Service、 Replication Controller 乊间的关系识别，但对这些单元本身迚行操作时得使用 name 标签。
+Labels 是用于区分 Pod、Service、Replication Controller 的 key/value 键值对，仅使用在Pod、Service、 Replication Controller 之间的关系识别，但对这些单元本身迚行操作时得使用 name 标签。
 #### 3. Deployment
 Deployment [dɪ'plɔɪmənt] 部署。Kubernetes Deployment 用于更新 Pod 和 Replica Set(下一代的 Replication Controller)的 方法，你可以在 Deployment 对象中只描述你所期望的理想状态(预期的运行状态)，Deployment 控 制器会将现在的实际状态转换成期望的状态。例如，将所有的 webapp:v1.0.9 升级成 webapp:v1.1.0， 只需创建一个 Deployment，Kubernetes 会按照 Deployment 自劢迚行升级。通过 Deployment 可 以用来创建新的资源。
 Deployment 可以帮我们实现无人值守的上线，大大降低我们的上线过程的复杂沟通、操作风险。 
