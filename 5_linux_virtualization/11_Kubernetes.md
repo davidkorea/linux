@@ -40,9 +40,25 @@ kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用
 - 192.168.0.163 node1
 - 192.168.0.164 node2
 
-所有节点准备镜像docker.io/nginx:latest
+## 2.1 所有节点准备镜像 docker.io/nginx:latest
 
-
+## 2.2 创建 kubectl run
+```
+[root@server162 ~]# kubectl run nginx --image=docker.io/nginx --replicas=1 --port=9000
+deployment "nginx" created
+```
+kubectl run 之后，kubernetes 创建了一个 deployment。查看 Deployment
+```
+[root@server162 ~]# kubectl get deployment 
+NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+nginx     1         1         1            1           10s
+```
+查看生成的 pod，kubernetes 将容器运行在 pod 中以方便实施卷和网络共享等管理
+```
+[root@server162 ~]# kubectl get pod -o wide
+NAME                     READY     STATUS    RESTARTS   AGE       IP            NODE
+nginx-2187705812-60s2p   1/1       Running   0          2m        10.255.65.2   node1
+```
 
 
 
