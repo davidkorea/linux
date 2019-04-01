@@ -38,3 +38,6 @@ nginx-2187705812-gz0fs   1/1       Running   0          42s
 NAME                     READY     STATUS    RESTARTS   AGE       IP           NODE
 nginx-2187705812-gz0fs   1/1       Running   0          50s       10.255.3.2   k8s-node1
 ```
+
+如果使用自己的pod image, docker.io/a406622768/pod-infrastructure:latest ，需要修改node的kubelet配置文件
+否则一直会```nginx3-1206369853-cks8d   0/1       ContainerCreating   0          1m```
