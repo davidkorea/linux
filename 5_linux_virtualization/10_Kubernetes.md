@@ -37,7 +37,7 @@ etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，
 #### 4. container 
 容器 ，可以运行服务和程序
 
-## 1.4 图片中为包括的几个名词
+## 1.4 图片中未包括的几个名词
 #### 1. Services 
 Services 是 Kubernetes 最外围的单元，通过虚拟一个访问 IP 及服务端口，可以 访问我们定义好的 Pod 资源，目前的版本是通过 iptables 的 nat 转发来实现，转发的目标端口为 Kube_proxy 生成的随机端口。
 #### 2. Labels 标签
