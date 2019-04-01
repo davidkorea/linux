@@ -44,7 +44,7 @@ nginx-2187705812-gz0fs   1/1       Running   0          50s       10.255.3.2   k
 ```
 [root@server162 ~]# kubectl get pod
 NAME                      READY     STATUS              RESTARTS   AGE
-nginx-2187705812-ft855    0/1       Completed           0          19m
+nginx-2187705812-ft855    0/1       Completed           0          19m      # 这个状态也不正常，应该是running
 nginx2-951959098-vh4ss    0/1       Completed           0          12m
 nginx3-1206369853-cks8d   0/1       ContainerCreating   0          2m
 ```
@@ -52,4 +52,16 @@ nginx3-1206369853-cks8d   0/1       ContainerCreating   0          2m
 
 - 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
 + 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=docker.io/a406622768/pod-infrastructure:latest" 
- ```
+```
+```
+[root@server162 ~]# kubectl get pod
+NAME                      READY     STATUS              RESTARTS   AGE
+nginx-2187705812-ft855    0/1       Completed           0          22m
+nginx2-951959098-vh4ss    0/1       Completed           0          16m
+nginx3-1206369853-cks8d   0/1       ContainerCreating   0          6m
+[root@server162 ~]# kubectl get pod
+NAME                      READY     STATUS    RESTARTS   AGE
+nginx-2187705812-ft855    1/1       Running   1          23m
+nginx2-951959098-vh4ss    1/1       Running   1          16m
+nginx3-1206369853-cks8d   1/1       Running   0          6m
+```
