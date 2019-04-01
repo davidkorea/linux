@@ -290,8 +290,98 @@ spec:
 
 
 # 4. 使用 kubectl 管理service 服务
+#### 1. 查看service的详细信息
+```
+[root@k8s-master ~]# kubectl get service -o yaml
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: 2019-04-01T15:04:33Z
+    labels:
+      component: apiserver
+      provider: kubernetes
+    name: kubernetes
+    namespace: default
+    resourceVersion: "26711"
+    selfLink: /api/v1/namespaces/default/services/kubernetes
+    uid: 74eefc46-548f-11e9-86e4-000c2954fad5
+  spec:
+    clusterIP: 10.254.0.1
+    ports:
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 6443
+    sessionAffinity: ClientIP
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: 2019-04-01T15:08:08Z
+    labels:
+      name: nginx
+    name: nginx
+    namespace: default
+    resourceVersion: "27089"
+    selfLink: /api/v1/namespaces/default/services/nginx
+    uid: f58cfc87-548f-11e9-86e4-000c2954fad5
+  spec:
+    clusterIP: 10.254.212.24
+    ports:
+    - nodePort: 31001
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    selector:
+      name: nginx
+    sessionAffinity: None
+    type: NodePort
+  status:
+    loadBalancer: {}
+kind: List
+metadata: {}
+resourceVersion: ""
+selfLink: ""
+```
+#### 2. kubectl edit service
+修改访问端口31001 为31002
 
-
+```
+[root@k8s-master ~]# kubectl edit service nginx 
+# Please edit the object below. Lines beginning with a '#' will be ignored,
+# and an empty file will abort the edit. If an error occurs while saving this file will be
+# reopened with the relevant failures.
+#
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: 2019-04-01T15:08:08Z
+  labels:
+    name: nginx
+  name: nginx
+  namespace: default
+  resourceVersion: "27089"
+  selfLink: /api/v1/namespaces/default/services/nginx
+  uid: f58cfc87-548f-11e9-86e4-000c2954fad5
+spec:
+  clusterIP: 10.254.212.24
+  ports:
+  - nodePort: 31001       # 改为31002
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    name: nginx
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}
+```
+http://192.168.0.16:31002/,访问成功。edit 编辑修改配置文件时，不需要停止服务。改完后立即生效
 
 
 
