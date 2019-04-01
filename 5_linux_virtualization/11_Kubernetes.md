@@ -40,4 +40,16 @@ nginx-2187705812-gz0fs   1/1       Running   0          50s       10.255.3.2   k
 ```
 
 如果使用自己的pod image, docker.io/a406622768/pod-infrastructure:latest ，需要修改node的kubelet配置文件
-否则一直会```nginx3-1206369853-cks8d   0/1       ContainerCreating   0          1m```
+否则一直会创建中
+```
+[root@server162 ~]# kubectl get pod
+NAME                      READY     STATUS              RESTARTS   AGE
+nginx-2187705812-ft855    0/1       Completed           0          19m
+nginx2-951959098-vh4ss    0/1       Completed           0          12m
+nginx3-1206369853-cks8d   0/1       ContainerCreating   0          2m
+```
+```diff
+
+- 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
++ 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=docker.io/a406622768/pod-infrastructure:latest" 
+ ```
