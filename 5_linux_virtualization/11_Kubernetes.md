@@ -96,6 +96,15 @@ No resources found.
 
 ## 3.1 生成 mysql-deployment.yaml 文件
 
+
+
+## 3.2 使用 mysql-deployment.yaml创建mysql资源
+
+## 3.3 kubectl命令
+
+#### 0. 创建测试环境
+
+- 生成 mysql-deployment.yaml 文件
 ```ymal
 [root@server162 ~]# vim mysql-deployment.yaml 
 kind: Deployment                             # 使用deployment创建一个pod，旧版本可以使用kind: ReplicationController
@@ -125,22 +134,10 @@ spec:
   - IfNotPresent ：如果本地存在镜像就优先使用本地镜像。 这样可以直接使用本地镜像
   - Never：不再去拉取镜像了，使用本地的，如果本地不存在就报异常了
 
-## 3.2 使用 mysql-deployment.yaml创建mysql资源
+- 使用 mysql-deployment.yaml创建mysql资源
 ```kubectl create -f mysql-deployment.yaml```
-```
-[root@server162 ~]# kubectl create -f mysql-deployment.yaml 
-deployment "mysql" created
 
-[root@server162 ~]# kubectl get pod -o wide
-NAME                     READY     STATUS    RESTARTS   AGE       IP            NODE
-mysql-2261771434-d1m98   1/1       Running   0          56s       10.255.65.2   node1
 
-[root@server162 ~]# ping 10.255.65.2
-PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
-64 bytes from 10.255.65.2: icmp_seq=1 ttl=61 time=2.16 ms
-64 bytes from 10.255.65.2: icmp_seq=2 ttl=61 time=1.08 ms
-```
-## 3.3 kubectl命令
 #### 1. ```kubectl get``` 命令
 - kubectl get deployments (缩写 deploy)
 - kubectl get events (缩写 ev)
@@ -187,7 +184,9 @@ PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
   ```
 - kubectl attach  实时查看运行中的容器消息
 
+**注：现在所创建 mysql 都只是 deployment 设备硬件资源，并没有对应 service 服务，所以现在还不能直接在外网迚行访问 mysql 服务**
 
+# 4. 使用 kubectl 管理service 服务
 
 
 
