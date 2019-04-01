@@ -383,11 +383,31 @@ status:
 ```
 http://192.168.0.16:31002/,访问成功。edit 编辑修改配置文件时，不需要停止服务。改完后立即生效
 
+```
+[root@k8s-master ~]# kubectl get service
+NAME         CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+kubernetes   10.254.0.1      <none>        443/TCP        21m
+nginx        10.254.212.24   <nodes>       80:31002/TCP   17m
+```
+- replace也可以更改port
+```
+kubectl get service nginx -o yaml > nginx_replace.yaml  # 导出配置文件
+kubectl replace -f nginx_replace.yaml                   # 更改好后，使用replace进行更改
+``` 
+#### 3. kubectl patch 换运行镜像
 
+当修改一部分设定时，使用 patch 很方便。比如:给 pod 换个 image 镜像
 
+1. 查看当前镜像是否可以解析php
+```
+[root@k8s-master ~]# kubectl exec -it nginx-1011335894-k3qzs bash
+root@nginx-1011335894-k3qzs:/# php
+bash: php: command not found        # 果然不能解析php
+```
+2. 更换可以解析php的镜像
+```
 
-
-
+```
 
 
 
