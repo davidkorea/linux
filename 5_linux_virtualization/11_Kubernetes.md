@@ -166,6 +166,19 @@ PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
   ... ... 
   ```    
 - kubectl cp 从容器拷出 或 向容器拷入文件。**容器内需要安装tar命令**
+  ```
+  [root@server162 ~]# kubectl cp mysql-2261771434-d1m98:/etc/my.cnf /tmp/my.cnf
+  error: unexpected EOF
+  
+  [root@server162 ~]# kubectl exec -it mysql-2261771434-d1m98 bash
+  bash-4.2# yum install -y tar
+  
+  [root@server162 ~]# kubectl cp mysql-2261771434-d1m98:/etc/my.cnf /tmp/my.cnf
+  tar: Removing leading `/' from member names
+  [root@server162 ~]# ll /tmp/
+  总用量 4
+  -rw-r--r-- 1 root root 1239 4月   1 16:28 my.cnf
+  ```
 - kubectl attach  实时查看运行中的容器消息
 
 
