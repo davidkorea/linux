@@ -12,6 +12,7 @@
 ### 1.1 master
 #### 1. 启动服务
 ```systemctl restart etcd kube-apiserver kube-controller-manager kube-scheduler kube-proxy flanneld```
+重启kube-proxy，以防止docker0和flannel0不在同一网段
 ### 1.2 nodes
 #### 1. 启动服务
 ```systemctl restart flanneld kube-proxy kubelet docker```
@@ -167,8 +168,7 @@ nginx        10.254.86.32   <nodes>       80:31001/TCP   18s
 > ```[root@server162 ~]# kubectl delete svc nginx ```，删除即可
 
 
-> 排错
-
+> 排错：docker0 和 flannel0 不在同一网段
 > ```
 >  [root@k8s-master ~]# ifconfig 
 >  docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
@@ -180,7 +180,7 @@ nginx        10.254.86.32   <nodes>       80:31001/TCP   18s
 >  flannel0: flags=4305<UP,POINTOPOINT,RUNNING,NOARP,MULTICAST>  mtu 1472
 >          inet 10.255.63.0  netmask 255.255.0.0  destination 10.255.63.0
 >  ```
-> 检查了所有配置文件包括flannel和etcd以及所有kubernetes，全部正确。最后重启服务kube_proxy后正常.
+> 检查了所有配置文件包括flannel和etcd以及所有kubernetes，全部正确。最后master重启服务kube_proxy后正常.
 > ```
 >  [root@k8s-master flannel]# systemctl restart flanneld kube-proxy kubelet docker
 >  [root@k8s-master flannel]# ifconfig 
