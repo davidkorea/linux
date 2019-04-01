@@ -203,7 +203,7 @@ nginx        10.254.86.32   <nodes>       80:31001/TCP   18s
 [root@k8s-master ~]# kubectl exec -it nginx-1011335894-k3qzs bash
 /index.html 011335894-k3qzs:/# echo "hello kubernetes!" >> /usr/share/nginx/html/
 ```
-
+![](https://i.loli.net/2019/04/01/5ca2312c45c7f.png)
 ## 3.3 kubectl命令
 
 #### 0. 创建测试环境
@@ -423,7 +423,8 @@ Zend Engine v3.3.3, Copyright (c) 1998-2018 Zend Technologies
 bash-4.4# nginx -v
 nginx version: nginx/1.14.2
 ```
-
+http://192.168.0.16:31002/ 访问php页面成功
+![](https://i.loli.net/2019/04/01/5ca2312c5c240.png)
 
 
 
