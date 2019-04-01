@@ -9,6 +9,9 @@
 # 1. kubectl命令创建和删除一个 pod 
 kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用 kubectl 各种功能
 
+- 192.168.0.162 master
+- 192.168.0.163 node1
+- 192.168.0.164 node2
 
 
 
