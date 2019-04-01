@@ -506,3 +506,45 @@ nginx-1011335894-9mwd4   1/1       Running   0          12s       10.255.35.3   
 nginx-1011335894-g7491   1/1       Running   0          12s       10.255.35.4   k8s-node1
 nginx-1011335894-h3jvx   1/1       Running   0          12s       10.255.35.5   k8s-node1
 ```
+#### iii. 取消禁止uncordon
+```
+[root@k8s-master ~]# kubectl uncordon k8s-node2
+node "k8s-node2" already uncordoned
+[root@k8s-master ~]# kubectl get nodes -o wide
+NAME        STATUS     AGE       EXTERNAL-IP
+127.0.0.1   NotReady   1h        <none>
+k8s-node1   Ready      1d        <none>
+k8s-node2   Ready      1d        <none>
+```
+
+### 7. kubectl drain
+用亍对某个 node 结点迚行维护。drain 两个作用:
+- 设定此node不可以使用(cordon)
+- evict 驱逐 pod 到他正常的 node 节点上。evict [ɪˈvɪkt] 驱逐
+
+```
+[root@k8s-master ~]# kubectl drain k8s-node2
+node "k8s-node2" already cordoned
+node "k8s-node2" drained
+[root@k8s-master ~]# kubectl get pods -o wide
+NAME                     READY     STATUS    RESTARTS   AGE       IP            NODE
+nginx-1011335894-61tdw   1/1       Running   0          18m       10.255.35.2   k8s-node1
+nginx-1011335894-9mwd4   1/1       Running   0          7m        10.255.35.3   k8s-node1
+nginx-1011335894-g7491   1/1       Running   0          7m        10.255.35.4   k8s-node1
+nginx-1011335894-h3jvx   1/1       Running   0          7m        10.255.35.5   k8s-node1
+nginx-1011335894-n24gt   1/1       Running   0          40s       10.255.35.7   k8s-node1
+nginx-1011335894-vpqj0   1/1       Running   0          40s       10.255.35.6   k8s-node1
+[root@k8s-master ~]# kubectl get nodes -o wide
+NAME        STATUS                     AGE       EXTERNAL-IP
+127.0.0.1   NotReady                   1h        <none>
+k8s-node1   Ready                      1d        <none>
+k8s-node2   Ready,SchedulingDisabled   1d        <none>
+[root@k8s-master ~]# kubectl uncordon k8s-node2
+node "k8s-node2" uncordoned
+```
+所有k8s-node2上的pod全部被驱逐至k8s-node1上面了
+
+
+
+
+
