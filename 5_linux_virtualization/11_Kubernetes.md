@@ -158,11 +158,12 @@ NAME         CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
 kubernetes   10.254.0.1     <none>        443/TCP        54s
 nginx        10.254.86.32   <nodes>       80:31001/TCP   18s
 ```
+
 > 排错：之前测试的时候已经用来31001端口。但是删除的时候只是删除了deployment，service并没有删除
 > ```
-  [root@server162 ~]# kubectl create -f nginx-svc.yaml 
-  The Service "nginx" is invalid: spec.ports[0].nodePort: Invalid value: 31001: provided port is already allocated
-  ```
+> [root@server162 ~]# kubectl create -f nginx-svc.yaml 
+> The Service "nginx" is invalid: spec.ports[0].nodePort: Invalid value: 31001: provided port is already allocated
+> ```
 > ```[root@server162 ~]# kubectl delete svc nginx ```，删除即可
 
 ## 3.3 kubectl命令
