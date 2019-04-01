@@ -65,3 +65,18 @@ nginx-2187705812-ft855    1/1       Running   1          23m
 nginx2-951959098-vh4ss    1/1       Running   1          16m
 nginx3-1206369853-cks8d   1/1       Running   0          6m
 ```
+3. delete pod
+```
+[root@server162 ~]# kubectl delete pod nginx3-1206369853-cks8d
+pod "nginx3-1206369853-cks8d" deleted
+[root@server162 ~]# kubectl get pod
+NAME                      READY     STATUS              RESTARTS   AGE
+nginx-2187705812-ft855    1/1       Running             1          25m
+nginx2-951959098-vh4ss    1/1       Running             1          18m
+nginx3-1206369853-z4r5r   0/1       ContainerCreating   0          3s
+[root@server162 ~]# kubectl get pod
+NAME                      READY     STATUS    RESTARTS   AGE
+nginx-2187705812-ft855    1/1       Running   1          25m
+nginx2-951959098-vh4ss    1/1       Running   1          18m
+nginx3-1206369853-z4r5r   1/1       Running   0          11s
+```
