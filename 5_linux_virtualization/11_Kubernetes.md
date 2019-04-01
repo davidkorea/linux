@@ -143,10 +143,10 @@ spec:
 
 ## 3.2 使用yaml创建 deployment 和 serveice
 ```
-[root@server162 ~]# kubectl create -f nginx-deployment.yaml 
+[root@server162 ~]# kubectl create -f nginx-deployment.yaml         # 创建deployment，相当于创建设备硬件资源	
 deployment "nginx" created
 
-[root@server162 ~]# kubectl create -f nginx-svc.yaml 
+[root@server162 ~]# kubectl create -f nginx-svc.yaml                # 创建service
 service "nginx" created
 
 [root@server162 ~]# kubectl get pod -o wide
@@ -165,6 +165,11 @@ nginx        10.254.86.32   <nodes>       80:31001/TCP   18s
 > The Service "nginx" is invalid: spec.ports[0].nodePort: Invalid value: 31001: provided port is already allocated
 > ```
 > ```[root@server162 ~]# kubectl delete svc nginx ```，删除即可
+
+
+**注：如果只是创建 deployment设备硬件资源，没有对应 service 服务，不能直接在外网迚行访问 Nginx服务**
+
+此时访问任何一个node都可以正常打开nginx页面http://192.168.0.163:31001/ ， http://192.168.0.164:31001/
 
 ## 3.3 kubectl命令
 
@@ -250,7 +255,6 @@ spec:
   ```
 - kubectl attach  实时查看运行中的容器消息
 
-**注：现在所创建 mysql 都只是 deployment 设备硬件资源，并没有对应 service 服务，所以现在还不能直接在外网迚行访问 mysql 服务**
 
 # 4. 使用 kubectl 管理service 服务
 
