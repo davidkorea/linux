@@ -359,6 +359,22 @@ PING 10.255.3.1 (10.255.3.1) 56(84) bytes of data.
 64 bytes from 10.255.3.1: icmp_seq=1 ttl=62 time=1.02 ms
 64 bytes from 10.255.3.1: icmp_seq=2 ttl=62 time=1.83 ms
 ```
+设置flannel网址的文件
+```
+[root@client164 ~]# cd /run/flannel/
+[root@client164 flannel]# ls
+docker  subnet.env
+[root@client164 flannel]# cat docker 
+DOCKER_OPT_BIP="--bip=10.255.21.1/24"
+DOCKER_OPT_IPMASQ="--ip-masq=true"
+DOCKER_OPT_MTU="--mtu=1472"
+DOCKER_NETWORK_OPTIONS=" --bip=10.255.21.1/24 --ip-masq=true --mtu=1472"
+[root@client164 flannel]# cat subnet.env 
+FLANNEL_NETWORK=10.255.0.0/16
+FLANNEL_SUBNET=10.255.21.1/24
+FLANNEL_MTU=1472
+FLANNEL_IPMASQ=false
+```
 go back to master 192.168.0.15查看整个集群的运行状态
 ```
 [root@k8s-master ~]# kubectl get nodes
