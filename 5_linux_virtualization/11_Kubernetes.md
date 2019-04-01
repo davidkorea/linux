@@ -9,10 +9,10 @@
 
 # 1. 环境准备
 
-## 1.1 master
+### 1.1 master
 #### 1. 启动服务
 ```systemctl restart etcd kube-apiserver kube-controller-manager kube-scheduler flanneld```
-## 1.2 nodes
+### 1.2 nodes
 #### 1. 启动服务
 ```systemctl restart flanneld kube-proxy kubelet docker```
 
@@ -40,9 +40,9 @@ kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用
 - 192.168.0.163 node1
 - 192.168.0.164 node2
 
-## 2.1 所有节点准备镜像 docker.io/nginx:latest
+### 2.1 所有节点准备镜像 docker.io/nginx:latest
 
-## 2.2 创建 kubectl run
+### 2.2 创建 kubectl run
 ```
 [root@server162 ~]# kubectl run nginx --image=docker.io/nginx --replicas=1 --port=9000
 deployment "nginx" created
@@ -65,7 +65,7 @@ nginx-2187705812-60s2p   1/1       Running   0          2m        10.255.65.2   
   - terminating ['tɜ:mɪneɪtɪŋ] #终止 。当删除 pod 时的状态
   - Running 正常运行状态
 
-## 2.3 删除kubectl delete
+### 2.3 删除kubectl delete
 #### 1. kubectl delete pod
 ```
 [root@server162 ~]# kubectl delete pod nginx-2187705812-60s2p
@@ -95,7 +95,7 @@ No resources found.
 上传镜像至所有node，```docker pull docker.io/nginx```
 
 ## 3.1 生成 nginx-deployment.yaml资源 和 nginx-svc.yaml服务配置文件
-- nginx-deployment.yaml 
+#### 1. nginx-deployment.yaml 
 ```
 [root@server162 ~]# vim nginx-deployment.yaml 
 kind: Deployment
@@ -117,7 +117,7 @@ spec:
         - containerPort: 80
           protocol: TCP
 ```
-- nginx-svc.yaml 
+#### 2. nginx-svc.yaml 
 ```
 [root@server162 ~]# vim nginx-svc.yaml 
 kind: Service
@@ -130,13 +130,16 @@ spec:
   type: NodePort
   ports:
   - protocol: TCP
-    nodePort: 31001
-    targetPort: 80
-    port: 80
+    nodePort: 31001   # 用户可以通过node节点上这个端口访问nginx，物理机的公网上的端口
+    targetPort: 80    # 指定 nginx docker 容器的端口
+    port: 80          # 指定 pod 端口
   selector:
     name: nginx
 ```
-
+- 服务端口的定义：
+  - nodePort: 31001
+  - port: 80 # pod 端口号定义
+  - targetPort: 80 #指定是 nginx docker 容器的端口
 
 ## 3.2 使用 mysql-deployment.yaml创建mysql资源
 
