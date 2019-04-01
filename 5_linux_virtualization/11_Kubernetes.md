@@ -167,7 +167,7 @@ PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
   ```    
 - kubectl cp 从容器拷出 或 向容器拷入文件。**容器内需要安装tar命令**
   ```
-  [root@server162 ~]# kubectl cp mysql-2261771434-d1m98:/etc/my.cnf /tmp/my.cnf
+  [root@server162 ~]# kubectl cp mysql-2261771434-d1m98:/etc/my.cnf /tmp/my.cnf     # container -> physical
   error: unexpected EOF
   
   [root@server162 ~]# kubectl exec -it mysql-2261771434-d1m98 bash
@@ -178,6 +178,12 @@ PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
   [root@server162 ~]# ll /tmp/
   总用量 4
   -rw-r--r-- 1 root root 1239 4月   1 16:28 my.cnf
+  ```
+  ```
+  [root@server162 ~]# kubectl cp /etc/hosts mysql-2261771434-d1m98:/tmp/hosts       # physical -> container
+  [root@server162 ~]# kubectl exec -it mysql-2261771434-d1m98 bash
+  bash-4.2# ls /tmp/
+  hosts
   ```
 - kubectl attach  实时查看运行中的容器消息
 
