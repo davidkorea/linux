@@ -348,7 +348,7 @@ resourceVersion: ""
 selfLink: ""
 ```
 ### 2. 修改访问端口31001 为31002
-#### i。 kubectl edit service
+#### i. kubectl edit service
 ```
 [root@k8s-master ~]# kubectl edit service nginx 
 # Please edit the object below. Lines beginning with a '#' will be ignored,
@@ -440,31 +440,31 @@ http://192.168.0.16:31002/ 访问php页面成功
 ![](https://i.loli.net/2019/04/01/5ca2312c5c240.png)
 
 
+## 4. kubectl scale
+scale 命令用亍横向扩展，是 kubernetes 或 swarm 这类容器编辑平台的重要功能之一
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- 之前已经设定 nginx 的 replica 副本为 1
+```
+[root@k8s-master ~]# kubectl get pod -o wide
+NAME                     READY     STATUS    RESTARTS   AGE       IP            NODE
+nginx-1011335894-k3qzs   1/1       Running   1          44m       10.255.16.2   k8s-node2
+```
+- 执行scale
+```
+[root@k8s-master ~]# kubectl scale --current-replicas=1 --replicas=3 deployment/nginx
+deployment "nginx" scaled
+[root@k8s-master ~]# kubectl get pod -o wide
+NAME                     READY     STATUS    RESTARTS   AGE       IP            NODE
+nginx-1011335894-k3qzs   1/1       Running   1          45m       10.255.16.2   k8s-node2
+nginx-1011335894-61tdw   1/1       Running   0          3s        10.255.35.2   k8s-node1
+nginx-1011335894-xbp7p   1/1       Running   0          3s        10.255.16.3   k8s-node2
+nginx-1011335894-k3qzs   1/1       Running   1          45m       10.255.16.2   k8s-node2
+```
+```
+[root@k8s-master ~]# kubectl get deployment 
+NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+nginx     3         3         3            3           47m
+```
 
 
 
