@@ -12,7 +12,9 @@
 ## 1.1 master
 #### 1. 启动服务
 ```systemctl restart etcd kube-apiserver kube-controller-manager kube-scheduler flanneld```
-
+## 1.2 nodes
+#### 1. 启动服务
+```systemctl restart flanneld kube-proxy kubelet docker```
 
 
 
