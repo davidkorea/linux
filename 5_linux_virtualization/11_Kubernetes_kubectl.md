@@ -401,13 +401,40 @@ kubectl replace -f nginx_replace.yaml                   # 更改好后，使用r
 1. 查看当前镜像是否可以解析php
 ```
 [root@k8s-master ~]# kubectl exec -it nginx-1011335894-k3qzs bash
+root@nginx-1011335894-k3qzs:/# nginx -v
+nginx version: nginx/1.15.10
 root@nginx-1011335894-k3qzs:/# php
 bash: php: command not found        # 果然不能解析php
 ```
 2. 更换可以解析php的镜像
 ```
+[root@k8s-node1 ~]# docker pull docker.io/richarvey/nginx-php-fpm     # 所有节点下载镜像
+[root@k8s-node2 ~]# docker pull docker.io/richarvey/nginx-php-fpm
 
+[root@k8s-master ~]# kubectl patch pod nginx-1011335894-k3qzs -p '{"spec":{"containers":[{"name":"nginx","image":"docker.io/richarvey/nginx-php-fpm:latest"}]}}'
+
+"nginx-1011335894-k3qzs" patched
+[root@k8s-master ~]# kubectl exec -it nginx-1011335894-k3qzs bash
+bash-4.4# php -v
+PHP 7.3.3 (cli) (built: Mar  9 2019 01:07:11) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.3.3, Copyright (c) 1998-2018 Zend Technologies
+    with Zend OPcache v7.3.3, Copyright (c) 1999-2018, by Zend Technologies
+bash-4.4# nginx -v
+nginx version: nginx/1.14.2
 ```
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
