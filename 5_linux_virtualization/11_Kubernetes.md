@@ -6,12 +6,24 @@
 5. kubectl 其他常用命令和参数说明
 6. 使用 kubectl 管理集群中 deployment 资源和 service 服务
 
-# 1. kubectl命令创建和删除一个 pod 
+
+# 1. 环境准备
+
+## 1.1 master
+#### 1. 启动服务
+```systemctl restart etcd kube-apiserver kube-controller-manager kube-scheduler flanneld```
+
+
+
+
+
+# 2. kubectl命令创建和删除一个 pod 
 kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用 kubectl 各种功能
 
 - 192.168.0.162 master
 - 192.168.0.163 node1
 - 192.168.0.164 node2
+
 
 
 
