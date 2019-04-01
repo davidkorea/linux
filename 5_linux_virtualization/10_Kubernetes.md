@@ -289,7 +289,22 @@ Kubelet 运行在 minion 节点上。Kubelet 组件管理 Pod、Pod 中容器及
 - ```KUBELET_API_SERVER="--api-servers=http://192.168.0.15:8080"``` #指定 apiserver 的地址
 - ```KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redh at.com/rhel7/pod-infrastructure:latest"``` infrastructure [ˈɪnfrəstrʌktʃə(r)] 基础设施 KUBELET_POD_INFRA_CONTAINER 指定 pod 基础容器镜像地址。这个是一个基础容器，每一个Pod 启动的时候都会启动一个这样的容器。如果你的本地没有这个镜像，kubelet 会连接外网把这个镜像 下载下来。最开始的时候是在 Google 的 registry 上，因此国内因为 GFW 都下载丌了导致 Pod 运行丌 起来。现在每个版本的 Kubernetes 都把这个镜像地址改成红帽的地址了。你也可以提前传到自己的 registry 上，然后再用这个参数指定成自己的镜像链接。
  
-### 4. 启动服务
+### 4. 配置 flanneld 服务
+
+```diff
+[root@k8s-node1 ~]# vim /etc/sysconfig/flanneld 
+
+-  4 FLANNEL_ETCD_ENDPOINTS="http://127.0.0.1:2379"
++  4 FLANNEL_ETCD_ENDPOINTS="http://192.168.0.15:2379"
+
+-  8 FLANNEL_ETCD_PREFIX="/atomic.io/network"
++  8 FLANNEL_ETCD_PREFIX="/k8s/network"
+
+- 11 #FLANNEL_OPTIONS=""
++ 11 FLANNEL_OPTIONS="--iface=ens33"         # 指定通信的物理网卡 
+```
+ 
+### 5. 启动服务
 ```
 [root@k8s-node1 ~]# systemctl restart flanneld kube-proxy kubelet docker
 [root@k8s-node1 ~]# systemctl enable flanneld kube-proxy kubelet docker
