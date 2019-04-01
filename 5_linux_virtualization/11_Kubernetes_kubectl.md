@@ -290,7 +290,7 @@ spec:
 
 
 # 4. 使用 kubectl 管理service 服务
-#### 1. 查看service的详细信息
+### 1. 查看service的详细信息
 ```
 [root@k8s-master ~]# kubectl get service -o yaml
 apiVersion: v1
@@ -347,9 +347,8 @@ metadata: {}
 resourceVersion: ""
 selfLink: ""
 ```
-#### 2. kubectl edit service
-修改访问端口31001 为31002
-
+### 2. 修改访问端口31001 为31002
+#### i。 kubectl edit service
 ```
 [root@k8s-master ~]# kubectl edit service nginx 
 # Please edit the object below. Lines beginning with a '#' will be ignored,
@@ -381,7 +380,7 @@ spec:
 status:
   loadBalancer: {}
 ```
-http://192.168.0.16:31002/,访问成功。edit 编辑修改配置文件时，不需要停止服务。改完后立即生效
+http://192.168.0.16:31002/，访问成功。edit 编辑修改配置文件时，不需要停止服务。改完后立即生效
 
 ```
 [root@k8s-master ~]# kubectl get service
@@ -389,16 +388,30 @@ NAME         CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
 kubernetes   10.254.0.1      <none>        443/TCP        21m
 nginx        10.254.212.24   <nodes>       80:31002/TCP   17m
 ```
-- replace也可以更改port
+#### ii. kubectl apply
+apply 命令是用来使用文件或者标准输入来更改配置信息
+```
+[root@master ~]# vim nginx-svc.yaml
+改: nodePort: 31001
+为: nodePort: 31004
+```
+执行 apply 命令，执行设定文件可以在运行状态修改 port 信息
+```
+[root@master ~]# kubectl apply -f nginx-svc.yaml service "nginx" configured
+[root@master ~]# kubectl get svc
+ NAME kubernetes nginx 已经改变。
+```
+#### iii. kubectl replace
+replace也可以更改port，我觉着是三个方法中最难用的一个
 ```
 kubectl get service nginx -o yaml > nginx_replace.yaml  # 导出配置文件
 kubectl replace -f nginx_replace.yaml                   # 更改好后，使用replace进行更改
 ``` 
-#### 3. kubectl patch 换运行镜像
+### 3. kubectl patch 换运行镜像
 
 当修改一部分设定时，使用 patch 很方便。比如:给 pod 换个 image 镜像
 
-1. 查看当前镜像是否可以解析php
+#### i. 查看当前镜像是否可以解析php
 ```
 [root@k8s-master ~]# kubectl exec -it nginx-1011335894-k3qzs bash
 root@nginx-1011335894-k3qzs:/# nginx -v
@@ -406,7 +419,7 @@ nginx version: nginx/1.15.10
 root@nginx-1011335894-k3qzs:/# php
 bash: php: command not found        # 果然不能解析php
 ```
-2. 更换可以解析php的镜像
+#### ii. 更换可以解析php的镜像
 ```
 [root@k8s-node1 ~]# docker pull docker.io/richarvey/nginx-php-fpm     # 所有节点下载镜像
 [root@k8s-node2 ~]# docker pull docker.io/richarvey/nginx-php-fpm
