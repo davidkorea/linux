@@ -80,3 +80,16 @@ nginx-2187705812-ft855    1/1       Running   1          25m
 nginx2-951959098-vh4ss    1/1       Running   1          18m
 nginx3-1206369853-z4r5r   1/1       Running   0          11s
 ```
+4. delete deploymet
+```
+[root@server162 ~]# kubectl delete deployment nginx3
+deployment "nginx3" deleted
+[root@server162 ~]# kubectl get deployment 
+NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+nginx     1         1         1            1           26m
+nginx2    1         1         1            1           19m
+[root@server162 ~]# kubectl get pod
+NAME                     READY     STATUS    RESTARTS   AGE
+nginx-2187705812-ft855   1/1       Running   1          26m
+nginx2-951959098-vh4ss   1/1       Running   1          19m
+```
