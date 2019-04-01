@@ -61,11 +61,11 @@ nginx-2187705812-60s2p   1/1       Running   0          2m        10.255.65.2   
 ```
 
 
-pods 常见的状态：
-1. ContainerCreating #容器创建
-2. ImagePullBackOff #从后端把镜像拉取到本地。如果这里 pod 没有正常运行，都是因为 docker hub 没有连接上，导致镜像没有下载成功，这时，可以在 node 节点上把相关镜像手动上传，或把 docker 源换成阿里的
-3. terminating ['tɜ:mɪneɪtɪŋ] #终止 。当删除 pod 时的状态
-4. Running 正常运行状态
+- pods 常见的状态：
+  - ContainerCreating #容器创建
+  - ImagePullBackOff #从后端把镜像拉取到本地。如果这里 pod 没有正常运行，都是因为 docker hub 没有连接上，导致镜像没有下载成功，这时，可以在 node 节点上把相关镜像手动上传，或把 docker 源换成阿里的
+  - terminating ['tɜ:mɪneɪtɪŋ] #终止 。当删除 pod 时的状态
+  - Running 正常运行状态
 
 
 
