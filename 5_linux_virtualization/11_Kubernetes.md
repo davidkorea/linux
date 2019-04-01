@@ -141,7 +141,7 @@ PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
 64 bytes from 10.255.65.2: icmp_seq=2 ttl=61 time=1.08 ms
 ```
 ## 3.3 kubectl命令
-- get 命令能够确认的信息类别：
+#### 1. ```kubectl get``` 命令
   - deployments (缩写 deploy)
   - events (缩写 ev)
   - namespaces (缩写 ns)
@@ -150,7 +150,11 @@ PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
   - replicasets (缩写 rs)
   - replicationcontrollers (缩写 rc)
   - services (缩写 svc)
-- 其他命令
+#### 2. ```kubectl describe``` 命令
+  - kubectl describe pod pod的名字
+  - kubectl describe node node的名字
+  - kubectl describe deployment deployment的名字
+#### 3. 其他命令
   - logs 取得 pod 中容器的 log 信息
   - exec 在 pod 中执行一条命令
   - cp 从容器拷出 或 向容器拷入文件
