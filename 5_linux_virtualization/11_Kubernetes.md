@@ -1,3 +1,33 @@
+# 使用kubectl命令管理Kubernetes容器平台
+
+1. kubectl 创建和删除一个 pod 相关操作
+3. yaml 诧法规则
+4. kubectl create 加载 yaml 文件生成 deployment 设备资源
+5. kubectl 其他常用命令和参数说明
+6. 使用 kubectl 管理集群中 deployment 资源和 service 服务
+
+# 1. kubectl命令创建和删除一个 pod 
+kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用 kubectl 各种功能
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 1. node节点中ip的设置有这个文件决定
 ```
