@@ -98,29 +98,32 @@ No resources found.
 
 ```ymal
 [root@server162 ~]# vim mysql-deployment.yaml 
-kind: Deployment
+kind: Deployment                             # 使用deployment创建一个pod，旧版本可以使用 kind: ReplicationController
 apiVersion: extensions/v1beta1
 metadata:
-  name: mysql
+  name: mysql                                # deployment 的名称，全尿唯一
 spec:
-  replicas: 1
-  template:
+  replicas: 1                                # Pod副本期待数量=1 表示运行一个pod，里面一个容器
+  template:                                  # 根据此模板创建 Pod 的副本（实例）
     metadata:
-      labels:
-        name: mysql
-    spec:
+      labels:                                # 符合目标的Pod拥有此标签。默认和 name 的值一样
+        name: mysql                          # 定义 Pod 的名字是 mysql
+    spec:                                    # Pod 中容器的定义部分
       containers:
-      - name: mysql
-        image: docker.io/mysql/mysql-server
-        imagePullPolicy: IfNotPresent
+      - name: mysql                          # 容器的名称
+        image: docker.io/mysql/mysql-server  # 容器对应的 Docker Image 镜像
+        imagePullPolicy: IfNotPresent        # 如果本地存在镜像就优先使用本地镜像
         ports:
-        - containerPort: 3306
+        - containerPort: 3306                # 容器暴露的端口号
           protocol: TCP
-        env:
-          - name: MYSQL_ROOT_PASSWORD
+        env:                                 # 注入到容器的环境变量
+          - name: MYSQL_ROOT_PASSWORD        # 设置 mysql root 的密码
             value: "hello123"
 ```
-
+- imagePullPolicy:
+  - 默认值为：imagePullPolicy: Always 一直从外网，下载镜像，不使用本地的
+  - IfNotPresent ：如果本地存在镜像就优先使用本地镜像。 这样可以直接使用本地镜像
+  - Never：不再去拉取镜像了，使用本地的，如果本地不存在就报异常了
 
 
 
