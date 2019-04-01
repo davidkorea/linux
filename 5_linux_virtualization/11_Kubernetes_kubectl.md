@@ -440,7 +440,7 @@ http://192.168.0.16:31002/ 访问php页面成功
 ![](https://i.loli.net/2019/04/01/5ca2312c5c240.png)
 
 
-## 4. kubectl scale
+### 4. kubectl scale
 scale 命令用亍横向扩展，是 kubernetes 或 swarm 这类容器编辑平台的重要功能之一
 
 - 之前已经设定 nginx 的 replica 副本为 1
@@ -458,17 +458,51 @@ NAME                     READY     STATUS    RESTARTS   AGE       IP            
 nginx-1011335894-k3qzs   1/1       Running   1          45m       10.255.16.2   k8s-node2
 nginx-1011335894-61tdw   1/1       Running   0          3s        10.255.35.2   k8s-node1
 nginx-1011335894-xbp7p   1/1       Running   0          3s        10.255.16.3   k8s-node2
-nginx-1011335894-k3qzs   1/1       Running   1          45m       10.255.16.2   k8s-node2
 ```
 ```
 [root@k8s-master ~]# kubectl get deployment 
 NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
 nginx     3         3         3            3           47m
 ```
+新创建的在node1和node2都有，正如上面AGE为3s的两行所示
+### 5. kubectl autoscale
+autoscale 命令用亍自劢扩展确认，跟 scale 不同的是前者还是需要手动执行，而 autoscale 则会根据负载迚行调解。而这条命令则可以对 Deployment/ReplicaSet/RC 迚行设定，通过最小值和最大值的 指定迚行设定。
 
+```
+[root@master ~]# kubectl autoscale deployment nginx --min=2 --max=5
+deployment "nginx" autoscaled
+```
+当然使用还会有一些限制，比如当前 3 个，设定最小和最大值为 2 的，会报错 
+```
+[root@master ~]# kubectl autoscale deployment nginx --min=2 --max=2
+Error from server (AlreadyExists): horizontalpodautoscalers.autoscaling "nginx" already exists
+```
+### 6. kubectl cordon 与 uncordon
+cordon [ˈkɔ:dn] 封锁 警戒线。在实际维护的时候会出现某个 node 坏掉，或者做一些处理，暂时不能让生成的 pod 在此 node 上运行，需要通知 kubernetes 让其不要创建过来，这条命令就是 cordon，uncordon 则是取消这个要求。
 
+之前横向扩展到 3 个副本，发现每个 node 上运行起来了一个 pod。设定 node2 不再运行新的 pod 实例，使用 get node 确认，其状态显示SchedulingDisabled
+#### i. 设置禁止使用k8s-node2
+```
+[root@k8s-master ~]# kubectl cordon k8s-node2
+node "k8s-node2" cordoned
 
-
-
-
-
+[root@k8s-master ~]# kubectl get nodes -o wide
+NAME        STATUS                     AGE       EXTERNAL-IP
+127.0.0.1   NotReady                   1h        <none>
+k8s-node1   Ready                      1d        <none>
+k8s-node2   Ready,SchedulingDisabled   1d        <none>
+```
+#### ii. 再次scale扩展
+再次执行横向扩展命令，看是否会有 pod 漂到 node2 这台机器上，结果发现叧只有之前scale时创建的一个pod，再没有新的 pod 漂过去
+```
+[root@k8s-master ~]# kubectl scale --replicas=6 deployment/nginx
+deployment "nginx" scaled
+[root@k8s-master ~]# kubectl get pods -o wide
+NAME                     READY     STATUS    RESTARTS   AGE       IP            NODE
+nginx-1011335894-k3qzs   1/1       Running   1          56m       10.255.16.2   k8s-node2
+nginx-1011335894-61tdw   1/1       Running   0          11m       10.255.35.2   k8s-node1
+nginx-1011335894-xbp7p   1/1       Running   0          11m       10.255.16.3   k8s-node2
+nginx-1011335894-9mwd4   1/1       Running   0          12s       10.255.35.3   k8s-node1
+nginx-1011335894-g7491   1/1       Running   0          12s       10.255.35.4   k8s-node1
+nginx-1011335894-h3jvx   1/1       Running   0          12s       10.255.35.5   k8s-node1
+```
