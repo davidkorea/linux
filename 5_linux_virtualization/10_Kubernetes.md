@@ -227,8 +227,14 @@ KUBE_CONTROLLER_MANAGER_ARGS=""
 - 11 #FLANNEL_OPTIONS=""
 + 11 FLANNEL_OPTIONS="--iface=ens33"         # 指定通信的物理网卡 
 ```
+此时systemctl restart flanneld依然会失败，reboot后再次重启即可
 
-
+## 2.4 启动所有服务
+```
+[root@k8s-master ~]# systemctl restart kube-apiserver kube-controller-manager kube-scheduler flanneld
+[root@k8s-master ~]# systemctl status kube-apiserver kube-controller-manager kube-scheduler flanneld
+[root@k8s-master ~]# systemctl enable kube-apiserver kube-controller-manager kube-scheduler flanneld
+```
 
 # 3. 配置node1
 ```
