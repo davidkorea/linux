@@ -88,14 +88,54 @@ No resources found.
 直接删除 pod 触发了 replicas 的确保机制，所以直接删除 deployment，同时也删除掉了pod
 
 
-# 3. kubectl create加载yaml文件生成deployment
+# 3. 加载yaml文件生成deployment
 
 使用 kubectl run 在设定很复杂的需求时，需要非常长的一条诧句，也很容易出错，也没法保存。 所以更多场景下会使用 yaml 戒者 json 文件
 
-上传镜像至所有node，```docker pull docker.io/mysql/mysql-server ```
+上传镜像至所有node，```docker pull docker.io/nginx```
 
-## 3.1 生成 mysql-deployment.yaml 文件
-
+## 3.1 生成 nginx-deployment.yaml资源 和 nginx-svc.yaml服务配置文件
+- nginx-deployment.yaml 
+```
+[root@server162 ~]# vim nginx-deployment.yaml 
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: nginx
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: nginx
+    spec:
+      containers:
+      - name: nginx
+        image:  docker.io/nginx:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+          protocol: TCP
+```
+- nginx-svc.yaml 
+```
+[root@server162 ~]# vim nginx-svc.yaml 
+kind: Service
+apiVersion: v1
+metadata:
+  name: nginx
+  labels:
+    name: nginx
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    nodePort: 31001
+    targetPort: 80
+    port: 80
+  selector:
+    name: nginx
+```
 
 
 ## 3.2 使用 mysql-deployment.yaml创建mysql资源
@@ -103,7 +143,7 @@ No resources found.
 ## 3.3 kubectl命令
 
 #### 0. 创建测试环境
-
+- ```docker pull docker.io/mysql/mysql-server ```
 - 生成 mysql-deployment.yaml 文件
 ```ymal
 [root@server162 ~]# vim mysql-deployment.yaml 
