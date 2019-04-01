@@ -33,7 +33,7 @@ docker.io/a406622768/pod-infrastructure   latest              1158bd68df6d      
 #### 3. 其他应用镜像
 和pod infrastructure镜像一样。所有node，都必须有一份
 
-# 2. kubectl命令创建和删除一个 pod 
+# 2. kubectl命令创建和删除 deployment，pod 
 kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用 kubectl 各种功能
 
 - 192.168.0.162 master
@@ -85,94 +85,79 @@ No resources found.
 [root@server162 ~]# kubectl get deployment 
 No resources found.
 ```
+直接删除 pod 触发了 replicas 的确保机制，所以直接删除 deployment，同时也删除掉了pod
 
 
+# 3. kubectl create加载yaml文件生成deployment
 
+使用 kubectl run 在设定很复杂的需求时，需要非常长的一条诧句，也很容易出错，也没法保存。 所以更多场景下会使用 yaml 戒者 json 文件
 
+上传镜像至所有node，```docker pull docker.io/mysql/mysql-server ```
 
+## 3.1 生成 mysql-deployment.yaml 文件
 
-
-
-
-
-1. node节点中ip的设置有这个文件决定
-```
-[root@k8s-node1 ~]# cat /run/flannel/subnet.env 
-FLANNEL_NETWORK=10.255.0.0/16
-FLANNEL_SUBNET=10.255.3.1/24
-FLANNEL_MTU=1472
-FLANNEL_IPMASQ=false
-```
-```
-[root@k8s-node2 ~]# cat /run/flannel/subnet.env 
-FLANNEL_NETWORK=10.255.0.0/16
-FLANNEL_SUBNET=10.255.79.1/24
-FLANNEL_MTU=1472
-FLANNEL_IPMASQ=false
-```
-2. master run a deployment
-node1 and node2 should have 2 images
-  - docker.io/nginx
-  - pod-infrastucture
-master node don't need to have these 2 images
-
-```
-[root@k8s-master ~]# docker images
-REPOSITORY                                            TAG                 IMAGE ID            CREATED             SIZE
-a406622768/pod-infrastructure                         latest              1158bd68df6d        19 months ago       209 MB
-registry.access.redhat.com/rhel7/pod-infrastructure   latest              1158bd68df6d        19 months ago       209 MB
-[root@k8s-master ~]# kubectl run nginx --image=docker.io/nginx --replicas=1 --port=9000
-deployment "nginx" created
-[root@k8s-master ~]# kubectl get deployment 
-NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-nginx     1         1         1            1           14s
-
-[root@k8s-master ~]# kubectl get pods
-NAME                     READY     STATUS    RESTARTS   AGE
-nginx-2187705812-gz0fs   1/1       Running   0          42s
-[root@k8s-master ~]# kubectl get pods -o wide
-NAME                     READY     STATUS    RESTARTS   AGE       IP           NODE
-nginx-2187705812-gz0fs   1/1       Running   0          50s       10.255.3.2   k8s-node1
+```ymal
+[root@server162 ~]# vim mysql-deployment.yaml 
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: docker.io/mysql/mysql-server
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+          protocol: TCP
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: "hello123"
 ```
 
 
-```
-[root@server162 ~]# kubectl get pod
-NAME                      READY     STATUS              RESTARTS   AGE
-nginx-2187705812-ft855    0/1       Completed           0          22m
-nginx2-951959098-vh4ss    0/1       Completed           0          16m
-nginx3-1206369853-cks8d   0/1       ContainerCreating   0          6m
-[root@server162 ~]# kubectl get pod
-NAME                      READY     STATUS    RESTARTS   AGE
-nginx-2187705812-ft855    1/1       Running   1          23m
-nginx2-951959098-vh4ss    1/1       Running   1          16m
-nginx3-1206369853-cks8d   1/1       Running   0          6m
-```
-3. delete pod
-```
-[root@server162 ~]# kubectl delete pod nginx3-1206369853-cks8d
-pod "nginx3-1206369853-cks8d" deleted
-[root@server162 ~]# kubectl get pod
-NAME                      READY     STATUS              RESTARTS   AGE
-nginx-2187705812-ft855    1/1       Running             1          25m
-nginx2-951959098-vh4ss    1/1       Running             1          18m
-nginx3-1206369853-z4r5r   0/1       ContainerCreating   0          3s
-[root@server162 ~]# kubectl get pod
-NAME                      READY     STATUS    RESTARTS   AGE
-nginx-2187705812-ft855    1/1       Running   1          25m
-nginx2-951959098-vh4ss    1/1       Running   1          18m
-nginx3-1206369853-z4r5r   1/1       Running   0          11s
-```
-4. delete deploymet
-```
-[root@server162 ~]# kubectl delete deployment nginx3
-deployment "nginx3" deleted
-[root@server162 ~]# kubectl get deployment 
-NAME      DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
-nginx     1         1         1            1           26m
-nginx2    1         1         1            1           19m
-[root@server162 ~]# kubectl get pod
-NAME                     READY     STATUS    RESTARTS   AGE
-nginx-2187705812-ft855   1/1       Running   1          26m
-nginx2-951959098-vh4ss   1/1       Running   1          19m
-```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
