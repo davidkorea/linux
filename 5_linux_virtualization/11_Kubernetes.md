@@ -16,8 +16,22 @@
 #### 1. 启动服务
 ```systemctl restart flanneld kube-proxy kubelet docker```
 
+#### 2. 所有node - 准备pod基础镜像
+```
+[root@client164 ~]# docker images
+REPOSITORY                                TAG                 IMAGE ID            CREATED             SIZE
+docker.io/a406622768/pod-infrastructure   latest              1158bd68df6d        19 months ago       209 MB
+```
+- 因为使用自己的pod image, docker.io/a406622768/pod-infrastructure:latest ，需要修改node的kubelet配置文件，否则一直会创建中ContainerCreating
+```diff
 
+- 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
++ 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=docker.io/a406622768/pod-infrastructure:latest" 
+```
+- 或者将自己的镜像重命名为registry.access.redhat.com/rhel7/pod-infrastructure:latest
 
+#### 3. 其他应用镜像
+和pod infrastructure镜像一样。所有node，都必须有一份
 
 # 2. kubectl命令创建和删除一个 pod 
 kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用 kubectl 各种功能
@@ -26,7 +40,7 @@ kubectl 是一个用亍操作 kubernetes 集群的命令行接口，通过利用
 - 192.168.0.163 node1
 - 192.168.0.164 node2
 
-
+所有节点准备镜像docker.io/nginx:latest
 
 
 
@@ -86,20 +100,7 @@ NAME                     READY     STATUS    RESTARTS   AGE       IP           N
 nginx-2187705812-gz0fs   1/1       Running   0          50s       10.255.3.2   k8s-node1
 ```
 
-如果使用自己的pod image, docker.io/a406622768/pod-infrastructure:latest ，需要修改node的kubelet配置文件
-否则一直会创建中
-```
-[root@server162 ~]# kubectl get pod
-NAME                      READY     STATUS              RESTARTS   AGE
-nginx-2187705812-ft855    0/1       Completed           0          19m      # 这个状态也不正常，应该是running
-nginx2-951959098-vh4ss    0/1       Completed           0          12m
-nginx3-1206369853-cks8d   0/1       ContainerCreating   0          2m
-```
-```diff
 
-- 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=registry.access.redhat.com/rhel7/pod-infrastructure:latest"
-+ 17 KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image=docker.io/a406622768/pod-infrastructure:latest" 
-```
 ```
 [root@server162 ~]# kubectl get pod
 NAME                      READY     STATUS              RESTARTS   AGE
