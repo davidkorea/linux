@@ -198,6 +198,12 @@ nginx        10.254.86.32   <nodes>       80:31001/TCP   18s
 
 尽管nginx的pod是在node1运行的，但我们去访问任意 node，都可以正常访问 ginx的。已经做了负载均衡，所有node可以成功访问 web 服务
 
+测试更改nginx的主页/usr/share/nginx/html/index.html
+```
+[root@k8s-master ~]# kubectl exec -it nginx-1011335894-k3qzs bash
+/index.html 011335894-k3qzs:/# echo "hello kubernetes!" >> /usr/share/nginx/html/
+```
+
 ## 3.3 kubectl命令
 
 #### 0. 创建测试环境
