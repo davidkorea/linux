@@ -142,23 +142,31 @@ PING 10.255.65.2 (10.255.65.2) 56(84) bytes of data.
 ```
 ## 3.3 kubectl命令
 #### 1. ```kubectl get``` 命令
-  - deployments (缩写 deploy)
-  - events (缩写 ev)
-  - namespaces (缩写 ns)
-  - nodes (缩写 no)
-  - pods (缩写 po)
-  - replicasets (缩写 rs)
-  - replicationcontrollers (缩写 rc)
-  - services (缩写 svc)
+- kubectl get deployments (缩写 deploy)
+- kubectl get events (缩写 ev)
+- kubectl get namespaces (缩写 ns)
+- kubectl get nodes (缩写 no)
+- kubectl get pods (缩写 po)
+- kubectl get replicasets (缩写 rs)
+- kubectl get replicationcontrollers (缩写 rc)
+- kubectl get services (缩写 svc)
 #### 2. ```kubectl describe``` 命令
-  - kubectl describe pod pod的名字
-  - kubectl describe node node的名字
-  - kubectl describe deployment deployment的名字
+- kubectl describe pod pod的名字
+- kubectl describe node node的名字
+- kubectl describe deployment deployment的名字
 #### 3. 其他命令
-  - logs 取得 pod 中容器的 log 信息
-  - exec 在 pod 中执行一条命令
-  - cp 从容器拷出 或 向容器拷入文件
-  - ttach Attach 实时查看运行中的容器消息
+- kubectl logs 取得 pod 中容器的 log 信息
+- kubectl exec -it 在 pod 中执行一条命令
+  ```
+  [root@server162 ~]# kubectl exec -it mysql-2261771434-d1m98 bash
+  bash-4.2# cat /etc/my.cnf
+  # For advice on how to change settings please see
+  # http://dev.mysql.com/doc/refman/8.0/en/server-configuration-defaults.html
+  [mysqld]
+  ... ... 
+  ```    
+- kubectl cp 从容器拷出 或 向容器拷入文件。**容器内需要安装tar命令**
+- kubectl attach  实时查看运行中的容器消息
 
 
 
