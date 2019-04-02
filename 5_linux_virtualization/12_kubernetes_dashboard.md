@@ -88,5 +88,49 @@ spec:
   - port: 80
     targetPort: 9090
 ```
+## 1.3 准备 kubernetes 相关的镜像
+- 在官方的 dashboard-deployment.yaml 中 定 义 了 dashboard 所 用 的 镜 像 ：gcr.io/google_containers/kubernetes-dashboard-amd64:v1.5.1，
+- 启动 k8s 的 pod 还需要一个额外的镜像：registry.access.redhat.com/rhel7/pod-infrastructure:latest，
+
+可以使用 docker 自带的源先下载下来，每个node保存一份镜像
+
+```
+docker.io/a406622768/pod-infrastructure       latest      1158bd68df6d        19 months ago       209 MB
+docker.io/bestwu/kubernetes-dashboard-amd64   v1.6.3      691a82db1ecd        20 months ago       139 MB
+```
+
+## 1.4 创建 dashboard 的 deployment 和 service
+
+```
+[root@server162 ~]# kubectl create -f dashboard-deployment.yaml
+deployment "kubernetes-dashboard-latest" created
+[root@server162 ~]# kubectl create -f dashboard-service.yaml
+service "kubernetes-dashboard" created
+```
+查看deployment，pods，service，需要参数--all-namespaces 
+```
+[root@server162 ~]# kubectl get deployment --all-namespaces 
+NAMESPACE     NAME                          DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+kube-system   kubernetes-dashboard-latest   1         1         1            1           3h
+```
+
+```
+[root@server162 ~]# kubectl get pod --all-namespaces 
+NAMESPACE     NAME                                           READY     STATUS    RESTARTS   AGE
+kube-system   kubernetes-dashboard-latest-3739580684-z19p4   1/1       Running   0          3h
+```
+```
+[root@server162 ~]# kubectl get svc --all-namespaces 
+NAMESPACE     NAME                   CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+default       kubernetes             10.254.0.1       <none>        443/TCP        23h
+kube-system   kubernetes-dashboard   10.254.142.63    <none>        80/TCP         3h
+```
+
+删除deployment，pods，service的时候也需要参数-n 来制定namespace，否则删除失败，默认-n是default
+```
+[root@server162 ~]# kubectl delete svc kubernetes-dashboard -n kube-system
+```
+
+
 
 
