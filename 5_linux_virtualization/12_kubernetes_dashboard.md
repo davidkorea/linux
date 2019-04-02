@@ -226,9 +226,9 @@ kubernetes     10.254.0.1       <none>        443/TCP        1d
 redis-master   10.254.217.59    <none>        6379/TCP       2h
 redis-slave    10.254.243.185   <none>        6379/TCP       2h
 ```
+访问 http://192.168.0.162:30001/ 成功
 
-
-
+![](https://i.loli.net/2019/04/02/5ca336a5ede89.png)
 
 
 
