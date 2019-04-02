@@ -134,5 +134,38 @@ kube-system   kubernetes-dashboard   10.254.142.63    <none>        80/TCP      
 
 ![](https://i.loli.net/2019/04/02/5ca3243548d75.png)
 
+## 1.5 排错经验分享
+#### 1. 查看pod日志信息
+```
+[root@server162 ~]# kubectl get pod -o wide --all-namespaces 
+NAMESPACE     NAME                                           READY     STATUS    RESTARTS   AGE       IP            NODE
+kube-system   kubernetes-dashboard-latest-3739580684-z19p4   1/1       Running   0          3h        10.255.65.3   node1
+```
+```
+[root@server162 ~]# kubectl logs kubernetes-dashboard-latest-3739580684-z19p4 -n kube-system
+Using HTTP port: 8443
+Using apiserver-host location: http://192.168.0.162:8080
+Skipping in-cluster config
+Using random key for csrf signing
+No request provided. Skipping authorization header
+Successful initial request to the apiserver, version: v1.5.2
+No request provided. Skipping authorization header
+Creating in-cluster Heapster client
+Could not enable metric client: Health check failed: the server could not find the requested resource (get services heapster). Continuing.
+Getting application global configuration
+Application configuration {"serverTime":1554184279687}
+[2019-04-02T05:51:26Z] Incoming HTTP/1.1 GET /api/v1/rbac/status request from 10.255.59.0:47246: {}
+[2019-04-02T05:51:26Z] Incoming HTTP/1.1 GET /api/v1/thirdpartyresource request from 10.255.59.0:47252: {}
+Getting list of third party resources
+[2019-04-02T05:51:26Z] Outcoming response to 10.255.59.0:47246 with 200 status code
+[2019-04-02T05:51:26Z] Outcoming response to 10.255.59.0:47252 with 200 status code
+[2019-04-02T05:51:27Z] Incoming HTTP/1.1 GET /api/v1/overview/default?filterBy=&itemsPerPage=15&page=1&sortBy=d%!C(MISSING)creationTimestamp request from 10.255.59.0:47252: {}
+Getting config category
+Getting discovery and load balancing category
+Getting lists of all workloads
+[restful] 2019/04/02 05:51:27 log.go:26: No metric client provided. Skipping metrics.
+Getting pod metrics
+[restful] 2019/04/02 05:51:27 log.go:26: No metric client provided. Skipping metrics.
+[restful] 2019/04/02 05:51:27 log.go:26: No metric client provided. Skipping metrics.
 
-
+```
