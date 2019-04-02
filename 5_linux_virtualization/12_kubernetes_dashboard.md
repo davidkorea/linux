@@ -175,5 +175,12 @@ Getting lists of all workloads
 Getting pod metrics
 [restful] 2019/04/02 05:51:27 log.go:26: No metric client provided. Skipping metrics.
 [restful] 2019/04/02 05:51:27 log.go:26: No metric client provided. Skipping metrics.
-
+```
+# 2. 在kubernetes集群上搭建基于 redis 和 docker 的留言簿案例
+## 2.1 准备镜像
+需要三个 docker 镜像： 1、 php-frontend web 前端镜像，2、 redis master 3、 redis slave
+```
+docker.io/kubeguide/guestbook-php-frontend    latest     47ee16830e89     2 years ago     510 MB
+docker.io/kubeguide/redis-master              latest     405a0b586f7e     3 years ago     419 MB
+docker.io/kubeguide/guestbook-redis-slave     latest     e0c36a1fa372     3 years ago     110 MB
 ```
