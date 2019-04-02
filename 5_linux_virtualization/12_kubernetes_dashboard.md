@@ -50,7 +50,7 @@ spec:
     spec:
       containers:
       - name: kubernetes-dashboard
-        image: docker.io/bestwu/kubernetes-dashboard-amd64:v1.6.3             # 一定要使用这个image，否则报错heapster
+        image: docker.io/bestwu/kubernetes-dashboard-amd64:v1.6.3    # 一定要使用这个image，否则报错heapster
         imagePullPolicy: IfNotPresent
         resources:
           # keep request = limit to keep this container in guaranteed class
@@ -71,6 +71,14 @@ spec:
           initialDelaySeconds: 30
           timeoutSeconds: 30
 ```
+
+> **排错**: 使用镜像docker.io/ist0ne/kubernetes-dashboard-amd64:latest 报错
+> ```
+> 2019/04/02 05:51:27 Metric client health check failed: the server could not find the requested resource (get services heapster). Retrying in 30 seconds.
+> ```
+> - 参考[在k8s-dashboard中集成heapster](https://andrewpqc.github.io/2018/04/25/heapster-in-kubernetes/)
+> - 参考[github:kubernetes-retired/heapster](https://github.com/kubernetes-retired/heapster)
+
 ## 1.2 创建dashboard-service.yaml 文件
 ```yaml
 apiVersion: v1
