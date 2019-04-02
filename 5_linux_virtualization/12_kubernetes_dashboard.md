@@ -218,8 +218,14 @@ redis-master-3671804942-00qpt   1/1       Running   0          2h        10.255.
 redis-slave-2377017994-175bq    1/1       Running   0          2h        10.255.21.5   node2
 redis-slave-2377017994-6kpd6    1/1       Running   0          2h        10.255.65.5   node1
 ```
-
-
+```
+[root@server162 ~]# kubectl get svc 
+NAME           CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
+frontend       10.254.138.170   <nodes>       80:30001/TCP   2h
+kubernetes     10.254.0.1       <none>        443/TCP        1d
+redis-master   10.254.217.59    <none>        6379/TCP       2h
+redis-slave    10.254.243.185   <none>        6379/TCP       2h
+```
 
 
 
