@@ -126,9 +126,9 @@ default       kubernetes             10.254.0.1       <none>        443/TCP     
 kube-system   kubernetes-dashboard   10.254.142.63    <none>        80/TCP         3h
 ```
 
-删除deployment，pods，service的时候也需要参数-n 来制定namespace，否则删除失败，默认-n是default
+删除deployment，pods，service的时候也需要参数--namespace，否则删除失败，默认--namespace是default
 ```
-[root@server162 ~]# kubectl delete svc kubernetes-dashboard -n kube-system
+[root@server162 ~]# kubectl delete svc kubernetes-dashboard --namespace=kube-system
 ```
 访问网址 http://192.168.0.162:8080/ui 成功
 
