@@ -130,7 +130,9 @@ kube-system   kubernetes-dashboard   10.254.142.63    <none>        80/TCP      
 ```
 [root@server162 ~]# kubectl delete svc kubernetes-dashboard -n kube-system
 ```
+访问网址 http://192.168.0.162:8080/ui 成功
 
+![](https://i.loli.net/2019/04/02/5ca3243548d75.png)
 
 
 
