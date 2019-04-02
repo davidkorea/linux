@@ -9,6 +9,13 @@
 访问该 pod 提供的服务。 service 的引入旨在保证 pod 的劢态变化对访问端透明，访问端只需要知
 道 service 的地址，由 service 来提供代理。
 
+- service 的三种端口
+  - port ： service 暴露在 cluster ip 上的端口，port 是提供给集群内部客户访问 service 的入口。
+  - nodePort ：nodePort 是 k8s 提供给集群外部客户访问 service 入口的一种方式。
+  - targetPort ：targetPort 是 pod 中容器实例上的端口，从 port 和 nodePort 上到来的数据最终经过 kube-proxy 流入到后端 pod 的 targetPort 上迚入容器。
+
+  port 和 nodePort 都是 service 的端口，前者暴露给集群内客户访问服务，后者暴露给集群外客户访问服务。从这两个端口到来的数据都需要经过反向代理 kube-proxy 流入后端 pod 的 targetPod，从而到达 pod 上的容器内。
+
 - replicationController：是 pod 的复制抽象，用于解决 pod 的扩容缩容问题。通常，分布式应用
 为 了 性 能 戒 高可 用 性 的考 虑 ， 需要 复 制 多份 资 源 ，并 且 根 据负 载 情 况劢 态 伸 缩。 通 过
 replicationController，我仧可以指定一个应用需要几份复制，Kubernetes 将为每份复制创建一
@@ -81,10 +88,5 @@ spec:
   - port: 80
     targetPort: 9090
 ```
-service 的三种端口
-- port ： service 暴露在 cluster ip 上的端口，port 是提供给集群内部客户访问 service 的入口。
-- nodePort ：nodePort 是 k8s 提供给集群外部客户访问 service 入口的一种方式。
-- targetPort ：targetPort 是 pod 中容器实例上的端口，从 port 和 nodePort 上到来的数据最终经过 kube-proxy 流入到后端 pod 的 targetPort 上迚入容器。
 
-port 和 nodePort 都是 service 的端口，前者暴露给集群内客户访问服务，后者暴露给集群外客户访问服务。从这两个端口到来的数据都需要经过反向代理 kube-proxy 流入后端 pod 的 targetPod，从而到达 pod 上的容器内。
 
