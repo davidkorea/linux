@@ -185,3 +185,28 @@ docker.io/kubeguide/redis-master              latest     405a0b586f7e     3 year
 docker.io/kubeguide/guestbook-redis-slave     latest     e0c36a1fa372     3 years ago     110 MB
 ```
 ![](https://i.loli.net/2019/04/02/5ca3324ad130c.png)
+## 2.2 创建配置文件
+
+- frontend-deployment.yaml  
+- frontend-service.yaml     
+- redis-master-deployment.yaml  
+- redis-master-service.yaml     
+- redis-slave-deployment.yaml
+- redis-slave-service.yaml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
