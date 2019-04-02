@@ -194,11 +194,30 @@ docker.io/kubeguide/guestbook-redis-slave     latest     e0c36a1fa372     3 year
 - redis-slave-deployment.yaml
 - redis-slave-service.yaml
 
+https://github.com/davidkorea/linux_study/tree/master/5_linux_virtualization/data/k8s_redis_yaml
 
+## 2.3 kubectl create
+```
+kubectl create -f k8s_redis_yaml/
+```
 
-
-
-
+```
+[root@server162 ~]# kubectl get deployment 
+NAME           DESIRED   CURRENT   UP-TO-DATE   AVAILABLE   AGE
+frontend       3         3         3            3           2h
+redis-master   1         1         1            1           2h
+redis-slave    2         2         2            2           2h
+```
+```
+[root@server162 ~]# kubectl get pod -o wide
+NAME                            READY     STATUS    RESTARTS   AGE       IP            NODE
+frontend-1186687533-6df3w       1/1       Running   0          2h        10.255.21.3   node2
+frontend-1186687533-q29kc       1/1       Running   0          2h        10.255.21.2   node2
+frontend-1186687533-wm4jz       1/1       Running   0          2h        10.255.65.4   node1
+redis-master-3671804942-00qpt   1/1       Running   0          2h        10.255.21.4   node2
+redis-slave-2377017994-175bq    1/1       Running   0          2h        10.255.21.5   node2
+redis-slave-2377017994-6kpd6    1/1       Running   0          2h        10.255.65.5   node1
+```
 
 
 
