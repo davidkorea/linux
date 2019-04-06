@@ -1,6 +1,7 @@
 # kvm-openstack-docker-kubernetes
 
 # Visualization
+# 1. 虚拟化技术分类
 - 模拟器emulization。可以虚拟和宿主机不同的系统，灵活，效率差
   - QEMU，PearPC，Bochs等技术
   - 需要将不同架构的虚拟机的指令，经过转换，在转换为宿主机支持的指令。因此，指令集的转换效率低
@@ -29,6 +30,7 @@
     - 文件系统也需要彼此划分多多份
 - 库级别的虚拟化
   - WINE（windows env），能够在linux上运行wondows程序
-  
-  
+  - JVM java vm
+# 2. 虚拟化种类
+Type-I， Type-II
   
