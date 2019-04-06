@@ -5,10 +5,6 @@
 - Xen仅进行CPU（包活中断）和内存的虚拟化，IO的虚拟化（声卡，显卡）由其第一个虚拟机domain0（dom0）的内核去实现
   - domain0 / dom0 / privileged domain，第一个虚拟机
   - domainU / unprivileged domain，其他虚拟机
-  
-<p align="center">
-  <img src="https://i.loli.net/2019/04/06/5ca86abdc2ac5.png" height=350 weight=350 >
-</p>  
 
 - Xen直接运行在硬件上面，然后直接在xen上启动一个虚拟机，作为xen的亲密无间的战友，拥有管理其他的虚拟机的特权。其他虚拟机的启动和关闭都要通过第一个虚拟机进行实现。
 - 因为xen本身并没有提供虚拟机管理程序，需要其上面第一个虚拟机的用户空间中运行虚拟机管理工具栈
@@ -99,12 +95,29 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe，libvirt
   - 即使是libvirt也需要远程至每一台物理主机，查看cpu，内存，io的使用情况，人工来决定在那台物理主机上创建虚拟机
   - 由此 openstack等 云平台出现，来解决这个问题
     
+## CentOS对Xen对支持
+- RHEL 5.7-（kernel version：2.6.18），默认对虚拟化技术xen
+  - kernel
+  - kernel-xen 需要安装这个内核才可以使用xen
+  
+- RHEL 5.8 Xen & KVM both
+- RHEL 6+ 仅支持KVM，同时取消支持xen
+  - 不支持自己安装在dom0中
+  - 但是支持自己运行在xen对虚拟环境中，即可以作为xen domU中对虚拟机
+  - dom0 和 domU 对内核中代码配置要求不同
+  
+<p align="center">
+  <img src="https://i.loli.net/2019/04/06/5ca86abdc2ac5.png" height=350 weight=350 >
+</p>  
 
+  - 但是xen是直接安装在硬件环境上对，不依赖于hostos
 
-
-
-
-
+- 目前要使用xen的解决方案
+  - 手动编译3.0以上版本的内核，启动对dom0的支持
+  - 编译安装xen 程序
+  - 制作好相关程序包的项目
+    - xen4centos，xen官方专门为centos发行版提供
+    - xen ma easy
 
 
 
