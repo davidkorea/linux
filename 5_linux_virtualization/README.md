@@ -31,6 +31,8 @@
   - 2.6.37开始支持运行dom0
   - 3.0 对关键特性进行了优化
 - 提供管理domU对工具栈，用于实现对虚拟机对添加，启动，快照，停止，删除等操作
+- XenStore
+  - 为各个domU提供共享信息存储空间，有着层级结构的名称空间。通常用于控制domU中的设备机制。配置中不需要设置xenstore
 ### 3. domU 非特权域
 根据其虚拟化等实现方式有多种类型  PV，  HVM，   PV on HVM
 
@@ -67,7 +69,7 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe
 </p>
 
 ### virsh / libvirt
-- virsh 是命令行，基于python开发，可以提供ui管理界面
+- virsh 是命令行，基于python开发，提供virt manager，virt viewer等图形化管理界面
 - 重量级，每一个主机都需要安装libvirt，这是虚拟化之外的另一套工具
 - 可以在安装了libvirt库的本地主机 去 远程链接对方的主机，只要对方主机的hypervisor上面也安装了libvirt库，并启动了libvirtd服务。可以通过对方主机上面的libvirt去管理对方的xen，kvm等虚拟机
 
@@ -75,8 +77,13 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe
   <img src="https://i.loli.net/2019/04/06/5ca8638f8ec14.png" height=350 weight=350 >
 </p>
 
-
-
+### 此处可以想到
+- xm，xl命令只能管理本地的xen虚拟机
+- libvirt可以管理其他主机的xen，kvm，qemu等虚拟机
+- 但是，当有多个物理主机，都运行hypervisor时，如何进行高效的虚拟机管理？
+  - 即使是libvirt也需要远程至每一台物理主机，查看cpu，内存，io的使用情况，人工来决定在那台物理主机上创建虚拟机
+  - 由此 openstack等 云平台出现，来解决这个问题
+    
 ![](https://i.loli.net/2019/04/06/5ca85ecbd7984.png)
 
 
