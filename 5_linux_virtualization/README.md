@@ -66,7 +66,9 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe
 - 目前思捷公司的 xen server(发行了一张光盘，早起收费，现在已开源) 和 XCP （xen cloud platform)
 <p align="center">
   <img src="https://i.loli.net/2019/04/06/5ca85ec89cc94.png" height=350 weight=350 >
+  <img src="https://i.loli.net/2019/04/06/5ca85ecbd7984.png" height=350 weight=350 >
 </p>
+
 
 ### virsh / libvirt
 - virsh 是命令行，基于python开发，提供virt manager，virt viewer等图形化管理界面
@@ -84,7 +86,6 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe
   - 即使是libvirt也需要远程至每一台物理主机，查看cpu，内存，io的使用情况，人工来决定在那台物理主机上创建虚拟机
   - 由此 openstack等 云平台出现，来解决这个问题
     
-![](https://i.loli.net/2019/04/06/5ca85ecbd7984.png)
 
 
 
