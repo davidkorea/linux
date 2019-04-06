@@ -19,7 +19,7 @@
   - 因为要修改系统内核，所以闭源系统很难进行半虚拟化
   - Xen，UML（user mode linux）
   
- - OS级别虚拟化
+- OS级别虚拟化
   - 容器级虚拟化 docker
   - 无虚拟机监控器VMM
   - 仅将正常操作系统的用户空间切割为多分，彼此间互相隔离，每一份被视为一个虚拟机
@@ -41,10 +41,7 @@
 - Xen，KVM在云端，成为Iaas，infrastructure 基础服务
 - lxc，container在云端，称为Paas，platform 平台服务
 
-# Xen
 
-- Xen属于type-I型虚拟化，Xen hypervisor直接运行在硬件上
-- Xen仅进行CPU和内存的虚拟化，IO的虚拟化（声卡，显卡）由其他程序进行
 
 
 
