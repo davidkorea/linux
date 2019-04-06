@@ -39,12 +39,12 @@ Xen当组成部分：
     PV on HVM
   - domU中的虚拟机类型：
     - Xen的PV技术：半虚拟化
-      不依赖于CPU的硬件辅助特性，guestos向Xen hypervisor发起hyper call进行cpu/内存调用，要求guestsos的内核作出修改，以知晓自己运行于pv/半虚拟化环境
-      依赖QEMU来虚拟io设备
+      不依赖于CPU的硬件辅助特性，guestos内核向Xen hypervisor发起hyper call进行cpu/内存调用，要求guestsos的内核作出修改，以知晓自己运行于pv/半虚拟化环境
+      对于io设备，guestos中需要能驱动io设备的fromtend，dom0中需要可以驱动io设别的backend
       运行于domU中的os：linux（2.6.24+）NetBSD，FreeBSD，OP en solosolars
     - Xen的HVM技术：全虚拟化
-      依赖于intel-VT，AMD-V，不需要向Xen hypervisor发起hyper call进行调用，但仍然由Xen hypervisor将cpu和内存虚拟后进行提供
-      依赖于QEMU来续集io设备
+      依赖于intel-VT，AMD-V，不需要guestos的内核向Xen hypervisor发起hyper call进行调用，可以直接运行指令。但仍然由Xen hypervisor将cpu和内存虚拟后进行提供
+      依赖于QEMU来虚拟io设备
       运行于domU中的os：几乎所有支持x86平台的系统，当然也包括windows
     - PV on HVM
       CPU为HVM模式运行
