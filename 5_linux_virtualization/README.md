@@ -66,6 +66,17 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe
   <img src="https://i.loli.net/2019/04/06/5ca85ec89cc94.png" height=350 weight=350 >
 </p>
 
+### virsh / libvirt
+- virsh 是命令行，基于python开发，可以提供ui管理界面
+- 重量级，每一个主机都需要安装libvirt，这是虚拟化之外的另一套工具
+- 可以在安装了libvirt库的本地主机 去 远程链接对方的主机，只要对方主机的hypervisor上面也安装了libvirt库，并启动了libvirtd服务。可以通过对方主机上面的libvirt去管理对方的xen，kvm等虚拟机
+
+<p align="center">
+  <img src="https://i.loli.net/2019/04/06/5ca8638f8ec14.png" height=350 weight=350 >
+</p>
+
+
+
 ![](https://i.loli.net/2019/04/06/5ca85ecbd7984.png)
 
 
