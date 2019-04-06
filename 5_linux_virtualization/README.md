@@ -5,6 +5,11 @@
 - Xen仅进行CPU（包活中断）和内存的虚拟化，IO的虚拟化（声卡，显卡）由其第一个虚拟机domain0（dom0）的内核去实现
   - domain0 / dom0 / privileged domain，第一个虚拟机
   - domainU / unprivileged domain，其他虚拟机
+  
+<p align="center">
+  <img src="https://i.loli.net/2019/04/06/5ca86abdc2ac5.png" height=350 weight=350 >
+</p>  
+
 - Xen直接运行在硬件上面，然后直接在xen上启动一个虚拟机，作为xen的亲密无间的战友，拥有管理其他的虚拟机的特权。其他虚拟机的启动和关闭都要通过第一个虚拟机进行实现。
 - 因为xen本身并没有提供虚拟机管理程序，需要其上面第一个虚拟机的用户空间中运行虚拟机管理工具栈
 - 因为xen本身不能驱动IO硬件，需要其上面第一个虚拟机内核空间安装目前流行的linux发行版。因为这些linux系统支持IO驱动。声卡，显卡，网卡，硬盘等设备
@@ -41,13 +46,16 @@ domU中的虚拟机类型：
   - 不依赖于CPU的硬件辅助特性，guestos内核向Xen hypervisor发起hyper call进行cpu/内存调用，要求guestsos的内核作出修改，以知晓自己运行于pv/半虚拟化环境
   - 对于io设备，guestos中需要能驱动io设备的fromtend，dom0中需要可以驱动io设别的backend
   - 运行于domU中的os：linux（2.6.24+）NetBSD，FreeBSD，OP en solosolars
+  
 <p align="center">
   <img src="https://i.loli.net/2019/04/06/5ca85a04348bc.png" height=350 weight=350 >
 </p>  
+
 - Xen的HVM技术：全虚拟化
   - 依赖于intel-VT，AMD-V，不需要guestos的内核向Xen hypervisor发起hyper call进行调用，可以直接运行指令。但仍然由Xen hypervisor将cpu和内存虚拟后进行提供
   - 依赖于QEMU来虚拟io设备
   - 运行于domU中的os：几乎所有支持x86平台的系统，当然也包括windows
+  
 <p align="center">
   <img src="https://i.loli.net/2019/04/06/5ca85ecbdbff7.png" height=350 weight=350 >
 </p>  
