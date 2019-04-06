@@ -1,6 +1,23 @@
 # kvm-openstack-docker-kubernetes
 
-# Visualization
+# Xen
+- Xen，KVM在云端，成为Iaas，infrastructure 基础服务
+- lxc，container在云端，称为Paas，platform 平台服务
+
+
+- Xen属于type-I型虚拟化，Xen hypervisor直接运行在硬件上
+- Xen仅进行CPU和内存的虚拟化，IO的虚拟化（声卡，显卡）由其他程序进行
+- Xen直接运行在硬件上面，然后需要怎直接在xen hypervisor上面直接启动一个虚拟机，作为xen的亲密无间的战友，拥有管理其他的虚拟机的特权
+
+
+
+
+
+
+
+
+
+
 # 1. 虚拟化技术分类
 - 模拟器emulization。可以虚拟和宿主机不同的系统，灵活，效率差
   - QEMU，PearPC，Bochs等技术
@@ -38,8 +55,6 @@
 - Type-II
   
   
-- Xen，KVM在云端，成为Iaas，infrastructure 基础服务
-- lxc，container在云端，称为Paas，platform 平台服务
 
 
 
