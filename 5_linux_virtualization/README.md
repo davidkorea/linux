@@ -101,7 +101,7 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe，libvirt
   - kernel-xen 需要安装这个内核才可以使用xen
   
 - RHEL 5.8 Xen & KVM both
-- RHEL 6+ 仅支持KVM，同时取消支持xen
+- RHEL 6+ 仅支持KVM，同时**取消所有版本keenel对xen对支持**，以前支持过xen的老版本内核，现在也不支持了
   - 不支持自己安装在dom0中
   - 但是支持自己运行在xen对虚拟环境中，即可以作为xen domU中对虚拟机
   - dom0 和 domU 对内核中代码配置要求不同
