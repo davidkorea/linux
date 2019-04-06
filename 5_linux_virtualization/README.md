@@ -17,13 +17,49 @@
 
 - 当多个虚拟机发起调用时，dom0孰先孰后进行处理？先来先得，又一个环状缓冲，每一个请求过来，会占用一个槽位，当槽位全部占满时，即缓冲区占满。新io请求出现时，会提示io设备繁忙，以此来控制io设备请求速度。网络设备也是类似法则进行实现
 
+```
+Xen当组成部分：
+1. Xen hypervisor
+  分配CPU，memory，interrupt
+2. dom0
+  特权域，IO分配
+    网络设备
+      net-front（guestos），net-backend
+    块设备
+      block-front（guestos），block-backend
+  linux kernel
+    2.6.37开始支持运行dom0
+    3.0 对关键特性进行了优化
+  提供管理domU对工具栈
+    用于实现对虚拟机对添加，启动，快照，停止，删除等操作
+3. domU
+  非特权域，根据其虚拟化等实现方式有多种类型
+    PV - 半虚拟化
+    HVM - 硬件辅助虚拟化，全虚拟化
+    PV on HVM
+    
+Xen的PV技术：半虚拟化
+  不依赖于CPU的硬件辅助特性，CPU由Xen hypervisor进行模拟，要求guestsos的内核作出修改，以知晓自己运行于pv/半虚拟化环境
+  依赖QEMU来虚拟io设备
+  运行于domU中的os：linux（2.6.24+）NetBSD，FreeBSD，OP en solosolars
+Xen的HVM技术：全虚拟化
+  依赖于intel-VT，AMD-V，CPU不需要Xen hypervisor模拟
+  依赖于QEMU来续集io设备
+  运行于domU中的os：几乎所有支持x86平台的系统，当然也包括windows
+PV on HVM
+  CPU
+```
+
+
+
 
 
 # 1. 虚拟化技术分类
 - 模拟器emulization。可以虚拟和宿主机不同的系统，灵活，效率差
   - QEMU，PearPC，Bochs等技术
-  - 需要将不同架构的虚拟机的指令，经过转换，在转换为宿主机支持的指令。因此，指令集的转换效率低
-- 完全虚拟化 full vitualization, native virtualizatiom. 虚拟机需要和宿主机的硬件架构完全相同。如果宿主机是x86，那么虚拟机也必须相同，位数都可以32，64。
+  - 需要将不同架构（x86，ARM 等等）的虚拟机的指令，经过转换，在转换为宿主机支持的指令。因此，指令集的转换效率低
+
+- 完全虚拟化 full vitualization, native virtualizatiom. 虚拟机需要和宿主机的硬件架构完全相同。如果宿主机是x86（winodws，linux），那么虚拟机也必须相同，位数32，64都可以
   - 因为虚拟机和宿主机的架构相同，所以有些不需要调用特权的指令可以直接由cpu处理，而不需要转换
   - 如果是特权指令，需要VMM虚拟机监视器来捕获虚拟机的指令，在宿主机转换后，再将结果返回给虚拟机（类似上面的虚拟器）
   - 硬件辅助虚拟化。CPU多了一个环，0，1，2，3的基础上又增加了环-1
