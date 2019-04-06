@@ -17,43 +17,41 @@
 
 - 当多个虚拟机发起调用时，dom0孰先孰后进行处理？先来先得，又一个环状缓冲，每一个请求过来，会占用一个槽位，当槽位全部占满时，即缓冲区占满。新io请求出现时，会提示io设备繁忙，以此来控制io设备请求速度。网络设备也是类似法则进行实现
 
-```
+
 Xen当组成部分：
-1. Xen hypervisor
-  分配CPU，memory，interrupt
-2. dom0
-  特权域
+1. Xen hypervisor， 分配CPU，memory，interrupt
+2. dom0，  特权域
   - IO分配
-    网络设备
+    - 网络设备
       net-front（guestos），net-backend
-    块设备
+    - 块设备
       block-front（guestos），block-backend
   - linux kernel
-    2.6.37开始支持运行dom0
-    3.0 对关键特性进行了优化
+    - 2.6.37开始支持运行dom0
+    - 3.0 对关键特性进行了优化
   - 提供管理domU对工具栈，用于实现对虚拟机对添加，启动，快照，停止，删除等操作
-3. domU
-  非特权域，根据其虚拟化等实现方式有多种类型
-    PV - 半虚拟化
-    HVM - 硬件辅助虚拟化，全虚拟化
-    PV on HVM
+3. domU，  非特权域，根据其虚拟化等实现方式有多种类型  PV，  HVM，   PV on HVM
   - domU中的虚拟机类型：
     - Xen的PV技术：半虚拟化
-      不依赖于CPU的硬件辅助特性，guestos内核向Xen hypervisor发起hyper call进行cpu/内存调用，要求guestsos的内核作出修改，以知晓自己运行于pv/半虚拟化环境
-      对于io设备，guestos中需要能驱动io设备的fromtend，dom0中需要可以驱动io设别的backend
-      运行于domU中的os：linux（2.6.24+）NetBSD，FreeBSD，OP en solosolars
+      - 不依赖于CPU的硬件辅助特性，guestos内核向Xen hypervisor发起hyper call进行cpu/内存调用，要求guestsos的内核作出修改，以知晓自己运行于pv/半虚拟化环境
+      - 对于io设备，guestos中需要能驱动io设备的fromtend，dom0中需要可以驱动io设别的backend
+      - 运行于domU中的os：linux（2.6.24+）NetBSD，FreeBSD，OP en solosolars
     - Xen的HVM技术：全虚拟化
-      依赖于intel-VT，AMD-V，不需要guestos的内核向Xen hypervisor发起hyper call进行调用，可以直接运行指令。但仍然由Xen hypervisor将cpu和内存虚拟后进行提供
-      依赖于QEMU来虚拟io设备
-      运行于domU中的os：几乎所有支持x86平台的系统，当然也包括windows
+      - 依赖于intel-VT，AMD-V，不需要guestos的内核向Xen hypervisor发起hyper call进行调用，可以直接运行指令。但仍然由Xen hypervisor将cpu和内存虚拟后进行提供
+      - 依赖于QEMU来虚拟io设备
+      - 运行于domU中的os：几乎所有支持x86平台的系统，当然也包括windows
     - PV on HVM
-      CPU为HVM模式运行
-      io设备为PV模式运行，即分为fromt-backend模式
-      运行于domU中的os，只要os能驱动PV接口类型的io设备
-```
+      - CPU为HVM模式运行
+      - io设备为PV模式运行，即分为fromt-backend模式
+      - 运行于domU中的os，只要os能驱动PV接口类型的io设备
 
 
 
+
+
+
+
+-----
 
 
 # 1. 虚拟化技术分类
