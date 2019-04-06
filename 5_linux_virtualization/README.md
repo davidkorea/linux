@@ -43,8 +43,8 @@
 
 # Xen
 
-
-
+- Xen属于type-I型虚拟化，Xen hypervisor直接运行在硬件上
+- Xen仅进行CPU和内存的虚拟化，IO的虚拟化（声卡，显卡）由其他程序进行
 
 
 
