@@ -31,6 +31,20 @@
 - 库级别的虚拟化
   - WINE（windows env），能够在linux上运行wondows程序
   - JVM java vm
-# 2. 虚拟化种类
+
+虚拟化种类
 Type-I， Type-II
   
+  
+Xen，KVM在云端，成为Iaas，infrastructure 基础服务
+lxc，container在云端，称为Paas，platform 平台服务
+
+
+
+
+
+
+
+
+
+
