@@ -53,7 +53,7 @@ domU中的虚拟机类型：
   - 运行于domU中的os，只要os能驱动PV接口类型的io设备
 
 ## Xen的工具栈
-dom0中的管理其他虚拟机的工具： xm， xl， xe
+dom0中的管理其他虚拟机的工具： xm， xl， xe，libvirt
 ### xm（xen manager） / xend
 - 在xem hypervisor中的dom0中，要启动xend服务，以便来接收xm的命令，来完成虚拟机创建，停止等操作
 - xm 是一个命令行工具
