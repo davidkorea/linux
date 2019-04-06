@@ -44,6 +44,7 @@ domU中的虚拟机类型：
   - 依赖于intel-VT，AMD-V，不需要guestos的内核向Xen hypervisor发起hyper call进行调用，可以直接运行指令。但仍然由Xen hypervisor将cpu和内存虚拟后进行提供
   - 依赖于QEMU来虚拟io设备
   - 运行于domU中的os：几乎所有支持x86平台的系统，当然也包括windows
+    ![](https://i.loli.net/2019/04/06/5ca85ecbdbff7.png)
 - PV on HVM
   - CPU为HVM模式运行
   - io设备为PV模式运行，即分为fromt-backend模式
@@ -61,7 +62,9 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe
 ### xe / xapi
 - xe是命令行工具，而xapi是xen api，所用于cloud环境中。
 - 目前思捷公司的 xen server(发行了一张光盘，早起收费，现在已开源) 和 XCP （xen cloud platform)
+![](https://i.loli.net/2019/04/06/5ca85ec89cc94.png)
 
+![](https://i.loli.net/2019/04/06/5ca85ecbd7984.png)
 
 
 
