@@ -41,12 +41,17 @@ domU中的虚拟机类型：
   - 不依赖于CPU的硬件辅助特性，guestos内核向Xen hypervisor发起hyper call进行cpu/内存调用，要求guestsos的内核作出修改，以知晓自己运行于pv/半虚拟化环境
   - 对于io设备，guestos中需要能驱动io设备的fromtend，dom0中需要可以驱动io设别的backend
   - 运行于domU中的os：linux（2.6.24+）NetBSD，FreeBSD，OP en solosolars
-    ![](https://i.loli.net/2019/04/06/5ca85a04348bc.png)
+<p align="center">
+  <img src="https://i.loli.net/2019/04/06/5ca85a04348bc.png" height=350 weight=350 >
+</p>  
 - Xen的HVM技术：全虚拟化
   - 依赖于intel-VT，AMD-V，不需要guestos的内核向Xen hypervisor发起hyper call进行调用，可以直接运行指令。但仍然由Xen hypervisor将cpu和内存虚拟后进行提供
   - 依赖于QEMU来虚拟io设备
   - 运行于domU中的os：几乎所有支持x86平台的系统，当然也包括windows
-    ![](https://i.loli.net/2019/04/06/5ca85ecbdbff7.png)
+<p align="center">
+  <img src="https://i.loli.net/2019/04/06/5ca85ecbdbff7.png" height=350 weight=350 >
+</p>  
+
 - PV on HVM
   - CPU为HVM模式运行
   - io设备为PV模式运行，即分为fromt-backend模式
