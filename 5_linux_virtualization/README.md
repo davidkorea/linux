@@ -1,10 +1,6 @@
 # kvm-openstack-docker-kubernetes
 
 # Xen
-- Xen，KVM在云端，成为Iaas，infrastructure 基础服务
-- lxc，container在云端，称为Paas，platform 平台服务
-
-
 - Xen属于type-I型虚拟化，Xen hypervisor直接运行在硬件上
 - Xen仅进行CPU和内存的虚拟化，IO的虚拟化（声卡，显卡）由其第一个虚拟机domain0（dom0）的内核去实现
   - domain0 / dom0 / privileged domain，第一个虚拟机
@@ -15,8 +11,9 @@
 - 所以其他的虚拟机需要CPU或内存时，向xen hypervisor去请求调用
 - 其他的虚拟机当使用io时，向第一个虚拟机发起调用请求。这种io的模拟是通过QEMU来实现的
 
-
-
+- 每一个虚拟机中的CPU，映射到xen hypervisor中是一个一个的线程来提供
+- 每一个虚拟机中的内存，都是由内存中的分页page管理。将物理内存中的一段空间切割出来，形成一个虚拟空间给虚拟机使用
+  - 虽然虚拟机中看到的是连续的内存空间，而实际上在物理内存空间中可能是非连续的空间
 
 
 
@@ -58,7 +55,8 @@
 - Type-I，hypervisor 直接运行在硬件
 - Type-II
   
-  
+- Xen，KVM在云端，成为Iaas，infrastructure 基础服务
+- lxc，container在云端，称为Paas，platform 平台服务
 
 
 
