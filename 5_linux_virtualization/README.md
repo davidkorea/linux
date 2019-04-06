@@ -19,9 +19,9 @@
 
 
 ## Xen当组成部分
-#### 1. Xen hypervisor
+### 1. Xen hypervisor
 分配CPU，memory，interrupt
-#### 2. dom0 特权域
+### 2. dom0 特权域
 - IO分配
   - 网络设备
     net-front（guestos），net-backend
@@ -31,7 +31,7 @@
   - 2.6.37开始支持运行dom0
   - 3.0 对关键特性进行了优化
 - 提供管理domU对工具栈，用于实现对虚拟机对添加，启动，快照，停止，删除等操作
-#### 3. domU 非特权域
+### 3. domU 非特权域
 根据其虚拟化等实现方式有多种类型  PV，  HVM，   PV on HVM
 
 domU中的虚拟机类型：
@@ -47,6 +47,30 @@ domU中的虚拟机类型：
   - CPU为HVM模式运行
   - io设备为PV模式运行，即分为fromt-backend模式
   - 运行于domU中的os，只要os能驱动PV接口类型的io设备
+
+## Xen的工具栈
+dom0中的管理其他虚拟机的工具
+- xm
+- xl
+- xe
+### xm（xen manager） / xend
+- 在xem hypervisor中的dom0中，要启动xend服务，以便来接收xm的命令，来完成虚拟机创建，停止等操作
+- xm 是一个命令行工具
+  - create， destroy， pause，stop 等等
+### xl （xen light）
+- xl是基于libxenlight库提供的轻量级的命令行工具栈
+- xen4.2起，xm和xl同时支持。从xen4.3起xm被废弃，只用xl
+### xe / xapi
+- xe是命令行工具，而xapi是xen api，所用于cloud环境中。
+- 目前思捷公司的 xen server(发行了一张光盘，早起收费，现在已开源) 和 XCP （xen cloud platform)
+
+
+
+
+
+
+
+
 
 
 
