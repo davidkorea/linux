@@ -33,7 +33,9 @@
   - JVM java vm
 
 虚拟化种类
-Type-I， Type-II
+
+- Type-I，hypervisor 直接运行在硬件
+- Type-II
   
   
 - Xen，KVM在云端，成为Iaas，infrastructure 基础服务
