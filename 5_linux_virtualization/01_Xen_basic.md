@@ -38,7 +38,7 @@
 - ```cd /boot```
 - ```ln -sv vmlinuz-2.6.32-504...  vmlinuz```
 - ```ln -sv initramfs-2.6.32.504...img initramfs.img```
-
+## 创建虚拟机
 进入到xen的目录 /etc/xen
 - xl.conf， xl命令的通用全局配置文件，和domU的配置无关
 - xlexample.hvm，xlwxample.pvlinux 为xl命令的domU创建模版
@@ -48,3 +48,9 @@
 - ```xl -v create busybox -n```,busybox为上面的配置文件，此命令并不会真正创建虚拟机，只会输出配置选项供检查使用 
 - ```xl -v create busybox```，-v显示详细信息，真正创建虚拟机
 - ```xl list``` ，会列出Domain-0 和 刚刚创建的busybox-001虚拟机
+
+创建虚拟机完成，但是刚才并没有配置网卡不能ssh进行远程操作，也没有图形界面，那么怎么进入虚拟机呢？
+- ```xl console busybox-001```
+
+
+
