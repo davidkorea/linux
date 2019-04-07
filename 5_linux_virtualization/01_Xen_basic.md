@@ -73,13 +73,15 @@
 - ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，不要使用exit命令
 
 ## 虚拟机网络配置
-命令方式，或者配置文件的方式，创建桥接设备后，会死机
-- kernel version, known bug
-- try to change to another kernel version
+命令方式，或者配置文件的方式，创建桥接设备后，会死机。kernel version, known bug，try to change to another kernel version
 - ```yum list all kernel*``` ，查看所有可用kernel
 下面2个都要安装，注意要安装新的kernel而不是升级当前使用的kernel，以免升级后无法开机
 - ```yum -y install kernel-3.10.68```
 - ```yum -y install kernel-3.10.68 kernel-firmware-3.10.68```
+- ```vim /etc.grub.conf```
+  ![](https://i.loli.net/2019/04/07/5ca9af2ec89f1.png)
+  
+这个版本的kernrl开机失败，再次更换3.7.4版本kernel-xen-3.7.4
 
 
 
