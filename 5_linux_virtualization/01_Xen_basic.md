@@ -1,6 +1,21 @@
 
 
 # 创建PV格式的虚拟机
+1. 准备磁盘镜像文件
+  - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
+  - ```mke2fs -t ext /images/xen/bnusybox.img```
+2. 提供根文件系统
+  - 编译真正的busybox tar文件，并复制到busybox.img镜像中
+  - ```mount -o /images/xen/busybox.img /mnt```
+  - ```cp -a $BUSYBOX/_install/* /mnt```
+  - ```mkdir /mnt{prox,sys,dev,var}```
+3. 提供domU配置文件
+  - dom0的内核文件，创建一个软连接，直接来使用
+  - 根据/etc/xen下的xlexample.pvlinux模版文件来修改虚拟机配置文件
+4. 启动实例
+  - ```x; -v create <domU_cfg_file> -n```，检查一下
+  - ```x; -v create <domU_cfg_file>```，真正创建
+
 
 ## 创建磁盘镜像文件qemu-img
 - 创建
