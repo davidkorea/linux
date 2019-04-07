@@ -1,5 +1,5 @@
 
-# 在centos6安装xen
+# 1. 在centos6安装xen
 
 - ```yum install -y xen```，默认安装最新版本xen-4.4 同时支持xm和xl命令，还默认下载了kernel3.18
   ![](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
@@ -10,7 +10,7 @@
 - 修改grub.conf文件
   ![](https://i.loli.net/2019/04/07/5ca9bb50116f8.jpg)
 
-# 创建PV格式的虚拟机  
+# 2. 创建PV格式的虚拟机  
 当前使用 centos6 3.18.12version kernel
 
 1. 准备磁盘镜像文件
@@ -29,7 +29,7 @@
   - ```x; -v create <domU_cfg_file>```，真正创建
 
 
-## 创建磁盘镜像文件qemu-img
+## 2.1 创建磁盘镜像文件qemu-img
 - 创建
   - ```qemu-img create -f raw /images/xen/busybox.img 2G```
   - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
@@ -61,12 +61,12 @@
         ![](https://i.loli.net/2019/04/07/5ca988926ec1b.png)
 **根文件系统准备完毕**
 
-## 准备内核
+## 2.2 准备内核
 宿主机自带的系统可以直接拿来用，虽然不能用作dom0，但是domU没有问题。创建软连接
 - ```cd /boot```
 - ```ln -sv vmlinuz-2.6.32-504...  vmlinuz```
 - ```ln -sv initramfs-2.6.32.504...img initramfs.img```
-## 创建虚拟机
+## 2.3 创建虚拟机
 进入到xen的目录 /etc/xen
 - xl.conf， xl命令的通用全局配置文件，和domU的配置无关
 - xlexample.hvm，xlwxample.pvlinux 为xl命令的domU创建模版
@@ -81,7 +81,7 @@
 - ```xl console busybox-001```
 - ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，使用exit命令会删除当前虚拟机
 
-## 虚拟机网络配置
+## 2.4 虚拟机网络配置
 命令方式，或者配置文件的方式，创建桥接设备后，会死机。kernel version, known bug，try to change to another kernel version
 - ```yum list all kernel*``` ，查看所有可用kernel
 下面2个都要安装，注意要安装新的kernel而不是升级当前使用的kernel，以免升级后无法开机
@@ -110,10 +110,12 @@
   - 修改 ```vif = ['bridge=xenbr0']```
 
 - ```xl -v create /etc/xen/busybox -c ```, -c创建虚拟机后直接进入控制台
-  - 此时虚拟机内执行ifconfig，并不能看到eth0，因为并没有网卡驱动
+  - 此时虚拟机内执行```ifconfig -a```，并不能看到eth0，因为并没有网卡驱动
   - 于是去宿主机上拷贝相应内核版本的网卡驱动程序
+    - 在虚拟机上执行```uname -r```，查看虚拟机的内核版本为2.6.32-504
 
-
+- 将之前创建的镜像文件挂载到/mnt，并复制网卡驱动文件进去
+  - ```mount -o loop /images/xen/busybox.img /mnt```
 
  
 
