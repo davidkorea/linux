@@ -45,4 +45,6 @@
 - ```cp xlexample.pvlinux busybox```,复制一份模版进行编辑
 - ```vim busybox```，如下图
   ![](https://i.loli.net/2019/04/07/5ca991fe76a2b.jpg)
-- ```xl create```
+- ```xl -v create busybox -n```,busybox为上面的配置文件，此命令并不会真正创建虚拟机，只会输出配置选项供检查使用 
+- ```xl -v create busybox```，-v显示详细信息，真正创建虚拟机
+- ```xl list``` ，会列出Domain-0 和 刚刚创建的busybox-001虚拟机
