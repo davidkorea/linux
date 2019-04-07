@@ -31,3 +31,18 @@
     - 测试这个文件系统是否可用
       - ```chroot /mnt /bin/sh```
         ![](https://i.loli.net/2019/04/07/5ca988926ec1b.png)
+**根文件系统准备完毕**
+
+## 准备内核
+宿主机自带的系统可以直接拿来用，虽然不能用作dom0，但是domU没有问题。创建软连接
+- ```cd /boot```
+- ```ln -sv vmlinuz-2.6.32-504...  vmlinuz```
+- ```ln -sv initramfs-2.6.32.504...img initramfs.img```
+
+进入到xen的目录 /etc/xen
+- xl.conf， xl命令的通用全局配置文件，和domU的配置无关
+- xlexample.hvm，xlwxample.pvlinux 为xl命令的domU创建模版
+- ```cp xlexample.pvlinux busybox```,复制一份模版进行编辑
+- ```vim busybox```，如下图
+  ![](https://i.loli.net/2019/04/07/5ca991fe76a2b.jpg)
+- ```xl create```
