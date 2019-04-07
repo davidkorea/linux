@@ -184,7 +184,7 @@ KUBE_API_ARGS=""
 [root@k8s-master ~]# grep -v ^# /etc/kubernetes/controller-manager 
 KUBE_CONTROLLER_MANAGER_ARGS=""
 ```
-### 4. kube-scheduler 配置文件
+### 4. scheduler 配置文件
 
 ```diff
 [root@k8s-master ~]# vim /etc/kubernetes/scheduler
