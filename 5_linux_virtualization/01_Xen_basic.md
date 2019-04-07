@@ -22,3 +22,4 @@
         - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```
         - ```make menuconfig```去编译busybox
         - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
+          ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
