@@ -87,10 +87,11 @@
   ![](https://i.loli.net/2019/04/07/5ca9b1761026b.png)
 
 
-依然死机，去安装3.7.4 kernel和其fireware
+依然死机，去安装3.7.4 kernel和其fireware，再不行更改网卡类型，不使用r1000
+- yum安装kernel，更改grub
+  ![](https://i.loli.net/2019/04/07/5ca9b426edf91.jpg)
 
-
-
+- 果然这个版本ok。创建网桥后并没有死机
 
 
 
