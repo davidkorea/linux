@@ -81,8 +81,10 @@
 - ```vim /etc.grub.conf```
   ![](https://i.loli.net/2019/04/07/5ca9af2ec89f1.png)
   
-这个版本的kernrl开机失败，再次更换3.7.4版本kernel-xen-3.7.4
-
+这个版本的kernrl开机失败，尝试在该版本上面更新bridge-utils版本。实在不行，再次更换3.7.4版本kernel-xen-3.7.4
+- ```rpm -q bridge-utils ```,查看版本bridge-utils-1.2-10.el6.x86_64，升级至1.5
+- 命令行创建桥设备
+  ![](https://i.loli.net/2019/04/07/5ca9b1761026b.png)
 
 
 
