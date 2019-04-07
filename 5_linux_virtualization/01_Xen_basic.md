@@ -87,6 +87,7 @@
   ![](https://i.loli.net/2019/04/07/5ca9b1761026b.png)
 
 
+依然死机，去安装3.7.4 kernel和其fireware
 
 
 
