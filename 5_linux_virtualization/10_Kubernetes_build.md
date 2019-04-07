@@ -176,7 +176,7 @@ KUBE_API_ARGS=""
 - ```KUBE_ETCD_SERVERS="--etcd-servers=http://192.168.0.15:2379"``` #etcd 服务地址，前面 已经启动了 etcd 服务
 - ```KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"``` #kubernetes 可以分配的 ip 的范围，kubernetes 启动的每一个 pod 以及 serveice 都会分配一个 ip 地址，将从这个范围中分配 IP。
 - ```KUBE_ADMISSION_CONTROL="--admission-control=AlwaysAdmit"``` #不做限制，允讲所有节点可以访问 apiserver ，对所有请求开绿灯。
-### 3. kube-controller-manager 配置文件
+### 3. controller-manager 配置文件
 
 默认不需要修改
 
