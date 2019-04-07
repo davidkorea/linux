@@ -1,14 +1,16 @@
 
+# 在centos6安装xen
 
-# 创建PV格式的虚拟机
-- ```yum install -y xen```，默认安装最新版本xen-4.4 同时支持xm和xl命令，还默认下载来kernel3.18
+- ```yum install -y xen```，默认安装最新版本xen-4.4 同时支持xm和xl命令，还默认下载了kernel3.18
   ![](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
-  - 安装后会/boot目录下会出现xen
-    ![](https://i.loli.net/2019/04/07/5ca9bb4a33330.jpg)
-  - 修改grub.conf文件
-    ![](https://i.loli.net/2019/04/07/5ca9bb50116f8.jpg)
-
   
+- 安装后会/boot目录下会出现xen
+  ![](https://i.loli.net/2019/04/07/5ca9bb4a33330.jpg)
+  
+- 修改grub.conf文件
+  ![](https://i.loli.net/2019/04/07/5ca9bb50116f8.jpg)
+
+# 创建PV格式的虚拟机  
 当前使用 centos6 3.18.12version kernel
 
 1. 准备磁盘镜像文件
@@ -77,7 +79,7 @@
 
 创建虚拟机完成，但是刚才并没有配置网卡不能ssh进行远程操作，也没有图形界面，那么怎么进入虚拟机呢？
 - ```xl console busybox-001```
-- ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，不要使用exit命令
+- ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，使用exit命令会删除当前虚拟机
 
 ## 虚拟机网络配置
 命令方式，或者配置文件的方式，创建桥接设备后，会死机。kernel version, known bug，try to change to another kernel version
@@ -98,17 +100,22 @@
 - yum安装kernel，更改grub
   ![](https://i.loli.net/2019/04/07/5ca9b426edf91.jpg)
 
-- 果然这个版本ok。创建网桥后并没有死机
+果然这个3.7.4版本ok。创建网桥后并没有死机
+- 创建网桥xenbr0
+
+### 配置虚拟机网络接口
+![](https://i.loli.net/2019/04/07/5ca9be3d0a713.jpg)
+
+- ```vim /etc/xen/busybox```
+  - 修改 ```vif = ['bridge=xenbr0']```
+
+- ```xl -v create /etc/xen/busybox -c ```, -c创建虚拟机后直接进入控制台
+  - 此时虚拟机内执行ifconfig，并不能看到eth0，因为并没有网卡驱动
+  - 于是去宿主机上拷贝相应内核版本的网卡驱动程序
 
 
 
-
-
-
-
-
-
-
+ 
 
 
 
