@@ -10,7 +10,12 @@
     - ```df -h```查看系统中文件的使用情况
     - ```du -sh *```查看当前目录下各个文件及目录占用空间大小
 
-- 不分区，直接格式化
+- 不分区，直接格式化，作为根文件系统
   - ```mke2fs -t ext2 /images/xen/busybox.img```
   - 挂载
     ```mount -o loop /images/xen/busybox.img /mnt```, -o loop??????????
+  - 若要将此busybox.img当作根文件目录，里面需要有etc，proc，usr等目录
+    - 自己创建比较麻烦，复制自己当前宿主机等目录也比较慢
+    - 所以直接去下载真正的busybox
+      - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```
+      - 下载busybox tar包，进到busybox解压目录下。编译成静态链格式
