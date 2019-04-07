@@ -1,7 +1,7 @@
 
 
 # 创建PV格式的虚拟机
-- ```yum install -y xen```，默认安装最新版本, 4.4 同时支持xm和xl命令
+- ```yum install -y xen```，默认安装最新版本xen-4.4 同时支持xm和xl命令，还默认下载来kernel3.18
   ![](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
   - 安装后会/boot目录下会出现xen
     ![](https://i.loli.net/2019/04/07/5ca9bb4a33330.jpg)
