@@ -23,3 +23,8 @@
         - ```make menuconfig```去编译busybox
         - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
           ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
+        - ```make```,如果使用make install会直接安装在当前目录下
+        - ```make install```，会安装在当前目录busybox的_install文件夹下
+        - ```cp -a _install/* /mnt```
+        - ```cd /mnt```
+        - ```mkdir proc sys dev etc var boot home```，在mnt目录下，创建这几个文件夹。关键就是proc sys dev目录
