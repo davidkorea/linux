@@ -20,3 +20,5 @@
       - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```
       - 下载busybox tar包，进到busybox解压目录下
         - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```
+        - ```make menuconfig```去编译busybox
+        - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
