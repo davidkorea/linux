@@ -2,7 +2,8 @@
 
 # Xen
 - Xen属于type-I型虚拟化，Xen hypervisor直接运行在硬件上
-  - **其实就是被更改过的带有xen的kernel 直接作为宿主机操作系统安装在物理主机，同时也作为xen的dom0，来管理其他的domU虚拟机**
+  - **其实Xen hypervisor就是被更改过的带有xen的kernel 直接作为宿主机操作系统安装在物理主机，同时也作为xen的dom0，来管理其他的domU虚拟机**
+  - **hypervisor除了提供cpu和内存的虚拟化之外，还需要提供内存管理器，线程调度器，设备驱动，安全子系统，io栈，网络栈等组件。其实hypervisor本身就是一个完整的操作系统。只不过其主要目的是用来运行多个虚拟机而不是运行进程，这是和linux内核的主要区别。但是xen的hypervisor把io的能力托付给了dom0来处理**
 - Xen仅进行CPU（包活中断）和内存的虚拟化，IO的虚拟化（声卡，显卡）由其第一个虚拟机domain0（dom0）的内核去实现
   - domain0 / dom0 / privileged domain，第一个虚拟机
   - domainU / unprivileged domain，其他虚拟机
