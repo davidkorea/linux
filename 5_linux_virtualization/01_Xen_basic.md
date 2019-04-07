@@ -17,14 +17,17 @@
   - 若要将此busybox.img当作根文件目录，里面需要有etc，proc，usr等目录
     - 自己创建比较麻烦，复制自己当前宿主机等目录也比较慢
     - 所以直接去下载真正的busybox
-      - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```
-      - 下载busybox tar包，进到busybox解压目录下
-        - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```
-        - ```make menuconfig```去编译busybox
-        - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
-          ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
-        - ```make```,如果使用make install会直接安装在当前目录下
-        - ```make install```，会安装在当前目录busybox的_install文件夹下
-        - ```cp -a _install/* /mnt```
-        - ```cd /mnt```
-        - ```mkdir proc sys dev etc var boot home```，在mnt目录下，创建这几个文件夹。关键就是proc sys dev目录
+    - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```
+    - 下载busybox tar包，进到busybox解压目录下
+      - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```
+      - ```make menuconfig```去编译busybox
+      - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
+        ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
+      - ```make```,如果使用make install会直接安装在当前目录下
+      - ```make install```，会安装在当前目录busybox的_install文件夹下
+      - ```cp -a _install/* /mnt```
+      - ```cd /mnt```
+      - ```mkdir proc sys dev etc var boot home```，在mnt目录下，创建这几个文件夹。关键就是proc sys dev目录
+    - 测试这个文件系统是否可用
+      - ```chroot /mnt /bin/sh```
+        ![](https://i.loli.net/2019/04/07/5ca988926ec1b.png)
