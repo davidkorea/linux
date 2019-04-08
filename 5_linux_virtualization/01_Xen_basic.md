@@ -87,9 +87,15 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
   ```
 2. 提供根文件系统
   - 编译真正的busybox tar文件，并复制到busybox.img镜像中
-  - ```mount -o /images/xen/busybox.img /mnt```
+  - ```mount -o loop /images/xen/busybox.img /mnt```
   - ```cp -a $BUSYBOX/_install/* /mnt```
   - ```mkdir /mnt{prox,sys,dev,var}```
+  ```
+  [root@localhost ~]# mount -o loop /images/xen/busybox.img  /mnt/
+  [root@localhost ~]# cd /mnt/
+  [root@localhost mnt]# ls
+  lost+found
+  ```
 3. 提供domU配置文件
   - dom0的内核文件，创建一个软连接，直接来使用
   - 根据/etc/xen下的xlexample.pvlinux模版文件来修改虚拟机配置文件
