@@ -1,6 +1,8 @@
 
 # 1. 在centos6安装xen
 
+> 配置centos6的网卡eth0时，DNS1要指定8.8.8.8，否则下面yum安装，超级慢，或报错...
+
 reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luochen2015/1741411)
 
 - 指定可以安装xen的yum源，否则yum install xen会报错找不到xen
@@ -125,7 +127,7 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
     - 所以直接去下载真正的busybox，``` wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2```
     - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```，需要移除掉之前下载的xen repo，然后只留下aliyun的repo，需要等超级久，重试好多次，最终才能安装成功
     - 下载busybox tar包，进到busybox解压目录下
-      - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```
+      - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```，如果yum安装报错，检查DNS是否是8.8.8.8
       - ```make menuconfig```去编译busybox
       - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
         ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
