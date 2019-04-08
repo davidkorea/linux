@@ -237,7 +237,16 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
     depends:        
     vermagic:       2.6.32-754.el6.x86_64 SMP mod_unload modversions     
     ```
-    
+- 在虚拟机磁盘镜像中创建目录，并将上面的驱动文件拷贝进去
+  ```
+  [root@localhost net]# mount -o loop /images/xen/busybox.img /mnt/
+  [root@localhost net]# mkdir /mnt/lib/modules -pv
+  [root@localhost net]# cp xen-netfront.ko 8139too.ko mii.ko /mnt/lib/modules/
+  
+  [root@localhost net]# cd /mnt/lib/modules/
+  [root@localhost modules]# ls
+  8139too.ko  mii.ko  xen-netfront.ko
+  ```
     
 
 
