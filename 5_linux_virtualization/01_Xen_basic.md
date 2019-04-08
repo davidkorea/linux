@@ -5,6 +5,7 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 
 - 指定可以安装xen的yum源，否则yum install xen会报错找不到xen
   - 直接```yum install centos-release-xen```，此时或出现2个xen的repo文件
+  - 移走其他的repo文件，yum.repos目录下只留上面新安装的2个xen的repo，否则安装yum install xen时会报错
 
 - ```yum install -y xen```，默认安装最新版本xen，grub.conf文件第一个title的kernel和module也被自动修改正确
   ```diff
