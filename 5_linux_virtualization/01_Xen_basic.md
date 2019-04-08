@@ -45,7 +45,7 @@
   ```
 - 修改grub.conf文件，上面一步已经自动修改完成
   ![](https://i.loli.net/2019/04/07/5ca9bb50116f8.jpg)
-
+- reboot
 # 2. 创建PV格式的虚拟机  
 当前使用 centos6 3.18.12version kernel
 
