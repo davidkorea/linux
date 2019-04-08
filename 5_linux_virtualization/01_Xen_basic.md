@@ -1,10 +1,26 @@
 
 # 1. 在centos6安装xen
-- 指定可以安装xen的yum源https://mirrors.aliyun.com/centos/6.10/virt/x86_64/ ，不指定直接yum install xen会报错找不到xen
-- 或者直接```yum install centos-release-xen```，此时或出现2个xen的repo文件
-  
+- 指定可以安装xen的yum源，否则yum install xen会报错找不到xen
+  - 直接```yum install centos-release-xen```，此时或出现2个xen的repo文件
 
-- ```yum install -y xen```，默认安装最新版本xen-4.4 同时支持xm和xl命令，还默认下载了kernel3.18
+- ```yum install -y xen```，默认安装最新版本xen，grub.conf文件第一个title的kernel和module也被自动修改正确
+  ```
+  [root@localhost ~]# vim /etc/grub.conf 
+  default=0
+  timeout=5
+  splashimage=(hd0,0)/grub/splash.xpm.gz
+  hiddenmenu
+  title CentOS (4.9.127-32.el6.x86_64)
+          root (hd0,0)
+          kernel /xen.gz dom0_mem=1024M,max:1024M cpuinfo com1=115200,8n1 console=com1,tty loglvl=all guest_loglvl=all
+          module /vmlinuz-4.9.127-32.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
+          module /initramfs-4.9.127-32.el6.x86_64.img
+          
+  title CentOS (2.6.32-754.11.1.el6.x86_64)
+          root (hd0,0)
+          kernel /vmlinuz-2.6.32-754.11.1.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
+          initrd /initramfs-2.6.32-754.11.1.el6.x86_64.img
+  ```
   ![](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
   
 - 安装后会/boot目录下会出现xen
