@@ -315,8 +315,17 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
             collisions:0 txqueuelen:0 
             RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
   ```
-- 在物理机上也能查到该虚拟机的net-backend vif2.0，vif后面的数字，就是虚拟机的id
- 
+- 在物理机上ifconfig也能查到该虚拟机的net-backend vif2.0，vif后面的数字，就是虚拟机的id
+- 同时brctl也能查到桥接状态
+  ```
+  [root@localhost xen]# brctl show
+  bridge name     bridge id               STP enabled     interfaces
+  pan0            8000.000000000000       no
+  virbr0          8000.52540092b0d2       yes             virbr0-nic
+  xenbr0          8000.000c29e97e25       no              eth0
+                                                          vif1.0
+                                                          vif2.0
+  ```
 
 
 
