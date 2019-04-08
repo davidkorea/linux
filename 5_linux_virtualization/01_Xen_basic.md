@@ -6,21 +6,21 @@
 - ```yum install -y xen```，默认安装最新版本xen，grub.conf文件第一个title的kernel和module也被自动修改正确
   ```diff
   [root@localhost ~]# vim /etc/grub.conf 
-      default=0
-      timeout=5
-      splashimage=(hd0,0)/grub/splash.xpm.gz
-      hiddenmenu
-      title CentOS (4.9.127-32.el6.x86_64)
-              root (hd0,0)
-  -           kernel /xen.gz dom0_mem=1024M,max:1024M cpuinfo com1=115200,8n1 console=com1,tty loglvl=all guest_loglvl=all
-  +           kernel /xen.gz dom0_mem=1024M,cpufreq=xen,dom0_max_vcpus=2,dom0_vcpus_pin
-              module /vmlinuz-4.9.127-32.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
-              module /initramfs-4.9.127-32.el6.x86_64.img
+  default=0
+  timeout=5
+  splashimage=(hd0,0)/grub/splash.xpm.gz
+  hiddenmenu
+  title CentOS (4.9.127-32.el6.x86_64)
+          root (hd0,0)
+  -       kernel /xen.gz dom0_mem=1024M,max:1024M cpuinfo com1=115200,8n1 console=com1,tty loglvl=all guest_loglvl=all
+  +       kernel /xen.gz dom0_mem=1024M,cpufreq=xen,dom0_max_vcpus=2,dom0_vcpus_pin
+          module /vmlinuz-4.9.127-32.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
+          module /initramfs-4.9.127-32.el6.x86_64.img
 
-      title CentOS (2.6.32-754.11.1.el6.x86_64)
-              root (hd0,0)
-              kernel /vmlinuz-2.6.32-754.11.1.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
-              initrd /initramfs-2.6.32-754.11.1.el6.x86_64.img
+  title CentOS (2.6.32-754.11.1.el6.x86_64)
+          root (hd0,0)
+          kernel /vmlinuz-2.6.32-754.11.1.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
+          initrd /initramfs-2.6.32-754.11.1.el6.x86_64.img
   ```
     - dom0_vcpus_pin dom0的虚拟cpu固定在物理cpu的某一核心
     
