@@ -286,6 +286,35 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 
 - 将之前创建的镜像文件挂载到/mnt，并复制网卡驱动文件进去
   - ```mount -o loop /images/xen/busybox.img /mnt```
+  - ```unmount /mnt```
+- ```xl -v create busybox-conf -c```，修改配置文件中虚拟机name后，再次创建新的虚拟机。刚开始还是查不到网卡设备，安装网卡驱动后，显示eth0正常，```insmod /lib/modules/xen-netfront.ko```
+  ```
+  / # ifconfig -a
+  lo        Link encap:Local Loopback  
+            LOOPBACK  MTU:65536  Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0 
+            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+  / # insmod /lib/modules/xen-netfront.ko 
+  Initialising Xen virtual ethernet driver.
+  / # ifconfig -a
+  eth0      Link encap:Ethernet  HWaddr 00:16:3E:21:EC:35  
+            BROADCAST MULTICAST  MTU:1500  Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:1000 
+            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+            Interrupt:18 
+
+  lo        Link encap:Local Loopback  
+            LOOPBACK  MTU:65536  Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0 
+            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+  ```
 
  
 
