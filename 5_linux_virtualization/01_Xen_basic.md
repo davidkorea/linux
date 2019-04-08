@@ -1,5 +1,8 @@
 
 # 1. 在centos6安装xen
+- 指定可以安装xen的yum源https://mirrors.aliyun.com/centos/6.10/virt/x86_64/ ，不指定直接yum install xen会报错找不到xen
+- 或者直接```yum install centos-release-xen```，此时或出现2个xen的repo文件
+  
 
 - ```yum install -y xen```，默认安装最新版本xen-4.4 同时支持xm和xl命令，还默认下载了kernel3.18
   ![](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
