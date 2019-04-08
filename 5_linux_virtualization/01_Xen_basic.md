@@ -124,7 +124,9 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
     ```
   - 若要将此busybox.img当作根文件目录，里面需要有etc，proc，usr等目录
     - 自己创建比较麻烦，复制自己当前宿主机等目录也比较慢
-    - 所以直接去下载真正的busybox，``` wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2```
+    - 所以直接去下载真正的busybox
+      - ``` wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2```，最新版本下面静态编译失败，报错```make: *** [busybox_unstripped] Error 1```
+      - 使用旧版本``` wget https://busybox.net/downloads/busybox-1.23.0.tar.bz2```，或者busybox-1.22.1.tar.bz2
     - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```，需要移除掉之前下载的xen repo，然后只留下aliyun的repo，需要等超级久，重试好多次，最终才能安装成功
     - 下载busybox tar包，进到busybox解压目录下
       - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```，如果yum安装报错，检查DNS是否是8.8.8.8
