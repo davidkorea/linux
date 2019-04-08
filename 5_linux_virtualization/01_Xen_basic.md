@@ -157,6 +157,21 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
   ![](https://i.loli.net/2019/04/07/5ca991fe76a2b.jpg)
 - ```xl -v create busybox -n```,busybox为上面的配置文件，此命令并不会真正创建虚拟机，只会输出配置选项供检查使用 
 - ```xl -v create busybox```，-v显示详细信息，真正创建虚拟机
+  - 报错
+    ```
+    libxl: error: libxl_exec.c:118:libxl_report_child_exitstatus: /etc/xen/scripts/block add [21144] exited with error status 1
+    libxl: error: libxl_device.c:1237:device_hotplug_child_death_cb: script: File /images/xen/busybox.img is loopback-mounted through 7:0,
+    which is mounted in the privileged domain,
+    and so cannot be mounted by a guest.
+    libxl: error: libxl_create.c:1291:domcreate_launch_dm: unable to add disk devices
+    libxl: error: libxl_exec.c:118:libxl_report_child_exitstatus: /etc/xen/scripts/block remove [21208] exited with error status 1
+    libxl: error: libxl_device.c:1237:device_hotplug_child_death_cb: script: /etc/xen/scripts/block failed; error detected.
+    libxl: error: libxl.c:1572:libxl__destroy_domid: non-existant domain 1
+    libxl: error: libxl.c:1531:domain_destroy_callback: unable to destroy guest with domid 1
+    libxl: error: libxl.c:1460:domain_destroy_cb: destruction of domain 1 failed
+    ```
+    - umount /mnt
+    - 配置文件中，注释掉网卡配置
 - ```xl list``` ，会列出Domain-0 和 刚刚创建的busybox-001虚拟机
 
 创建虚拟机完成，但是刚才并没有配置网卡不能ssh进行远程操作，也没有图形界面，那么怎么进入虚拟机呢？
