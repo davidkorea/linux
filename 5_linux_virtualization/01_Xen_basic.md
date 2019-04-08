@@ -315,7 +315,7 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
             collisions:0 txqueuelen:0 
             RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
   ```
-
+- 在物理机上也能查到该虚拟机的net-backend vif2.0，vif后面的数字，就是虚拟机的id
  
 
 
