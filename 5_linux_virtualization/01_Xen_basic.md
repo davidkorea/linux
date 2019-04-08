@@ -21,11 +21,25 @@
           kernel /vmlinuz-2.6.32-754.11.1.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
           initrd /initramfs-2.6.32-754.11.1.el6.x86_64.img
   ```
-  ![](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
+  [](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
   
 - 安装后会/boot目录下会出现xen
-  ![](https://i.loli.net/2019/04/07/5ca9bb4a33330.jpg)
-  
+  [](https://i.loli.net/2019/04/07/5ca9bb4a33330.jpg)
+  ```
+  [root@localhost ~]# cd /boot/
+  [root@localhost boot]# ls
+  config-2.6.32-754.11.1.el6.x86_64         symvers-2.6.32-754.el6.x86_64.gz
+  config-2.6.32-754.el6.x86_64              symvers-4.9.127-32.el6.x86_64.gz
+  config-4.9.127-32.el6.x86_64              System.map-2.6.32-754.11.1.el6.x86_64
+  efi                                       System.map-2.6.32-754.el6.x86_64
+  grub                                      System.map-4.9.127-32.el6.x86_64
+  initramfs-2.6.32-754.11.1.el6.x86_64.img  vmlinuz-2.6.32-754.11.1.el6.x86_64
+  initramfs-2.6.32-754.el6.x86_64.img       vmlinuz-2.6.32-754.el6.x86_64
+  initramfs-4.9.127-32.el6.x86_64.img       vmlinuz-4.9.127-32.el6.x86_64
+  initrd-2.6.32-754.el6.x86_64kdump.img     xen-4.8.5.12.ga1f8fe0628-1.el6.config
+  lost+found                                xen-4.8.5.12.ga1f8fe0628-1.el6.gz
+  symvers-2.6.32-754.11.1.el6.x86_64.gz     xen.gz
+  ```
 - 修改grub.conf文件
   ![](https://i.loli.net/2019/04/07/5ca9bb50116f8.jpg)
 
