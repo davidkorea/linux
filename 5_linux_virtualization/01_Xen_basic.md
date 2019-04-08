@@ -40,7 +40,7 @@
   lost+found                                xen-4.8.5.12.ga1f8fe0628-1.el6.gz
   symvers-2.6.32-754.11.1.el6.x86_64.gz     xen.gz
   ```
-- 修改grub.conf文件
+- 修改grub.conf文件，上面一步已经自动修改完成
   ![](https://i.loli.net/2019/04/07/5ca9bb50116f8.jpg)
 
 # 2. 创建PV格式的虚拟机  
