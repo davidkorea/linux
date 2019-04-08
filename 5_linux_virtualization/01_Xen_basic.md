@@ -128,6 +128,14 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
       - ``` wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2```，最新版本下面静态编译失败，报错```make: *** [busybox_unstripped] Error 1```
       - 使用旧版本``` wget https://busybox.net/downloads/busybox-1.23.0.tar.bz2```，或者busybox-1.22.1.tar.bz2
     - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```，需要移除掉之前下载的xen repo，然后只留下aliyun的repo，需要等超级久，重试好多次，最终才能安装成功
+      - 此时会报错
+        ```
+        事务测试出错：
+        file /etc/libvirt/libvirt.conf from install of libvirt-libs-4.1.0-2.xen48.el6.x86_64 conflicts with
+        file from package libvirt-client-0.10.2-64.el6.x86_64
+        ```
+        - 删除libvirt-client-0.10.2-64.el6.x86_64，重新安装
+        - ```yum remove libvirt-client-0.10.2-64.el6.x86_64```，再次执行安装成功
     - 下载busybox tar包，进到busybox解压目录下
       - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```，如果yum安装报错，检查DNS是否是8.8.8.8
       - ```make menuconfig```去编译busybox
