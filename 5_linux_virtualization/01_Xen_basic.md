@@ -181,8 +181,8 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 
 ## 2.4 虚拟机网络配置
 ### 创建xenbr0桥配置文件
-- 创建ifcfg-xenbr0
-- 修改ifcfg-eth0
+- 创建ifcfg-xenbr0，一定要加上NM_CONTROLLED=no，否则service restart报错``` Error: Connection activation failed: Master connection not found or invalid```
+- 修改ifcfg-eth0，一定要加上NM_CONTROLLED=no
 - 关闭networkManager ```chkconfig NetworkManager off```，查看 ```chkconfig --list NetworkManager```
 - ```service network restart```
 
