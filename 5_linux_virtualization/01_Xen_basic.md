@@ -141,7 +141,7 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
       - ```make menuconfig```去编译busybox
       - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
         ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
-      - ```make```,如果使用make install会直接安装在当前目录下
+      - ```make -j 4```,如果使用make install会直接安装在当前目录下，如果出错，那么```make clean```，拍错后，再次执行
       - ```make install```，会安装在当前目录busybox的_install文件夹下
       - ```cp -a _install/* /mnt```
       - ```cd /mnt```
