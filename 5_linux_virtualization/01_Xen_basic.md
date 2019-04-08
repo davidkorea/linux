@@ -168,7 +168,13 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
     - umount /mnt
     - 配置文件中，注释掉网卡配置
 - ```xl list``` ，会列出Domain-0 和 刚刚创建的busybox-001虚拟机
-
+  ```
+  [root@localhost xen]# xl list
+  Name                                        ID   Mem VCPUs      State   Time(s)
+  Domain-0                                     0  3783     4     r-----    1125.6
+  busybox-001                                  3   256     2     -b----       3.6
+  ```
+  
 创建虚拟机完成，但是刚才并没有配置网卡不能ssh进行远程操作，也没有图形界面，那么怎么进入虚拟机呢？
 - ```xl console busybox-001```
 - ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，使用exit命令会删除当前虚拟机
