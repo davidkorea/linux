@@ -188,12 +188,30 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 - ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，使用exit命令会删除当前虚拟机
 
 ## 2.4 虚拟机网络配置
-### 创建xenbr0桥配置文件
+
 - 创建ifcfg-xenbr0，一定要加上NM_CONTROLLED=no，否则service restart报错``` Error: Connection activation failed: Master connection not found or invalid```
 - 修改ifcfg-eth0，一定要加上NM_CONTROLLED=no
 - 关闭networkManager ```chkconfig NetworkManager off```，查看 ```chkconfig --list NetworkManager```
 - ```service network restart```
+- 修改xen虚拟机配置文件```vif = [ 'bridge=xenbr0' ]```，并且改掉虚拟机name
+- 创建带有网卡设备的虚拟机```xl -v create busybox-conf -c```，-c 创建好之后至今进入
+- 在虚拟机中执行ifconfig -a，依然看不到ip地址，这是因为没有网卡驱动
+  ```
+  [root@localhost ~]# xl console busybox-002
+  / # ifconfig -a
+  lo        Link encap:Local Loopback  
+            LOOPBACK  MTU:65536  Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0 
+            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+  ```
+- 进入这个路径 /lib/modules/2.6.32-754.el6.x86_64/kernel/drivers/net
 
+
+
+
+-----
 
 命令方式，或者配置文件的方式，创建桥接设备后，会死机。kernel version, known bug，try to change to another kernel version
 - ```yum list all kernel*``` ，查看所有可用kernel
