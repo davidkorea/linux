@@ -53,6 +53,7 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 当前使用 centos6 3.18.12version kernel
 
 1. 准备磁盘镜像文件
+  - ```mkdir -pv /images/xen```
   - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
   - ```mke2fs -t ext /images/xen/bnusybox.img```
 2. 提供根文件系统
