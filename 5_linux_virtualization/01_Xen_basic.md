@@ -247,7 +247,62 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
   [root@localhost modules]# ls
   8139too.ko  mii.ko  xen-netfront.ko
   ```
-    
+
+- 将之前创建的镜像文件挂载到/mnt，并复制网卡驱动文件进去
+  - ```mount -o loop /images/xen/busybox.img /mnt```
+  - ```unmount /mnt```
+- ```xl -v create busybox-conf -c```，修改配置文件中虚拟机name后，再次创建新的虚拟机。刚开始还是查不到网卡设备，安装网卡驱动后，显示eth0正常，```insmod /lib/modules/xen-netfront.ko```
+  ```
+  / # ifconfig -a
+  lo        Link encap:Local Loopback  
+            LOOPBACK  MTU:65536  Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0 
+            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+
+  / # insmod /lib/modules/xen-netfront.ko 
+  Initialising Xen virtual ethernet driver.
+  / # ifconfig -a
+  eth0      Link encap:Ethernet  HWaddr 00:16:3E:21:EC:35  
+            BROADCAST MULTICAST  MTU:1500  Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:1000 
+            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+            Interrupt:18 
+
+  lo        Link encap:Local Loopback  
+            LOOPBACK  MTU:65536  Metric:1
+            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:0 
+            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+            
+  / # ifconfig eth0 192.168.0.19 up     # 配置虚拟机ip
+  
+  / # ping 192.168.0.18                 # ping 物理机正常  
+  PING 192.168.0.18 (192.168.0.18): 56 data bytes
+  64 bytes from 192.168.0.18: seq=0 ttl=64 time=1.391 ms
+  ```
+- 在物理机上ifconfig也能查到该虚拟机的net-backend vif2.0，vif后面的数字，就是虚拟机的id
+- 同时brctl也能查到桥接状态
+  ```
+  [root@localhost xen]# brctl show
+  bridge name     bridge id               STP enabled     interfaces
+  pan0            8000.000000000000       no
+  virbr0          8000.52540092b0d2       yes             virbr0-nic
+  xenbr0          8000.000c29e97e25       no              eth0
+                                                          vif1.0
+                                                          vif2.0
+  ```
+
+
+
+
+
+
+
 
 
 -----
@@ -283,51 +338,6 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
   - 此时虚拟机内执行```ifconfig -a```，并不能看到eth0，因为并没有网卡驱动
   - 于是去宿主机上拷贝相应内核版本的网卡驱动程序
     - 在虚拟机上执行```uname -r```，查看虚拟机的内核版本为2.6.32-504
-
-- 将之前创建的镜像文件挂载到/mnt，并复制网卡驱动文件进去
-  - ```mount -o loop /images/xen/busybox.img /mnt```
-  - ```unmount /mnt```
-- ```xl -v create busybox-conf -c```，修改配置文件中虚拟机name后，再次创建新的虚拟机。刚开始还是查不到网卡设备，安装网卡驱动后，显示eth0正常，```insmod /lib/modules/xen-netfront.ko```
-  ```
-  / # ifconfig -a
-  lo        Link encap:Local Loopback  
-            LOOPBACK  MTU:65536  Metric:1
-            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-            collisions:0 txqueuelen:0 
-            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-
-  / # insmod /lib/modules/xen-netfront.ko 
-  Initialising Xen virtual ethernet driver.
-  / # ifconfig -a
-  eth0      Link encap:Ethernet  HWaddr 00:16:3E:21:EC:35  
-            BROADCAST MULTICAST  MTU:1500  Metric:1
-            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-            collisions:0 txqueuelen:1000 
-            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-            Interrupt:18 
-
-  lo        Link encap:Local Loopback  
-            LOOPBACK  MTU:65536  Metric:1
-            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-            collisions:0 txqueuelen:0 
-            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-  ```
-- 在物理机上ifconfig也能查到该虚拟机的net-backend vif2.0，vif后面的数字，就是虚拟机的id
-- 同时brctl也能查到桥接状态
-  ```
-  [root@localhost xen]# brctl show
-  bridge name     bridge id               STP enabled     interfaces
-  pan0            8000.000000000000       no
-  virbr0          8000.52540092b0d2       yes             virbr0-nic
-  xenbr0          8000.000c29e97e25       no              eth0
-                                                          vif1.0
-                                                          vif2.0
-  ```
-
-
 
 
 
