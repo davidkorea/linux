@@ -1,5 +1,8 @@
 
 # 1. 在centos6安装xen
+
+reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luochen2015/1741411)
+
 - 指定可以安装xen的yum源，否则yum install xen会报错找不到xen
   - 直接```yum install centos-release-xen```，此时或出现2个xen的repo文件
 
