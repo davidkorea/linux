@@ -207,8 +207,38 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
             RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
   ```
 - 进入这个路径 /lib/modules/2.6.32-754.el6.x86_64/kernel/drivers/net
-
-
+  - 查看这本包，有没有其他依赖的包,depends为空，则没有依赖包
+    ```
+    [root@localhost net]# modinfo xen-netfront.ko 
+    filename:       xen-netfront.ko
+    alias:          xennet
+    alias:          xen:vif
+    license:        GPL
+    description:    Xen virtual network device frontend
+    retpoline:      Y
+    srcversion:     5C6FC78BC365D9AF8135201
+    depends:        
+    vermagic:       2.6.32-754.el6.x86_64 SMP mod_unload modversions 
+    ```
+  - 看到8139too.ko有依赖mii这个包
+    ```
+    [root@localhost net]# modinfo 8139too.ko 
+    depends:        mii
+    ```
+    mii 没有依赖包
+    ```
+    [root@localhost net]# modinfo mii.ko 
+    filename:       mii.ko
+    license:        GPL
+    description:    MII hardware support library
+    author:         Jeff Garzik <jgarzik@pobox.com>
+    retpoline:      Y
+    srcversion:     94D0B170BD4AA5F0553F61D
+    depends:        
+    vermagic:       2.6.32-754.el6.x86_64 SMP mod_unload modversions     
+    ```
+    
+    
 
 
 -----
