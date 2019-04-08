@@ -180,6 +180,13 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 - ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，使用exit命令会删除当前虚拟机
 
 ## 2.4 虚拟机网络配置
+### 创建xenbr0桥配置文件
+- 创建ifcfg-xenbr0
+- 修改ifcfg-eth0
+- 关闭networkManager ```chkconfig NetworkManager off```，查看 ```chkconfig --list NetworkManager```
+- ```service network restart```
+
+
 命令方式，或者配置文件的方式，创建桥接设备后，会死机。kernel version, known bug，try to change to another kernel version
 - ```yum list all kernel*``` ，查看所有可用kernel
 下面2个都要安装，注意要安装新的kernel而不是升级当前使用的kernel，以免升级后无法开机
