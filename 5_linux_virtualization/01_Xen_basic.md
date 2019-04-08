@@ -56,6 +56,35 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
   - ```mkdir -pv /images/xen```
   - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
   - ```mke2fs -t ext /images/xen/bnusybox.img```
+  ```
+  [root@localhost ~]# qemu-img create -f raw -o size=2G /images/xen/busybox.img
+  Formatting '/images/xen/busybox.img', fmt=raw size=2147483648 
+  
+  [root@localhost ~]# mke2fs -t ext /images/xen/busybox.img 
+  mke2fs 1.41.12 (17-May-2010)
+  /images/xen/busybox.img is not a block special device.
+  Proceed anyway? (y,n) y
+  Filesystem label=
+  OS type: Linux
+  Block size=4096 (log=2)
+  Fragment size=4096 (log=2)
+  Stride=0 blocks, Stripe width=0 blocks
+  131072 inodes, 524288 blocks
+  26214 blocks (5.00%) reserved for the super user
+  First data block=0
+  Maximum filesystem blocks=536870912
+  16 block groups
+  32768 blocks per group, 32768 fragments per group
+  8192 inodes per group
+  Superblock backups stored on blocks: 
+          32768, 98304, 163840, 229376, 294912
+
+  Writing inode tables: done                            
+  Writing superblocks and filesystem accounting information: done
+
+  This filesystem will be automatically checked every 34 mounts or
+  180 days, whichever comes first.  Use tune2fs -c or -i to override.
+  ```
 2. 提供根文件系统
   - 编译真正的busybox tar文件，并复制到busybox.img镜像中
   - ```mount -o /images/xen/busybox.img /mnt```
