@@ -143,13 +143,13 @@ lost+found
 #### 2. 下载编译工具
 - ```yum -y groupinstall "Development Tools" "Server Platform Development"```，编译安装busybox，需要安装编译工具。如果安装centos6时选择来软件开发使用，不安装也可以（需要移除掉之前下载的xen repo，然后只留下aliyun的repo，需要等超级久，重试好多次，最终才能安装成功）
 - 此时会报错
-        ```
-        事务测试出错：
-        file /etc/libvirt/libvirt.conf from install of libvirt-libs-4.1.0-2.xen48.el6.x86_64 conflicts with
-        file from package libvirt-client-0.10.2-64.el6.x86_64
-        ```
-        - 删除libvirt-client-0.10.2-64.el6.x86_64，重新安装
-        - ```yum remove libvirt-client-0.10.2-64.el6.x86_64```，再次执行安装成功
+  ```
+  事务测试出错：
+  file /etc/libvirt/libvirt.conf from install of libvirt-libs-4.1.0-2.xen48.el6.x86_64 conflicts with
+  file from package libvirt-client-0.10.2-64.el6.x86_64
+  ```
+  - 删除libvirt-client-0.10.2-64.el6.x86_64，重新安装
+  - ```yum remove libvirt-client-0.10.2-64.el6.x86_64```，再次执行安装成功
 #### 3. 静态编译安装busybox
 编译成静态链格式，即不让其再依赖于其他库
 - 解压busybox tar包，进到busybox解压目录下
