@@ -223,26 +223,26 @@ lost+found
 - ```xl console busybox-001```
 - ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，使用exit命令会删除当前虚拟机
 
-# 5. 创建PV类型虚拟机（有网络）
+# 5. 创建PV类型虚拟机（有网络 - 桥接网络）
 
 ## 5.1 创建网桥设备
 安装系统时，默认安装来bridge-utils工具。此处通过创建网桥设备的配置文件的方式来创建网桥
 #### 1. 修改配置文件
 - 创建ifcfg-xenbr0，
   - 一定要加上NM_CONTROLLED=no，否则service restart报错``` Error: Connection activation failed: Master connection not found or invalid```
-    ```
-    [root@localhost network-scripts]# cat ifcfg-xenbr0 
-    DEVICE=xenbr0
-    TYPE=Bridge
-    ONBOOT=yes
-    BOOTPROTO=static
-    IPADDR=192.168.0.160
-    NETMASK=255.255.255.0
-    GATEWAY=192.168.0.1
-    DNS1=8.8.8.8
-    DNS2=168.126.63.1
-    NM_CONTROLLED=no
-    ```
+  ```
+  [root@localhost network-scripts]# cat ifcfg-xenbr0 
+  DEVICE=xenbr0
+  TYPE=Bridge
+  ONBOOT=yes
+  BOOTPROTO=static
+  IPADDR=192.168.0.160
+  NETMASK=255.255.255.0
+  GATEWAY=192.168.0.1
+  DNS1=8.8.8.8
+  DNS2=168.126.63.1
+  NM_CONTROLLED=no
+  ```
 - 修改ifcfg-eth0，一定要加上NM_CONTROLLED=no
   ```
   [root@localhost network-scripts]# cat ifcfg-eth0 
@@ -296,7 +296,7 @@ lo        Link encap:Local Loopback
     RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
 ```
 ## 5.3 制作虚拟机网卡驱动
-#### 1. 复制宿主机（dom0的网卡启动）到虚拟机
+#### 1. 复制宿主机（dom0的网卡驱动）到虚拟机
 - 进入这个路径``` /lib/modules/2.6.32-754.el6.x86_64/kernel/drivers/net```
 - 查看网卡驱动，有没有其他依赖的包,depends为空，则没有依赖包
   - xen-netfront.ko，无依赖包
@@ -394,12 +394,17 @@ lo        Link encap:Local Loopback
                                                           vif1.0
                                                           vif2.0
   ```
+- 因为是PV半虚拟化，所以I/O设备是分为frontend（domU）和backend（don0）两部分
+
+**以上虚拟机网络方式为：桥接并使用物理机网络，即虚拟机和物理机再同一局域网，也可以想物理机一样正常访问外网**
 
 
+# 6. 其他网络模式虚拟机
 
-
-
-
+虚拟机的网络连接方式有
+- 桥接使用物理网络
+- VMNET（虚拟机之间通信，无法访问物理机，无法访问外网）
+- Host only（虚拟机之间通信，以及虚拟机和物理机可以通信，虚拟机无法访问外网）
 
 
 
