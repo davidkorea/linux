@@ -86,14 +86,15 @@ Domain-0                                     0  3271     4     r-----    3270.7
 
 
 ## 2.1 创建磁盘镜像文件qemu-img
-#### 1. 创建
-  - ```qemu-img create -f raw /images/xen/busybox.img 2G```
-  - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
+#### 1. 创建磁盘镜像
+- ```qemu-img create -f raw /images/xen/busybox.img 2G```
+- ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
 
-  - 当使用```ll -h```查看时，2G大小，但是当使用```du -sh busybox.img```时，显示大小为0
-    - ```df -h```查看系统中文件的使用情况
-    - ```du -sh *```查看当前目录下各个文件及目录占用空间大小
-  ```
+- 当使用```ll -h```查看时，2G大小，但是当使用```du -sh busybox.img```时，显示大小为0
+  - ```df -h``` 查看系统中文件的使用情况
+  - ```du -sh *```查看当前目录下各个文件及目录占用空间大小
+
+```
   [root@localhost ~]# qemu-img create -f raw -o size=2G /images/xen/busybox.img
   Formatting '/images/xen/busybox.img', fmt=raw size=2147483648 
   
@@ -122,22 +123,24 @@ Domain-0                                     0  3271     4     r-----    3270.7
   This filesystem will be automatically checked every 34 mounts or
   180 days, whichever comes first.  Use tune2fs -c or -i to override.
   ```
-- 不分区，直接格式化，作为根文件系统
-  - ```mke2fs -t ext2 /images/xen/busybox.img```
-  - 挂载
-    ```mount -o loop /images/xen/busybox.img /mnt```, -o loop??????????
+#### 2. 不分区，直接格式化，作为根文件系统
+- 格式化磁盘
+  - ```mke2fs -t ext /images/xen/busybox.img```
+- 挂载
+  - ```mount -o loop /images/xen/busybox.img /mnt```
     
-    ```
-    [root@localhost ~]# mount -o loop /images/xen/busybox.img  /mnt/
-    [root@localhost ~]# cd /mnt/
-    [root@localhost mnt]# ls
-    lost+found
-    ```
-  - 若要将此busybox.img当作根文件目录，里面需要有etc，proc，usr等目录
-    - 自己创建比较麻烦，复制自己当前宿主机等目录也比较慢
-    - 所以直接去下载真正的busybox
-      - ``` wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2```，最新版本下面静态编译失败，报错```make: *** [busybox_unstripped] Error 1```
-      - 使用旧版本``` wget https://busybox.net/downloads/busybox-1.23.0.tar.bz2```，或者busybox-1.22.1.tar.bz2
+```
+[root@localhost ~]# mount -o loop /images/xen/busybox.img  /mnt/
+[root@localhost ~]# cd /mnt/
+[root@localhost mnt]# ls
+lost+found
+```
+## 2.2 创建完整磁盘文件系统
+若要将此busybox.img当作根文件目录，里面需要有etc，proc，usr等目录。自己创建比较麻烦，复制自己当前宿主机等目录也比较慢，所以直接去下载真正的busybox
+#### 1. 下载busybox.tar.bz2
+- ``` wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2```，最新版本下面静态编译失败，报错```make: *** [busybox_unstripped] Error 1```
+- 使用旧版本``` wget https://busybox.net/downloads/busybox-1.23.0.tar.bz2```，或者busybox-1.22.1.tar.bz2
+#### 2. 静态编译安装busybox
     - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```，需要移除掉之前下载的xen repo，然后只留下aliyun的repo，需要等超级久，重试好多次，最终才能安装成功
       - 此时会报错
         ```
