@@ -1,7 +1,8 @@
 # 创建xen虚拟机
 
 - DomU的内核文件位于Dom0，不在DomU的磁盘镜像内
-- 桥接物理网络
+  - 桥接物理网络虚拟机
+  - VMNET网络虚拟机
 
 # 1. 准备centos6 xen kernel环境
 
@@ -10,8 +11,8 @@
 
 reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luochen2015/1741411)
 
-### 1. 安装xen yum源
-指定可以安装xen的yum源，否则直接yum install xen会报错找不到xen
+### 1. 安装Xen4CentOS - xen yum源
+安装Xen4CentOS，制定安装xen的yum源，否则直接yum install xen会报错找不到xen
 - ```yum install centos-release-xen```，
 - 执行上面命令后，会出现2个xen的repo文件（移走其他的repo文件，yum.repos目录下只留上面新安装的2个xen的repo，否则安装yum install xen时会报错。有可能是DNS的问题）
 ### 2. 安装xen
