@@ -1,5 +1,8 @@
 # 创建xen虚拟机
 
+- DomU的内核文件位于Dom0，不在DomU的磁盘镜像内
+- 桥接物理网络
+
 # 1. 准备centos6 xen kernel环境
 
 - 配置centos6的网卡eth0时，DNS1要指定8.8.8.8，否则下面yum安装，超级慢，或报错...
