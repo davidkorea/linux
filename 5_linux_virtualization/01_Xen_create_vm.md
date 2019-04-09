@@ -432,7 +432,7 @@ vim /etc/xen/busybox_conf
 ```
 - xen vm2
 ```cp /etc/xen/busybox_conf /etc/xen/busybox_conf_vmnet```
-```
+```diff
 - name = "busybox-001"
 + name = "busybox-002"
   kernel = "/boot/vmlinuz"
@@ -445,7 +445,66 @@ vim /etc/xen/busybox_conf
 + disk = [ '/images/xen/busybox.img_vmnet,raw,xvda,rw' ]
   root = '/dev/xvda ro'
 ```
+### 3. 创建网桥设备
+```diff
+[root@localhost ~]# cd /etc/sysconfig/network-scripts/
+[root@localhost network-scripts]# cp ifcfg-xenbr0 ifcfg-xenbr1
+[root@localhost network-scripts]# vim ifcfg-xenbr1
 
+
+[root@localhost network-scripts]# service network restart
+```
+### 4. 创建2台虚拟机
+```
+[root@localhost ~]# xl -v create /etc/xen/busybox_conf
+[root@localhost ~]# xl -v create /etc/xen/busybox_conf_vmnet 
+
+[root@localhost ~]# xl li
+Name                                        ID   Mem VCPUs      State   Time(s)
+Domain-0                                     0  3271     4     r-----    3811.9
+busybox-001                                  7   256     2     -b----       3.5
+busybox-002                                  8   256     2     -b----       3.7
+
+[root@localhost ~]# brctl show
+bridge name     bridge id               STP enabled     interfaces
+virbr0          8000.52540088a23f       yes             virbr0-nic
+xenbr0          8000.000c298084b5       no              eth0
+xenbr1          8000.feffffffffff       no              vif7.0
+                                                        vif8.0
+```
+### 5. 加载虚拟机网卡驱动并配ip地址
+虚拟机配置10.0.0.0网段，互相可以ping通
+```
+[root@localhost ~]# xl console busybox-001
+
+/ # insmod /lib/modules/xen-netfront.ko 
+Initialising Xen virtual ethernet driver.
+
+/ # ifconfig eth0 10.0.0.10 up
+/ # ifconfig 
+eth0      Link encap:Ethernet  HWaddr 00:16:3E:62:23:71  
+          inet addr:10.0.0.10  Bcast:10.255.255.255  Mask:255.0.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:12 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:1344 (1.3 KiB)  TX bytes:0 (0.0 B)
+          Interrupt:18 
+```
+```
+[root@localhost ~]# xl console busybox-002
+
+/ # insmod /lib/modules/xen-netfront.ko 
+Initialising Xen virtual ethernet driver.
+
+/ # ifconfig eth0 10.0.0.20 up
+
+/ # ping 10.0.0.10
+PING 10.0.0.10 (10.0.0.10): 56 data bytes
+64 bytes from 10.0.0.10: seq=0 ttl=64 time=17.647 ms
+64 bytes from 10.0.0.10: seq=1 ttl=64 time=1.232 ms
+64 bytes from 10.0.0.10: seq=2 ttl=64 time=1.295 ms
+```
 
 
 -----
