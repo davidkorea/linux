@@ -157,7 +157,7 @@ lost+found
 - ```yum -y install glibc-static```，安装一个工具，如果yum安装报错，检查DNS是否是8.8.8.8
 - ```make menuconfig```
   - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
-        ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
+    ![](https://i.loli.net/2019/04/09/5cac33edc7334.png)
 - ```make -j 4```，如果使用make install会直接安装在当前目录下，如果出错，那么```make clean```，排错后，再次执行
 - ```make install```，会安装在当前目录busybox的_install文件夹下
 - ```cp -a _install/* /mnt```
@@ -168,7 +168,7 @@ lost+found
         ![](https://i.loli.net/2019/04/07/5ca988926ec1b.png)
 
 # 3. 准备虚拟机内核
-宿主机自带的系统可以直接拿来用，虽然不能用作dom0，但是domU没有问题。创建软连接
+宿主机自带的2.6.32-754内核可以直接拿来用，虽然不能用作dom0，但是domU没有问题。创建软连接
 - ```cd /boot```
 - ```ln -sv vmlinuz-2.6.32-504...  vmlinuz```
 - ```ln -sv initramfs-2.6.32.504...img initramfs.img```
