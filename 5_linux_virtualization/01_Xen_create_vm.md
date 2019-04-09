@@ -402,14 +402,13 @@ lo        Link encap:Local Loopback
 **以上虚拟机网络方式为：桥接并使用物理机网络，即虚拟机和物理机再同一局域网，也可以想物理机一样正常访问外网**
 
 
-# 6. 其他网络模式虚拟机
+# 6. 创建VMNET网络类型虚拟机
 
-虚拟机的网络连接方式有
-- 桥接使用物理网络
-- VMNET（虚拟机之间通信，无法访问物理机，无法访问外网）
-- Host only（虚拟机之间通信，以及虚拟机和物理机可以通信，虚拟机无法访问外网）
+- 虚拟机的网络连接方式有
+  - 桥接使用物理网络
+  - VMNET（虚拟机之间通信，无法访问物理机，无法访问外网）
+  - Host only（虚拟机之间通信，以及虚拟机和物理机可以通信，虚拟机无法访问外网）
 
-## 6.1 创建VMNET虚拟机
 
 创建2台虚拟机，不关联物理网卡，所有虚拟机使用新创建网桥xenbr1
 
@@ -418,7 +417,7 @@ lo        Link encap:Local Loopback
 ### 2. 创建虚拟机配置文件
 - xen vm1
 ```diff
-vim /etc/xen/busybox_conf
+[root@localhost xen]# vim /etc/xen/busybox_conf
   name = "busybox-001"
   kernel = "/boot/vmlinuz"
   ramdisk = "/boot/initramfs.img"
@@ -431,8 +430,10 @@ vim /etc/xen/busybox_conf
   root = '/dev/xvda ro'
 ```
 - xen vm2
-```cp /etc/xen/busybox_conf /etc/xen/busybox_conf_vmnet```
+
 ```diff
+[root@localhost xen]# cp /etc/xen/busybox_conf /etc/xen/busybox_conf_vmnet
+[root@localhost xen]# vim /etc/xen/busybox_conf_vmnet
 - name = "busybox-001"
 + name = "busybox-002"
   kernel = "/boot/vmlinuz"
