@@ -225,9 +225,9 @@ lost+found
 
 # 5. 创建PV类型虚拟机（有网络）
 
-## 5.1 虚拟机网络配置
-#### 1. 创建网桥设备
+## 5.1 创建网桥设备
 安装系统时，默认安装来bridge-utils工具。此处通过创建网桥设备的配置文件的方式来创建网桥
+#### 1. 修改配置文件
 - 创建ifcfg-xenbr0，
   - 一定要加上NM_CONTROLLED=no，否则service restart报错``` Error: Connection activation failed: Master connection not found or invalid```
     ```
@@ -256,22 +256,48 @@ lost+found
   NM_CONTROLLED=no
   ```
 #### 2. 关闭networkManager
--  ```chkconfig NetworkManager off```，查看 ```chkconfig --list NetworkManager```
+-  ```chkconfig NetworkManager off```
+- 查看 ```chkconfig --list NetworkManager```
+        ```
+        [root@localhost network-scripts]# chkconfig --list NetworkManager
+        NetworkManager  0:off   1:off   2:off   3:off   4:off   5:off   6:off
+        ```
+#### 3. 重启网络服务
 - ```service network restart```
-- 修改xen虚拟机配置文件```vif = [ 'bridge=xenbr0' ]```，并且改掉虚拟机name
-- 创建带有网卡设备的虚拟机```xl -v create busybox-conf -c```，-c 创建好之后至今进入
-- 在虚拟机中执行ifconfig -a，依然看不到ip地址，这是因为没有网卡驱动
-  ```
-  [root@localhost ~]# xl console busybox-002
-  / # ifconfig -a
-  lo        Link encap:Local Loopback  
-            LOOPBACK  MTU:65536  Metric:1
-            RX packets:0 errors:0 dropped:0 overruns:0 frame:0
-            TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
-            collisions:0 txqueuelen:0 
-            RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
-  ```
-- 进入这个路径 /lib/modules/2.6.32-754.el6.x86_64/kernel/drivers/net
+
+-> 如果重启服务后，系统死机，参考下面issue
+
+## 5.2 修改虚拟机配置文件，添加网卡配置选项
+#### 1. 修改xen虚拟机配置文件
+```diff
+[root@localhost xen]# grep -v ^# busybox_conf 
+  name = "busybox-002"
+  kernel = "/boot/vmlinuz"
+  ramdisk = "/boot/initramfs.img"
+  extra = "selinux=0 init=/bin/sh"
+  memory = 256
+  vcpus = 2
++ vif = [ 'bridge=xenbr0' ]
+  disk = [ '/images/xen/busybox.img,raw,xvda,rw' ]
+  root = '/dev/xvda ro'
+```
+#### 2. 创建带有网卡设备的虚拟机
+- ```xl -v create busybox-conf -c```，-c 创建好之后直接进入虚拟机
+#### 3. 查看虚拟机的网卡设备
+- 在虚拟机中执行ifconfig -a，依然看不到eth0，这是因为没有网卡驱动
+```
+[root@localhost ~]# xl console busybox-002
+/ # ifconfig -a
+lo        Link encap:Local Loopback  
+    LOOPBACK  MTU:65536  Metric:1
+    RX packets:0 errors:0 dropped:0 overruns:0 frame:0
+    TX packets:0 errors:0 dropped:0 overruns:0 carrier:0
+    collisions:0 txqueuelen:0 
+    RX bytes:0 (0.0 B)  TX bytes:0 (0.0 B)
+```
+## 5.3 制作虚拟机网卡驱动
+#### 1. 复制宿主机（dom0的网卡启动）到虚拟机
+- 进入这个路径``` /lib/modules/2.6.32-754.el6.x86_64/kernel/drivers/net```
   - 查看这本包，有没有其他依赖的包,depends为空，则没有依赖包
     ```
     [root@localhost net]# modinfo xen-netfront.ko 
