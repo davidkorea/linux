@@ -178,16 +178,29 @@ lost+found
 - ```cd /boot```
 - ```ln -sv vmlinuz-2.6.32-754.el6.x86_64  vmlinuz```
 - ```ln -sv initramfs-2.6.32-754.el6.x86_64.img initramfs.img```
-# 4. 创建PV(半虚拟化)虚拟机（无网络）
+
+# 4. 创建PV类型虚拟机（无网络）
 ### 4.1 创建虚拟器配置文件
 进入到xen的目录 /etc/xen
 - xl.conf， xl命令的通用全局配置文件，和domU的配置无关
 - xlexample.hvm，xlwxample.pvlinux 为xl命令的domU创建模版
-- ```cp xlexample.pvlinux busybox```,复制一份模版进行编辑
-- ```vim busybox```，如下图
-  ![](https://i.loli.net/2019/04/08/5cab10ca6e654.jpg)
-- ```xl -v create busybox -n```,busybox为上面的配置文件，此命令并不会真正创建虚拟机，只会输出配置选项供检查使用 
-- ```xl -v create busybox```，-v显示详细信息，真正创建虚拟机
+#### 1. 复制一份模版进行编辑
+- ```cp xlexample.pvlinux busybox_conf```,
+- ```vim busybox_conf```，做如下修改
+  ```
+  [root@localhost xen]# grep -v ^# busybox_conf 
+  name = "busybox-001"
+  kernel = "/boot/vmlinuz"
+  ramdisk = "/boot/initramfs.img"
+  extra = "selinux=0 init=/bin/sh"
+  memory = 256
+  vcpus = 2
+  disk = [ '/images/xen/busybox.img,raw,xvda,rw' ]
+  root = '/dev/xvda ro'
+  ```
+#### 3. 创建虚拟机
+- ```xl -v create busybox_conf -n```，busybox_conf为上面的配置文件，此命令并不会真正创建虚拟机，只会输出配置选项供检查使用 
+- ```xl -v create busybox_conf```，-v显示详细信息，真正创建虚拟机
   - 报错
     ```
     libxl: error: libxl_device.c:1237:device_hotplug_child_death_cb: script: File /images/xen/busybox.img is loopback-mounted through 7:0,
@@ -205,16 +218,45 @@ lost+found
   Domain-0                                     0  3783     4     r-----    1125.6
   busybox-001                                  3   256     2     -b----       3.6
   ```
-  
+#### 4. 进入虚拟机  
 创建虚拟机完成，但是刚才并没有配置网卡不能ssh进行远程操作，也没有图形界面，那么怎么进入虚拟机呢？
 - ```xl console busybox-001```
 - ```ctrl + ] ``` ctrl+右中括号，推出虚拟机终端，使用exit命令会删除当前虚拟机
 
-## 2.4 虚拟机网络配置
+# 5. 创建PV类型虚拟机（有网络）
 
-- 创建ifcfg-xenbr0，一定要加上NM_CONTROLLED=no，否则service restart报错``` Error: Connection activation failed: Master connection not found or invalid```
+## 5.1 虚拟机网络配置
+#### 1. 创建网桥设备
+安装系统时，默认安装来bridge-utils工具。此处通过创建网桥设备的配置文件的方式来创建网桥
+- 创建ifcfg-xenbr0，
+  - 一定要加上NM_CONTROLLED=no，否则service restart报错``` Error: Connection activation failed: Master connection not found or invalid```
+    ```
+    [root@localhost network-scripts]# cat ifcfg-xenbr0 
+    DEVICE=xenbr0
+    TYPE=Bridge
+    ONBOOT=yes
+    BOOTPROTO=static
+    IPADDR=192.168.0.160
+    NETMASK=255.255.255.0
+    GATEWAY=192.168.0.1
+    DNS1=8.8.8.8
+    DNS2=168.126.63.1
+    NM_CONTROLLED=no
+    ```
 - 修改ifcfg-eth0，一定要加上NM_CONTROLLED=no
-- 关闭networkManager ```chkconfig NetworkManager off```，查看 ```chkconfig --list NetworkManager```
+  ```
+  [root@localhost network-scripts]# cat ifcfg-eth0 
+  DEVICE=eth0
+  HWADDR=00:0C:29:80:84:B5
+  TYPE=Ethernet
+  UUID=bd9ca1a9-fc6a-4866-9444-d2fd4a0d487b
+  ONBOOT=yes
+  BOOTPROTO=static
+  BRIDGE=xenbr0
+  NM_CONTROLLED=no
+  ```
+#### 2. 关闭networkManager
+-  ```chkconfig NetworkManager off```，查看 ```chkconfig --list NetworkManager```
 - ```service network restart```
 - 修改xen虚拟机配置文件```vif = [ 'bridge=xenbr0' ]```，并且改掉虚拟机name
 - 创建带有网卡设备的虚拟机```xl -v create busybox-conf -c```，-c 创建好之后至今进入
