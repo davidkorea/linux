@@ -450,7 +450,17 @@ vim /etc/xen/busybox_conf
 [root@localhost ~]# cd /etc/sysconfig/network-scripts/
 [root@localhost network-scripts]# cp ifcfg-xenbr0 ifcfg-xenbr1
 [root@localhost network-scripts]# vim ifcfg-xenbr1
-
+- DEVICE=xenbr0
++ DEVICE=xenbr1
+  NM_CONTROLLED=no
+  TYPE=Bridge
+  ONBOOT=yes
+- BOOTPROTO=static
+- IPADDR=192.168.0.160
+- NETMASK=255.255.255.0
+- GATEWAY=192.168.0.1
+- DNS1=8.8.8.8
+- DNS2=168.126.63.1
 
 [root@localhost network-scripts]# service network restart
 ```
