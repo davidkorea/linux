@@ -2,7 +2,8 @@
 
 # 1. 准备centos6 xen kernel环境
 
-配置centos6的网卡eth0时，DNS1要指定8.8.8.8，否则下面yum安装，超级慢，或报错...
+- 配置centos6的网卡eth0时，DNS1要指定8.8.8.8，否则下面yum安装，超级慢，或报错...
+- 可以不配置aliyun yum源，用系统自带的也很快
 
 reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luochen2015/1741411)
 
