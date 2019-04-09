@@ -1,15 +1,20 @@
+# 创建xen虚拟机
 
-# 1. 在centos6安装xen
+# 1. 准备centos6环境
 
-> 配置centos6的网卡eth0时，DNS1要指定8.8.8.8，否则下面yum安装，超级慢，或报错...
+配置centos6的网卡eth0时，DNS1要指定8.8.8.8，否则下面yum安装，超级慢，或报错...
+
+## 1.1 安装xen kernel
 
 reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luochen2015/1741411)
 
-- 指定可以安装xen的yum源，否则yum install xen会报错找不到xen
-  - 直接```yum install centos-release-xen```，此时或出现2个xen的repo文件
-  - 移走其他的repo文件，yum.repos目录下只留上面新安装的2个xen的repo，否则安装yum install xen时会报错
-
+#### 1. 安装xen yum源
+指定可以安装xen的yum源，否则直接yum install xen会报错找不到xen
+- ```yum install centos-release-xen```，
+- 执行上面命令后，会出现2个xen的repo文件（移走其他的repo文件，yum.repos目录下只留上面新安装的2个xen的repo，否则安装yum install xen时会报错。有可能是DNS的问题）
+#### 2. 安装xen
 - ```yum install -y xen```，默认安装最新版本xen，grub.conf文件第一个title的kernel和module也被自动修改正确
+- 修改grub.conf文件
   ```diff
   [root@localhost ~]# vim /etc/grub.conf 
   default=0
@@ -28,7 +33,7 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
           kernel /vmlinuz-2.6.32-754.11.1.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
           initrd /initramfs-2.6.32-754.11.1.el6.x86_64.img
   ```
-    - dom0_vcpus_pin dom0的虚拟cpu固定在物理cpu的某一核心
+  - dom0_vcpus_pin dom0的虚拟cpu固定在物理cpu的某一核心
     
   [](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
   
@@ -49,33 +54,34 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
   lost+found                                xen-4.8.5.12.ga1f8fe0628-1.el6.gz
   symvers-2.6.32-754.11.1.el6.x86_64.gz     xen.gz
   ```
-- 修改grub.conf文件，上面一步已经自动修改完成
-  ![](https://i.loli.net/2019/04/07/5ca9bb50116f8.jpg)
+  
 - reboot
-# 2. 创建PV格式的虚拟机  
-当前使用 centos6 3.18.12version kernel
+  - 重启后使用内核4.9.127-32.el6.x86_64
 
-1. 准备磁盘镜像文件
-  - ```mkdir -pv /images/xen```
-  - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
-  - ```mke2fs -t ext /images/xen/bnusybox.img```
- 
-2. 提供根文件系统
-  - 编译真正的busybox tar文件，并复制到busybox.img镜像中
-  - ```mount -o loop /images/xen/busybox.img /mnt```
-  - ```cp -a $BUSYBOX/_install/* /mnt```
-  - ```mkdir /mnt{prox,sys,dev,var}```
+# 2. 创建PV格式的虚拟机（无网络）  
+当前使用 centos6 4.9.127-32.el6.x86_64 version kernel
 
-3. 提供domU配置文件
-  - dom0的内核文件，创建一个软连接，直接来使用
-  - 根据/etc/xen下的xlexample.pvlinux模版文件来修改虚拟机配置文件
-4. 启动实例
-  - ```x; -v create <domU_cfg_file> -n```，检查一下
-  - ```x; -v create <domU_cfg_file>```，真正创建
+> 1. 准备磁盘镜像文件
+>   - ```mkdir -pv /images/xen```
+>   - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
+>   - ```mke2fs -t ext /images/xen/bnusybox.img```
+>  
+> 2. 提供根文件系统
+>   - 下载真正的busybox tar文件，静态编译后，复制到busybox.img镜像中
+>   - ```mount -o loop /images/xen/busybox.img /mnt```
+>   - ```cp -a $BUSYBOX/_install/* /mnt```
+>   - ```mkdir /mnt{prox,sys,dev,var}```
+> 
+> 3. 提供domU配置文件
+>   - dom0的内核文件，创建一个软连接，直接来使用
+>   - 根据/etc/xen下的xlexample.pvlinux模版文件来修改虚拟机配置文件
+> 4. 启动实例
+>   - ```x; -v create <domU_cfg_file> -n```，检查一下
+>   - ```x; -v create <domU_cfg_file>```，真正创建
 
 
 ## 2.1 创建磁盘镜像文件qemu-img
-- 创建
+#### 1. 创建
   - ```qemu-img create -f raw /images/xen/busybox.img 2G```
   - ```qemu-img create -f raw -o size=2G /images/xen/busybox.img```
 
