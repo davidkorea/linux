@@ -63,7 +63,7 @@ Name                                        ID   Mem VCPUs      State   Time(s)
 Domain-0                                     0  3271     4     r-----    3270.7
 ```
 
-# 2. 创建PV格式的虚拟机（无网络）  
+# 2. 准备虚拟机磁盘镜像文件  
 当前使用 centos6 4.9.127-32.el6.x86_64 version kernel
 
 > 1. 准备磁盘镜像文件
@@ -140,9 +140,9 @@ lost+found
 #### 1. 下载busybox.tar.bz2
 - ``` wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2```，最新版本下面静态编译失败，报错```make: *** [busybox_unstripped] Error 1```
 - 使用旧版本``` wget https://busybox.net/downloads/busybox-1.23.0.tar.bz2```，或者busybox-1.22.1.tar.bz2
-#### 2. 静态编译安装busybox
-    - 编译安装busybox，需要安装编译工具```yum -y groupinstall "Development Tools" "Server Platform Development"```，需要移除掉之前下载的xen repo，然后只留下aliyun的repo，需要等超级久，重试好多次，最终才能安装成功
-      - 此时会报错
+#### 2. 下载编译工具
+- ```yum -y groupinstall "Development Tools" "Server Platform Development"```，编译安装busybox，需要安装编译工具。如果安装centos6时选择来软件开发使用，不安装也可以（需要移除掉之前下载的xen repo，然后只留下aliyun的repo，需要等超级久，重试好多次，最终才能安装成功）
+- 此时会报错
         ```
         事务测试出错：
         file /etc/libvirt/libvirt.conf from install of libvirt-libs-4.1.0-2.xen48.el6.x86_64 conflicts with
@@ -150,22 +150,23 @@ lost+found
         ```
         - 删除libvirt-client-0.10.2-64.el6.x86_64，重新安装
         - ```yum remove libvirt-client-0.10.2-64.el6.x86_64```，再次执行安装成功
-    - 下载busybox tar包，进到busybox解压目录下
-      - 编译成静态链格式，即不让其再依赖于其他库。安装一个工具```yum -y install glibc-static```，如果yum安装报错，检查DNS是否是8.8.8.8
-      - ```make menuconfig```去编译busybox
-      - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
+#### 3. 静态编译安装busybox
+编译成静态链格式，即不让其再依赖于其他库
+- 解压busybox tar包，进到busybox解压目录下
+- ```yum -y install glibc-static```，安装一个工具，如果yum安装报错，检查DNS是否是8.8.8.8
+- ```make menuconfig```
+  - 图形画面下，Busybox Settings -> Build Options -> Build Busybox as a static binary(no shared libs)
         ![](https://i.loli.net/2019/04/07/5ca9860f20431.png)
-      - ```make -j 4```,如果使用make install会直接安装在当前目录下，如果出错，那么```make clean```，拍错后，再次执行
-      - ```make install```，会安装在当前目录busybox的_install文件夹下
-      - ```cp -a _install/* /mnt```
-      - ```cd /mnt```
-      - ```mkdir proc sys dev etc var boot home```，在mnt目录下，创建这几个文件夹。关键就是proc sys dev目录
+- ```make -j 4```，如果使用make install会直接安装在当前目录下，如果出错，那么```make clean```，排错后，再次执行
+- ```make install```，会安装在当前目录busybox的_install文件夹下
+- ```cp -a _install/* /mnt```
+- ```cd /mnt```
+- ```mkdir proc sys dev etc var boot home```，在mnt目录下，创建这几个文件夹。关键就是proc sys dev目录
     - 测试这个文件系统是否可用
       - ```chroot /mnt /bin/sh```
         ![](https://i.loli.net/2019/04/07/5ca988926ec1b.png)
-**根文件系统准备完毕**
 
-## 2.2 准备内核
+# 3. 准备虚拟机内核
 宿主机自带的系统可以直接拿来用，虽然不能用作dom0，但是domU没有问题。创建软连接
 - ```cd /boot```
 - ```ln -sv vmlinuz-2.6.32-504...  vmlinuz```
