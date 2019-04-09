@@ -56,7 +56,12 @@ title CentOS (2.6.32-754.11.1.el6.x86_64)
   ```
   
 ### 4. reboot
-重启后使用内核4.9.127-32.el6.x86_64
+重启后使用内核4.9.127-32.el6.x86_64，宿主机即为xen-dom0
+```
+[root@localhost boot]# xl list
+Name                                        ID   Mem VCPUs      State   Time(s)
+Domain-0                                     0  3271     4     r-----    3270.7
+```
 
 # 2. 创建PV格式的虚拟机（无网络）  
 当前使用 centos6 4.9.127-32.el6.x86_64 version kernel
