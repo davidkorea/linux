@@ -1,39 +1,39 @@
 # 创建xen虚拟机
 
-# 1. 准备centos6环境
+# 1. 准备centos6 xen kernel环境
 
 配置centos6的网卡eth0时，DNS1要指定8.8.8.8，否则下面yum安装，超级慢，或报错...
 
-## 1.1 安装xen kernel
-
 reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luochen2015/1741411)
 
-#### 1. 安装xen yum源
+### 1. 安装xen yum源
 指定可以安装xen的yum源，否则直接yum install xen会报错找不到xen
 - ```yum install centos-release-xen```，
 - 执行上面命令后，会出现2个xen的repo文件（移走其他的repo文件，yum.repos目录下只留上面新安装的2个xen的repo，否则安装yum install xen时会报错。有可能是DNS的问题）
-#### 2. 安装xen
-- ```yum install -y xen```，默认安装最新版本xen，grub.conf文件第一个title的kernel和module也被自动修改正确
-- 修改grub.conf文件
-  ```diff
-  [root@localhost ~]# vim /etc/grub.conf 
-  default=0
-  timeout=5
-  splashimage=(hd0,0)/grub/splash.xpm.gz
-  hiddenmenu
-  title CentOS (4.9.127-32.el6.x86_64)
-          root (hd0,0)
-  -       kernel /xen.gz dom0_mem=1024M,max:1024M cpuinfo com1=115200,8n1 console=com1,tty loglvl=all guest_loglvl=all
-  +       kernel /xen.gz dom0_mem=1024M,cpufreq=xen,dom0_max_vcpus=2,dom0_vcpus_pin
-          module /vmlinuz-4.9.127-32.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
-          module /initramfs-4.9.127-32.el6.x86_64.img
+### 2. 安装xen
+- ```yum install -y xen```
 
-  title CentOS (2.6.32-754.11.1.el6.x86_64)
-          root (hd0,0)
-          kernel /vmlinuz-2.6.32-754.11.1.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
-          initrd /initramfs-2.6.32-754.11.1.el6.x86_64.img
-  ```
-  - dom0_vcpus_pin dom0的虚拟cpu固定在物理cpu的某一核心
+默认安装最新版本xen，grub.conf文件第一个title的kernel和module也被自动修改正确
+### 3. 修改grub.conf文件
+```diff
+[root@localhost ~]# vim /etc/grub.conf 
+default=0
+timeout=5
+splashimage=(hd0,0)/grub/splash.xpm.gz
+hiddenmenu
+title CentOS (4.9.127-32.el6.x86_64)
+        root (hd0,0)
+-       kernel /xen.gz dom0_mem=1024M,max:1024M cpuinfo com1=115200,8n1 console=com1,tty loglvl=all guest_loglvl=all
++       kernel /xen.gz dom0_mem=1024M,cpufreq=xen,dom0_max_vcpus=2,dom0_vcpus_pin
+        module /vmlinuz-4.9.127-32.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
+        module /initramfs-4.9.127-32.el6.x86_64.img
+
+title CentOS (2.6.32-754.11.1.el6.x86_64)
+        root (hd0,0)
+        kernel /vmlinuz-2.6.32-754.11.1.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root nomodeset rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap SYSFONT=latarcyrheb-sun16 rd_LVM_LV=VolGroup/lv_root  KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet crashkernel=auto
+        initrd /initramfs-2.6.32-754.11.1.el6.x86_64.img
+```
+- dom0_vcpus_pin dom0的虚拟cpu固定在物理cpu的某一核心
     
   [](https://i.loli.net/2019/04/07/5ca9b75e07d2f.jpg)
   
@@ -55,8 +55,8 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
   symvers-2.6.32-754.11.1.el6.x86_64.gz     xen.gz
   ```
   
-- reboot
-  - 重启后使用内核4.9.127-32.el6.x86_64
+### 4. reboot
+重启后使用内核4.9.127-32.el6.x86_64
 
 # 2. 创建PV格式的虚拟机（无网络）  
 当前使用 centos6 4.9.127-32.el6.x86_64 version kernel
