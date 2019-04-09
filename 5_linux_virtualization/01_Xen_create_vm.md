@@ -414,21 +414,36 @@ lo        Link encap:Local Loopback
 创建2台虚拟机，不关联物理网卡，所有虚拟机使用新创建网桥xenbr1
 
 ### 1. 创建虚拟机磁盘镜像
-
 - ```cp /images/xen/busybox.img /images/xen/busybox_vmnet.img ```
 ### 2. 创建虚拟机配置文件
-```cp /etc/xen/busybox_conf /etc/xen/busybox_conf_vmnet```
-
+- xen vm1
+```diff
+vim /etc/xen/busybox_conf
+  name = "busybox-001"
+  kernel = "/boot/vmlinuz"
+  ramdisk = "/boot/initramfs.img"
+  extra = "selinux=0 init=/bin/sh"
+  memory = 256
+  vcpus = 2
+- vif = [ 'bridge=xenbr0' ]
++ vif = [ 'bridge=xenbr1' ]
+  disk = [ '/images/xen/busybox.img,raw,xvda,rw' ]
+  root = '/dev/xvda ro'
 ```
-name = "busybox-002"
-kernel = "/boot/vmlinuz"
-ramdisk = "/boot/initramfs.img"
-extra = "selinux=0 init=/bin/sh"
-memory = 256
-vcpus = 2
-vif = [ 'bridge=xenbr1' ]
-disk = [ '/images/xen/busybox.img,raw,xvda,rw' ]
-root = '/dev/xvda ro'
+- xen vm2
+```cp /etc/xen/busybox_conf /etc/xen/busybox_conf_vmnet```
+```
+- name = "busybox-001"
++ name = "busybox-002"
+  kernel = "/boot/vmlinuz"
+  ramdisk = "/boot/initramfs.img"
+  extra = "selinux=0 init=/bin/sh"
+  memory = 256
+  vcpus = 2
++ vif = [ 'bridge=xenbr1' ]
+- disk = [ '/images/xen/busybox.img,raw,xvda,rw' ]
++ disk = [ '/images/xen/busybox.img_vmnet,raw,xvda,rw' ]
+  root = '/dev/xvda ro'
 ```
 
 
