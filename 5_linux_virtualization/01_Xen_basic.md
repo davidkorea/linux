@@ -306,8 +306,8 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 
 
 -----
-
-命令方式，或者配置文件的方式，创建桥接设备后，会死机。kernel version, known bug，try to change to another kernel version
+### Issue: 命令方式和配置文件的方式，创建桥接设备后，都会死机
+kernel version, known bug，try to change to another kernel version
 - ```yum list all kernel*``` ，查看所有可用kernel
 下面2个都要安装，注意要安装新的kernel而不是升级当前使用的kernel，以免升级后无法开机
 - ```yum -y install kernel-3.10.68```
@@ -328,16 +328,8 @@ reference: [在Centos6.5上安装xen的两种方式](https://blog.51cto.com/luoc
 果然这个3.7.4版本ok。创建网桥后并没有死机
 - 创建网桥xenbr0
 
-### 配置虚拟机网络接口
-![](https://i.loli.net/2019/04/07/5ca9be3d0a713.jpg)
+-----
 
-- ```vim /etc/xen/busybox```
-  - 修改 ```vif = ['bridge=xenbr0']```
-
-- ```xl -v create /etc/xen/busybox -c ```, -c创建虚拟机后直接进入控制台
-  - 此时虚拟机内执行```ifconfig -a```，并不能看到eth0，因为并没有网卡驱动
-  - 于是去宿主机上拷贝相应内核版本的网卡驱动程序
-    - 在虚拟机上执行```uname -r```，查看虚拟机的内核版本为2.6.32-504
 
 
 
