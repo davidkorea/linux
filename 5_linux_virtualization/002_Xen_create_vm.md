@@ -3,6 +3,7 @@
 - DomU的内核文件位于Dom0，不在DomU的磁盘镜像内
   - 桥接物理网络虚拟机
   - VMNET网络虚拟机
+官方教程：[CentOS 的 Xen4 快速入门](https://wiki.centos.org/zh/HowTos/Xen/Xen4QuickStart)
 
 # 1. 准备centos6 xen kernel环境
 
