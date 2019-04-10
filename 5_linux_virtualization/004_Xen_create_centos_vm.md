@@ -46,6 +46,7 @@
 - xl create /etc/xen/centos_conf
 - xl console centos-001
 -----
+1. English
 ```
 Welcome to CentOS for x86_64
 
@@ -73,6 +74,7 @@ Welcome to CentOS for x86_64
   <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
   ```
   -----
+  2. URL
   ```
   Welcome to CentOS for x86_64
 
@@ -100,6 +102,7 @@ Welcome to CentOS for x86_64
   <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
 ```
 -----
+3. uncheck IPv6
 ```
 欢迎使用Secure Shell Extension（版本：0.17）。
 常见问题解答：https://goo.gl/muppJj（按住 Ctrl 键的同时点击链接即可打开）
@@ -124,6 +127,7 @@ Welcome to CentOS for x86_64
                     
 ```
 -----
+4. https://mirrors.aliyun.com/centos/6.10/os/x86_64/
 ```
 欢迎使用Secure Shell Extension（版本：0.17）。
 常见问题解答：https://goo.gl/muppJj（按住 Ctrl 键的同时点击链接即可打开）
@@ -150,12 +154,146 @@ Welcome to CentOS for x86_64
 
 ```
 -----
+```
+Welcome to CentOS for x86_64
+
+
+
+
+
+               ┌──────────────────┤ CentOS ├───────────────────┐
+               │                                               │
+               │ Welcome to CentOS!                            │
+               │                                               │
+               │                                               │
+               │                    ┌────┐                     │
+               │                    │ OK │                     │
+               │                    └────┘                     │
+               │                                               │
+               │                                               │
+               └───────────────────────────────────────────────┘
 
 
 
 
 
 
+  <Tab>/<Alt-Tab> between elements   |  <Space> selects   |  <F12> next screen
+```
+-----
+5. Re-initialize all
+```
+Welcome to CentOS for x86_64
+ ┌────────────────────────────────┤ Warning ├─────────────────────────────────┐
+ │                                                                            │
+ │         Error processing drive:                                 ↑          │
+ │                                                                 ▮          │
+ │         xen-vbd-51712                                           ▒          │
+ │         122880MB                                                ▒          │
+ │         Xen Virtual Block Device                                ▒          │
+ │                                                                 ▒          │
+ │         This device may need to be reinitialized.               ▒          │
+ │                                                                 ▒          │
+ │         REINITIALIZING WILL CAUSE ALL DATA TO BE LOST!          ▒          │
+ │                                                                 ▒          │
+ │         This action may also be applied to all other disks      ▒          │
+ │         needing reinitialization.                               ↓          │
+ │                                                                            │
+ │  ┌────────┐   ┌────────────┐   ┌───────────────┐   ┌───────────────────┐   │
+ │  │ Ignore │   │ Ignore all │   │ Re-initialize │   │ Re-initialize all │   │
+ │  └────────┘   └────────────┘   └───────────────┘   └───────────────────┘   │
+ │                                                                            │
+ │                                                                            │
+ └────────────────────────────────────────────────────────────────────────────┘
+
+  <Tab>/<Alt-Tab> between elements   |  <Space> selects   |  <F12> next screen
+
+```
+-----
+6. Asia/Shanghai   
+```
+Welcome to CentOS for x86_64
+ 
+ 
+                    ┌───────┤ Time Zone Selection ├───────┐
+                    │                                     │
+                    │ In which time zone are you located? │
+                    │                                     │
+                    │ [*] System clock uses UTC           │
+                    │                                     │
+                    │  Asia/Sakhalin                   ↑  │
+                    │  Asia/Samarkand                  ▒  │
+                    │  Asia/Seoul                      ▮  │
+                    │  Asia/Shanghai                   ▒  │
+                    │  Asia/Singapore                  ↓  │
+                    │                                     │
+                    │      ┌────┐          ┌──────┐       │
+                    │      │ OK │          │ Back │       │
+                    │      └────┘          └──────┘       │
+                    │                                     │
+                    │                                     │
+                    └─────────────────────────────────────┘
+ 
+
+  <Tab>/<Alt-Tab> between elements   |  <Space> selects   |  <F12> next screen
+```
+-----
+7. 111111
+```
+Welcome to CentOS for x86_64
+ 
+ 
+                    
+                ┌──────────────┤ Root Password ├───────────────┐
+                │                                              │
+                │    Pick a root password. You must type it    │
+                │    twice to ensure you know it and do not    │
+                │    make a typing mistake.                    │
+                │                                              │
+                │ Password:           ******__________________ │
+                │ Password (confirm): ******__________________ │
+                │                                              │
+                │        ┌────┐               ┌──────┐         │
+                │        │ OK │               │ Back │         │
+                │        └────┘               └──────┘         │
+                │                                              │
+                │                                              │
+                └──────────────────────────────────────────────┘
+                    
+                    
+ 
+
+  <Tab>/<Alt-Tab> between elements   |  <Space> selects   |  <F12> next screen
+```
+-----
+8. Replace existing Linux system 
+```
+Welcome to CentOS for x86_64
+ 
+       ┌─────────────────────┤ Partitioning Type ├─────────────────────┐
+       │                                                               │
+       │ Installation requires partitioning of your hard drive.  The   │
+       │ default layout is suitable for most users.  Select what space │
+       │ to use and which drives to use as the install target.         │
+       │                                                               │
+       │                 Use entire drive                              │
+       │                 Replace existing Linux system                 │
+       │                 Use free space                                │
+       │                                                               │
+       │   Which drive(s) do you want to use for this installation?    │
+       │      [*]   xvda   122880 MB (Xen Virtual Block Devic) ↑       │
+       │                                                       ▮       │
+       │                                                               │
+       │                      ┌────┐   ┌──────┐                        │
+       │                      │ OK │   │ Back │                        │
+       │                      └────┘   └──────┘                        │
+       │                                                               │
+       │                                                               │
+       └───────────────────────────────────────────────────────────────┘
+
+<Space>,<+>,<-> selection   |   <F2> Add drive   |   <F12> next screen
+```
+-----
 
 
 
