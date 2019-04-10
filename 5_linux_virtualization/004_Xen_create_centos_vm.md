@@ -323,6 +323,28 @@ grep -v ^# /etc/xen/centos_conf
   ```
 # 2. 基于ks文件的无人值守安装centos
 
+## 2.1 磁盘文件
+- ```qemu-img create -f qcow2 -o size=120G,preallocation=metedata /images/xen/ks-centos6.10.img```
+
+## 2.2 配置文件
+```
+[root@localhost ~]# cd /etc/xen/
+[root@localhost xen]# vim centos_ks_conf 
+
+name = "ks-centos-001"
+kernel = "/images/kernel/vmlinuz"
+ramdisk = "/images/kernel/initrd.img"
+extra = "ks=ftp://192.168.0.15/ks.cfg"
+memory = 512
+vcpus = 2
+vif = [ 'bridge=xenbr0' ]
+disk = [ '/images/xen/ks-centos6.10.img,qcow2,xvda,rw' ]
+root = '/dev/xvda ro'
+```
+## 2.3 创建虚拟机
+
+- xl create /etc/xen/ks-centos_conf
+- xl console ks-centos-001
 
 
 
@@ -330,3 +352,86 @@ grep -v ^# /etc/xen/centos_conf
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
+## CentOS6.10 ks.cfg
+```
+#platform=x86, AMD64, 或 Intel EM64T
+#version=DEVEL
+# Install OS instead of upgrade
+install
+# Keyboard layouts
+keyboard 'us'
+# Root password
+rootpw --iscrypted $1$9yx.pjhB$cSaPuJPxd9V5JMoK2tttO.
+# Use network installation
+url --url="ftp://192.168.0.15/pub"
+# System language
+lang en_US
+# System authorization information
+auth  --useshadow  --passalgo=sha512
+# Use graphical install
+graphical
+firstboot --disable
+# SELinux configuration
+selinux --disabled
+
+# Firewall configuration
+firewall --disabled
+# Halt after installation
+halt
+# System timezone
+timezone Africa/Abidjan
+# System bootloader configuration
+bootloader --location=none
+# Clear the Master Boot Record
+zerombr
+# Partition clearing information
+clearpart --all --initlabel
+# Disk partitioning information
+part /boot --fstype="xfs" --size=300
+part swap --fstype="swap" --size=2000
+part / --fstype="xfs" --size=1
+
+%packages
+@development
+
+%end
+
+```
