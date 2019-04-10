@@ -45,3 +45,56 @@
 ## 1.4 创建虚拟机
 - xl create /etc/xen/centos_conf
 - xl console centos-001
+-----
+
+Welcome to CentOS for x86_64
+
+                    ┌────────┤ Choose a Language ├────────┐
+                    │                                     │
+                    │ What language would you like to use │
+                    │ during the installation process?    │
+                    │                                     │
+                    │      Catalan                ↑       │
+                    │      Chinese(Simplified)    ▒       │
+                    │      Chinese(Traditional)   ▮       │
+                    │      Croatian               ▒       │
+                    │      Czech                  ▒       │
+                    │      Danish                 ▒       │
+                    │      Dutch                  ▒       │
+                    │      English                ↓       │
+                    │                                     │
+                    │               ┌────┐                │
+                    │               │ OK │                │
+                    │               └────┘                │
+                    │                                     │
+                    │                                     │
+                    └─────────────────────────────────────┘
+
+  <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
+  
+  -----
+  
+  Welcome to CentOS for x86_64
+
+                    
+                    
+                        ┌───┤ Installation Method ├───┐
+                        │                             │
+                        │ What type of media contains │
+                        │ the installation image?     │
+                        │                             │
+                        │        Local CD/DVD         │
+                        │        Hard drive           │
+                        │        NFS directory        │
+                        │        URL                  │
+                        │                             │
+                        │   ┌────┐       ┌──────┐     │
+                        │   │ OK │       │ Back │     │
+                        │   └────┘       └──────┘     │
+                        │                             │
+                        │                             │
+                        └─────────────────────────────┘
+                    
+                    
+
+  <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
