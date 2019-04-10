@@ -390,6 +390,10 @@ root = '/dev/xvda ro'
 
 
 -----
+## make ks.cfg
+1. no VMNET, use pysical network 192.168.0.15
+2. Bootable partitions cannot be on an xfs filesystem.  USE ext format
+
 ## CentOS6.10 ks.cfg
 ```
 #platform=x86, AMD64, 或 Intel EM64T
