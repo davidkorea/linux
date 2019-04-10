@@ -309,7 +309,7 @@ grep -v ^# /etc/xen/centos_conf
   vcpus = 2
   vif = [ 'bridge=xenbr0' ]
   disk = [ '/images/xen/centos6.10.img,qcow2,xvda,rw' ]
-+ bootloader = 'pygrub'
++ bootloader = 'pygrub'         # /usr/bin/pygrub
 ```
 10. 重启后进入虚拟机
 - xl console centos-001
