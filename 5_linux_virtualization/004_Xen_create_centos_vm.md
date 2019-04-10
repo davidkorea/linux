@@ -1,5 +1,5 @@
 
-# 1.xl创建centos6虚拟机
+# 1.xl全手动创建centos6虚拟机
 ## 1.1 准备内核文件
 - yum/cd中的文件
   - isolinux
@@ -295,7 +295,7 @@ Welcome to CentOS for x86_64
 ```
 -----
 
-
+# 2. 基于ks文件的无人值守安装centos
 
 
 
