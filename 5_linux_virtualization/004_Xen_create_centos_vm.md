@@ -294,7 +294,23 @@ Welcome to CentOS for x86_64
 <Space>,<+>,<-> selection   |   <F2> Add drive   |   <F12> next screen
 ```
 -----
+9. 安装后，重启前，修改配置文件
+```diff
+[root@localhost ~]# grep -v ^# !$
+grep -v ^# /etc/xen/centos_conf
 
+  name = "centos-001"
+- kernel = "/images/kernel/vmlinuz"
++ #kernel = "/images/kernel/vmlinuz"
+- ramdisk = "/images/kernel/initrd.img"
++ #ramdisk = "/images/kernel/initrd.img"
+  extra = ""
+  memory = 512
+  vcpus = 2
+  vif = [ 'bridge=xenbr0' ]
+  disk = [ '/images/xen/centos6.10.img,qcow2,xvda,rw' ]
++ bootloader = 'pygrub'
+```
 # 2. 基于ks文件的无人值守安装centos
 
 
