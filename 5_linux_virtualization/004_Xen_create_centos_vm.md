@@ -46,7 +46,7 @@
 - xl create /etc/xen/centos_conf
 - xl console centos-001
 -----
-
+```
 Welcome to CentOS for x86_64
 
                     ┌────────┤ Choose a Language ├────────┐
@@ -71,9 +71,9 @@ Welcome to CentOS for x86_64
                     └─────────────────────────────────────┘
 
   <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
-  
+  ```
   -----
-  
+  ```
   Welcome to CentOS for x86_64
 
                     
@@ -98,3 +98,4 @@ Welcome to CentOS for x86_64
                     
 
   <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
+```
