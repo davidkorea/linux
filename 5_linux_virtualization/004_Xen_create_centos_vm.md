@@ -99,3 +99,70 @@ Welcome to CentOS for x86_64
 
   <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
 ```
+-----
+```
+欢迎使用Secure Shell Extension（版本：0.17）。
+常见问题解答：https://goo.gl/muppJj（按住 Ctrl 键的同时点击链接即可打开）
+                    
+                 ┌────────────┤ Configure TCP/IP ├────────────┐
+                 │                                            │
+                 │ [*] Enable IPv4 support                    │
+                 │        (*) Dynamic IP configuration (DHCP) │
+                 │        ( ) Manual configuration            │
+                 │                                            │
+                 │ [ ] Enable IPv6 support                    │
+                 │        (*) Automatic                       │
+                 │        ( ) Automatic, DHCP only            │
+                 │        ( ) Manual configuration            │
+                 │                                            │
+                 │        ┌────┐              ┌──────┐        │
+                 │        │ OK │              │ Back │        │
+                 │        └────┘              └──────┘        │
+                 │                                            │
+                 │                                            │
+                 └────────────────────────────────────────────┘
+                    
+```
+-----
+```
+欢迎使用Secure Shell Extension（版本：0.17）。
+常见问题解答：https://goo.gl/muppJj（按住 Ctrl 键的同时点击链接即可打开）
+        ┌────────────────────────┤ URL Setup ├─────────────────────────┐
+        │                                                              │
+        │          Please enter the URL containing the CentOS          │
+        │          installation image on your server.                  │
+        │                                                              │
+        │ https://mirrors.aliyun.com/centos/6.10/os/x86_64/___________ │
+        │                                                              │
+        │ [ ] Enable HTTP proxy                                        │
+        │                                                              │
+        │ Proxy URL        ___________________________________         │
+        │ Username         _______________                             │
+        │                                                              │
+        │ Password         _______________                             │
+        │                                                              │
+        │            ┌────┐                       ┌──────┐             │
+        │            │ OK │                       │ Back │             │
+        │            └────┘                       └──────┘             │
+        │                                                              │
+        │                                                              │
+        └──────────────────────────────────────────────────────────────┘
+
+```
+-----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
