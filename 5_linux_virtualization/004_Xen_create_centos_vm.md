@@ -43,3 +43,5 @@
   #root = '/dev/xvda ro '
   ```
 ## 1.4 创建虚拟机
+- xl create /etc/xen/centos_conf
+- xl console centos-001
