@@ -231,7 +231,10 @@
   - mount /dev/xvdb /etc，ls /etc查看磁盘挂载成功，umount拆掉即可
   - xl block-detach busybox-001 51728，拆掉磁盘，磁盘设备idx需要通过block-list查看
 
-**手动制作镜像就是这样，但是测试时，创建完成吸进，xl list查看状态是p，而不是b或者r，console也进不去**
+> 手动制作镜像并创建虚拟机操作完成
+> - 但是测试时，创建完成吸进，xl list查看状态是p，而不是b或者r
+> - xl console无法进入虚拟机，报错busybox-003 is an invalid domain identifier (rc=-6)
+
 
 
 
