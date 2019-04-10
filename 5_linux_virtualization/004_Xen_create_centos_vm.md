@@ -311,6 +311,16 @@ grep -v ^# /etc/xen/centos_conf
   disk = [ '/images/xen/centos6.10.img,qcow2,xvda,rw' ]
 + bootloader = 'pygrub'
 ```
+10. 重启后进入虚拟机
+- xl console centos-001
+- 配置网卡
+  ```
+  [root@localhost ~]# ifconfig eth0 192.168.0.20 up
+  [root@localhost ~]# ping 192.168.0.18
+  PING 192.168.0.18 (192.168.0.18) 56(84) bytes of data.
+  64 bytes from 192.168.0.18: icmp_seq=1 ttl=64 time=0.776 ms
+  64 bytes from 192.168.0.18: icmp_seq=2 ttl=64 time=0.529 ms
+  ```
 # 2. 基于ks文件的无人值守安装centos
 
 
