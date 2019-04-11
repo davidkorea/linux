@@ -1,7 +1,7 @@
 
 # 1.xl全手动创建centos6虚拟机
 ## 1.1 准备内核文件
-- yum/cd中的文件
+- yum/cdrom中的文件(iso文件内也都有)
   - isolinux
     - vmlinuz
     - initrd
@@ -20,18 +20,19 @@
   vesamenu.c32                 29-Jun-2018 16:11              163728
   vmlinuz                      29-Jun-2018 16:11             4315504
   ```
-  - wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/initrd.img 
-  - wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/vmlinuz  
-- mkdir /images/kernel
-- mv initrd.img vmlinuz /images/kernel
+  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/initrd.img ```
+  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/vmlinuz  ```
+- ```mkdir /images/kernel```
+- ```mv initrd.img vmlinuz /images/kernel```
 ## 1.3 创建磁盘镜像qemu-img
--  qemu-img create -f qcow2 -o size=120G,preallocation=metedata /images/xen/centos6.10.img
--  df -lh查看物理磁盘空间够不够
+-  ```qemu-img create -f qcow2 -o size=20G,preallocation=metedata /images/xen/centos6.10.img```
+-  ```df -lh```查看物理磁盘空间够不够
 
 ## 1.3 准备虚拟机配置文件
-- cp /etc/xen/busybox_conf centos_conf
-- vim /etc/xen/centos_ conf
+- ```cp /etc/xen/busybox_conf centos_conf```
+- 修改配置文件
   ```
+  vim /etc/xen/centos_ conf
   name = 'centos-001'
   kernel = '/images/kernel/vmlinuz'
   ramdisk = '/images/kernelinitrd.img'
@@ -43,10 +44,10 @@
   #root = '/dev/xvda ro '
   ```
 ## 1.4 创建虚拟机
-- xl create /etc/xen/centos_conf
-- xl console centos-001
+- ```xl create /etc/xen/centos_conf```
+- ```xl console centos-001```
 -----
-1. English
+#### 1. English
 ```
 Welcome to CentOS for x86_64
 
@@ -72,37 +73,37 @@ Welcome to CentOS for x86_64
                     └─────────────────────────────────────┘
 
   <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
-  ```
-  -----
-  2. URL
-  ```
-  Welcome to CentOS for x86_64
-
-                    
-                    
-                        ┌───┤ Installation Method ├───┐
-                        │                             │
-                        │ What type of media contains │
-                        │ the installation image?     │
-                        │                             │
-                        │        Local CD/DVD         │
-                        │        Hard drive           │
-                        │        NFS directory        │
-                        │        URL                  │
-                        │                             │
-                        │   ┌────┐       ┌──────┐     │
-                        │   │ OK │       │ Back │     │
-                        │   └────┘       └──────┘     │
-                        │                             │
-                        │                             │
-                        └─────────────────────────────┘
-                    
-                    
-
-  <Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
 ```
 -----
-3. uncheck IPv6
+#### 2. URL
+```
+Welcome to CentOS for x86_64
+
+
+
+                      ┌───┤ Installation Method ├───┐
+                      │                             │
+                      │ What type of media contains │
+                      │ the installation image?     │
+                      │                             │
+                      │        Local CD/DVD         │
+                      │        Hard drive           │
+                      │        NFS directory        │
+                      │        URL                  │
+                      │                             │
+                      │   ┌────┐       ┌──────┐     │
+                      │   │ OK │       │ Back │     │
+                      │   └────┘       └──────┘     │
+                      │                             │
+                      │                             │
+                      └─────────────────────────────┘
+
+
+
+<Tab>/<Alt-Tab> between elements  | <Space> selects | <F12> next screen
+```
+-----
+#### 3. uncheck IPv6
 ```
 欢迎使用Secure Shell Extension（版本：0.17）。
 常见问题解答：https://goo.gl/muppJj（按住 Ctrl 键的同时点击链接即可打开）
@@ -127,7 +128,8 @@ Welcome to CentOS for x86_64
                     
 ```
 -----
-4. https://mirrors.aliyun.com/centos/6.10/os/x86_64/
+
+#### 4. https://mirrors.aliyun.com/centos/6.10/os/x86_64/
 ```
 欢迎使用Secure Shell Extension（版本：0.17）。
 常见问题解答：https://goo.gl/muppJj（按住 Ctrl 键的同时点击链接即可打开）
@@ -154,34 +156,8 @@ Welcome to CentOS for x86_64
 
 ```
 -----
-```
-Welcome to CentOS for x86_64
 
-
-
-
-
-               ┌──────────────────┤ CentOS ├───────────────────┐
-               │                                               │
-               │ Welcome to CentOS!                            │
-               │                                               │
-               │                                               │
-               │                    ┌────┐                     │
-               │                    │ OK │                     │
-               │                    └────┘                     │
-               │                                               │
-               │                                               │
-               └───────────────────────────────────────────────┘
-
-
-
-
-
-
-  <Tab>/<Alt-Tab> between elements   |  <Space> selects   |  <F12> next screen
-```
------
-5. Re-initialize all
+#### 5. Re-initialize all
 ```
 Welcome to CentOS for x86_64
  ┌────────────────────────────────┤ Warning ├─────────────────────────────────┐
@@ -210,7 +186,8 @@ Welcome to CentOS for x86_64
 
 ```
 -----
-6. Asia/Shanghai   
+
+#### 6. Asia/Shanghai   
 ```
 Welcome to CentOS for x86_64
  
@@ -238,7 +215,8 @@ Welcome to CentOS for x86_64
   <Tab>/<Alt-Tab> between elements   |  <Space> selects   |  <F12> next screen
 ```
 -----
-7. 111111
+
+#### 7. 111111
 ```
 Welcome to CentOS for x86_64
  
@@ -266,7 +244,8 @@ Welcome to CentOS for x86_64
   <Tab>/<Alt-Tab> between elements   |  <Space> selects   |  <F12> next screen
 ```
 -----
-8. Replace existing Linux system 
+
+#### 8. Replace existing Linux system 
 ```
 Welcome to CentOS for x86_64
  
@@ -294,7 +273,9 @@ Welcome to CentOS for x86_64
 <Space>,<+>,<-> selection   |   <F2> Add drive   |   <F12> next screen
 ```
 -----
-9. 安装后，重启前，修改配置文件
+
+#### 9. 安装后，重启前，修改配置文件
+- bootloader = 'pygrub' ，否则重启后会再次进行安装系统
 ```diff
 [root@localhost ~]# grep -v ^# !$
 grep -v ^# /etc/xen/centos_conf
@@ -309,10 +290,11 @@ grep -v ^# /etc/xen/centos_conf
   vcpus = 2
   vif = [ 'bridge=xenbr0' ]
   disk = [ '/images/xen/centos6.10.img,qcow2,xvda,rw' ]
-+ bootloader = 'pygrub'         # /usr/bin/pygrub
++ bootloader = 'pygrub'            # /usr/bin/pygrub
 ```
-10. 重启后进入虚拟机
-- xl console centos-001
+
+#### 10. 重启后进入虚拟机
+- ```xl console centos-001```
 - 配置网卡
   ```
   [root@localhost ~]# ifconfig eth0 192.168.0.20 up
