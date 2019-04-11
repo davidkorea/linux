@@ -389,7 +389,10 @@ grep -v ^# /etc/xen/centos_conf
 
 -----
 # 附录：创建PXE安装kickstart ks.cfg文件
-## 1. 制作ks.cfg注意事项
+## 1. 安装启动ftp，tftp
+#### 1. 
+
+## 2. 制作ks.cfg注意事项
 #### 1. no VMNET,
 - use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
 #### 2. ext4 
@@ -402,7 +405,7 @@ grep -v ^# /etc/xen/centos_conf
 
 ![](https://i.loli.net/2019/04/11/5caee4e279592.png)
 
-## 2. CentOS6 ks.cfg文件源代码
+## 3. CentOS6 ks.cfg文件源代码
 ```diff
   #platform=x86, AMD64, or Intel EM64T
   #version=DEVEL
