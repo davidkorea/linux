@@ -46,7 +46,6 @@
 ## 1.4 创建虚拟机
 - ```xl create /etc/xen/centos_conf```
 - ```xl console centos-001```
------
 #### 1. English
 ```
 Welcome to CentOS for x86_64
@@ -324,14 +323,25 @@ grep -v ^# /etc/xen/centos_conf
   vcpus = 2
   vif = [ 'bridge=xenbr0' ]
   disk = [ '/images/xen/ks-centos.img,qcow2,xvda,rw' ]
-  root = '/dev/xvda ro'
 ```
 - PXE安装时。报错anaconda 磁盘空间不足。因此扩大内存至2018M
 ## 2.3 创建虚拟机
 
 - ```xl create /etc/xen/kscentos_conf```
 
-
+## 2.4 安装完，重启前，更改配置文件
+```diff
+[root@localhost ~]# vim /etc/xen/kscentos_conf 
+  name = "centos-ks-001"
+- kernel = "/images/kernel/vmlinuz"
+- ramdisk = "/images/kernel/initrd.img"
+- extra = "ks=ftp://192.168.0.15/ks.cfg"
+  memory = 2048
+  vcpus = 2
+  vif = [ 'bridge=xenbr0' ]
+  disk = [ '/images/xen/ks-centos.img,qcow2,xvda,rw' ]
++ bootloader = 'pygrub'
+```
 
 
 
