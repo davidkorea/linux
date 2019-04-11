@@ -379,8 +379,10 @@ grep -v ^# /etc/xen/centos_conf
               : ssh keys and to let the user run various scripts.
   ```
 
-
-
+# 3. 启动图形窗口vfb - virtual frame buffer帧缓冲设备
+- 在创建虚拟机的配置文件中定义vfb即可，vnc或者sdl都可以
+  - ```vfb = ['sdl=1']```
+  - ```vfb = ['vnc=1']```
 
 
 
