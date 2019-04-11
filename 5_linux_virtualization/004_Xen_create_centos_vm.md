@@ -390,8 +390,40 @@ grep -v ^# /etc/xen/centos_conf
 -----
 # 附录：创建PXE安装kickstart ks.cfg文件
 ## 1. 安装启动ftp，tftp
-#### 1. 
+#### 1. vsftpd
+- ```yum install vsftpd -y```
+- ```service vsftpd start```
+#### 2. tftp
+- ```yum install tftp tftp-server xinetd -y```
+- 修改xinetd服务配置文件
+  ```diff
+  [root@localhost ~]# vim /etc/xinetd.d/tftp 
 
+     1 # default: off
+     2 # description: The tftp server serves files using the trivial file transfer \
+     3 #       protocol.  The tftp protocol is often used to boot diskless \
+     4 #       workstations, download configuration files to network-aware printers, \
+     5 #       and to start the installation process for some operating systems.
+     6 service tftp
+     7 {
+     8         socket_type             = dgram
+     9         protocol                = udp
+    10         wait                    = yes
+    11         user                    = root
+    12         server                  = /usr/sbin/in.tftpd
+  - 13         server_args             = -s /var/lib/tftpboot
+  + 13         server_args             = -s /tftpboot        # 并不存在，需要自行创建
+  - 14         disable                 = yes
+  + 14         disable                 = no
+    15         per_source              = 11
+    16         cps                     = 100 2
+    17         flags                   = IPv4
+
+  [root@localhost ~]# systemctl start xinetd          # 启动服务
+  [root@localhost ~]# lsof -i:69
+  COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+  xinetd  9102 root    5u  IPv4  51445      0t0  UDP *:tftp 
+  ```
 ## 2. 制作ks.cfg注意事项
 #### 1. no VMNET,
 - use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
