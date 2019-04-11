@@ -359,8 +359,25 @@ grep -v ^# /etc/xen/centos_conf
 ## 2.6 模板
 - 将此虚拟机镜像中的独有文件(网卡MAC等信息)拆除，就可以构建一个虚拟机模板
 - 创建一个虚拟机启动文件，指定磁盘模板文件，就可以快速创建虚拟机
-
-
+- cloud-init命令，可以实现剔除磁盘镜像中的独有文件，并会重新生成一些独一无二的信息为新虚拟机使用
+  ```
+  [root@localhost ~]# yum info cloud-init
+  Loaded plugins: fastestmirror, refresh-packagekit, security
+  Loading mirror speeds from cached hostfile
+  Available Packages
+  Name        : cloud-init
+  Arch        : x86_64
+  Version     : 0.7.5
+  Release     : 8.el6.centos.2
+  Size        : 440 k
+  Repo        : development
+  Summary     : Cloud instance init scripts
+  URL         : http://launchpad.net/cloud-init
+  License     : GPLv3
+  Description : Cloud-init is a set of init scripts for cloud instances.  Cloud instances
+              : need special scripts to run during initialization to retrieve and install
+              : ssh keys and to let the user run various scripts.
+  ```
 
 
 
