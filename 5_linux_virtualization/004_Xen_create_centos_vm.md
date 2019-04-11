@@ -388,6 +388,8 @@ grep -v ^# /etc/xen/centos_conf
 - 会报错anaconda 没有足够磁盘空间，需要手动指定大小，比如15G，或者15500，确保不超过qcow2总容量
 - 安装方式也不要安装开发恐惧development，只安装core，节省磁盘空间，以免报错
 
+![](https://i.loli.net/2019/04/11/5caee4e279592.png)
+
 ## 2. CentOS6 ks.cfg文件源代码
 ```diff
   #platform=x86, AMD64, 或 Intel EM64T
@@ -433,5 +435,4 @@ grep -v ^# /etc/xen/centos_conf
 + @core
 
   %end
-
 ```
