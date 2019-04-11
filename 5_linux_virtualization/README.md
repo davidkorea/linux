@@ -36,7 +36,9 @@
 虚拟化种类
 
 - Type-I，hypervisor 直接运行在硬件
+  - hypervisor -> vm
 - Type-II
+  - host -> vmm(virtual machine monitor) -> vm
   
 - Xen，KVM在云端，成为Iaas，infrastructure 基础服务
 - lxc，container在云端，称为Paas，platform 平台服务
