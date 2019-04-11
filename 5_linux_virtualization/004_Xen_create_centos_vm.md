@@ -326,12 +326,13 @@ grep -v ^# /etc/xen/centos_conf
 + on_reboot = 'destroy'
 ```
 - PXE安装时。报错anaconda 磁盘空间不足。因此扩大内存至2018M
-- on_reboot = 'destroy'，以免安装完重启后，自动再次自行系统安装，反复循环
+- on_reboot = 'destroy'，以免安装完重启后，自动再次自行系统安装，反复循环。安装完全结束后destroy会自动删除虚拟机，但是安装好的完整磁盘文件还在
 ## 2.3 创建虚拟机
 
-- ```xl create /etc/xen/kscentos_conf```
-
-## 2.4 安装完，重启前，更改配置文件
+- ```xl create /etc/xen/kscentos_conf -c```
+  - 首次创建虚拟机，只是为了创建一个可以运行centos6的完整磁盘镜像
+  
+## 2.4 安装完，虚拟机会被自动删除，更改配置文件
 ```diff
 [root@localhost ~]# vim /etc/xen/kscentos_conf 
   name = "centos-ks-001"
@@ -342,12 +343,15 @@ grep -v ^# /etc/xen/centos_conf
   vcpus = 2
   vif = [ 'bridge=xenbr0' ]
   disk = [ '/images/xen/ks-centos.img,qcow2,xvda,rw' ]
+- on_reboot = 'destroy'
 + bootloader = 'pygrub'
 ```
+- 使用镜像内部的文件，自行进行系统引导
 
+## 2.5 再次创建虚拟机
 
-
-
+- ```xl create /etc/xen/kscentos_conf -c```
+  - 此时可以从刚才创建好的完整系统镜像中启动centos6
 
 
 
