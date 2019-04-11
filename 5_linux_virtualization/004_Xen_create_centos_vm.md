@@ -376,56 +376,62 @@ grep -v ^# /etc/xen/centos_conf
 
 
 -----
-## make ks.cfg
+# 附录：创建PXE安装kickstart ks.cfg文件
+## 1. 制作ks.cfg注意事项
 #### 1. no VMNET,
 - use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
-2. ext4 
+#### 2. ext4 
 - ```Bootable partitions cannot be on an xfs filesystem. ```
 - 在centos7中制作kickstart文件时，默认磁盘分区为xfs，需要改成ext4，因为centos6不支持xfs
 - 或者直接在centos6下制作kickstart文件，默认就是ext4文件系统
-3. 创建分区时，根分区 / = 1，不可以，会报错anaconda 没有足够次哦按空间，需要手动指定大小，比如15G，或者15500，确保不超过qcow2总容量
-## CentOS6.10 ks.cfg
-```
-#platform=x86, AMD64, 或 Intel EM64T
-#version=DEVEL
-# Install OS instead of upgrade
-install
-# Keyboard layouts
-keyboard 'us'
-# Root password
-rootpw --iscrypted $1$9yx.pjhB$cSaPuJPxd9V5JMoK2tttO.
-# Use network installation
-url --url="ftp://192.168.0.15/pub"
-# System language
-lang en_US
-# System authorization information
-auth  --useshadow  --passalgo=sha512
-# Use graphical install
-graphical
-firstboot --disable
-# SELinux configuration
-selinux --disabled
+#### 3. 创建分区时，根分区 / = 1，不可以
+- 会报错anaconda 没有足够磁盘空间，需要手动指定大小，比如15G，或者15500，确保不超过qcow2总容量
+- 安装方式也不要安装开发恐惧development，只安装core，节省磁盘空间，以免报错
 
-# Firewall configuration
-firewall --disabled
-# Halt after installation
-halt
-# System timezone
-timezone Africa/Abidjan
-# System bootloader configuration
-bootloader --location=none
-# Clear the Master Boot Record
-zerombr
-# Partition clearing information
-clearpart --all --initlabel
-# Disk partitioning information
-part /boot --fstype="xfs" --size=300
-part swap --fstype="swap" --size=2000
-part / --fstype="xfs" --size=1
+## 2. CentOS6 ks.cfg文件源代码
+```diff
+  #platform=x86, AMD64, 或 Intel EM64T
+  #version=DEVEL
+  # Install OS instead of upgrade
+  install
+  # Keyboard layouts
+  keyboard 'us'
+  # Root password
+  rootpw --iscrypted $1$9yx.pjhB$cSaPuJPxd9V5JMoK2tttO.
+  # Use network installation
+  url --url="ftp://192.168.0.15/pub"
+  # System language
+  lang en_US
+  # System authorization information
+  auth  --useshadow  --passalgo=sha512
+  # Use graphical install
+  graphical
+  firstboot --disable
+  # SELinux configuration
+  selinux --disabled
 
-%packages
-@development
+  # Firewall configuration
+  firewall --disabled
+  # Halt after installation
+  halt
+  # System timezone
+  timezone Africa/Abidjan
+  # System bootloader configuration
+  bootloader --location=none
+  # Clear the Master Boot Record
+  zerombr
+  # Partition clearing information
+  clearpart --all --initlabel
+  # Disk partitioning information
+  part /boot --fstype="xfs" --size=300
+  part swap --fstype="swap" --size=2000
+- part / --fstype="xfs" --size=1
++ part / --fstype="xfs" --size=15500
 
-%end
+  %packages
+- @development
++ @core
+
+  %end
 
 ```
