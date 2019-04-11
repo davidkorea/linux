@@ -389,7 +389,11 @@ grep -v ^# /etc/xen/centos_conf
 
 
 
-
+<p align='center'> | </p>
+<p align='center'> | </p>
+<p align='center'> | </p>
+<p align='center'> | </p>
+<p align='center'> | </p>
 
 -----
 # 附录：创建PXE安装kickstart ks.cfg文件
