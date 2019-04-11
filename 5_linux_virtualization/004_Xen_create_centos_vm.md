@@ -303,30 +303,34 @@ grep -v ^# /etc/xen/centos_conf
   64 bytes from 192.168.0.18: icmp_seq=1 ttl=64 time=0.776 ms
   64 bytes from 192.168.0.18: icmp_seq=2 ttl=64 time=0.529 ms
   ```
-# 2. 基于ks文件的无人值守安装centos
+# 2. 基于ks文件的无人值守安装centos6
+
+> centos6.10宿主机上，搭建vsfrpd，tftp，system-config-kickstart创建ks.cfg文件
 
 ## 2.1 磁盘文件
-- ```qemu-img create -f qcow2 -o size=120G,preallocation=metedata /images/xen/ks-centos6.10.img```
+- ```qemu-img create -f qcow2 -o size=120G,preallocation=metedata /images/xen/ks-centos.img```
 
 ## 2.2 配置文件
-```
+```diff
 [root@localhost ~]# cd /etc/xen/
-[root@localhost xen]# vim centos_ks_conf 
+[root@localhost xen]# vim kscentos_conf 
 
-name = "ks-centos-001"
-kernel = "/images/kernel/vmlinuz"
-ramdisk = "/images/kernel/initrd.img"
-extra = "ks=ftp://192.168.0.15/ks.cfg"
-memory = 512
-vcpus = 2
-vif = [ 'bridge=xenbr0' ]
-disk = [ '/images/xen/ks-centos6.10.img,qcow2,xvda,rw' ]
-root = '/dev/xvda ro'
+  name = "centos-ks-001"
+  kernel = "/images/kernel/vmlinuz"
+  ramdisk = "/images/kernel/initrd.img"
+  extra = "ks=ftp://192.168.0.15/ks.cfg"
+- memory = 512
++ memory = 2048
+  vcpus = 2
+  vif = [ 'bridge=xenbr0' ]
+  disk = [ '/images/xen/ks-centos.img,qcow2,xvda,rw' ]
+  root = '/dev/xvda ro'
 ```
+- PXE安装时。报错anaconda 磁盘空间不足。因此扩大内存至2018M
 ## 2.3 创建虚拟机
 
-- xl create /etc/xen/ks-centos_conf
-- xl console ks-centos-001
+- ```xl create /etc/xen/kscentos_conf```
+
 
 
 
@@ -373,8 +377,8 @@ root = '/dev/xvda ro'
 
 -----
 ## make ks.cfg
-1. no VMNET, use pysical network 192.168.0.15
-2. Bootable partitions cannot be on an xfs filesystem.  USE ext format
+1. no VMNET, use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
+2. Bootable partitions cannot be on an xfs filesystem.  USE ext format，再centos7中制作kickstart文件时，默认磁盘分区为xfs，需要改成ext4，因为centos6不支持xfs
 
 ## CentOS6.10 ks.cfg
 ```
