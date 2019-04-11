@@ -24,7 +24,7 @@
   - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/vmlinuz  ```
 - ```mkdir /images/kernel```
 - ```mv initrd.img vmlinuz /images/kernel```
-## 1.3 创建磁盘镜像qemu-img
+## 1.2 创建磁盘镜像qemu-img
 -  ```qemu-img create -f qcow2 -o size=20G,preallocation=metedata /images/xen/centos6.10.img```
 -  ```df -lh```查看物理磁盘空间够不够
 
