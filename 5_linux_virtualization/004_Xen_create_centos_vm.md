@@ -383,14 +383,28 @@ grep -v ^# /etc/xen/centos_conf
 - 在创建虚拟机的配置文件中定义vfb即可，vnc或者sdl都可以
   - ```vfb = ['sdl=1']```
   - ```vfb = ['vnc=1']```
+## 3.1 sdl
+#### 1. busybox
+- 只更改虚拟机配置文件，直接xl create，xshell会自动连接一个图形窗口
+#### 2. centos6
+- 更改centos系统虚拟机内部/etc/inittab文件
+  - 默认级别改为5
+    ```
+    #   0 - halt (Do NOT set initdefault to this)
+    #   1 - Single user mode
+    #   2 - Multiuser, without NFS (The same as 3, if you do not have networking)
+    #   3 - Full multiuser mode
+    #   4 - unused
+    #   5 - X11
+    #   6 - reboot (Do NOT set initdefault to this)
+    # 
+    id:5:initdefault:
+    ```
+- ```shutdown -h now```
+- 更改配置文件```vfb = ['sdl=1']```
+- xl create，会直接显示图形界面
 
-
-
-
-
-
-
-
+## 3.2 vnc
 
 
 
