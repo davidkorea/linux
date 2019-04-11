@@ -323,8 +323,10 @@ grep -v ^# /etc/xen/centos_conf
   vcpus = 2
   vif = [ 'bridge=xenbr0' ]
   disk = [ '/images/xen/ks-centos.img,qcow2,xvda,rw' ]
++ on_reboot = 'destroy'
 ```
 - PXE安装时。报错anaconda 磁盘空间不足。因此扩大内存至2018M
+- on_reboot = 'destroy'，以免安装完重启后，自动再次自行系统安装，反复循环
 ## 2.3 创建虚拟机
 
 - ```xl create /etc/xen/kscentos_conf```
