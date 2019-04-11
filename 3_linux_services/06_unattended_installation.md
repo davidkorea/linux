@@ -42,12 +42,23 @@
 ```
 #### 2. 安装ftp服务以及开启服务，设置为开机自动启动
 - 纯净系统
-```
-[root@server162 ~]# yum install vsftpd -y
-[root@server162 ~]# systemctl start vsftpd
-[root@server162 ~]# systemctl enable vsftpd
-```
-- 之前配置国ftp的清空，更改vsftp设置
+  - centos7
+	```
+	[root@server162 ~]# yum install vsftpd -y
+	[root@server162 ~]# systemctl start vsftpd
+	[root@server162 ~]# systemctl enable vsftpd
+	```
+  - centos6
+	```
+	[root@localhost ~]# yum install vsftpd -y
+	[root@localhost ~]# service vsftpd restart
+	Shutting down vsftpd:                                      [  OK  ]
+	Starting vsftpd for vsftpd:                                [  OK  ]
+	[root@localhost vsftpd]# getenforce 		# 默认启动服务后，可以直接匿名访问
+	Disabled
+	[root@localhost vsftpd]# iptables -F		# 访问失败，检查防火墙selinux，清空iptables，成功
+	```
+- 之前配置过ftp的清空，更改vsftp设置
   - 实现匿名可以直接访问pub
   - team1 11111 依然可以向以前一样通过filezilla进行有账户访问/var/www/html
 ```
