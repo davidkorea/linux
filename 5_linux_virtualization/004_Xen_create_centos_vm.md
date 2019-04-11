@@ -424,6 +424,30 @@ grep -v ^# /etc/xen/centos_conf
   COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
   xinetd  9102 root    5u  IPv4  51445      0t0  UDP *:tftp 
   ```
+#### 3. 配置PXE启动所需的相关文件
+- 安装服务
+[root@localhost ~]# yum -y install system-config-kickstart && syslinux
+##### 如果syslinux安装不成功，需要单独在yum install -y syslinux安装一下
+- 将tftp需要共享出去的文件，存放点tftp根目录/tftpboot
+  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/initrd.img ```，不挂在光盘，直接下载也可以
+  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/vmlinuz  ```
+  ```
+  [root@localhost ~]# mkdir /tftpboot
+  [root@localhost ~]# mkdir /tftpboot/pxelinux.cfg
+  [root@localhost ~]# cp /usr/share/syslinux/pxelinux.0 /tftpboot/    # 只有安装了syslinux软件包，才会有/usr/share/syslinux/目录及
+  [root@localhost ~]# cp /mnt/images/pxeboot/initrd.img  /tftpboot/
+  [root@localhost ~]# cp /mnt/images/pxeboot/vmlinuz  /tftpboot/
+  [root@localhost ~]# cp /mnt/isolinux/isolinux.cfg  /tftpboot/pxelinux.cfg/default
+  [root@localhost ~]# chmod 644  /tftpboot/pxelinux.cfg/default
+  [root@localhost ~]# tree /tftpboot/
+  /tftpboot/
+  |-- initrd.img
+  |-- pxelinux.0    
+  |-- vmlinuz
+  |-- pxelinux.cfg
+      `-- default
+  ```   
+
 ## 2. 制作ks.cfg注意事项
 #### 1. no VMNET,
 - use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
