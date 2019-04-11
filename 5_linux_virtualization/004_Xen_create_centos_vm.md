@@ -377,9 +377,13 @@ grep -v ^# /etc/xen/centos_conf
 
 -----
 ## make ks.cfg
-1. no VMNET, use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
-2. Bootable partitions cannot be on an xfs filesystem.  USE ext format，再centos7中制作kickstart文件时，默认磁盘分区为xfs，需要改成ext4，因为centos6不支持xfs
-
+#### 1. no VMNET,
+- use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
+2. ext4 
+- ```Bootable partitions cannot be on an xfs filesystem. ```
+- 在centos7中制作kickstart文件时，默认磁盘分区为xfs，需要改成ext4，因为centos6不支持xfs
+- 或者直接在centos6下制作kickstart文件，默认就是ext4文件系统
+3. 创建分区时，根分区 / = 1，不可以，会报错anaconda 没有足够次哦按空间，需要手动指定大小，比如15G，或者15500，确保不超过qcow2总容量
 ## CentOS6.10 ks.cfg
 ```
 #platform=x86, AMD64, 或 Intel EM64T
