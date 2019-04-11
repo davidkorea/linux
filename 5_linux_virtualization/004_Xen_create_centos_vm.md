@@ -302,7 +302,8 @@ grep -v ^# /etc/xen/centos_conf
   64 bytes from 192.168.0.18: icmp_seq=1 ttl=64 time=0.776 ms
   64 bytes from 192.168.0.18: icmp_seq=2 ttl=64 time=0.529 ms
   ```
-# 2. 基于ks文件的无人值守安装centos6
+  
+# 2. 基于ks文件的无人值守安装xen半虚拟化centos6虚拟机
 
 > centos6.10宿主机上，搭建vsfrpd，tftp，system-config-kickstart创建ks.cfg文件
 
@@ -355,8 +356,9 @@ grep -v ^# /etc/xen/centos_conf
   - ```ifconfig eth0 192.168.0.165```，配置网络，可以ping通宿主机
 
 
-
-
+## 2.6 模板
+- 将此虚拟机镜像中的独有文件(网卡MAC等信息)拆除，就可以构建一个虚拟机模板
+- 创建一个虚拟机启动文件，指定磁盘模板文件，就可以快速创建虚拟机
 
 
 
