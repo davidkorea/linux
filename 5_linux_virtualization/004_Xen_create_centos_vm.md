@@ -352,7 +352,7 @@ grep -v ^# /etc/xen/centos_conf
 
 - ```xl create /etc/xen/kscentos_conf -c```
   - 此时可以从刚才创建好的完整系统镜像中启动centos6
-
+  - ```ifconfig eth0 192.168.0.165```，配置网络，可以ping通宿主机
 
 
 
