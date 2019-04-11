@@ -98,27 +98,29 @@
 [root@server162 ~]# yum install tftp tftp-server xinetd -y
 ```
   修改第13，14行
-```
+```diff
 [root@server162 ~]# vim /etc/xinetd.d/tftp 
-
-  1 # default: off
-  2 # description: The tftp server serves files using the trivial file transfer \
-  3 #       protocol.  The tftp protocol is often used to boot diskless \
-  4 #       workstations, download configuration files to network-aware printers, \
-  5 #       and to start the installation process for some operating systems.
-  6 service tftp
-  7 {
-  8         socket_type             = dgram
-  9         protocol                = udp
- 10         wait                    = yes
- 11         user                    = root
- 12         server                  = /usr/sbin/in.tftpd
- 13         server_args             = -s /tftpboot        # 并不存在，需要自行创建
- 14         disable                 = no
- 15         per_source              = 11
- 16         cps                     = 100 2
- 17         flags                   = IPv4
  
+   1 # default: off
+   2 # description: The tftp server serves files using the trivial file transfer \
+   3 #       protocol.  The tftp protocol is often used to boot diskless \
+   4 #       workstations, download configuration files to network-aware printers, \
+   5 #       and to start the installation process for some operating systems.
+   6 service tftp
+   7 {
+   8         socket_type             = dgram
+   9         protocol                = udp
+  10         wait                    = yes
+  11         user                    = root
+  12         server                  = /usr/sbin/in.tftpd
+- 13         server_args             = -s /var/lib/tftpboot
++ 13         server_args             = -s /tftpboot        # 并不存在，需要自行创建
+- 14         disable                 = yes
++ 14         disable                 = no
+  15         per_source              = 11
+  16         cps                     = 100 2
+  17         flags                   = IPv4
+  
 [root@server162 ~]# systemctl start xinetd          # 启动服务
 [root@server162 ~]# lsof -i:69
 COMMAND  PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
