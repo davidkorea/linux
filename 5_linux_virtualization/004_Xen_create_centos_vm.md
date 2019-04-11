@@ -392,43 +392,45 @@ grep -v ^# /etc/xen/centos_conf
 
 ## 2. CentOS6 ks.cfg文件源代码
 ```diff
-  #platform=x86, AMD64, 或 Intel EM64T
+  #platform=x86, AMD64, or Intel EM64T
   #version=DEVEL
+  # Firewall configuration
+  firewall --disabled
   # Install OS instead of upgrade
   install
-  # Keyboard layouts
-  keyboard 'us'
-  # Root password
-  rootpw --iscrypted $1$9yx.pjhB$cSaPuJPxd9V5JMoK2tttO.
   # Use network installation
-  url --url="ftp://192.168.0.15/pub"
-  # System language
-  lang en_US
+  url --url="ftp://192.168.0.160/pub"
+  # Root password
+  rootpw --plaintext 111111
   # System authorization information
   auth  --useshadow  --passalgo=sha512
   # Use graphical install
   graphical
   firstboot --disable
+  # System keyboard
+  keyboard us
+  # System language
+  lang en_US
   # SELinux configuration
   selinux --disabled
-
-  # Firewall configuration
-  firewall --disabled
-  # Halt after installation
-  halt
+  # Installation logging level
+  logging --level=info
+  # Reboot after installation
+  reboot
   # System timezone
-  timezone Africa/Abidjan
+  timezone  Asia/Shanghai
   # System bootloader configuration
-  bootloader --location=none
+  bootloader --location=mbr
   # Clear the Master Boot Record
   zerombr
   # Partition clearing information
-  clearpart --all --initlabel
+  clearpart --all --initlabel 
   # Disk partitioning information
-  part /boot --fstype="xfs" --size=300
+- part /boot --fstype="xfs" --size=300
++ part /boot --fstype="ext4" --size=500
   part swap --fstype="swap" --size=2000
 - part / --fstype="xfs" --size=1
-+ part / --fstype="xfs" --size=15500
++ part / --fstype="ext4" --size=15500
 
   %packages
 - @development
