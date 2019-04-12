@@ -544,24 +544,32 @@ grep -v ^# /etc/xen/centos_conf
 
 [root@server162 yum.repos.d]# yum makecache
 ```
+![](https://i.loli.net/2019/04/12/5cb02d185fd76.png)
 #### 6. 通过system-config-kickstart制作ks.cfg文件
 ```
 [root@localhost ~]# system-config-kickstart 
 ```
-通过图形化界面设置安装选项
+通过图形化界面设置安装选项，保存ks.cfg，并放到目录/var/ftp/
+```
+[root@localhost ~]# cp ks.cfg /var/ftp
+```
 
 ## 2. 制作ks.cfg注意事项
 #### 1. FTP use physical network，no VMNET
 - use pysical network 192.168.0.160，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
+  ![](https://i.loli.net/2019/04/12/5cb02da427217.png)
 #### 2. ext4 
 - ```Bootable partitions cannot be on an xfs filesystem. ```
 - 在centos7中制作kickstart文件时，默认磁盘分区为xfs，需要改成ext4，因为centos6不支持xfs
 - 或者直接在centos6下制作kickstart文件，默认就是ext4文件系统
+  ![](https://i.loli.net/2019/04/12/5cb02dc27f400.png)
 #### 3. 创建分区时，根分区 / = 1，不可以
-- 会报错anaconda 没有足够磁盘空间，需要手动指定大小，比如15G，或者15500，确保不超过qcow2总容量
-- 安装方式也不要安装开发恐惧development，只安装core，节省磁盘空间，以免报错
+- centos7中 / = 1，表示使用全部剩余磁盘空间，而centos6会报错磁盘空间不足
+- 报错anaconda 没有足够磁盘空间，需要手动指定大小，比如15G，或者15500，确保不超过qcow2总容量
+- 安装方式也不要安装开发工具development，只安装core，节省磁盘空间，以免报错
+  ![](https://i.loli.net/2019/04/11/5caee4e279592.png)
 
-![](https://i.loli.net/2019/04/11/5caee4e279592.png)
+  ![](https://i.loli.net/2019/04/12/5cb02de76cbfc.png)
 
 ## 3. CentOS6 ks.cfg文件源代码
 ```diff
