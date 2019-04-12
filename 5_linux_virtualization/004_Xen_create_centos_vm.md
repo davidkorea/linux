@@ -496,7 +496,35 @@ grep -v ^# /etc/xen/centos_conf
   |-- pxelinux.cfg
       `-- default
   ```   
+#### 4. 修改安装选项default文件
 
+```
+[root@localhost ~]# vim /tftpboot/pxelinux.cfg/default 
+- default vesamenu.c32
++ default linux
+  #prompt 1
+  timeout 600
+
+  display boot.msg
+
+  menu background splash.jpg
+  menu title Welcome to CentOS 6.10!
+  menu color border 0 #ffffffff #00000000
+  menu color sel 7 #ffffffff #ff000000
+  menu color title 0 #ffffffff #00000000
+  menu color tabmsg 0 #ffffffff #00000000
+  menu color unsel 0 #ffffffff #00000000
+  menu color hotsel 0 #ff000000 #ffffffff
+  menu color hotkey 7 #ffffffff #ff000000
+  menu color scrollbar 0 #ffffffff #00000000
+
+  label linux
+    menu label ^Install or upgrade an existing system
+    menu default
+    kernel vmlinuz
+-   append initrd=initrd.img
++   append initrd=initrd.img inst.repo=ftp://192.168.0.160/pub inst.ks=ftp://192.168.0.160/ks.cfg
+```
 
 
 
