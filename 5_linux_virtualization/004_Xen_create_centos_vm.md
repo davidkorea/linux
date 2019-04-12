@@ -498,7 +498,7 @@ grep -v ^# /etc/xen/centos_conf
   ```   
 #### 4. 修改安装选项default文件
 
-```
+```diff
 [root@localhost ~]# vim /tftpboot/pxelinux.cfg/default 
 - default vesamenu.c32
 + default linux
@@ -525,14 +525,34 @@ grep -v ^# /etc/xen/centos_conf
 -   append initrd=initrd.img
 +   append initrd=initrd.img inst.repo=ftp://192.168.0.160/pub inst.ks=ftp://192.168.0.160/ks.cfg
 ```
+#### 5. 制作kickstart的无人值守安装文件
+配置ftp形式的yum源，将光盘挂载到ftp pub目录下。配置本地yum源安装会更快一些，其实直接挂载阿里云的http yum源也可以，比较慢
+```
+[root@localhost ~]# cd /etc/yum.repos.d/
+[root@localhost yum.repos.d]# mkdir bak
+[root@localhost yum.repos.d]# mv *.repo  bak/         # 这样做是避免其他yum文件的影响
 
+[root@localhost yum.repos.d]# vim my.repo
+  [development]        
+  name=my-centos6-dvd
+  baseurl=file:///var/ftp/pub                         # 需要将光盘挂载到此路径下
+  enabled=1
+  gpgcheck=0
 
+[root@localhost ~]# mount /dev/cdrom /var/ftp/pub     # 缺少这一步，下面kickstart中无法选择安装包
+                                                      # 并且 makecache 也会报错
 
-
+[root@server162 yum.repos.d]# yum makecache
+```
+#### 6. 通过system-config-kickstart制作ks.cfg文件
+```
+[root@localhost ~]# system-config-kickstart 
+```
+通过图形化界面设置安装选项
 
 ## 2. 制作ks.cfg注意事项
-#### 1. no VMNET,
-- use pysical network 192.168.0.15，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
+#### 1. FTP use physical network，no VMNET
+- use pysical network 192.168.0.160，此处不能参考教程设置为虚拟网络，需要配置在物理网络中
 #### 2. ext4 
 - ```Bootable partitions cannot be on an xfs filesystem. ```
 - 在centos7中制作kickstart文件时，默认磁盘分区为xfs，需要改成ext4，因为centos6不支持xfs
