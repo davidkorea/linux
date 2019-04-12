@@ -477,8 +477,9 @@ grep -v ^# /etc/xen/centos_conf
   ```
 
 - 将tftp需要共享出去的文件，存放点tftp根目录/tftpboot
-  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/initrd.img ```，不挂在光盘，直接下载也可以
-  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/vmlinuz  ```
+  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/initrd.img ```，不挂载光盘，直接下载也可以
+  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/vmlinuz```
+  - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/isolinux.cfg```
   ```
   [root@localhost ~]# mkdir /tftpboot
   [root@localhost ~]# mkdir /tftpboot/pxelinux.cfg
@@ -495,6 +496,11 @@ grep -v ^# /etc/xen/centos_conf
   |-- pxelinux.cfg
       `-- default
   ```   
+
+
+
+
+
 
 ## 2. 制作ks.cfg注意事项
 #### 1. no VMNET,
