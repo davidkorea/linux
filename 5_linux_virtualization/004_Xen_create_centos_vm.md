@@ -471,8 +471,11 @@ grep -v ^# /etc/xen/centos_conf
   ```
 #### 3. 配置PXE启动所需的相关文件
 - 安装服务
-[root@localhost ~]# yum -y install system-config-kickstart && syslinux
-##### 如果syslinux安装不成功，需要单独在yum install -y syslinux安装一下
+  ```
+  [root@localhost ~]# yum -y install system-config-kickstart && syslinux 
+  # 如果syslinux安装不成功，需要单独在yum install -y syslinux安装一下
+  ```
+
 - 将tftp需要共享出去的文件，存放点tftp根目录/tftpboot
   - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/initrd.img ```，不挂在光盘，直接下载也可以
   - ```wget https://mirrors.aliyun.com/centos/6.10/os/x86_64/isolinux/vmlinuz  ```
