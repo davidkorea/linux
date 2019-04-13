@@ -72,7 +72,7 @@
   - ctrl + alt/option + 2 进入qemu的monitor监控接口，可以实现诸多高级管理功能，ctrl + alt/option + 1退出该模式
     - info name
     - info status
-    
+    ![](https://i.loli.net/2019/04/13/5cb173c9449d9.png)
 
 
 
