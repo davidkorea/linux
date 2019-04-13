@@ -46,6 +46,19 @@
     Format specific information:
     compat: 0.10
      ```
-
-
+## 创建kvm虚拟机
+- qemu-kvm -m 128 -smp 2 -name 'test' -hda cirros-0.3.4-x86_64-disk.img 
+  - 默认以vnc的方式启动虚拟机，所以需要安装vnc客户端，并不会自动打开控制台
+  ```
+  qemu-kvm -m 128 -smp 2 -name 'test' -hda cirros-0.3.4-x86_64-disk.img 
+  VNC server running on `::1:5900'
+  ```
+- ss -tnl
+  ```
+  [root@server15 ~]# ss -tnl
+  State       Recv-Q Send-Q Local Address:Port               Peer Address:Port                           
+  LISTEN      0      1           ::1:5900                     :::*                  
+  ```
+- 安装linux的vnc客户端tigervnc
+  - yum install -y tigervnc
 
