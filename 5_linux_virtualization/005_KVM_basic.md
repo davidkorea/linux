@@ -82,6 +82,9 @@
 
 ## 模拟网卡设备 VS 半虚拟化网卡设备
 ### 模拟
+![](https://i.loli.net/2019/04/13/5cb1796f10f51.png)
+- 虚拟机中可以查看到网卡，这就是net-frontend
+- 就像vmware一样，宿主机上会生成一个vmnet2，vmnet3网卡一样，这就是net-backend后端，虽然不一定是一一对应
 
 ### 半虚拟化
 
