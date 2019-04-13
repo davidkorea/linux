@@ -99,8 +99,11 @@
 1. -m，megs，指定虚拟机RAM
 2. -cpu，指定cpu类型，qemu虚拟cpu，物理intel cpu，或其他类型cpu，如arm
 3. -smp，cpu核心数（可以具体指定threads线程，sockets插槽）每一个虚拟机到cpu都是物理机中到一个线程，所以可以动态增加虚拟cpu
-4.  
-
+4. -hda，-cdrom，不能同时使用，指定系统镜像文件位置
+5. -drive，逼hda，cdrom更为高级到模式，来定义硬盘设备
+  - file，硬盘镜像文件路径
+  - if，interface，指定硬盘设备连的接口类型，即控制器类型，如ide，scsi，sd，mtd，floppy等
+  - index，同一个接口类型对应等多个设备等序号，比如一个scsi接口可以给多个硬盘来使用
 
 
 
