@@ -3,7 +3,9 @@
   - modprobe kvm，加载模块
   - lsmod | grep kvm
 - kvm管理工具栈
-  - qemu-kvm
+  - qemu-kvm，/usr/libexec目录下
     - qemu本身是一个模拟器，可以模拟和底层架构不一样的硬件，比如硬件是intel，qemu可以模拟amd的cpu
     - 对于虚拟化来讲，底层硬件会直接输出给虚拟机，只是虚拟io设备
-  - virsh
+  - libvirt
+    - virt-install。命令行方式安装
+    - virt-manager，图形化安装，管理
