@@ -68,7 +68,10 @@
     ```
   - ```vncviewer :5900```，即可启动本地的5900端口
     ![](https://i.loli.net/2019/04/13/5cb1721272ae6.png)
-    
+  
+  - 进入虚拟机 cat /proc/cpuinfo，查看到虚拟机到cpu是QEMU Vitual CPU version 1.5.3
+    - 可以在创建虚拟机时，使用命令 -cpu host，来指定虚拟机使用物理cpu架构
+   
   - ctrl + alt/option + 2 进入qemu的monitor监控接口，可以实现诸多高级管理功能，ctrl + alt/option + 1退出该模式
     - info name
     - info status
@@ -90,7 +93,7 @@
 
 - 虚拟机明确知道自己运行在半虚拟化状态下
 - 省去了中间到虚拟化层到转发，前后端网卡直接通信
-- kvm用到到半虚拟化是virtio
+- kvm用到到半虚拟化是virtio，比如创建半虚拟化块设备
 
 
 
