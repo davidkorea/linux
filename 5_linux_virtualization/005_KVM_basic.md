@@ -24,7 +24,7 @@
   - ln -sv /usr/libexec/qemu-kvm /usr/bin，创建软连接够qemu-kvm和qemu-img都可以直接使用
 ## 相关命令
 - 命令分类
-  - 标砖选项
+  - 标准选项
   - 显示选项
   - 块设备选项
   - 网络选项
@@ -94,6 +94,22 @@
 - 虚拟机明确知道自己运行在半虚拟化状态下
 - 省去了中间到虚拟化层到转发，前后端网卡直接通信
 - kvm用到到半虚拟化是virtio，比如创建半虚拟化块设备
+
+# qemu-kvm 标准命令
+1. -m，megs，指定虚拟机RAM
+2. -cpu，指定cpu类型，qemu虚拟cpu，物理intel cpu，或其他类型cpu，如arm
+3. -smp，cpu核心数（可以具体指定threads线程，sockets插槽）每一个虚拟机到cpu都是物理机中到一个线程，所以可以动态增加虚拟cpu
+4.  
+
+
+
+
+
+
+
+
+
+
 
 
 
