@@ -121,7 +121,8 @@
   - 在创建虚拟机时，指定-sdl，则会在本地直接调用sdl图形窗口界面，当然本地需要有安装sdl相关显示库
   - ```qemu-kvm -m 128 -cpu host -smp 2 -name 'test' -drive file=cirros-0.3.4-x86_64-disk.img,\if=virtio,media=disk,format=qcow2,cache=writeback -sdl```，测试失败
 - vnc，默认启动vnc服务5900，5901..，
-
+  - vnc display 192.168.0.160:1，表示监听在哪个主机哪个桌面，即这个IP地址可以远程vnc访问虚拟机
+- nographic，直接在cmd中显示命令行
 
 
 
