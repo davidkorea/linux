@@ -106,7 +106,8 @@
   - index，同一个接口类型对应等多个设备等序号，比如一个scsi接口可以给多个硬盘来使用
   - media，介质类型disk还是cdrom，默认是disk
   - snapshot，指定当前设备是否支持快照功能
-
+  - cache，cpu缓存功能none，writeback（先将数据存在cpu等缓存中，再定期写入内存），unsafe，writethrough（实时将数据写入内存）
+  - format，镜像文件类型qcow2等等
 
 
 
