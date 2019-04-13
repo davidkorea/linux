@@ -74,11 +74,16 @@
     - info status
     [](https://i.loli.net/2019/04/13/5cb173c9449d9.png)
 
-  - ps -aux
+  - ps -aux，可以直接kill，相当于向虚拟机发送了shutdown关机命令
     ```
     root  12860  1.9  1.0 818428 107880 pts/0   Sl+  13:12   0:22 qemu-kvm -m 128 -smp 2 -name test -hda cirros-0.3.4-x86
     ```
 
+
+## 模拟网卡设备 VS 半虚拟化网卡设备
+### 模拟
+
+### 半虚拟化
 
 
 
