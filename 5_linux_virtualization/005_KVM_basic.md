@@ -7,5 +7,10 @@
     - qemu本身是一个模拟器，可以模拟和底层架构不一样的硬件，比如硬件是intel，qemu可以模拟amd的cpu
     - 对于虚拟化来讲，底层硬件会直接输出给虚拟机，只是虚拟io设备
   - libvirt
-    - virt-install。命令行方式安装
-    - virt-manager，图形化安装，管理
+    - 安装工具
+      - virt-install。命令行方式安装
+      - virt-manager，图形化安装，管理
+    - 管理工具
+      - virsh
+      - virt-manager
+      - virt-viewer
