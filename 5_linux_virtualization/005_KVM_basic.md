@@ -32,7 +32,8 @@
   - qemu-img支持很多 Supported formats: vvfat vpc vmdk vhdx vdi ssh sheepdog rbd raw host_cdrom host_floppy host_device file qed qcow2 qcow parallels nbd iscsi gluster dmg tftp ftps ftp https http cloop bochs blkverify blkdebug
   - qcow2 流行的高级磁盘镜像格式，支持众多磁盘操作
   - raw 很多高级功能不支持，比如磁盘resize等
-
+- 显卡不支持半虚拟化，但是在centos7上，可以使用半虚拟化
+- 基于busybox打造的cirros镜像
 
 
 
