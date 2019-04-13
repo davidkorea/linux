@@ -34,9 +34,18 @@
   - raw 很多高级功能不支持，比如磁盘resize等
 - 显卡不支持半虚拟化，但是在centos7上，可以使用半虚拟化
 - 基于busybox打造的cirros镜像
-
-
-
+  - http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+  - qemu-img info cirros-0.3.4-x86_64-disk.img 
+    ```
+    [root@server15 ~]#  qemu-img info cirros-0.3.4-x86_64-disk.img 
+    image: cirros-0.3.4-x86_64-disk.img
+    file format: qcow2
+    virtual size: 39M (41126400 bytes)
+    disk size: 13M
+    cluster_size: 65536
+    Format specific information:
+    compat: 0.10
+     ```
 
 
 
