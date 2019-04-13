@@ -104,7 +104,8 @@
   - file，硬盘镜像文件路径
   - if，interface，指定硬盘设备连的接口类型，即控制器类型，如ide，scsi，sd，mtd，floppy等
   - index，同一个接口类型对应等多个设备等序号，比如一个scsi接口可以给多个硬盘来使用
-
+  - media，介质类型disk还是cdrom，默认是disk
+  - snapshot，指定当前设备是否支持快照功能
 
 
 
