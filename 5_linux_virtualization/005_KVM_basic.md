@@ -111,7 +111,9 @@
 6. -boot，定义启动设备的引导顺序。a和b表示软驱，c表示第一块硬盘，d表示光驱，n-p表示网络适配器，默认为硬盘设备
   - -boot order=dc,once=d，once表示创建虚拟机时首次使用d光驱，再次启动时则禁用光驱
 
-
+实例，启动一个xp虚拟机
+- ```qemu-img create -f qcow2 -o size=20G,preallocation=metadata /images/windows/winxp.qcow2```
+- ```qemu-kvm -m 512 -smp 2 -cpu host -drive file=/images/windows/winxp.qcow2,media=disk -drive file=/root/winxp.iso,media=cdrom -boot order=dc,once=d```
 
 
 
