@@ -67,8 +67,8 @@
     /usr/bin/vncviewer
     ```
   - ```vncviewer :5900```，即可启动本地的5900端口
-
-
+    ![](https://i.loli.net/2019/04/13/5cb1721272ae6.png)
+    
 
 
 
