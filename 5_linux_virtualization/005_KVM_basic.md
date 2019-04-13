@@ -72,9 +72,12 @@
   - ctrl + alt/option + 2 进入qemu的monitor监控接口，可以实现诸多高级管理功能，ctrl + alt/option + 1退出该模式
     - info name
     - info status
-    ![](https://i.loli.net/2019/04/13/5cb173c9449d9.png)
+    [](https://i.loli.net/2019/04/13/5cb173c9449d9.png)
 
-
+  - ps -aux
+    ```
+    root  12860  1.9  1.0 818428 107880 pts/0   Sl+  13:12   0:22 qemu-kvm -m 128 -smp 2 -name test -hda cirros-0.3.4-x86
+    ```
 
 
 
