@@ -14,3 +14,4 @@
       - virsh
       - virt-manager
       - virt-viewer
+  - openstack，也算是一个虚拟机的管理工具
