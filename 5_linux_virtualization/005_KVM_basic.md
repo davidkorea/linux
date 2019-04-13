@@ -123,6 +123,22 @@
 - vnc，默认启动vnc服务5900，5901..，
   - vnc display 192.168.0.160:1，表示监听在哪个主机哪个桌面，即这个IP地址可以远程vnc访问虚拟机
 - nographic，直接在cmd中显示命令行
+- vga，指定要仿真的vga接口类型，如cirrus，std，vmware，qxl
+
+# qemu-kvm 网络选项，虚拟网络，虚拟网卡
+
+- 网络设备接口类型 nic，tap，user
+- linux 内核有bridge模块，通过bridge-utils向内核发送命令来创建网桥
+
+
+
+
+
+
+
+
+
+
 
 
 
