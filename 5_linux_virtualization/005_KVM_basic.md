@@ -2,7 +2,7 @@
 - centos7，加载kvm模块
   - modprobe kvm，加载模块
   - lsmod | grep kvm
-- kvm管理工具栈
+- kvm管理工具栈，所有工具都可以调用api：/dev/kvm字符设备接口，管理kvm 虚拟机
   - qemu-kvm，/usr/libexec目录下，更为底层的管理工具
     - qemu本身是一个模拟器，可以模拟和底层架构不一样的硬件，比如硬件是intel，qemu可以模拟amd的cpu
     - 对于虚拟化来讲，底层硬件会直接输出给虚拟机，只是虚拟io设备
@@ -24,9 +24,9 @@
   - ln -sv /usr/libexec/qemu-kvm /usr/bin，创建软连接够qemu-kvm，qemu-img可以直接使用
 ## 相关命令
 - 命令分类
-  - 标准选项
+  - 标准选项：-m，-cpu，-smp，-name
+  - 块设备选项：-hd{a,b,c,d}，-cdrom，-drive，-boot order
   - 显示选项
-  - 块设备选项
   - 网络选项
 - 虚拟机磁盘镜像文件有多种类型
   - qemu-img支持很多 Supported formats: vvfat vpc vmdk vhdx vdi ssh sheepdog rbd raw host_cdrom host_floppy host_device file qed qcow2 qcow parallels nbd iscsi gluster dmg tftp ftps ftp https http cloop bochs blkverify blkdebug
@@ -115,7 +115,12 @@
 - ```qemu-img create -f qcow2 -o size=20G,preallocation=metadata /images/windows/winxp.qcow2```
 - ```qemu-kvm -m 512 -smp 2 -cpu host -drive file=/images/windows/winxp.qcow2,media=disk -drive file=/root/winxp.iso,media=cdrom -boot order=dc,once=d```
 
+# qemu-kvm 显示选项
 
+- sdl：simple directmedia layer，简单直接介质层，有c语言开发，跨平台的开源多媒体库文件。
+  - 在创建虚拟机时，指定-sdl，则会在本地直接调用sdl图形窗口界面，当然本地需要有安装sdl相关显示库
+  - ```qemu-kvm -m 128 -cpu host -smp 2 -name 'test' -drive file=cirros-0.3.4-x86_64-disk.img,\if=virtio,media=disk,format=qcow2,cache=writeback -sdl```，测试失败
+- vnc，默认启动vnc服务5900，5901..，
 
 
 
