@@ -69,7 +69,10 @@
   - ```vncviewer :5900```，即可启动本地的5900端口
     ![](https://i.loli.net/2019/04/13/5cb1721272ae6.png)
     
-
+  - ctrl + alt/option + 2 进入qemu的monitor监控接口，可以实现诸多高级管理功能，ctrl + alt/option + 1退出该模式
+    - info name
+    - info status
+    
 
 
 
