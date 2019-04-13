@@ -108,7 +108,8 @@
   - snapshot，指定当前设备是否支持快照功能
   - cache，cpu缓存功能none，writeback（先将数据存在cpu等缓存中，再定期写入内存），unsafe，writethrough（实时将数据写入内存）
   - format，镜像文件类型qcow2等等
-
+6. -boot，定义启动设备的引导顺序。a和b表示软驱，c表示第一块硬盘，d表示光驱，n-p表示网络适配器，默认为硬盘设备
+  - -boot order=dc,once=d，once表示创建虚拟机时首次使用d光驱，再次启动时则禁用光驱
 
 
 
