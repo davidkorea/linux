@@ -61,4 +61,22 @@
   ```
 - 安装linux的vnc客户端tigervnc
   - yum install -y tigervnc
+  - 安装完之后，会安装一个vncviewer
+    ```
+    [root@server15 ~]# rpm -ql tigervnc
+    /usr/bin/vncviewer
+    ```
+  - ```vncviewer :5900```，即可启动本地的5900端口
+
+
+
+
+
+
+
+
+
+
+
+
 
