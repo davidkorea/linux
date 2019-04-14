@@ -46,22 +46,15 @@
 
 # 2. KVM实现网络模型
 
+## 2.1 网桥
 - modinfo bridge，linux内核本身自带这个模块，需要bridge-utils的brctl命令来创建虚拟桥设备
 - brctl addbr，创建桥
 - brctl addif，添加端口至网桥
 
 #### 1. 创建网桥
-```
-[root@server15 ~]# ifconfig -a
-br0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
-        ether d6:c4:00:a1:84:1e  txqueuelen 1000  (Ethernet)
-        RX packets 0  bytes 0 (0.0 B)
-        RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 0  bytes 0 (0.0 B)
-        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-```
+- ```brctl addbr br0```
 #### 2. 关闭stp
-- ```[root@server15 ~]# brctl stp br0 off```
+- ```brctl stp br0 off```
   ```
   [root@server15 ~]# brctl show
   bridge name	bridge id		STP enabled	interfaces
