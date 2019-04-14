@@ -19,7 +19,7 @@
 - linux的网络命名空间即可实现多个dhcp之间的隔离
 - vmware给仅主机模式和NAT模式提供来dhcp服务
 - linux dnsmaster 既可以提供dhcp服务，又可以提供给dns服务
-- 创建kvm虚拟机时，要创建网卡的前半段和后半段，并需要脚本连接到相应的虚拟网桥上面，主机脚本需要手动写
+- 创建kvm虚拟机时，要创建网卡的前半段和后半段，并需要脚本连接到相应的虚拟网桥上面，主机脚本需要手动写/etc/qemu-ifup
 
 ## 2. 路有模型
 - 在 隔离模型 的基础上，给网桥上面再增加一个接口virnet1，或者说是在物理机上再创建一个虚拟网卡并关联到网桥
@@ -104,5 +104,14 @@ fi
 bash -n /etc/qemu-ifup
 [root@server15 ~]# chmod +x !$
 chmod +x /etc/qemu-ifup
-
 ```
+## 2.3 创建虚拟机
+
+
+- 查看网卡后半段已经被添加到网桥br0
+  ```
+  bridge name	bridge id		STP enabled	interfaces
+  br0		8000.1221de5c63f8	no		vif0.0
+  ```
+
+
