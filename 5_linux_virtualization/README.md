@@ -15,10 +15,14 @@
   4. 被数据分析公司偷走数据，云的数据隔离，使得数据不被偷走
   5. 客服机器人
   6. 哪些自己做，哪些找第三方来做
--come stay pay
-  
-  
-  
+- come stay pay
+- 充值  
+- 防外挂，云服务降低费用
+- ddos 超大流量工具 - 大数据
+
+
+
+
 
 # kvm-openstack-docker-kubernetes
 
