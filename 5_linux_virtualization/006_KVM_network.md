@@ -79,4 +79,9 @@
       ```
       qemu: Supported NIC models: ne2k_pci,i82551,i82557b,i82559er,rtl8139,e1000,pcnet,virtio
       ```
-
+#### 2. net tap, 创建网卡后半段
+- ```qemu-kvm -net tap[,vlan=n][,name=name][,fd=h][,ifname=name][,script=file][,downscript=dfile]```
+- 可以童工物理机的TAP网络接口连接至指定vlan n
+- 也可以使用script=file，来指定网卡后半段连接至某一个网桥
+- 通过downscript，在虚拟机关机时，将网卡后半段与网桥分离
+- name指定后半段在物理机上叫什么名字
