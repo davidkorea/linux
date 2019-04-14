@@ -70,11 +70,13 @@
 ```
 - 要想永久有效，需要创建配置文件ifcfg-br0
 
-## 2.1 隔离模型
+## 2.2. KVM网络属性相关选项
+#### 1. net nic，向虚拟机创建一个网络设备
+- ```qemu-kvm -net nic[,vlan=n][,macaddr=mac][,model=type][,name=name][,addr=addr][,vectors=v]```
 
-## 2.2 路由模型
-
-## 2.3 NAT模型
-
-
+  - qemu可以模拟多种网卡设备，默认为intel的千兆以太网网络控制器e1000类型，一般只会用来更改为半虚拟化virtio
+    - ```qemu-kvm -net nic,model=?```
+      ```
+      qemu: Supported NIC models: ne2k_pci,i82551,i82557b,i82559er,rtl8139,e1000,pcnet,virtio
+      ```
 
