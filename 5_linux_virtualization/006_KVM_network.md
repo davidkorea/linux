@@ -136,10 +136,16 @@ Requesting system poweroff
 ## 3.1 组建隔离网络
 #### 1. 创建第二个虚拟机
 - 上面创建了test虚拟机
-- 再次创建test1虚拟机，使用相同script，将网卡后半段绑定至相同网桥设备br0
+- 再次创建test1虚拟机，使用相同script，将网卡后半段绑定至相同网桥设备br0。需要手动指定虚拟机内前半段网卡的mac地址
   ```
   qemu-kvm -m 128 -cpu host -smp 2 -name test1 -drive file=cirros-0.3.4-x86_64-disk.img,\
   if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
+  -net tap,ifname=vif1.0,script=/etc/qemu-ifup
+  ```
+
+  ```
+  qemu-kvm -m 128 -cpu host -smp 2 -name test1 -drive file=cirros-0.3.4-x86_64-disk.img,\
+  if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic,macaddr=52:54:00:12:34:57 \
   -net tap,ifname=vif1.0,script=/etc/qemu-ifup
   ```
 - 查看网桥br0端口
@@ -182,7 +188,11 @@ Requesting system poweroff
   4 packets transmitted, 0 packets received, 100% packet loss
   ```
 - ping不同，查看两个虚拟机的网卡MAC地址一样。所以创建虚拟机时，网卡mac要手动指定
-
+  ```
+  qemu-kvm -m 128 -cpu host -smp 2 -name test1 -drive file=cirros-0.3.4-x86_64-disk.img,\
+  if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic,macaddr=52:54:00:12:34:57 \
+  -net tap,ifname=vif1.0,script=/etc/qemu-ifup
+  ```
 
 
 
