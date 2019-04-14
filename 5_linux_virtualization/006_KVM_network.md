@@ -71,7 +71,7 @@
 - 要想永久有效，需要创建配置文件ifcfg-br0
 
 ## 2.2. KVM网络属性相关选项
-#### 1. net nic，向虚拟机创建一个网络设备
+### 2.2.1. net nic，向虚拟机创建一个网络设备
 - ```qemu-kvm -net nic[,vlan=n][,macaddr=mac][,model=type][,name=name][,addr=addr][,vectors=v]```
 
   - qemu可以模拟多种网卡设备，默认为intel的千兆以太网网络控制器e1000类型，一般只会用来更改为半虚拟化virtio
@@ -79,9 +79,30 @@
       ```
       qemu: Supported NIC models: ne2k_pci,i82551,i82557b,i82559er,rtl8139,e1000,pcnet,virtio
       ```
-#### 2. net tap, 创建网卡后半段
+### 2.2.2. net tap, 创建网卡后半段
 - ```qemu-kvm -net tap[,vlan=n][,name=name][,fd=h][,ifname=name][,script=file][,downscript=dfile]```
 - 可以童工物理机的TAP网络接口连接至指定vlan n
 - 也可以使用script=file，来指定网卡后半段连接至某一个网桥，脚本默认路径/etc/qemu-ifup，没有脚本的话script=no
 - 通过downscript，在虚拟机关机时，将网卡后半段与网桥分离，默认路径为/etc/qemu-ifdown，没有脚本的话downscript=no
 - ifname指定后半段在物理机上叫什么名字，默认为tap0
+#### qemu-ifup
+```
+[root@server15 ~]# vim /etc/qemu-ifup
+#!/bin/bash
+bridge=br0
+
+if [ -n '$1' ]; then
+	ip link set $1 up
+	brctl addif $bridge $1
+ 	[ $? -eq 0 ] && exit 0 || exit 1
+else
+	echo "Error: no interface specified."
+	exit 1
+fi
+
+[root@server15 ~]# bash -n !$
+bash -n /etc/qemu-ifup
+[root@server15 ~]# chmod +x !$
+chmod +x /etc/qemu-ifup
+
+```
