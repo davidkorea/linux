@@ -44,7 +44,7 @@
 - 在物理网卡上打开 混杂模式，即不管mac地址是谁，物理网卡都将其信息接收下来。接下来后，再根据MAC地址（物理机mac还是虚拟机mac）来判断信息发送给谁
 
 
-# 2. KVM实现网络模型
+# 2. KVM虚拟机网络
 
 ## 2.1 网桥
 - modinfo bridge，linux内核本身自带这个模块，需要bridge-utils的brctl命令来创建虚拟桥设备
@@ -105,12 +105,12 @@ bash -n /etc/qemu-ifup
 [root@server15 ~]# chmod +x !$
 chmod +x /etc/qemu-ifup
 ```
-## 2.3 创建虚拟机
-
+# 3. 创建有网络设备的KVM虚拟机
+- 创建kvm虚拟机
 ```
 qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk.img,\
->if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
->-net tap,ifname=vif0.0,script=/etc/qemu-ifup
+if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
+-net tap,ifname=vif0.0,script=/etc/qemu-ifup
 ```
 ```
 $ sudo su
@@ -133,4 +133,11 @@ Requesting system poweroff
   root       8993  0.0  0.0      0     0 ?        S<   12:58   0:00 [kvm-irqfd-clean]
   root      12659  2.9  2.3 973728 235588 pts/0   Sl+  13:57   0:06 qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk.img,if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic -net tap,ifname=vif0.0,script=/etc/qemu-ifup
   ```
-
+## 3.1 组建隔离网络
+- 上面创建了test虚拟机
+- 再次创建test1虚拟机，使用相同script，将网卡后半段绑定至相同网桥设备br0
+  ```
+  qemu-kvm -m 128 -cpu host -smp 2 -name test1 -drive file=cirros-0.3.4-x86_64-disk.img,\
+  if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
+  -net tap,ifname=vif1.0,script=/etc/qemu-ifup
+  ```
