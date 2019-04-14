@@ -161,12 +161,7 @@ Requesting system poweroff
   $ ifconfig 
   eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
             inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0
-            inet6 addr: fe80::5054:ff:fe12:3456/64 Scope:Link
-            UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-            RX packets:6 errors:0 dropped:0 overruns:0 frame:0
-            TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
-            collisions:0 txqueuelen:1000 
-            RX bytes:1484 (1.4 KiB)  TX bytes:1304 (1.2 KiB)
+
   ```
 - test1
   ```
@@ -174,11 +169,7 @@ Requesting system poweroff
   $ ifconfig 
   eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
             inet addr:10.0.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
-            inet6 addr: fe80::5054:ff:fe12:3456/64 Scope:Link
-            UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-            RX packets:1 errors:0 dropped:0 overruns:0 frame:0
-            TX packets:11 errors:0 dropped:0 overruns:0 carrier:0
-            collisions:0 txqueuelen:1000 
+
             RX bytes:86 (86.0 B)  TX bytes:1174 (1.1 KiB)
   
   $ ping 10.0.0.1
@@ -193,9 +184,25 @@ Requesting system poweroff
   if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic,macaddr=52:54:00:12:34:57 \
   -net tap,ifname=vif1.0,script=/etc/qemu-ifup
   ```
+- 再次创建test1虚拟机，配置ip地址，虚拟机指向相互ping通
+  ```
+  
+  $ ifconfig eth0 10.0.0.2 up
+  $ ifconfig 
+  eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
+            inet addr:10.0.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
 
+  $ ping 10.0.0.1
+  PING 10.0.0.1 (10.0.0.1): 56 data bytes
+  64 bytes from 10.0.0.1: seq=0 ttl=64 time=2.488 ms
+  64 bytes from 10.0.0.1: seq=1 ttl=64 time=1.916 ms
+  
+  --- 10.0.0.1 ping statistics ---
+  2 packets transmitted, 2 packets received, 0% packet loss
+  round-trip min/avg/max = 1.916/2.202/2.488 ms
+  ```
 
-
+## 3.2 组建路由网络
 
 
 
