@@ -201,7 +201,7 @@ Requesting system poweroff
   round-trip min/avg/max = 1.916/2.202/2.488 ms
   ```
 
-## 3.2 组建路由网络
+## 3.2 组建NAT网络
 
 ### 3.1 物理机 -> 虚拟机 
 配置物理机可以ping通虚拟机
@@ -289,13 +289,24 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   round-trip min/avg/max = 75.594/99.852/124.110 ms
   ```
 
+## 3.3 组建桥接网络
 
+物理网卡直接添加到虚拟网桥br0，此时物理网卡就成了交换机，将原来物理网卡的ip地址给br0，物理网卡不设置ip地址。启动交换机的混在模式
 
+- 拆掉br0的ip地址
+  ```ip addr del 192.168.0.254/24 dev br0```
 
-
-
-
-
+- 拆掉物理网卡ip，将ip给br0，绑定物理网卡到br0
+  ```ip addr del 172.30.1.34 dev ens33; brctl addif br0 ens33; ip addr add 172.30.1.34/16 dev br0```
+  - 注意ip addr add/del中的参数dev 一定要有
+  - 注意添加br0的ip地址时/16 一定要有，否则无法平通通网段其他ip
+  ```
+  [root@server15 ~]# brctl show
+  bridge name	bridge id		STP enabled	interfaces
+  br0		8000.000c2954fad5	no		ens33
+  							vif0.0
+  							vif1.0
+  ```
 
 
 
