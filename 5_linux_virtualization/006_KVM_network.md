@@ -181,4 +181,37 @@ Requesting system poweroff
   --- 10.0.0.1 ping statistics ---
   4 packets transmitted, 0 packets received, 100% packet loss
   ```
-- ping不同，查看两个虚拟机的网卡MAC地址一样。所以创建
+- ping不同，查看两个虚拟机的网卡MAC地址一样。所以创建虚拟机时，网卡mac要手动指定
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
