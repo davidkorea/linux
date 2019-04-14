@@ -203,7 +203,8 @@ Requesting system poweroff
 
 ## 3.2 组建路由网络
 
-### 3.1 配置网桥br0和虚拟机通网段ip地址
+### 3.1 物理机 -> 虚拟机 
+配置物理机可以ping通虚拟机
 ```
 [root@server15 ~]# ifconfig br0 192.168.0.254 
 [root@server15 ~]# ifconfig 
@@ -216,7 +217,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 529  bytes 49456 (48.2 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
-此时物理机可以ping通虚拟机10.0.0.0网段
+此时物理机可以ping通虚拟机192.168.0.0网段
 ### 3.2 虚拟机 物理机 相互通信
 - 在虚拟机test中测试ping网桥br0，ok
   ```
