@@ -67,6 +67,16 @@ br0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
   bridge name	bridge id		STP enabled	interfaces
   br0		8000.000000000000	no		  
   ```
+#### 3. 激活br0
+```
+[root@server15 ~]# ip link set dev br0 up
+[root@server15 ~]# ip link show 
+
+6: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/ether d6:c4:00:a1:84:1e brd ff:ff:ff:ff:ff:ff
+```
+- 要想永久有效，需要创建配置文件ifcfg-br0
+
 ## 2.1 隔离模型
 
 ## 2.2 路由模型
