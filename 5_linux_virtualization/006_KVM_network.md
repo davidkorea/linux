@@ -276,8 +276,18 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   SNAT       all  --  10.0.0.0/24          0.0.0.0/0            to:172.30.1.34     # 可能是/24的问题，配置这个网段ping不通外网
   SNAT       all  --  192.168.0.0/24       0.0.0.0/0            to:172.30.1.34
   ```
-
-
+- 虚拟机中ping物理网关172.30.1.1还是失败，有可能是路由器设置了不允许ping网关
+- ping物理网段中的其他ip正常，ping220.181.57.216（baidu）也正常
+  ```
+  $ ping 220.181.57.216
+  PING 220.181.57.216 (220.181.57.216): 56 data bytes
+  64 bytes from 220.181.57.216: seq=0 ttl=47 time=124.110 ms
+  64 bytes from 220.181.57.216: seq=1 ttl=47 time=75.594 ms
+  
+  --- 220.181.57.216 ping statistics ---
+  2 packets transmitted, 2 packets received, 0% packet loss
+  round-trip min/avg/max = 75.594/99.852/124.110 ms
+  ```
 
 
 
