@@ -106,6 +106,7 @@ bash -n /etc/qemu-ifup
 chmod +x /etc/qemu-ifup
 ```
 # 3. 创建有网络设备的KVM虚拟机
+- 参照上面步骤创建网桥br0
 - 创建kvm虚拟机
 ```
 qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk.img,\
@@ -152,7 +153,7 @@ Requesting system poweroff
   ```
   bridge name	bridge id		STP enabled	interfaces
   br0		8000.5ee803a9cbdb	no		vif0.0
-							vif1.0
+						       	vif1.0
   ```
 #### 2. 两个虚拟机配置ip地址
 - test
@@ -169,8 +170,6 @@ Requesting system poweroff
   $ ifconfig 
   eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
             inet addr:192.168.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
-
-            RX bytes:86 (86.0 B)  TX bytes:1174 (1.1 KiB)
   
   $ ping 192.168.0.1
   PING 192.168.0.1 (10.0.0.1): 56 data bytes
