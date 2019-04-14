@@ -107,11 +107,30 @@ chmod +x /etc/qemu-ifup
 ```
 ## 2.3 创建虚拟机
 
+```
+qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk.img,\
+>if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
+>-net tap,ifname=vif0.0,script=/etc/qemu-ifup
+```
+```
+$ sudo su
+$ poweroff
+The system is going down NOW!
+Sent SIGTERM to all processes
+Requesting system poweroff
+[  343.310066] Power down.
+/etc/qemu-ifdown: could not launch network script
+```
 
 - 查看网卡后半段已经被添加到网桥br0
   ```
   bridge name	bridge id		STP enabled	interfaces
   br0		8000.1221de5c63f8	no		vif0.0
   ```
-
+- 查看虚拟机进程
+  ```
+  [root@server15 ~]# ps -aux | grep kvm
+  root       8993  0.0  0.0      0     0 ?        S<   12:58   0:00 [kvm-irqfd-clean]
+  root      12659  2.9  2.3 973728 235588 pts/0   Sl+  13:57   0:06 qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk.img,if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic -net tap,ifname=vif0.0,script=/etc/qemu-ifup
+  ```
 
