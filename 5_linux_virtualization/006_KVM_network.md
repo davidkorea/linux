@@ -298,7 +298,9 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   ```ip addr del 192.168.0.254/24 dev br0```
 
 - 拆掉物理网卡ip，将ip给br0，绑定物理网卡到br0
-  ```ip addr del 172.30.1.34 dev ens33; brctl addif br0 ens33; ip addr add 172.30.1.34/16 dev br0```
+  ```
+  ip addr del 172.30.1.34 dev ens33; brctl addif br0 ens33; ip addr add 172.30.1.34/16 dev br0
+  ```
   - 注意ip addr add/del中的参数dev 一定要有
   - 注意添加br0的ip地址时/16 一定要有，否则无法平通通网段其他ip
   ```
@@ -308,6 +310,8 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   							vif0.0
   							vif1.0
   ```
+  **物理机外网ping不通！！！？？？ping百度失败**
+  
 #### 2. 虚拟机网络设置
 ```
 $ ifconfig eth0 172.30,1.51					# 直接配置新ip失败
