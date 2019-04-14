@@ -293,6 +293,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
 
 物理网卡直接添加到虚拟网桥br0，此时物理网卡就成了交换机，将原来物理网卡的ip地址给br0，物理网卡不设置ip地址。启动交换机的混在模式
 
+#### 1. 物理机网络设置
 - 拆掉br0的ip地址
   ```ip addr del 192.168.0.254/24 dev br0```
 
@@ -307,8 +308,54 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   							vif0.0
   							vif1.0
   ```
+#### 2. 虚拟机网络设置
+```
+$ ifconfig eth0 172.30,1.51					# 直接配置新ip失败
+ifconfig: bad address '172.30,1.51'
+$ 
+$ ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue 
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen 1000
+    link/ether 52:54:00:12:34:56 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.0.1/24 brd 192.168.0.255 scope global eth0
+    inet6 fe80::5054:ff:fe12:3456/64 scope link 
+       valid_lft forever preferred_lft forever
+$ ip addr del 192.168.0.1/24 dev eth0				# 先拆除就ip
+$ ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
+          inet6 addr: fe80::5054:ff:fe12:3456/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:853 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:219 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:69760 (68.1 KiB)  TX bytes:20410 (19.9 KiB)
 
+$ ifconfig eth0 172.30.1.51					# 设置新ip
+$ ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
+          inet addr:172.30.1.51  Bcast:172.30.255.255  Mask:255.255.0.0
+          inet6 addr: fe80::5054:ff:fe12:3456/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:859 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:219 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:70120 (68.4 KiB)  TX bytes:20410 (19.9 KiB)
 
+$ ping 172.30.1.50						# 可以ping通物理网络
+PING 172.30.1.50 (172.30.1.50): 56 data bytes
+64 bytes from 172.30.1.50: seq=0 ttl=64 time=1581.620 ms
+64 bytes from 172.30.1.50: seq=1 ttl=64 time=585.848 ms
+64 bytes from 172.30.1.50: seq=2 ttl=64 time=289.564 ms
+64 bytes from 172.30.1.50: seq=3 ttl=64 time=174.459 ms
+
+--- 172.30.1.50 ping statistics ---
+4 packets transmitted, 4 packets received, 0% packet loss
+round-trip min/avg/max = 174.459/657.872/1581.620 ms
+```
 
 
 
