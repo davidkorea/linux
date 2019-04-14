@@ -204,7 +204,7 @@ Requesting system poweroff
 
 ## 3.2 组建路由网络
 
-#### 1. 配置网桥br0和虚拟机通网段ip地址
+### 3.1 配置网桥br0和虚拟机通网段ip地址
 ```
 [root@server15 ~]# ifconfig br0 10.0.0.254 
 [root@server15 ~]# ifconfig 
@@ -217,7 +217,8 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX packets 18  bytes 3073 (3.0 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
-#### 2. 进入虚拟机
+此时物理机可以ping通虚拟机10.0.0.0网段
+### 3.2 虚拟机 物理机 相互通信
 - 在虚拟机test中测试ping网桥br0，ok
   ```
   $ ping 10.0.0.254
@@ -250,10 +251,30 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   3 packets transmitted, 3 packets received, 0% packet loss
   round-trip min/avg/max = 0.906/1.444/1.807 ms
   ```
-  - 目前只是可以平通物理机ip而已。但是ping物理网卡的网关172.30.1.1失败，是因为没有路由转发
+### 3.2 虚拟机 外网 相互通信
+- 目前只是虚拟机和通物理机ip互通而已。但是ping物理网卡的网关172.30.1.1失败，ping任何一个172.30.1.0网段的ip都不通，除了本季ip是因为没有路由转发，报文发出去了，但是回不来。打开物理机路由转发功能，也还是平不出去
+  ```
+  [root@server15 ~]# cat /proc/sys/net/ipv4/ip_forward     # 如果是0，需要手动置1
+  1
+  ```
+- 此时如果要访问外网，可以添加路由，或者添加NAT。因为物理网络的路由不能随意添加，所以还是选择NAT模式
+  ```[root@server15 ~]# iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -j SNAT --to-source 172.30.1.34```
 
-
-
+  ```
+  [root@server15 ~]# iptables -t nat -L -n
+  Chain PREROUTING (policy ACCEPT)
+  target     prot opt source               destination         
+  
+  Chain INPUT (policy ACCEPT)
+  target     prot opt source               destination         
+  
+  Chain OUTPUT (policy ACCEPT)
+  target     prot opt source               destination         
+  
+  Chain POSTROUTING (policy ACCEPT)
+  target     prot opt source               destination          
+  SNAT       all  --  10.0.0.0/24          0.0.0.0/0            to:172.30.1.34
+  ```
 
 
 
