@@ -134,6 +134,7 @@ Requesting system poweroff
   root      12659  2.9  2.3 973728 235588 pts/0   Sl+  13:57   0:06 qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk.img,if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic -net tap,ifname=vif0.0,script=/etc/qemu-ifup
   ```
 ## 3.1 组建隔离网络
+#### 1. 创建第二个虚拟机
 - 上面创建了test虚拟机
 - 再次创建test1虚拟机，使用相同script，将网卡后半段绑定至相同网桥设备br0
   ```
@@ -147,3 +148,37 @@ Requesting system poweroff
   br0		8000.5ee803a9cbdb	no		vif0.0
 							vif1.0
   ```
+#### 2. 两个虚拟机配置ip地址
+- test
+  ```
+  $ ifconfig eth0 10.0.0.1 up
+  $ ifconfig 
+  eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
+            inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0
+            inet6 addr: fe80::5054:ff:fe12:3456/64 Scope:Link
+            UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+            RX packets:6 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:10 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:1000 
+            RX bytes:1484 (1.4 KiB)  TX bytes:1304 (1.2 KiB)
+  ```
+- test1
+  ```
+  $ ifconfig eth0 10.0.0.2 up
+  $ ifconfig 
+  eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
+            inet addr:10.0.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
+            inet6 addr: fe80::5054:ff:fe12:3456/64 Scope:Link
+            UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+            RX packets:1 errors:0 dropped:0 overruns:0 frame:0
+            TX packets:11 errors:0 dropped:0 overruns:0 carrier:0
+            collisions:0 txqueuelen:1000 
+            RX bytes:86 (86.0 B)  TX bytes:1174 (1.1 KiB)
+  
+  $ ping 10.0.0.1
+  PING 10.0.0.1 (10.0.0.1): 56 data bytes
+  
+  --- 10.0.0.1 ping statistics ---
+  4 packets transmitted, 0 packets received, 100% packet loss
+  ```
+- ping不同，查看两个虚拟机的网卡MAC地址一样。所以创建
