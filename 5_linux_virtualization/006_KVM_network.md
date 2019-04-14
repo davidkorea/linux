@@ -157,23 +157,23 @@ Requesting system poweroff
 #### 2. 两个虚拟机配置ip地址
 - test
   ```
-  $ ifconfig eth0 10.0.0.1 up
+  $ ifconfig eth0 192.168.0.1 up
   $ ifconfig 
   eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
-            inet addr:10.0.0.1  Bcast:10.255.255.255  Mask:255.0.0.0
+            inet addr:192.168.0.1  Bcast:10.255.255.255  Mask:255.0.0.0
 
   ```
 - test1
   ```
-  $ ifconfig eth0 10.0.0.2 up
+  $ ifconfig eth0 192.168.0.2 up
   $ ifconfig 
   eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
-            inet addr:10.0.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
+            inet addr:192.168.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
 
             RX bytes:86 (86.0 B)  TX bytes:1174 (1.1 KiB)
   
-  $ ping 10.0.0.1
-  PING 10.0.0.1 (10.0.0.1): 56 data bytes
+  $ ping 192.168.0.1
+  PING 192.168.0.1 (10.0.0.1): 56 data bytes
   
   --- 10.0.0.1 ping statistics ---
   4 packets transmitted, 0 packets received, 100% packet loss
@@ -187,17 +187,17 @@ Requesting system poweroff
 - 再次创建test1虚拟机，配置ip地址，虚拟机指向相互ping通
   ```
   
-  $ ifconfig eth0 10.0.0.2 up
+  $ ifconfig eth0 192.168.0.2 up
   $ ifconfig 
   eth0      Link encap:Ethernet  HWaddr 52:54:00:12:34:56  
-            inet addr:10.0.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
+            inet addr:192.168.0.2  Bcast:10.255.255.255  Mask:255.0.0.0
 
-  $ ping 10.0.0.1
-  PING 10.0.0.1 (10.0.0.1): 56 data bytes
-  64 bytes from 10.0.0.1: seq=0 ttl=64 time=2.488 ms
-  64 bytes from 10.0.0.1: seq=1 ttl=64 time=1.916 ms
+  $ ping 192.168.0.1
+  PING 192.168.0.1 (10.0.0.1): 56 data bytes
+  64 bytes from 192.168.0.1: seq=0 ttl=64 time=2.488 ms
+  64 bytes from 192.168.0.1: seq=1 ttl=64 time=1.916 ms
   
-  --- 10.0.0.1 ping statistics ---
+  --- 192.168.0.1 ping statistics ---
   2 packets transmitted, 2 packets received, 0% packet loss
   round-trip min/avg/max = 1.916/2.202/2.488 ms
   ```
@@ -206,28 +206,28 @@ Requesting system poweroff
 
 ### 3.1 配置网桥br0和虚拟机通网段ip地址
 ```
-[root@server15 ~]# ifconfig br0 10.0.0.254 
+[root@server15 ~]# ifconfig br0 192.168.0.254 
 [root@server15 ~]# ifconfig 
 br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-        inet 10.0.0.254  netmask 255.0.0.0  broadcast 10.255.255.255
+        inet 192.168.0.254  netmask 255.255.255.0  broadcast 192.168.0.255
         inet6 fe80::d4c4:ff:fea1:841e  prefixlen 64  scopeid 0x20<link>
         ether a2:e4:0d:02:90:3d  txqueuelen 1000  (Ethernet)
-        RX packets 43  bytes 5104 (4.9 KiB)
+        RX packets 361  bytes 30192 (29.4 KiB)
         RX errors 0  dropped 0  overruns 0  frame 0
-        TX packets 18  bytes 3073 (3.0 KiB)
+        TX packets 529  bytes 49456 (48.2 KiB)
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 此时物理机可以ping通虚拟机10.0.0.0网段
 ### 3.2 虚拟机 物理机 相互通信
 - 在虚拟机test中测试ping网桥br0，ok
   ```
-  $ ping 10.0.0.254
+  $ ping 192.168.0.254 
   PING 10.0.0.254 (10.0.0.254): 56 data bytes
-  64 bytes from 10.0.0.254: seq=0 ttl=64 time=6.578 ms
-  64 bytes from 10.0.0.254: seq=1 ttl=64 time=1.527 ms
-  64 bytes from 10.0.0.254: seq=2 ttl=64 time=1.551 ms
+  64 bytes from 192.168.0.254: seq=0 ttl=64 time=6.578 ms
+  64 bytes from 192.168.0.254: seq=1 ttl=64 time=1.527 ms
+  64 bytes from 192.168.0.254: seq=2 ttl=64 time=1.551 ms
   
-  --- 10.0.0.254 ping statistics ---
+  --- 192.168.0.254 ping statistics ---
   3 packets transmitted, 3 packets received, 0% packet loss
   round-trip min/avg/max = 1.527/3.218/6.578 ms
   ```
@@ -239,7 +239,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   ```
   - 将虚拟机网关指向br0，ping物理机ok
   ```
-  $ route add default gw 10.0.0.254
+  $ route add default gw 192.168.0.254
   
   $ ping 172.30.1.34
   PING 172.30.1.34 (172.30.1.34): 56 data bytes
@@ -258,7 +258,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   1
   ```
 - 此时如果要访问外网，可以添加路由，或者添加NAT。因为物理网络的路由不能随意添加，所以还是选择NAT模式
-  ```[root@server15 ~]# iptables -t nat -A POSTROUTING -s 10.0.0.0/24 -j SNAT --to-source 172.30.1.34```
+  ```[root@server15 ~]# iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to-source 172.30.1.34```
 
   ```
   [root@server15 ~]# iptables -t nat -L -n
@@ -273,7 +273,8 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   
   Chain POSTROUTING (policy ACCEPT)
   target     prot opt source               destination          
-  SNAT       all  --  10.0.0.0/24          0.0.0.0/0            to:172.30.1.34
+  SNAT       all  --  10.0.0.0/24          0.0.0.0/0            to:172.30.1.34     # 可能是/24的问题，配置这个网段ping不通外网
+  SNAT       all  --  192.168.0.0/24       0.0.0.0/0            to:172.30.1.34
   ```
 
 
