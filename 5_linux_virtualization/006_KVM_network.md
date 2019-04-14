@@ -204,9 +204,53 @@ Requesting system poweroff
 
 ## 3.2 组建路由网络
 
-
-
-
+#### 1. 配置网桥br0和虚拟机通网段ip地址
+```
+[root@server15 ~]# ifconfig br0 10.0.0.254 
+[root@server15 ~]# ifconfig 
+br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.0.254  netmask 255.0.0.0  broadcast 10.255.255.255
+        inet6 fe80::d4c4:ff:fea1:841e  prefixlen 64  scopeid 0x20<link>
+        ether a2:e4:0d:02:90:3d  txqueuelen 1000  (Ethernet)
+        RX packets 43  bytes 5104 (4.9 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 18  bytes 3073 (3.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+```
+#### 2. 进入虚拟机
+- 在虚拟机test中测试ping网桥br0，ok
+  ```
+  $ ping 10.0.0.254
+  PING 10.0.0.254 (10.0.0.254): 56 data bytes
+  64 bytes from 10.0.0.254: seq=0 ttl=64 time=6.578 ms
+  64 bytes from 10.0.0.254: seq=1 ttl=64 time=1.527 ms
+  64 bytes from 10.0.0.254: seq=2 ttl=64 time=1.551 ms
+  
+  --- 10.0.0.254 ping statistics ---
+  3 packets transmitted, 3 packets received, 0% packet loss
+  round-trip min/avg/max = 1.527/3.218/6.578 ms
+  ```
+- 在虚拟机test中测试ping网桥物理机，failed. 需要在虚拟机中加一条路由规则
+  ```
+  $ ping 172.30.1.34
+  PING 172.30.1.34 (172.30.1.34): 56 data bytes
+  ping: sendto: Network is unreachable
+  ```
+  - 将虚拟机网关指向br0，ping物理机ok
+  ```
+  $ route add default gw 10.0.0.254
+  
+  $ ping 172.30.1.34
+  PING 172.30.1.34 (172.30.1.34): 56 data bytes
+  64 bytes from 172.30.1.34: seq=0 ttl=64 time=0.906 ms
+  64 bytes from 172.30.1.34: seq=1 ttl=64 time=1.621 ms
+  64 bytes from 172.30.1.34: seq=2 ttl=64 time=1.807 ms
+  
+  --- 172.30.1.34 ping statistics ---
+  3 packets transmitted, 3 packets received, 0% packet loss
+  round-trip min/avg/max = 0.906/1.444/1.807 ms
+  ```
+  - 目前只是可以平通物理机ip而已。但是ping物理网卡的网关172.30.1.1失败，是因为没有路由转发
 
 
 
