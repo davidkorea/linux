@@ -153,7 +153,7 @@ Requesting system poweroff
   ```
   bridge name	bridge id		STP enabled	interfaces
   br0		8000.5ee803a9cbdb	no		vif0.0
-						       	vif1.0
+  						       	vif1.0
   ```
 #### 2. 两个虚拟机配置ip地址
 - test
