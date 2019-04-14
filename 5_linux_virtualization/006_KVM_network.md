@@ -105,6 +105,11 @@ bash -n /etc/qemu-ifup
 [root@server15 ~]# chmod +x !$
 chmod +x /etc/qemu-ifup
 ```
+#### qemu-ifdown
+- 其实关机脚本qemu-ifdown可以不用指定，会自动执行
+- 当虚拟机关机后，其使用的后半段网卡会自动消失
+- 通过brctl show查询绑定在br0的端口也会消失
+
 # 3. 创建有网络设备的KVM虚拟机
 - 参照上面步骤创建网桥br0
 - 创建kvm虚拟机
@@ -301,6 +306,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   ```
   ip addr del 172.30.1.34 dev ens33; brctl addif br0 ens33; ip addr add 172.30.1.34/16 dev br0
   ```
+  - 会报错，但是ip地址可以配置成功
   - 注意ip addr add/del中的参数dev 一定要有
   - 注意添加br0的ip地址时/16 一定要有，否则无法平通通网段其他ip
   ```
@@ -310,7 +316,18 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   							vif0.0
   							vif1.0
   ```
-  **物理机外网ping不通！！！？？？ping百度失败**
+  ```
+  [root@server15 ~]# ifconfig br0
+  br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet 172.30.1.34  netmask 255.255.255.255  broadcast 0.0.0.0
+          inet6 fe80::a4b5:cbff:fead:cc20  prefixlen 64  scopeid 0x20<link>
+          ether 00:0c:29:54:fa:d5  txqueuelen 1000  (Ethernet)
+          RX packets 2580  bytes 269720 (263.3 KiB)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 324  bytes 40104 (39.1 KiB)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  ```
+  **物理机外网ping不通！！！？？？ping百度失败。通过配置文件的方式，完全复制物理网卡的设定给br0试一下？估计是16，24这样的位数的原因**
   
 #### 2. 虚拟机网络设置
 ```
@@ -360,8 +377,7 @@ PING 172.30.1.50 (172.30.1.50): 56 data bytes
 4 packets transmitted, 4 packets received, 0% packet loss
 round-trip min/avg/max = 174.459/657.872/1581.620 ms
 ```
-
-
+- 此时虚拟机可以使用物理网络中的地址与物理网络通信
 
 
 
