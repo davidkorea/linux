@@ -127,6 +127,8 @@ if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
 >   - 将上面的命令复制到同一行内，不要用断行符号\，命令可以执行成功
 > - Issue:  登录虚拟机后EXT4-fs error (device vda1): ext4_lookup:1584: inode #6150: comm sh: deleted inode referenced: 6275
 >   - 使用cirros-0.4.0全是错，改用cirros-0.3.4-x86_64-disk.img版本
+> - Issue: Nothing to boot: No such file or directory (http://ipxe.org/2d03e13b) No more network devices
+>   - 执行上面创建命令，我发启动ipxe，找不到问题所在。还原快照，重新安装qemu-kvm，解决
 
 ```
 $ sudo su
