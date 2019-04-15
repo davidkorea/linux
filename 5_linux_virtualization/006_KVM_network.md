@@ -5,8 +5,8 @@
 - tap，是二层设备，通信靠MAC地址
   - tap，需要在创建虚拟机时注意网卡mac不能一样，默认mac地址都是一样的，需要手动指定，否则互相不能通信
   - 另一种tun三层设备，通信靠IP地址
-# KVM网络类型
-## 1. 隔离模型
+# 1. 虚拟机网络类型
+## 1.1 隔离模型
 - 每一个虚拟机都有自己的前半段网卡eth0
 - 其对应的后半段网卡在物理主机vnet0，vnet1...
 - 将物理机上的各个后半段网卡都关联至虚拟网桥(虚拟交换机)上面，实现虚拟机之间的通信，但不能和物理机通信
@@ -21,7 +21,7 @@
 - linux dnsmaster 既可以提供dhcp服务，又可以提供给dns服务
 - 创建kvm虚拟机时，要创建网卡的前半段和后半段，并需要脚本连接到相应的虚拟网桥上面，主机脚本需要手动写/etc/qemu-ifup
 
-## 2. 路有模型
+## 1.2 路有模型
 - 在 隔离模型 的基础上，给网桥上面再增加一个接口virnet1，或者说是在物理机上再创建一个虚拟网卡并关联到网桥
 - 将新端口virnet1连至物理机网卡，虚拟机可以访问外网，但是外网无法回访虚拟机
   ![](https://i.loli.net/2019/04/13/5cb1b435428cd.png)
@@ -30,21 +30,21 @@
 - 缺点依然是，路由模型无法让外网回访虚拟机
 - 所以vmware中根本没有这种模型
 
-## 3. NAT模型
+## 1.3 NAT模型
 - 在上述 路由模型 的基础上，添加一个NAT server（添加一条路由规则即可），即可实现外网可以访问虚拟机
 - 回访时，物理网卡将数据发给NAT server，由NAT server决定发给哪一个虚拟机
   ![](https://i.loli.net/2019/04/13/5cb1b5ed66a98.png)
 - 在物理机上开启NAT功能，NAT会话表可以知道将报文发送给哪一个虚拟机
 - linux中的NAT服务就是一条iptables规则
 
-## 4. 桥接模型
+## 1.4 桥接模型
 - 在 隔离模型 的基础上，直接将网桥设备关联至物理网卡，可以通过物理网卡访问外网
 - 问题是，虚拟机和物理机都通过同一个物理网卡访问外网，回访时，应该找物理机还是虚拟机？
 - 此时，物理网卡会变成一个交换机（物理网桥）。给物理机创建一个虚拟网卡，并将物理网卡自己的MAC地址给这个虚拟网卡
 - 在物理网卡上打开 混杂模式，即不管mac地址是谁，物理网卡都将其信息接收下来。接下来后，再根据MAC地址（物理机mac还是虚拟机mac）来判断信息发送给谁
 
 
-# 2. KVM虚拟机网络
+# 2. KVM虚拟机网络基础
 
 ## 2.1 网桥
 - modinfo bridge，linux内核本身自带这个模块，需要bridge-utils的brctl命令来创建虚拟桥设备
@@ -62,18 +62,18 @@
   ```
 #### 3. 激活br0
 ```
-[root@server15 ~]# ip link set dev br0 up
-[root@server15 ~]# ip link show 
+[root@server15 ~]# ip link set dev br0 up	# ip link set br0 up
+[root@server15 ~]# ip link show 		# 显示up状态	
 
 6: br0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
     link/ether d6:c4:00:a1:84:1e brd ff:ff:ff:ff:ff:ff
 ```
 - 要想永久有效，需要创建配置文件ifcfg-br0
 
-## 2.2. KVM网络属性相关选项
+## 2.2. qemu-kvm网络属性相关选项
 ### 2.2.1. net nic，向虚拟机创建一个网络设备
 - ```qemu-kvm -net nic[,vlan=n][,macaddr=mac][,model=type][,name=name][,addr=addr][,vectors=v]```
-
+  - macaddr，需要手动指定虚拟机内前半段网卡的mac地址，否则多个虚拟机都使用默认的mac，导致mac冲突，无法网络通信
   - qemu可以模拟多种网卡设备，默认为intel的千兆以太网网络控制器e1000类型，一般只会用来更改为半虚拟化virtio
     - ```qemu-kvm -net nic,model=?```
       ```
@@ -81,11 +81,11 @@
       ```
 ### 2.2.2. net tap, 创建网卡后半段
 - ```qemu-kvm -net tap[,vlan=n][,name=name][,fd=h][,ifname=name][,script=file][,downscript=dfile]```
-- 可以童工物理机的TAP网络接口连接至指定vlan n
+- 可以通过物理机的TAP网络接口连接至指定vlan n
 - 也可以使用script=file，来指定网卡后半段连接至某一个网桥，脚本默认路径/etc/qemu-ifup，没有脚本的话script=no
 - 通过downscript，在虚拟机关机时，将网卡后半段与网桥分离，默认路径为/etc/qemu-ifdown，没有脚本的话downscript=no
 - ifname指定后半段在物理机上叫什么名字，默认为tap0
-#### qemu-ifup
+#### 1. qemu-ifup
 ```
 [root@server15 ~]# vim /etc/qemu-ifup
 #!/bin/bash
@@ -105,12 +105,13 @@ bash -n /etc/qemu-ifup
 [root@server15 ~]# chmod +x !$
 chmod +x /etc/qemu-ifup
 ```
-#### qemu-ifdown
+#### 2. qemu-ifdown
 - 其实关机脚本qemu-ifdown可以不用指定，会自动执行
 - 当虚拟机关机后，其使用的后半段网卡会自动消失
 - 通过brctl show查询绑定在br0的端口也会消失
 
-# 3. 创建有网络设备的KVM虚拟机
+# 3. 实现各网络模型的KVM虚拟机
+
 - 参照上面步骤创建网桥br0
 - 创建kvm虚拟机
 ```
@@ -182,7 +183,7 @@ Requesting system poweroff
   --- 10.0.0.1 ping statistics ---
   4 packets transmitted, 0 packets received, 100% packet loss
   ```
-- ping不同，查看两个虚拟机的网卡MAC地址一样。所以创建虚拟机时，网卡mac要手动指定
+- ping不通，查看两个虚拟机的网卡MAC地址一样。所以创建虚拟机时，网卡mac要手动指定
   ```
   qemu-kvm -m 128 -cpu host -smp 2 -name test1 -drive file=cirros-0.3.4-x86_64-disk.img,\
   if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic,macaddr=52:54:00:12:34:57 \
@@ -223,7 +224,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
         TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
 ```
 此时物理机可以ping通虚拟机192.168.0.0网段
-### 3.2 虚拟机 物理机 相互通信
+### 3.2 虚拟机 < - >物理机 相互通信
 - 在虚拟机test中测试ping网桥br0，ok
   ```
   $ ping 192.168.0.254 
@@ -256,8 +257,9 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   3 packets transmitted, 3 packets received, 0% packet loss
   round-trip min/avg/max = 0.906/1.444/1.807 ms
   ```
-### 3.2 虚拟机 外网 相互通信
-- 目前只是虚拟机和通物理机ip互通而已。但是ping物理网卡的网关172.30.1.1失败，ping任何一个172.30.1.0网段的ip都不通，除了本季ip是因为没有路由转发，报文发出去了，但是回不来。打开物理机路由转发功能，也还是平不出去
+### 3.2 虚拟机 < - >外网 相互通信
+- 目前只是虚拟机和通物理机ip互通而已。但是ping物理网卡的网关172.30.1.1失败，ping任何一个172.30.1.0网段的ip都不通，除了本机ip
+- 是因为没有路由转发，报文发出去了，但是回不来。打开物理机路由转发功能，也还是ping不出去
   ```
   [root@server15 ~]# cat /proc/sys/net/ipv4/ip_forward     # 如果是0，需要手动置1
   1
@@ -281,8 +283,8 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   SNAT       all  --  10.0.0.0/24          0.0.0.0/0            to:172.30.1.34     # 可能是/24的问题，配置这个网段ping不通外网
   SNAT       all  --  192.168.0.0/24       0.0.0.0/0            to:172.30.1.34
   ```
-- 虚拟机中ping物理网关172.30.1.1还是失败，有可能是路由器设置了不允许ping网关
-- ping物理网段中的其他ip正常，ping220.181.57.216（baidu）也正常
+- 虚拟机中ping物理网关172.30.1.1还是失败，有可能是咖啡厅的路由器设置了不允许ping网关
+- ping物理网段中的其他ip正常，ping220.181.57.216（baidu）也正常。因此设置与外网通信成功
   ```
   $ ping 220.181.57.216
   PING 220.181.57.216 (220.181.57.216): 56 data bytes
