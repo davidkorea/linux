@@ -21,7 +21,13 @@
 - kvm虚拟机不依赖于管理员权限启动虚拟机
 - yum install -y qemu-kvm 
   - rpm -ql qemu-kvm查看到qemu-kvm默认在/sur/libexec目录下，需要创建软连接到/usr//bin目录下，才可以直接使用命令
-  - ln -sv /usr/libexec/qemu-kvm /usr/bin，创建软连接够qemu-kvm，qemu-img可以直接使用
+  - ln -sv /usr/libexec/qemu-kvm /usr/bin，创建软连接够qemu-kvm，qemu-img可以直接使用。必须要使用绝对路径，否则不能使用
+  ```
+  [root@server162 bin]# ln -sv /usr/libexec/qemu-kvm /usr/bin
+  "/usr/bin/qemu-kvm" -> "/usr/libexec/qemu-kvm"
+  [root@server162 bin]# ls qemu-kvm 
+  qemu-kvm
+  ```
 ## 相关命令
 - 命令分类
   - 标准选项：-m，-cpu，-smp，-name
