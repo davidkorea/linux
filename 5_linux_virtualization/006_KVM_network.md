@@ -106,6 +106,7 @@ bash -n /etc/qemu-ifup
 [root@server15 ~]# chmod +x !$
 chmod +x /etc/qemu-ifup
 ```
+**```chmod +x /etc/qemu-ifup```, 一定要将脚本添加执行权限，否则报错 **
 #### 2. qemu-ifdown
 - 其实关机脚本qemu-ifdown可以不用指定，会自动执行
 - 当虚拟机关机后，其使用的后半段网卡会自动消失
@@ -120,6 +121,11 @@ qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk
 if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
 -net tap,ifname=vif0.0,script=/etc/qemu-ifup
 ```
+
+> - Issue: could not configure /dev/net/tun (vif0.0): Device or resource busy
+> - Issue: qemu-ifup: could not configure /dev/net/tun: Operation not permitted
+> 将上面的命令复制到同一行内，不要用断行符号\，命令可以执行成功
+
 ```
 $ sudo su
 $ poweroff
