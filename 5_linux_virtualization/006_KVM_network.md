@@ -18,7 +18,13 @@
 - 因此每一个虚拟网桥都需要搭配一个dhcp服务器
 - linux的网络命名空间即可实现多个dhcp之间的隔离
 - vmware给仅主机模式和NAT模式提供来dhcp服务
-- linux dnsmaster 既可以提供dhcp服务，又可以提供给dns服务
+- linux dnsmasq 既可以提供dhcp服务，又可以提供给dns服务
+  - 安装qemu-kvm时，会自动安装上dnsmasq
+    ```
+    [root@server15 ~]# ps -aux | grep dns
+    nobody 10020  0.0  0.0  53884  1112 ?  S    22:04   0:00 /usr/sbin/dnsmasq --conf-file=/var/lib/libvirt/dnsmasq/default.conf --leasefile-ro --dhcp-script=/usr/libexec/libvirt_leaseshelper
+    root   10021  0.0  0.0  53856   376 ?  S    22:04   0:00 /usr/sbin/dnsmasq --conf-file=/var/lib/libvirt/dnsmasq/default.conf --leasefile-ro --dhcp-script=/usr/libexec/libvirt_leaseshelper
+    ```
 - 创建kvm虚拟机时，要创建网卡的前半段和后半段，并需要脚本连接到相应的虚拟网桥上面，主机脚本需要手动写/etc/qemu-ifup
 
 ## 1.2 路由模型
