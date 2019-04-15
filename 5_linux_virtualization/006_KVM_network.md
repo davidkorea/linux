@@ -61,6 +61,7 @@
   br0		8000.000000000000	no		  
   ```
 #### 3. 激活br0
+- ```ifconfig br0 up```，或使用下面命令
 ```
 [root@server15 ~]# ip link set dev br0 up	# ip link set br0 up
 [root@server15 ~]# ip link show 		# 显示up状态	
