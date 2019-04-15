@@ -21,7 +21,7 @@
 - linux dnsmaster 既可以提供dhcp服务，又可以提供给dns服务
 - 创建kvm虚拟机时，要创建网卡的前半段和后半段，并需要脚本连接到相应的虚拟网桥上面，主机脚本需要手动写/etc/qemu-ifup
 
-## 1.2 路有模型
+## 1.2 路由模型
 - 在 隔离模型 的基础上，给网桥上面再增加一个接口virnet1，或者说是在物理机上再创建一个虚拟网卡并关联到网桥
 - 将新端口virnet1连至物理机网卡，虚拟机可以访问外网，但是外网无法回访虚拟机
   ![](https://i.loli.net/2019/04/13/5cb1b435428cd.png)
@@ -35,7 +35,8 @@
 - 回访时，物理网卡将数据发给NAT server，由NAT server决定发给哪一个虚拟机
   ![](https://i.loli.net/2019/04/13/5cb1b5ed66a98.png)
 - 在物理机上开启NAT功能，NAT会话表可以知道将报文发送给哪一个虚拟机
-- linux中的NAT服务就是一条iptables规则，```iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -j SNAT --to-source 192.168.0.162```
+- linux中的NAT服务就是一条iptables规则，
+  - ```iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -j SNAT --to-source 192.168.0.162```
 - 虚拟机可以ping通外网，但是外网不能直接ping通虚拟机，即虚拟机不能作为目标地址来通信。因为NAT使用的都是私有地址
   - **在物理网卡上面配置多个IP地址，每个ip地址对应一个虚拟机。即目标地址转发**
   - SDN，软件定义网络，来实现服务网络实现
