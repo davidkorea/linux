@@ -35,7 +35,7 @@
 - 回访时，物理网卡将数据发给NAT server，由NAT server决定发给哪一个虚拟机
   ![](https://i.loli.net/2019/04/13/5cb1b5ed66a98.png)
 - 在物理机上开启NAT功能，NAT会话表可以知道将报文发送给哪一个虚拟机
-- linux中的NAT服务就是一条iptables规则
+- linux中的NAT服务就是一条iptables规则，```iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -j SNAT --to-source 192.168.0.162```
 - 虚拟机可以ping通外网，但是外网不能直接ping通虚拟机，即虚拟机不能作为目标地址来通信。因为NAT使用的都是私有地址
   - **在物理网卡上面配置多个IP地址，每个ip地址对应一个虚拟机。即目标地址转发**
   - SDN，软件定义网络，来实现服务网络实现
@@ -280,7 +280,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
   1
   ```
 - 此时如果要访问外网，可以添加路由，或者添加NAT。因为物理网络的路由不能随意添加，所以还是选择NAT模式
-  ```[root@server15 ~]# iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to-source 172.30.1.34```
+  - ```[root@server15 ~]# iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -j SNAT --to-source 172.30.1.34```
 
   ```
   [root@server15 ~]# iptables -t nat -L -n
