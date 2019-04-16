@@ -1,4 +1,15 @@
-qemu-kvm -m 512 -smp 2 -name centos6 -drive file=/images/centos/centos6.qcow2,media=disk -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=centos6.0,script=/etc/qemu-ifup -boot order=nc,once=n -nographic
+- 使用网络安装boot order=n，因为没有pxe网络或者cobbler，所以安装会失败，需要指定安装镜像iso
+  ```
+  qemu-kvm -m 512 -smp 2 -name centos6 -drive file=/images/centos/centos6.qcow2,media=disk -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=centos6.0,script=/etc/qemu-ifup -boot order=nc,once=n -nographic
+  ```
+- 写了两个drive file，指定虚拟硬盘qcow2，指定安装镜像iso。
+  ```
+  qemu-kvm -m 512 -smp 2 -name centos -drive file=/images/centos/centos6.qcow2,format=qcow2,media=disk,if=virtio -drive file=/windowsshare/CentOS-7-x86_64-DVD-1810.iso,media=cdrom  -net nic,model=virtio -net tap,ifname=centos6.0 -boot order=dc,once=d
+  ```
+  ```
+  qemu-kvm -m 512 -smp 2 -name xp -drive file=/images/win/xp.qcow2,format=qcow2,media=disk,if=virtio -drive file=/windowsshare/WindowsXPSP3.iso,media=cdrom  -net nic,model=virtio,macaddr=52:54:00:12:12:12  -net tap,ifname=xp1.0 -boot order=dc,once=d
+  ```
+
 
 
 
