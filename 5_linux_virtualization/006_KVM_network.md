@@ -144,7 +144,7 @@ qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk
 ```
 > - Issue: 创建时could not configure /dev/net/tun (vif0.0): Device or resource busy
 > - Issue: 创建时qemu-ifup: could not configure /dev/net/tun: Operation not permitted
->   - 将上面的命令复制到同一行内，不要用断行符号\，命令可以执行成功
+>   - 使用**管理员**账户；将上面的命令复制到同一行内，不要用断行符号\，命令可以执行成功
 > - Issue:  登录虚拟机后EXT4-fs error (device vda1): ext4_lookup:1584: inode #6150: comm sh: deleted inode referenced: 6275
 >   - 使用cirros-0.4.0全是错，改用cirros-0.3.4-x86_64-disk.img版本
 > - Issue: Nothing to boot: No such file or directory (http://ipxe.org/2d03e13b) No more network devices
