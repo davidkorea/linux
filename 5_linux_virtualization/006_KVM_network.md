@@ -134,7 +134,9 @@ qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk
 if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
 -net tap,ifname=vif0.0,script=/etc/qemu-ifup
 ```
-
+```
+qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk.img,if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic -net tap,ifname=vif0.0,script=/etc/qemu-ifup
+```
 > - Issue: 创建时could not configure /dev/net/tun (vif0.0): Device or resource busy
 > - Issue: 创建时qemu-ifup: could not configure /dev/net/tun: Operation not permitted
 >   - 将上面的命令复制到同一行内，不要用断行符号\，命令可以执行成功
@@ -142,6 +144,9 @@ if=virtio,media=disk,format=qcow2,cache=writeback -nographic -net nic \
 >   - 使用cirros-0.4.0全是错，改用cirros-0.3.4-x86_64-disk.img版本
 > - Issue: Nothing to boot: No such file or directory (http://ipxe.org/2d03e13b) No more network devices
 >   - 执行上面创建命令，我发启动ipxe，找不到问题所在。还原快照，重新安装qemu-kvm，解决
+> - Issue: qemu-kvm: -drive file=cirros-0.3.4-x86_64-disk.img,: drive with bus=0, unit=0 (index=0) exists”
+>   - 多数原因是参数前面少了 -，还是复制到同一行来执行命令
+
 
 ```
 $ sudo su
