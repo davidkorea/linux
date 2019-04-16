@@ -1,3 +1,5 @@
+qemu-kvm -m 512 -smp 2 -name centos6 -drive -file=/images/centos/centos6.qcow2,media=disk -net nic,if=virtio,macaddr=52:54:00:11:22:33 -nic tap,ifname=centos6.0,script=/etc/qemu-ifup -boot order=nc,once=n -nographic
+
 # qemu-kvm 网络
 
 - 添加虚拟网卡，并将虚拟机接入网络。三种网络属性：nic前半段，tap后半段，user
