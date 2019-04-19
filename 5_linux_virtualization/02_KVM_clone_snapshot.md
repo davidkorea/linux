@@ -48,7 +48,7 @@ drwxr-xr-x  2 root root   29 3月  17 17:33 autostart
 -rw-------  1 root root 4449 3月  17 17:15 kvm_centos7.xml
 drwx------. 3 root root   42 1月  30 02:34 networks
 ```
-2. 查看远虚拟机和克隆虚拟机配置文件到差别
+2. 查看原虚拟机和克隆虚拟机配置文件到差别
 ```
 [root@localhost ~]# cd /etc/libvirt/qemu/
 [root@localhost qemu]# ls
