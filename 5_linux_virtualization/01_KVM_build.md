@@ -4,7 +4,7 @@
 2. 安装 KVM 虚拟机
 3. 实战 1:配置 KVM 网络桥接功能
 4. 实战 2:使用 KVM 安装虚拟机
-5. 实战 3:解决 centos6 下 shutdown 关丌了 KVM 虚拟机的问题
+5. 实战 3:解决 centos6 下 shutdown 关不了 KVM 虚拟机的问题
 
 # 1. 虚拟化产品对比介绍
 - 仿真虚拟化： [对系统硬件没有要求,性能最低] vmware
@@ -240,7 +240,7 @@ virsh autostart centos7-71    #设置 centos7-71 虚拟机为物理机开机
 reboot 后，没有发现 kvm 虚拟机开机自劢启劢。原因是什么?
 
 ```
-[root@server100 ~]# vim /etc/fstab #记得设置开机自劢挂载 sdb1，丌然后开机启劢丌了虚拟机
+[root@server100 ~]# vim /etc/fstab #记得设置开机自劢挂载 sdb1，不然后开机启劢丌了虚拟机
 /dev/sdb1 /var/lib/libvirt/images xfs defaults 0 0
 ```
 
