@@ -47,7 +47,7 @@ Libvirt will take care of the storage, networking, and virtual hardware requirem
 to start a virtual machine along with VM lifecycle management.
 
 
-
+- ```yum install qemu-kvm libvirt virt-install virt-manager virt-install -y```
 
 
 
