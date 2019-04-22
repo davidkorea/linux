@@ -156,7 +156,7 @@ UUID:           ed954729-1466-454a-b3a2-19c4f1778388
 自动启动： 是
 桥接：       virbr0
 ```   
-```
+```xml
 [root@server162 ~]# virsh net-dumpxml default
 <network>
   <name>default</name>
@@ -175,7 +175,7 @@ UUID:           ed954729-1466-454a-b3a2-19c4f1778388
   </ip>
 </network>
 ```
-    
+- Virtual network configuration files are stored in /etc/libvirt/qemu/networks/ as XML files. For the default network it is /etc/libvirt/qemu/networks/default.xml
     
     
     
