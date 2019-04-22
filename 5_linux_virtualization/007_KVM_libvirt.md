@@ -43,7 +43,8 @@ It is getting more and more confusing, right? If qemu-kvm can run a virtual mach
 then why do you need to use libvirt. The answer is simple, libvirt manages
 qemu-kvm and qemu-kvm runs the KVM virtual machines.
 
-
+Libvirt will take care of the storage, networking, and virtual hardware requirements
+to start a virtual machine along with VM lifecycle management.
 
 
 
