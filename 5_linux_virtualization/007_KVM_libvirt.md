@@ -98,11 +98,12 @@ suitable way to run the libvirt hypervisor drivers using KVM virtualization.
     -  disk, cdrom, floppy, and lun type devices can be used with the virtual machine on this host
     
     
-# 1. Introducing virt-manager 
-** go to Edit | Connection Details **
-### 1.1 Overview
+# 1. virt-manager 
+## 1.1 Introducing virt-manager 
+**go to Edit | Connection Details**
+### 1 Overview
 
-### 1.2 Virtual Networks
+### 2 Virtual Networks
 - **NATed virtual network**
 A NAT-based virtual network provides outbound network connectivity to the virtual machines. That means the VMs can communicate with the outside network based on the network connectivity available on the host but none of the outside entities will be able to communicate with the VMs. In this setup, the virtual machines and host should be able to communicate with each other through the bridge interface confgured on the host.
 - **Routed virtual network**
@@ -145,22 +146,22 @@ UUID:           ed954729-1466-454a-b3a2-19c4f1778388
 </network>
 ```
 - Virtual network configuration files are stored in /etc/libvirt/qemu/networks/ as XML files. For the default network it is /etc/libvirt/qemu/networks/default.xml
-### 1.3 Storage
+### 3 Storage
 The location of this storage pool is in /var/lib/libvirt/images.
     
-# 2. Creating virtual machines using virt-manager
+## 1.2 Creating virtual machines using virt-manager
 
 The following methods are available with virt-manager for Guest OS installation:
-- Local installation media (ISO Image or CD-ROM)
-- Network installation (HTTP, FTP, or NFS)
-- Network boot (PXE)
-- Importing existing disk images
-## 2.1 Local installation media (ISO Image or CD-ROM)
-    
-## 2.2 Network installation (HTTP, FTP, or NFS)
-url: https://mirrors.aliyun.com/centos/7.6.1810/os/x86_64/
-    
-    
+#### 1. Local installation media (ISO Image or CD-ROM)
+#### 2. Network installation (HTTP, FTP, or NFS)
+  - url: https://mirrors.aliyun.com/centos/7.6.1810/os/x86_64/
+#### 3. Network boot (PXE)
+- PXE Guest installation requires a PXE server running on the same subnet where you wish to create the virtual machine and the host system must have network connectivity to the PXE server.
+- The default NATed network created by virt-manager is not compatible with PXE installation, because a virtual machine connected to the NAT does not appear on the network as its own device, and therefore the PXE server can't see it and can't send the required data to perform the installation. 
+- select "主机设备 ens33：macvtap"  - "桥接"
+
+#### 4. Importing existing disk images
+- import a pre-installed and confgured disk image instead of doing a manual installation
     
     
     
