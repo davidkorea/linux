@@ -148,7 +148,13 @@ UUID:           ed954729-1466-454a-b3a2-19c4f1778388
 ### 1.3 Storage
 The location of this storage pool is in /var/lib/libvirt/images.
     
-    
+# 2. Creating virtual machines using virt-manager
+
+The following methods are available with virt-manager for Guest OS installation:
+• Local installation media (ISO Image or CD-ROM)
+• Network installation (HTTP, FTP, or NFS)
+• Network boot (PXE)
+• Importing existing disk images
     
     
     
