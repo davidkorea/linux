@@ -129,7 +129,25 @@ suitable way to run the libvirt hypervisor drivers using KVM virtualization.
     -  disk, cdrom, floppy, and lun type devices can be used with the virtual machine on this host
     
     
-    
+# 1. virt-manager
+## 1.1 go to Edit | Connection Details 
+#### 1. Overview
+
+#### 2. Virtual Networks
+- NATed virtual network
+A NAT-based virtual network provides outbound network connectivity to the
+virtual machines. That means the VMs can communicate with the outside network
+based on the network connectivity available on the host but none of the outside
+entities will be able to communicate with the VMs. In this setup, the virtual machines
+and host should be able to communicate with each other through the bridge interface
+confgured on the host.
+- Routed virtual network
+A routed virtual network allows the connection of virtual machines directly to the
+physical network. Here VMs will send out packets to the outside network based on
+the routing rules set on the hypervisor.
+- Isolated virtual network
+As the name implies, this provides a private network between the hypervisor and
+the virtual machines.
     
     
     
