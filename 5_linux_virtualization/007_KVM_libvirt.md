@@ -1,5 +1,5 @@
 
-# libvirt virsh
+# libvirt virsh virt-manager
 
 QEMU opens the device fle (/dev/kvm) exposed by the KVM kernel module and executes ioctls() on it. To conclude, KVM makes use of QEMU to become a complete hypervisor, and KVM is an accelerator or enabler of the hardware virtualization extensions (VMX or SVM) provided by the processor to be tightly coupled with the CPU architecture. Indirectly, this conveys that virtual systems also have to use the same architecture to make use of hardware virtualization extensions/capabilities. Once it is enabled, it will defnitely give better performance than other techniques such as binary translation.
 
@@ -163,11 +163,23 @@ The following methods are available with virt-manager for Guest OS installation:
 #### 4. Importing existing disk images
 - import a pre-installed and confgured disk image instead of doing a manual installation
     
+# 2. virt-install    
     
-    
-    
-    
-    
+```
+[root@server162 ~]# virt-install --name centos7-raw --memory 1024 --disk /var/lib/libvirt/qemu/centos7.raw --vcpus 1 --network bridge=virbr0 --graphics vnc,port=5999 --console pty,target_type=serial --cdrom /windowsshare/CentOS-7-x86_64-DVD-1810.iso 
+WARNING  无法连接到图形控制台：没有安装 virt-viewer。请安装 'virt-viewer' 软件包。
+WARNING  没有控制台用于启动客户机，默认为 --wait -1
+
+开始安装......
+ERROR    unsupported format character '�' (0xffffffe7) at index 47
+域安装失败，您可以运行下列命令重启您的域：
+'virsh start virsh --connect qemu:///system start centos7-raw'
+否则请重新开始安装。
+
+[root@server162 ~]# yum install -y virt-viewer
+```
+  - 此时虽然报错没有安装virt-viewer，但是系统已经可以安装，只是图形界面无法使用
+  - 安装virt-viewer后，重新执行上述命令，可以正常安装并进入图形界面
     
     
     
