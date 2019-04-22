@@ -164,7 +164,7 @@ The following methods are available with virt-manager for Guest OS installation:
 - import a pre-installed and confgured disk image instead of doing a manual installation
     
 # 2. virt-install    
-···
+```
 virt-install --name centos7-raw --memory 1024 
 --disk /var/lib/libvirt/qemu/centos7.raw --vcpus 1 
 --network bridge=virbr0 
@@ -172,7 +172,6 @@ virt-install --name centos7-raw --memory 1024
 --console pty,target_type=serial 
 --cdrom /windowsshare/CentOS-7-x86_64-DVD-1810.iso 
 ```
-
 ```
 [root@server162 ~]# virt-install --name centos7-raw --memory 1024 --disk /var/lib/libvirt/qemu/centos7.raw --vcpus 1 --network bridge=virbr0 --graphics vnc,port=5999 --console pty,target_type=serial --cdrom /windowsshare/CentOS-7-x86_64-DVD-1810.iso 
 WARNING  无法连接到图形控制台：没有安装 virt-viewer。请安装 'virt-viewer' 软件包。
@@ -191,10 +190,18 @@ ERROR    unsupported format character '�' (0xffffffe7) at index 47
   - 安装virt-viewer后，重新执行上述命令，可以正常安装并进入图形界面
   - ```virt-viewer centos7-raw```，可以直接连图形界面
 
+# 3. Automated virtual machine deployment
+## 3.1 virt-builder
     
+virt-builder is a command-line tool that creates disk images using cleanly prepared, digitally signed OS templates and customizes them to quickly build new virtual machines. virt-builder can build images for Fedora, Ubuntu, CentOS, Debian, and a few others.
+
+This utility is provided by the libguestfs-tools-c package and can be installed by running the ```yum install libguestfs-tools-c -y``` command.
+
+virt-builder by default downloads OS templates from the http://libguestfs.org/download/builder/ repository
     
-    
-    
-    
-    
-    
+```
+[root@server162 ~]#  cd /var/lib/libvirt/qemu/ ; /usr/bin/virt-builder centos-7.1 --format raw --size 50G
+[  29.0] Downloading: http://libguestfs.org/download/builder/centos-7.1.xz
+########                                                                  11.6%
+
+```
