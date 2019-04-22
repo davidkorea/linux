@@ -151,10 +151,10 @@ The location of this storage pool is in /var/lib/libvirt/images.
 # 2. Creating virtual machines using virt-manager
 
 The following methods are available with virt-manager for Guest OS installation:
-• Local installation media (ISO Image or CD-ROM)
-• Network installation (HTTP, FTP, or NFS)
-• Network boot (PXE)
-• Importing existing disk images
+- Local installation media (ISO Image or CD-ROM)
+- Network installation (HTTP, FTP, or NFS)
+- Network boot (PXE)
+- Importing existing disk images
     
     
     
