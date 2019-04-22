@@ -141,9 +141,40 @@ A routed virtual network allows the connection of virtual machines directly to t
 - **Isolated virtual network**
 As the name implies, this provides a private network between the hypervisor and the virtual machines.
     
-    
-    
-    
+```
+[root@server162 ~]# virsh net-list --all
+ 名称               状态     自动开始  持久
+----------------------------------------------------------
+ default              活动     是           是
+```
+```
+[root@server162 ~]# virsh net-info default
+名称：       default
+UUID:           ed954729-1466-454a-b3a2-19c4f1778388
+活跃：       是
+持久：       是
+自动启动： 是
+桥接：       virbr0
+```   
+```
+[root@server162 ~]# virsh net-dumpxml default
+<network>
+  <name>default</name>
+  <uuid>ed954729-1466-454a-b3a2-19c4f1778388</uuid>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <mac address='52:54:00:99:40:2f'/>
+  <ip address='192.168.122.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.122.2' end='192.168.122.254'/>
+    </dhcp>
+  </ip>
+</network>
+```
     
     
     
