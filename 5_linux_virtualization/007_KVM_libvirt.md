@@ -116,3 +116,45 @@ suitable way to run the libvirt hypervisor drivers using KVM virtualization.
     <vcpu max='240'/>
     ```
     - on this host a maximum of 240 vcpus can be defned for a virtual machine
+  - disk device
+    ```xml
+    [root@server162 ~]# virsh domcapabilities | grep diskDevice -A 5
+      <enum name='diskDevice'>
+        <value>disk</value>
+        <value>cdrom</value>
+        <value>floppy</value>
+        <value>lun</value>
+      </enum>
+    ```
+    -  disk, cdrom, floppy, and lun type devices can be used with the virtual machine on this host
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
