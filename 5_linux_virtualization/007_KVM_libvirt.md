@@ -94,6 +94,18 @@ suitable way to run the libvirt hypervisor drivers using KVM virtualization.
    LXC: 正在检查 for cgroup 'blkio' controller mount-point                   : PASS
    LXC: 正在检查 if device /sys/fs/fuse/connections exists                   : PASS
    ```
-
+- ```virsh nodeinfo```
+  - physical node's system resource information
+  ```
+  [root@server162 ~]# virsh nodeinfo 
+  CPU 型号：        x86_64
+  CPU：               4
+  CPU 频率：        2393 MHz
+  CPU socket：        2
+  每个 socket 的内核数： 2
+  每个内核的线程数： 1
+  NUMA 单元：       1
+  内存大小：      8388084 KiB
+  ```
 
 
