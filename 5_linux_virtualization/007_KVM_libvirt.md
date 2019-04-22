@@ -49,8 +49,49 @@ to start a virtual machine along with VM lifecycle management.
 
 - ```yum install qemu-kvm libvirt virt-install virt-manager virt-install -y```
 - ```systemctl enable libvirtd && systemctl start libvirtd```
-
-
+- ```virt-host-validate```
+  ```
+  [root@server162 ~]# virt-host-validate
+    QEMU: 正在检查 for hardware virtualization                                 : PASS
+    QEMU: 正在检查 if device /dev/kvm exists                                   : PASS
+    QEMU: 正在检查 if device /dev/kvm is accessible                            : PASS
+    QEMU: 正在检查 if device /dev/vhost-net exists                             : PASS
+    QEMU: 正在检查 if device /dev/net/tun exists                               : PASS
+    QEMU: 正在检查 for cgroup 'memory' controller support                      : PASS
+    QEMU: 正在检查 for cgroup 'memory' controller mount-point                  : PASS
+    QEMU: 正在检查 for cgroup 'cpu' controller support                         : PASS
+    QEMU: 正在检查 for cgroup 'cpu' controller mount-point                     : PASS
+    QEMU: 正在检查 for cgroup 'cpuacct' controller support                     : PASS
+    QEMU: 正在检查 for cgroup 'cpuacct' controller mount-point                 : PASS
+    QEMU: 正在检查 for cgroup 'cpuset' controller support                      : PASS
+    QEMU: 正在检查 for cgroup 'cpuset' controller mount-point                  : PASS
+    QEMU: 正在检查 for cgroup 'devices' controller support                     : PASS
+    QEMU: 正在检查 for cgroup 'devices' controller mount-point                 : PASS
+    QEMU: 正在检查 for cgroup 'blkio' controller support                       : PASS
+    QEMU: 正在检查 for cgroup 'blkio' controller mount-point                   : PASS
+    QEMU: 正在检查 for device assignment IOMMU support                         : WARN (No ACPI DMAR table found, 
+                                      IOMMU either disabled in BIOS or not supported by this hardware platform)
+     LXC: 正在检查 用于 Linux >= 2.6.26                                      : PASS
+     LXC: 正在检查 for namespace ipc                                           : PASS
+     LXC: 正在检查 for namespace mnt                                           : PASS
+     LXC: 正在检查 for namespace pid                                           : PASS
+     LXC: 正在检查 for namespace uts                                           : PASS
+     LXC: 正在检查 for namespace net                                           : PASS
+     LXC: 正在检查 for namespace user                                          : PASS
+     LXC: 正在检查 for cgroup 'memory' controller support                      : PASS
+     LXC: 正在检查 for cgroup 'memory' controller mount-point                  : PASS
+     LXC: 正在检查 for cgroup 'cpu' controller support                         : PASS
+     LXC: 正在检查 for cgroup 'cpu' controller mount-point                     : PASS
+     LXC: 正在检查 for cgroup 'cpuacct' controller support                     : PASS
+     LXC: 正在检查 for cgroup 'cpuacct' controller mount-point                 : PASS
+     LXC: 正在检查 for cgroup 'cpuset' controller support                      : PASS
+     LXC: 正在检查 for cgroup 'cpuset' controller mount-point                  : PASS
+     LXC: 正在检查 for cgroup 'devices' controller support                     : PASS
+     LXC: 正在检查 for cgroup 'devices' controller mount-point                 : PASS
+     LXC: 正在检查 for cgroup 'blkio' controller support                       : PASS
+     LXC: 正在检查 for cgroup 'blkio' controller mount-point                   : PASS
+     LXC: 正在检查 if device /sys/fs/fuse/connections exists                   : PASS
+   ```
 
 
 
