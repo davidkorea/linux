@@ -38,3 +38,18 @@ a solution. This modifed QEMU is called qemu-kvm, which can interact with KVM
 modules directly and safely execute instructions from the VM directly on the CPU
 without using dynamic translations. In short, we use qemu-kvm binary to run the
 KVM-based virtual machines.
+
+It is getting more and more confusing, right? If qemu-kvm can run a virtual machine,
+then why do you need to use libvirt. The answer is simple, libvirt manages
+qemu-kvm and qemu-kvm runs the KVM virtual machines.
+
+
+
+
+
+
+
+
+
+
+
