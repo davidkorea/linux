@@ -18,7 +18,7 @@ tester-bridge   8000.000000000000       no
 15: tester-bridge: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/ether 0a:b8:94:9d:e3:01 brd ff:ff:ff:ff:ff:ff
 ```
-#### 2.  create and add a TAP(osi layer 2) device the bridge
+#### 2.  create and add a TAP(osi layer 2) device to the bridge
 - First check if the TUN/TAP device module is loaded into the kernel
   - ```lsmod | greptun```
 - create a tap device named vm-vnic
@@ -40,6 +40,11 @@ tester-bridge   8000.1edfbfb95b9a       no              vm-vnic
 > 
 > ![](https://i.loli.net/2019/04/22/5cbd7c98dc7d6.png)
 
-
+#### 3. remove if and br
+- Remove the vm-vnic tap device from the tester bridge，解绑tap设备
+  - ```brctl delif tester-bridge vm-vnic```
+- remove the tap device using the ip command，删除tap设备
+  - ```ip tuntap del vm-vnic mode tap```
+- ```brctl delbr tester-bridge```,
 
 
