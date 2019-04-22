@@ -37,6 +37,7 @@ tester-bridge   8000.1edfbfb95b9a       no              vm-vnic
 ```
 
 > You can see that vm-vnic is an interface added to the bridge tester. Now vm-vnic can act as the interface between your virtual machine and the bridge tester, which in turn enables the virtual machine to communicate with other virtual machines added to this bridge
+> 
 > ![](https://i.loli.net/2019/04/22/5cbd7c98dc7d6.png)
 
 
