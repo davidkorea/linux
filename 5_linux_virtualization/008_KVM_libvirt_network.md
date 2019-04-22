@@ -59,7 +59,9 @@ a closed network for the virtual machines. only the virtual machines which are a
 
 ![](https://i.loli.net/2019/04/22/5cbd807f1c416.png)
 
-
+### 1. virt-manager
+![](https://i.loli.net/2019/04/22/5cbd880d58486.png)
+### 2. virsh with xml
 
 
 
