@@ -56,6 +56,7 @@ tester-bridge   8000.1edfbfb95b9a       no              vm-vnic
 - OVS
 ## 2.1 Isolated virtual network
 a closed network for the virtual machines. only the virtual machines which are added to this network can communicate with each other
+
 ![](https://i.loli.net/2019/04/22/5cbd807f1c416.png)
 
 
