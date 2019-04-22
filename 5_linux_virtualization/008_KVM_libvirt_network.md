@@ -21,16 +21,17 @@ tester-bridge   8000.000000000000       no
 #### 2.  create and add a TAP(osi layer 2) device the bridge
 - First check if the TUN/TAP device module is loaded into the kernel
   - ```lsmod | greptun```
+- create a tap device named vm-vnic
+```
 [root@server162 ~]# ip tuntap add dev vm-vnic mode tap
 [root@server162 ~]# ip link show vm-vnic 
 16: vm-vnic: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/ether 1e:df:bf:b9:5b:9a brd ff:ff:ff:ff:ff:ff
+```
+- add  tap device ```vm-vnic``` to bridge ```tester-bridge```
+```
 [root@server162 ~]# brctl addif tester-bridge vm-vnic
 [root@server162 ~]# brctl show
 bridge name     bridge id               STP enabled     interfaces
-br0             8000.000c295e80e5       no              ens33
-                                                        vnet1
-tester-bridge           8000.1edfbfb95b9a       no              vm-vnic
-virbr0          8000.52540099402f       yes             virbr0-nic
-                                                        vnet0
+tester-bridge   8000.1edfbfb95b9a       no              vm-vnic
 ```
