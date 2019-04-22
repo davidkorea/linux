@@ -98,11 +98,11 @@ suitable way to run the libvirt hypervisor drivers using KVM virtualization.
     -  disk, cdrom, floppy, and lun type devices can be used with the virtual machine on this host
     
     
-# 1. virt-manager
-## 1.1 go to Edit | Connection Details 
-#### 1. Overview
+# 1. Introducing virt-manager 
+** go to Edit | Connection Details **
+### 1.1 Overview
 
-#### 2. Virtual Networks
+### 1.2 Virtual Networks
 - **NATed virtual network**
 A NAT-based virtual network provides outbound network connectivity to the virtual machines. That means the VMs can communicate with the outside network based on the network connectivity available on the host but none of the outside entities will be able to communicate with the VMs. In this setup, the virtual machines and host should be able to communicate with each other through the bridge interface confgured on the host.
 - **Routed virtual network**
@@ -145,7 +145,7 @@ UUID:           ed954729-1466-454a-b3a2-19c4f1778388
 </network>
 ```
 - Virtual network configuration files are stored in /etc/libvirt/qemu/networks/ as XML files. For the default network it is /etc/libvirt/qemu/networks/default.xml
-#### 3. Storage
+### 1.3 Storage
 The location of this storage pool is in /var/lib/libvirt/images.
     
     
