@@ -155,10 +155,10 @@ The following methods are available with virt-manager for Guest OS installation:
 - Network installation (HTTP, FTP, or NFS)
 - Network boot (PXE)
 - Importing existing disk images
+## 2.1 Local installation media (ISO Image or CD-ROM)
     
-    
-    
-    
+## 2.2 Network installation (HTTP, FTP, or NFS)
+url: https://mirrors.aliyun.com/centos/7.6.1810/os/x86_64/
     
     
     
