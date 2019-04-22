@@ -17,3 +17,10 @@ device emulation and BIOS), it can become one. KVM needs hardware virtualization
 Linux kernel into a hypervisor. When KVM runs virtual machines, every VM is
 a normal Linux process, which can obviously be scheduled to run on a CPU by
 the host kernel as with any other process present in the host kernel.
+
+KVM enables virtualization and readies your server or workstation to host the
+virtual machines. In technical terms, KVM is a set of kernel modules for an x86
+architecture hardware with virtualization extensions; when loaded, it converts a
+Linux server into a virtualization server (hypervisor). The loadable modules are
+kvm.ko, which provides the core virtualization capabilities and a processor-specifc
+module, kvm-intel.ko or kvm-amd.ko.
