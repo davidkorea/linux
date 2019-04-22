@@ -31,3 +31,10 @@ top of another one. For example, Qemu can run an OS created on the ARM platform
 on the x86 platform; however, there is a catch here. Since QEMU uses dynamic
 translation, which is a technique used to execute virtual machine instructions
 on the host machine, the VMs run slow.
+
+If QEMU is slow, how can it run blazing fast KVM-based virtual machines at a near
+native speed? KVM developers thought about the problem and modifed QEMU as
+a solution. This modifed QEMU is called qemu-kvm, which can interact with KVM
+modules directly and safely execute instructions from the VM directly on the CPU
+without using dynamic translations. In short, we use qemu-kvm binary to run the
+KVM-based virtual machines.
