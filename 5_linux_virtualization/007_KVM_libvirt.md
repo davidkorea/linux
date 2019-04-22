@@ -107,5 +107,12 @@ suitable way to run the libvirt hypervisor drivers using KVM virtualization.
   NUMA 单元：       1
   内存大小：      8388084 KiB
   ```
+- ```virsh domcapabilities```
+  -  displays an XML document describing the capabilitiesof qemu-kvm with respect to the host and libvirt version.  It will help you determine the type of virtual disks you can use with the virtual machines, the maximum number of vCPUs that can be assigned, and so on.
 
-
+  - vcpus
+    ```xml
+    [root@server162 ~]# virsh domcapabilities | grep -i max
+    <vcpu max='240'/>
+    ```
+    - on this host a maximum of 240 vcpus can be defned for a virtual machine
