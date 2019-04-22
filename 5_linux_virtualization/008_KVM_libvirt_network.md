@@ -1,6 +1,5 @@
 # KVM_libvirt_network
 # 1. Virtual Network
-## 1. brctl 
 - **TUN**, which stands for "tunnel", simulates a network layer device and it operates at OSI reference model's layer 3 packets, such as IP packets. 
 - **TAP**(namely a network tap) simulates a link layer device and it operates at OSI reference model's layer 2 packets, such as Ethernet frames. 
 - TUN is used with routing, while TAP is used to create a network bridge.
@@ -46,5 +45,25 @@ tester-bridge   8000.1edfbfb95b9a       no              vm-vnic
 - remove the tap device using the ip command，删除tap设备
   - ```ip tuntap del vm-vnic mode tap```
 - ```brctl delbr tester-bridge```,
+# 2. Virtual networking using libvirt
+
+- Isolated virtual network
+- Routed virtual network
+- NATed virtual network
+- Bridged network using a physical NIC, VLAN interface, bond interface, and bonded VLAN interface
+- MacVTap
+- PCI passthrough NPIV
+- OVS
+## 2.1 Isolated virtual network
+a closed network for the virtual machines. only the virtual machines which are added to this network can communicate with each other
+![](https://i.loli.net/2019/04/22/5cbd807f1c416.png)
+
+
+
+
+
+
+
+
 
 
