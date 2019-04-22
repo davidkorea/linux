@@ -24,3 +24,10 @@ architecture hardware with virtualization extensions; when loaded, it converts a
 Linux server into a virtualization server (hypervisor). The loadable modules are
 kvm.ko, which provides the core virtualization capabilities and a processor-specifc
 module, kvm-intel.ko or kvm-amd.ko.
+
+Quick Emulator (QEMU) is an open source machine emulator. This emulator will
+help you to run the operating systems that are designed to run one architecture on
+top of another one. For example, Qemu can run an OS created on the ARM platform
+on the x86 platform; however, there is a catch here. Since QEMU uses dynamic
+translation, which is a technique used to execute virtual machine instructions
+on the host machine, the VMs run slow.
