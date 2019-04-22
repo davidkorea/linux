@@ -202,6 +202,35 @@ virt-builder by default downloads OS templates from the http://libguestfs.org/do
 ```
 [root@server162 ~]#  cd /var/lib/libvirt/qemu/ ; /usr/bin/virt-builder centos-7.1 --format raw --size 50G
 [  29.0] Downloading: http://libguestfs.org/download/builder/centos-7.1.xz
-########                                                                  11.6%
+######################################################################## 100.0%
+[ 232.3] Planning how to build this image
+[ 232.3] Uncompressing
+[ 255.3] Resizing (using virt-resize) to expand the disk to 50.0G
+[ 448.1] Opening the new disk
+[ 462.4] Setting a random seed
+[ 462.5] Setting the machine ID in /etc/machine-id
+[ 462.5] Setting passwords
+virt-builder: Setting random password of root to cq7DBcfvg9hehioN
+[ 467.7] Finishing off
+                   Output file: centos-7.1.img
+                   Output size: 50.0G
+                 Output format: raw
+            Total usable space: 48.1G
+                    Free space: 47.3G (98%)                                                        11.6%
 
 ```
+```
+[root@server162 ~]# virt-install --name centos --ram 1028 --vcpus=2 --disk path=/var/lib/libvirt/qemu/centos-7.1.img --import
+```
+## 3.2 oz
+
+
+
+
+
+
+
+
+
+
+
