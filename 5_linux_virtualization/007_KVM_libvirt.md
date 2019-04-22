@@ -172,6 +172,7 @@ virt-install --name centos7-raw --memory 1024
 --console pty,target_type=serial 
 --cdrom /windowsshare/CentOS-7-x86_64-DVD-1810.iso 
 ```
+
 ```
 [root@server162 ~]# virt-install --name centos7-raw --memory 1024 --disk /var/lib/libvirt/qemu/centos7.raw --vcpus 1 --network bridge=virbr0 --graphics vnc,port=5999 --console pty,target_type=serial --cdrom /windowsshare/CentOS-7-x86_64-DVD-1810.iso 
 WARNING  无法连接到图形控制台：没有安装 virt-viewer。请安装 'virt-viewer' 软件包。
@@ -185,9 +186,10 @@ ERROR    unsupported format character '�' (0xffffffe7) at index 47
 
 [root@server162 ~]# yum install -y virt-viewer
 ```
+
   - 此时虽然报错没有安装virt-viewer，但是系统已经可以安装，只是图形界面无法使用
   - 安装virt-viewer后，重新执行上述命令，可以正常安装并进入图形界面
-  - ```[root@server162 ~]# virt-viewer centos7-raw```，可以直接连图形界面
+  - ```virt-viewer centos7-raw```，可以直接连图形界面
 
     
     
