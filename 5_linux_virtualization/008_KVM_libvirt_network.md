@@ -217,7 +217,10 @@ virsh detach-interface --domain F22-02 --type network --mac
 Interface detached successfully
 ```
 
+# 3. Routed virtual network
+This mode is not commonly used, unless you have a special use case to create a network with this complexity.
 
+![](https://i.loli.net/2019/04/23/5cbe8b42b681f.png)
 
 
 
