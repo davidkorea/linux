@@ -222,9 +222,13 @@ This mode is not commonly used, unless you have a special use case to create a n
 
 ![](https://i.loli.net/2019/04/23/5cbe8b42b681f.png)
 
+## 3.1 virt-manager
 
+![](https://i.loli.net/2019/04/23/5cbea35c28fbb.png)
 
+## 3.2 virsh
 
+- delete the routed network created above
 
 
 
