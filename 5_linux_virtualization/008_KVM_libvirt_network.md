@@ -394,7 +394,8 @@ all the same with routed network, excpet the last step. select "any physical dev
 - Unlike the NATed mode, virtual machines can be accessed directly using their IP address, which is essential when you host a service
 on your virtual machines.
 
-??? ，没搞明白 到底要干嘛？？？
+??? ，没搞明白 到底要干嘛？？？ 默认自动生成的就是这种模式，并且默认开启了DHCP，如果虚拟机网卡配置文件也是DHCP并且onboot=yes，将会自动获取一个ip地址
+
 #### 1. prepare ens33, ens34, ens35, br0
 - let ens35 be a management interface, for ssh to physical host
 - attach ens33 and ens34 to br0
