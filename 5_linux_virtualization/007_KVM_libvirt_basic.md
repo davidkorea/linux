@@ -173,6 +173,9 @@ virt-install --name centos7-raw --memory 1024
 --cdrom /windowsshare/CentOS-7-x86_64-DVD-1810.iso 
 ```
 ```
+[root@server162 ~]# qemu-img create -f raw /var/lib/libvirt/qemu/centos7.raw 10G
+Formatting '/var/lib/libvirt/qemu/centos7.raw', fmt=raw size=10737418240 
+
 [root@server162 ~]# virt-install --name centos7-raw --memory 1024 --disk /var/lib/libvirt/qemu/centos7.raw --vcpus 1 --network bridge=virbr0 --graphics vnc,port=5999 --console pty,target_type=serial --cdrom /windowsshare/CentOS-7-x86_64-DVD-1810.iso 
 WARNING  无法连接到图形控制台：没有安装 virt-viewer。请安装 'virt-viewer' 软件包。
 WARNING  没有控制台用于启动客户机，默认为 --wait -1
