@@ -394,8 +394,12 @@ all the same with routed network, excpet the last step. select "any physical dev
 - Unlike the NATed mode, virtual machines can be accessed directly using their IP address, which is essential when you host a service
 on your virtual machines.
 
+??? ，没搞明白 到底要干嘛？？？
 
+# 5. MacVTap
 
+- MacVTap is used when you do not want to create a normal bridge, but want the users in local network to access your virtual machine. 
+- This connection type is not used in production systems and is mostly used on workstation systems.
 
-
+Navigate to Add Hardware | Network to add a virtual NIC as the MacVTap interface using virt-manager. At Network source, select the physical NIC interface on the host where you want to enable MacVTap
 
