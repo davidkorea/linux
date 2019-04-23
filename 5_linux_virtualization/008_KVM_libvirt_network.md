@@ -305,3 +305,73 @@ vnet0      bridge     virbr0     virtio      52:54:00:ab:30:f2
 vnet1      network    isolated   virtio      52:54:00:99:e4:1f
 vnet4      network    routed     virtio      52:54:00:6a:bc:1c
 ```
+### 4. create routing rules
+
+donno how to do...
+## 3.3 edit a routed virtual network
+- edit a routed virtual network and modify the routing confguration so that the packets from the virtual machines can be forwarded to any interface available on the host based on IP route rules specifed on the host
+- The aim of this example is to show how to modify a virtual network once it is created with your confguration
+
+### 1. stop the virtual network frst
+net-destory is only de-activate the network, not delete.
+```
+[root@server162 ~]# virsh net-destroy routed 
+网络 routed 被删除
+
+[root@server162 ~]# virsh net-list --all
+ 名称               状态     自动开始  持久
+----------------------------------------------------------
+ default              活动     是           是
+ isolated             活动     是           是
+ routed               不活跃  是           
+```
+### 2. net-edit
+```diff
+  <network>
+    <name>routed</name>
+    <uuid>2c316996-204d-423d-9f73-2f095e3fed5b</uuid>
+-   <forward dev='ens33' mode='route'>
+-     <interface dev='ens33'/>
+-   </forward>
++   <forward mode='route' />
+
+    <bridge name='virbr2' stp='on' delay='0'/>
+    <mac address='52:54:00:75:57:2c'/>
+    <ip address='192.168.10.1' netmask='255.255.255.0'>
+    </ip>
+  </network>
+```
+virify the changes with net-dump
+```xml
+[root@server162 ~]# virsh net-dumpxml routed 
+<network>
+  <name>routed</name>
+  <uuid>2c316996-204d-423d-9f73-2f095e3fed5b</uuid>
+  <forward mode='route'/>
+  <bridge name='virbr2' stp='on' delay='0'/>
+  <mac address='52:54:00:75:57:2c'/>
+  <ip address='192.168.10.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
