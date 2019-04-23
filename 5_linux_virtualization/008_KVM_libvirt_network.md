@@ -210,7 +210,12 @@ because of minimal install, no ifconfig command. refer to [006_KVM_qemu_network]
 
 ![](https://i.loli.net/2019/04/23/5cbe86bb15787.png)
 
-
+#### v, detach-interface
+```
+virsh detach-interface --domain F22-02 --type network --mac
+52:54:00:2b:0d:0c --config --live
+Interface detached successfully
+```
 
 
 
