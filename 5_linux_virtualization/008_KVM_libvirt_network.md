@@ -268,5 +268,19 @@ This mode is not commonly used, unless you have a special use case to create a n
   </ip>
 </network>
 ```
+### 2. activate routed network
+```
+[root@server162 ~]# virsh net-start routed 
+网络 routed 已开始
 
+[root@server162 ~]# virsh net-autostart routed 
+网络routed标记为自动启动
+
+[root@server162 ~]# virsh net-list --all
+ 名称               状态     自动开始  持久
+----------------------------------------------------------
+ default              活动     是           是
+ isolated             活动     是           是
+ routed               活动     是           是
+```
 
