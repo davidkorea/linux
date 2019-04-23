@@ -88,10 +88,20 @@ create the isolated network using the virsh command. For that, we need to create
  default            活动      是        是
  isolated           不活跃    否           
  ```
+#### 3. xml file that virst created based on isolated.xml we provided 
+Let's see the XML fle libvirt being created based on the confguration we provided through the isolated.xml
  
- 
- 
- 
+```xml
+[root@server162 ~]# virsh net-dumpxml isolated 
+<network>
+  <name>isolated</name>
+  <uuid>be4e3e53-a36e-4779-b772-0ed835eef8b4</uuid>
+  <bridge name='virbr1' stp='on' delay='0'/>
+  <mac address='52:54:00:74:dc:e7'/>
+</network>
+```
+- libvirt added a few additional parameters. and created a new bridge for this network
+- libvirt added the rest of the required parameters; you can mention these in your XML fle when required. recommendation is that you leave it to libvirt to avoid conﬂicts.
  
  
 
