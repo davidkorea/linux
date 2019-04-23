@@ -203,10 +203,10 @@ virbr1          8000.52540074dce7       yes             virbr1-nic
 #### iv. set ip for each vm
 because of minimal install, no ifconfig command. refer to [006_KVM_qemu_network](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/006_KVM_qemu_network.md#1-%E7%89%A9%E7%90%86%E6%9C%BA%E7%BD%91%E7%BB%9C%E8%AE%BE%E7%BD%AE) for ```ip``` related command usage. 
 - vm1
-```ip addr add 192.168.10.1/16 dev eth1```
+```ip addr add 192.168.10.1/16 dev eth1```, /16 is a must
 
 - vm2
-```ip addr add 192.168.10.2/16 dev eth1```
+```ip addr add 192.168.10.2/16 dev eth1```, /16 is a must
 
 ![](https://i.loli.net/2019/04/23/5cbe86bb15787.png)
 
