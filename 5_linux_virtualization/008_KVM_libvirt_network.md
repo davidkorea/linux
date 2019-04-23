@@ -68,7 +68,7 @@ a closed network for the virtual machines. only the virtual machines which are a
 ## 2.2 virsh with xml
 - delete setting above on virt-manager first
 - create the isolated network using the virsh command. For that, we need to create an XML fle with the following contents and save it as isolated.xml
-#### 1. create isolated.xml
+### 1. create isolated.xml
 create the isolated network using the virsh command. For that, we need to create an XML fle with the following contents and save it as isolated.xml
 ```xml
 [root@server162 ~]# vim isolated.xml 
@@ -76,7 +76,7 @@ create the isolated network using the virsh command. For that, we need to create
   <name>isolated</name>
 </network>
 ```
-#### 2. defne a network using the XML flie created above
+### 2. defne a network using the XML flie created above
 ```
 [root@server162 ~]# virsh net-define isolated.xml 
 从 isolated定义网络isolated.xml
@@ -88,7 +88,7 @@ create the isolated network using the virsh command. For that, we need to create
  default            活动      是        是
  isolated           不活跃    否           
  ```
-#### 3. xml file that virst created based on isolated.xml we provided 
+### 3. xml file that virst created based on isolated.xml we provided 
 Let's see the XML fle libvirt being created based on the confguration we provided through the isolated.xml
  
 ```xml
@@ -122,7 +122,7 @@ or other application using the libvirt API.
   <mac address='52:54:00:74:dc:e7'/>
 </network>
 ```
-#### 4. activate network
+### 4. activate network
 - virsh net-start
 ```
 [root@server162 networks]# virsh net-start isolated 
@@ -140,15 +140,45 @@ or other application using the libvirt API.
  default              活动     是           是
  isolated             活动     是           
  ```
-#### 5. add a network interface to vm
-1. vm1 by virt-manager
+### 5. add a network interface to vm
+#### i. vm1 by virt-manager
 ![](https://i.loli.net/2019/04/23/5cbe7c0af14ea.png)
-2. vm2 by virsh
 
-
-
-
-
+```
+[root@server162 ~]# virsh domiflist centos7-raw-clone
+接口     类型     源        型号      MAC
+-------------------------------------------------------
+vnet0      bridge     virbr0     virtio      52:54:00:ab:30:f2
+vnet2      network    isolated   virtio      52:54:00:99:e4:1f
+```
+  - Interface - Name of the tap interface attached to the bridge.
+  - Type - Type of device
+  - Source - Name of the virtual network.
+  - Model - Virtual NIC model.
+  - MAC - MAC address of the virtual NIC(not the MAC of vnet0 or vnet2) .
+#### ii. vm2 by virsh
+- get the details of the current virtual NIC attached to the virtual machine centos7-raw-clone1 using domiflist
+```
+[root@server162 ~]# virsh domiflist centos7-raw-clone1
+接口     类型     源        型号      MAC
+-------------------------------------------------------
+vnet1      bridge     virbr0     virtio      52:54:00:3b:22:59
+```
+- attach a new virtual interface to centos7-raw-clone1
+```
+[root@server162 ~]# virsh attach-interface --domain centos7-raw-clone1 --source isolated --type network --model virtio --config --live 
+成功附加接
+```
+  - ```--config```: make the change persistent in the next startup of the VM.
+  - ```--live```: attach the NIC to a live virtual machine. Remove --live if the virtual machine is not running
+  
+```
+[root@server162 ~]# virsh domiflist centos7-raw-clone1
+接口     类型     源        型号      MAC
+-------------------------------------------------------
+vnet1      bridge     virbr0     virtio      52:54:00:3b:22:59
+vnet3      network    isolated   virtio      52:54:00:2d:56:9c
+```
 
 
 
