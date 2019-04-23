@@ -283,4 +283,25 @@ This mode is not commonly used, unless you have a special use case to create a n
  isolated             活动     是           是
  routed               活动     是           是
 ```
+### 3. attach an interfate to routed network 
+```
+virsh attach-interface --domain centos7-raw-clone   
+--source routed --type network --model virtio --config --live 
+```
+```
+[root@server162 ~]# virsh domiflist 1
+接口     类型     源        型号      MAC
+-------------------------------------------------------
+vnet0      bridge     virbr0     virtio      52:54:00:ab:30:f2
+vnet1      network    isolated   virtio      52:54:00:99:e4:1f
 
+[root@server162 ~]# virsh attach-interface --domain centos7-raw-clone --source routed --type network --model virtio --config --live 
+成功附加接口
+
+[root@server162 ~]# virsh domiflist 1
+接口     类型     源        型号      MAC
+-------------------------------------------------------
+vnet0      bridge     virbr0     virtio      52:54:00:ab:30:f2
+vnet1      network    isolated   virtio      52:54:00:99:e4:1f
+vnet4      network    routed     virtio      52:54:00:6a:bc:1c
+```
