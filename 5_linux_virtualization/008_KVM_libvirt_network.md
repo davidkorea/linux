@@ -380,11 +380,14 @@ To enable IPv6, you can add a similar to the preceding confguration.
 - The NATed virtual network is created with the help of iptables, specifcally using the masquerading option. 
 - Hence, stopping iptables when VMs are in use can cause network disruption inside the virtual machines:
 
-![]()
+![](https://i.loli.net/2019/04/23/5cbebf3974ae3.png)
 
+## 4.1 virt-manager
+all the same with routed network, excpet the last step. select "any physical device + NAT"
 
+![](https://i.loli.net/2019/04/23/5cbecaa5ef640.png)
 
-
+## 4.2 Bridged network using a physical NIC, VLAN interface, bond interface, and bonded VLAN interface (aka shared physical interface)
 
 
 
