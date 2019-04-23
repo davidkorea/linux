@@ -140,3 +140,36 @@ or other application using the libvirt API.
  default              活动     是           是
  isolated             活动     是           
  ```
+#### 5. add a network interface to vm
+1. vm1 by virt-manager
+![](https://i.loli.net/2019/04/23/5cbe7c0af14ea.png)
+2. vm2 by virsh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
