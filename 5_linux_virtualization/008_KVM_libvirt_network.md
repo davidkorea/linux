@@ -62,8 +62,9 @@ a closed network for the virtual machines. only the virtual machines which are a
 ### 1. virt-manager
 ![](https://i.loli.net/2019/04/22/5cbd880d58486.png)
 ### 2. virsh with xml
-
-
+- delete setting above on virt-manager first
+- create the isolated network using the virsh command. For that, we need to create an XML fle with the following contents and save it as isolated.xml
+1. 
 
 
 
