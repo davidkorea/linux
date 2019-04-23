@@ -100,9 +100,43 @@ Let's see the XML fle libvirt being created based on the confguration we provide
   <mac address='52:54:00:74:dc:e7'/>
 </network>
 ```
-- libvirt added a few additional parameters. and created a new bridge for this network
+- libvirt added a few additional parameters. and created a new bridge for this network, brctl show cannot find it because it has nt been activated.
 - libvirt added the rest of the required parameters; you can mention these in your XML fle when required. recommendation is that you leave it to libvirt to avoid conﬂicts.
 - ```net-create``` is similar to ```net-define```. 
   - ```net-create``` will not create a persistent virtual network. Once destroyed, it is removed and has to be created again using the net-create command.
  - recommand ```net-define```
 
+Once you defne a network using net-define, the confguration fle will be stored in ```/etc/libvirt/qemu/networks/``` as an XML fle with the same name as your virtual network
+```xml
+<!--
+WARNING: THIS IS AN AUTO-GENERATED FILE. CHANGES TO IT ARE LIKELY TO BE
+OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
+  virsh net-edit isolated
+or other application using the libvirt API.
+-->
+
+<network>
+  <name>isolated</name>
+  <uuid>be4e3e53-a36e-4779-b772-0ed835eef8b4</uuid>
+  <bridge name='virbr1' stp='on' delay='0'/>
+  <mac address='52:54:00:74:dc:e7'/>
+</network>
+```
+#### 4. activate network
+- virsh net-start
+```
+[root@server162 networks]# virsh net-start isolated 
+网络 isolated 已开
+```
+- virsh net-autostart
+```
+[root@server162 ~]# virsh net-autostart isolated 
+网络isolated标记为自动启
+```
+```
+[root@server162 ~]# virsh net-list --all
+ 名称               状态     自动开始  持久
+----------------------------------------------------------
+ default              活动     是           是
+ isolated             活动     是           
+ ```
