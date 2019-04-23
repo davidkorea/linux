@@ -354,9 +354,15 @@ virify the changes with net-dump
   </ip>
 </network>
 ```
-
-
-
+To enable IPv6, you can add a similar to the preceding confguration. 
+```xml
+<ip family="ipv6" address="2001:db8:ca2:2::1" prefix="64" >
+```
+### 3. activate routed network
+```
+[root@server162 ~]# virsh net-start routed 
+网络 routed 已开
+```
 
 
 
