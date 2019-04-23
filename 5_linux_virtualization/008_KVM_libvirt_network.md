@@ -371,11 +371,16 @@ To enable IPv6, you can add a similar to the preceding confguration.
 网络 routed 已开
 ```
 
+# 4. NATed virtual network
+- NATed mode is the most commonly used virtual networking when you want to set up a test environment on your laptop or test machine. 
+- This mode allows the virtual machines to communicate with the outside network without using any additional confguration. 
+- This method also allows communication between the hypervisor and the virtual machines. 
+- The major drawback of this virtual network is that none of the systems outside the hypervisor can reach the virtual machines.
 
+- The NATed virtual network is created with the help of iptables, specifcally using the masquerading option. 
+- Hence, stopping iptables when VMs are in use can cause network disruption inside the virtual machines:
 
-
-
-
+![]()
 
 
 
