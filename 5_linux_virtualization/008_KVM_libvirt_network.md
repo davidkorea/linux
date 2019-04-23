@@ -1,5 +1,6 @@
 # KVM_libvirt_network
 # 1. Virtual Network
+## 1.1 basic
 - **TUN**, which stands for "tunnel", simulates a network layer device and it operates at OSI reference model's layer 3 packets, such as IP packets. 
 - **TAP**(namely a network tap) simulates a link layer device and it operates at OSI reference model's layer 2 packets, such as Ethernet frames. 
 - TUN is used with routing, while TAP is used to create a network bridge.
@@ -45,7 +46,7 @@ tester-bridge   8000.1edfbfb95b9a       no              vm-vnic
 - remove the tap device using the ip command，删除tap设备
   - ```ip tuntap del vm-vnic mode tap```
 - ```brctl delbr tester-bridge```,
-# 2. Virtual networking using libvirt
+## 1.2 Virtual networking using libvirt
 
 - Isolated virtual network
 - Routed virtual network
@@ -54,19 +55,27 @@ tester-bridge   8000.1edfbfb95b9a       no              vm-vnic
 - MacVTap
 - PCI passthrough NPIV
 - OVS
-## 2.1 Isolated virtual network
+
+we will cover each type of networks below.
+
+## 2 Isolated virtual network
 a closed network for the virtual machines. only the virtual machines which are added to this network can communicate with each other
 
 ![](https://i.loli.net/2019/04/22/5cbd807f1c416.png)
 
-### 1. virt-manager
+## 2.1 virt-manager
 ![](https://i.loli.net/2019/04/22/5cbd880d58486.png)
-### 2. virsh with xml
+## 2.2 virsh with xml
 - delete setting above on virt-manager first
 - create the isolated network using the virsh command. For that, we need to create an XML fle with the following contents and save it as isolated.xml
-1. 
-
-
+#### 1. create isolated.xml
+create the isolated network using the virsh command. For that, we need to create an XML fle with the following contents and save it as isolated.xml
+```xml
+[root@server162 ~]# vim isolated.xml 
+<network>
+  <name>isolated</name>
+</network>
+```
 
 
 
