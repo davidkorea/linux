@@ -81,5 +81,17 @@ create the isolated network using the virsh command. For that, we need to create
 [root@server162 ~]# virsh net-define isolated.xml 
 从 isolated定义网络isolated.xml
 ```
-
+```
+[root@server162 ~]# virsh net-list --all
+ 名称               状态     自动开始  持久
+----------------------------------------------------------
+ default            活动      是        是
+ isolated           不活跃    否           
+ ```
+ 
+ 
+ 
+ 
+ 
+ 
 
