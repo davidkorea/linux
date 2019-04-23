@@ -141,6 +141,9 @@ or other application using the libvirt API.
  isolated             活动     是           
  ```
 ### 5. add a network interface to vm
+
+create 2 VMs as [007_KVM_libvirt_basic - virt-install](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/007_KVM_libvirt_basic.md#2-virt-install)
+
 #### i. vm1 by virt-manager
 ![](https://i.loli.net/2019/04/23/5cbe7c0af14ea.png)
 
@@ -179,8 +182,23 @@ vnet1      bridge     virbr0     virtio      52:54:00:3b:22:59
 vnet1      bridge     virbr0     virtio      52:54:00:3b:22:59
 vnet3      network    isolated   virtio      52:54:00:2d:56:9c
 ```
-
-
+#### iii. check bridge 
+```
+[root@server162 ~]# brctl show
+bridge name     bridge id               STP enabled     interfaces
+virbr0          8000.52540099402f       yes             virbr0-nic
+                                                        vnet0
+                                                        vnet1
+virbr1          8000.52540074dce7       yes             virbr1-nic
+                                                        vnet2
+                                                        vnet3
+```
+- interface vnet0 and vnet1 is created when the vm is first created. they are attached to virbr0 by default
+- interface vnet2 and vnet3 is we created and attached to isolated network
+- The ```virbr1-nic``` interface is created by libvirt when it starts virbr1
+  - The purpose of this interface is to provide a consistent and reliable MAC address for the virbr1 bridge
+  - The bridge copies the MAC address of the frst interface, which is added to it
+  - virbr1-nic is always the frst interface added to it by libvirt and never being removed till the bridge is destroyed
 
 
 
