@@ -230,10 +230,43 @@ This mode is not commonly used, unless you have a special use case to create a n
 
 - delete the routed network created above
 
-
-
-
-
-
+### 1. net-define with xml file
+- Create an XML confguration file as routed.xml
+```xml
+<network>
+  <name>routed</name>
+  <forward dev='ens33' mode='route'>
+    <interface dev='ens33' />
+  </forward>
+  <ip address='192.168.10.1' netmask='255.255.255.0'></ip>
+</network>
+```
+- net-define
+```
+[root@server162 ~]# virsh net-define routed.xml 
+从 routed定义网络routed.xml
+```
+```
+[root@server162 ~]# virsh net-list --all
+ 名称               状态     自动开始  持久
+----------------------------------------------------------
+ default              活动     是           是
+ isolated             活动     是           是
+ routed               不活跃  否           是
+```
+```xml
+[root@server162 ~]# virsh net-dumpxml routed 
+<network>
+  <name>routed</name>
+  <uuid>2c316996-204d-423d-9f73-2f095e3fed5b</uuid>
+  <forward dev='ens33' mode='route'>
+    <interface dev='ens33'/>
+  </forward>
+  <bridge name='virbr2' stp='on' delay='0'/>
+  <mac address='52:54:00:75:57:2c'/>
+  <ip address='192.168.10.1' netmask='255.255.255.0'>
+  </ip>
+</network>
+```
 
 
