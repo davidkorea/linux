@@ -102,6 +102,7 @@ Let's see the XML fle libvirt being created based on the confguration we provide
 ```
 - libvirt added a few additional parameters. and created a new bridge for this network
 - libvirt added the rest of the required parameters; you can mention these in your XML fle when required. recommendation is that you leave it to libvirt to avoid conﬂicts.
- 
- 
+- ```net-create``` is similar to ```net-define```. 
+  - ```net-create``` will not create a persistent virtual network. Once destroyed, it is removed and has to be created again using the net-create command.
+ - recommand ```net-define```
 
