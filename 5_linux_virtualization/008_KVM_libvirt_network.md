@@ -76,7 +76,10 @@ create the isolated network using the virsh command. For that, we need to create
   <name>isolated</name>
 </network>
 ```
-
-
+#### 2. defne a network using the XML flie created above
+```
+[root@server162 ~]# virsh net-define isolated.xml 
+从 isolated定义网络isolated.xml
+```
 
 
