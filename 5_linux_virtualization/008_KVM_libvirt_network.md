@@ -305,9 +305,16 @@ vnet0      bridge     virbr0     virtio      52:54:00:ab:30:f2
 vnet1      network    isolated   virtio      52:54:00:99:e4:1f
 vnet4      network    routed     virtio      52:54:00:6a:bc:1c
 ```
+delete if
+```
+[root@server162 ~]# virsh detach-interface --domain centos7-raw-clone --type network --mac 52:54:00:6a:bc:1c --config --live 
+成功分离接
+```
+
 ### 4. create routing rules
 
 donno how to do...
+
 ## 3.3 edit a routed virtual network
 - edit a routed virtual network and modify the routing confguration so that the packets from the virtual machines can be forwarded to any interface available on the host based on IP route rules specifed on the host
 - The aim of this example is to show how to modify a virtual network once it is created with your confguration
