@@ -395,6 +395,86 @@ all the same with routed network, excpet the last step. select "any physical dev
 on your virtual machines.
 
 ??? ，没搞明白 到底要干嘛？？？
+#### 1. prepare ens33, ens34, ens35, br0
+- let ens35 be a management interface, for ssh to physical host
+- attach ens33 and ens34 to br0
+- because we have ens35 to use ssh, br0 can have no ip. if no ens35, br0 hsould have ip
+```
+# cat ifcfg-ens33
+DEVICE=ens33
+TYPE=Ethernet
+HWADDR=52:54:00:32:56:aa
+ONBOOT=yes
+NM_CONTROLLED=no
+BRIDGE=br0
+
+# cat ifcfg-br0
+DEVICE=br0
+TYPE=Bridge
+ONBOOT=yes
+NM_CONTROLLED=no
+```
+Enable the network service and start it.
+```# systemctl enable network```
+```# systemctl disable NetworkManager```
+```# ifup br0; ifup eth1```
+```# brctl show```
+#### 2. create a bond (bond0) using ens33 and ens34 and add it to br0
+```
+# ifdown br0; ifdown eth1
+# cat ifcfg-ens33
+DEVICE=ens33
+TYPE=Ethernet
+HWADDR=52:54:00:32:56:aa
+ONBOOT=yes
+NM_CONTROLLED=no
+SLAVE=yes
+MASTER=bond0
+
+# cat ifcfg-ens34
+DEVICE=ens34
+TYPE=Ethernet
+HWADDR=52:54:00:a6:02:51
+ONBOOT=yes
+NM_CONTROLLED=no
+SLAVE=yes
+MASTER=bond0
+
+# cat ifcfg-bond0
+DEVICE=bond0
+ONBOOT=yes
+BONDING_OPTS='mode=1 miimon=100'
+BRIDGE=br0
+NM_CONTROLLED=no
+```
+- ```# ifup bond0```
+- ```# brctl show```
+#### 3. create a tagged VLAN named bond0.123 and will be added to the br0 bridge
+
+- ```# ifdown bond0; ifdown br0```
+- ```# cp ifcfg-bond0 ifcfg-bond0.123```
+```diff
+# cat ifcfg-bond0.123
+DEVICE=bond0.123
+ONBOOT=yes
+BONDING_OPTS='mode=1 miimon=100'
+BRIDGE=br0
+NM_CONTROLLED=no
+VLAN=yes
+
+# cat ifcfg-bond0
+  DEVICE=bond0
+  ONBOOT=yes
+  BONDING_OPTS='mode=1 miimon=100'
+- BRIDGE=br0
+  NM_CONTROLLED=no
+```
+- ```# ifup bond0.123```
+
+
+
+
+
 
 # 5. MacVTap
 
