@@ -207,7 +207,7 @@ because of minimal install, no ifconfig command. refer to [006_KVM_qemu_network]
 
 - vm2
 ```ip addr add 192.168.10.2/16 dev eth1```, /16 is a must
-
+- ```ip addr```, to check ip address if no ifconfig command in minimal install
 ![](https://i.loli.net/2019/04/23/5cbe86bb15787.png)
 
 #### v, detach-interface
