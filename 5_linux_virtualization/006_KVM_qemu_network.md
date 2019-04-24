@@ -30,7 +30,14 @@
           TX packets 0  bytes 0 (0.0 B)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
-  
+- 更改网络名称空间内网卡名称
+  - ```ip netns exec r1 ip link set veth1.1 name eth0```
+  ```
+  [root@server162 ~]# ip netns exec r1 ip link set veth1.1 name eth0
+  [root@server162 ~]# ip netns exec r1 ifconfig -a
+  eth0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
+          ether 5a:6d:52:eb:69:d3  txqueuelen 1000  (Ethernet)
+  ```
   
   
 ## 4.1 create bridge br-ex, br-in
