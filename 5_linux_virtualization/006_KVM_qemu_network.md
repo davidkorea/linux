@@ -1,44 +1,52 @@
 # 4. 复杂网路实现（net namespace）
 - 创建网络名称空间
-  - ```ip netns add r1```
+  - ```ip netns add r1```, ```ip netns add r2```
   - ```ip netns exec r1 COMMAND```
+- 创建一对网卡，分别添加到r1和r2
+  - ```ip link add veth1.1 type veth peer name veth1.2```，type=veth表示创建一对网卡
   ```
-  [root@server162 ~]# ip netns exec r1 ifconfig -a
-  lo: flags=8<LOOPBACK>  mtu 65536
-          loop  txqueuelen 1000  (Local Loopback)
-          RX packets 0  bytes 0 (0.0 B)
-          RX errors 0  dropped 0  overruns 0  frame 0
-          TX packets 0  bytes 0 (0.0 B)
-          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  [root@server162 ~]# ip link add veth1.1 type veth peer name veth1.2
+  [root@server162 ~]# ip link show
+  21: veth1.2@veth1.1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether 82:09:a5:60:8b:e8 brd ff:ff:ff:ff:ff:ff
+  22: veth1.1@veth1.2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether 5a:6d:52:eb:69:d3 brd ff:ff:ff:ff:ff:ff
   ```
 - 将网卡添加至网络名称空间
   - ```ip link set veth1.1 netns r1```
+  - ```ip link set veth1.2 netns r2```
   ```
   [root@server162 ~]# ip link set veth1.1 netns r1
   [root@server162 ~]# ip netns exec r1 ifconfig -a
   lo: flags=8<LOOPBACK>  mtu 65536
           loop  txqueuelen 1000  (Local Loopback)
-          RX packets 0  bytes 0 (0.0 B)
-          RX errors 0  dropped 0  overruns 0  frame 0
-          TX packets 0  bytes 0 (0.0 B)
-          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   
   veth1.1: flags=4098<BROADCAST,MULTICAST>  mtu 1500
           ether 5a:6d:52:eb:69:d3  txqueuelen 1000  (Ethernet)
-          RX packets 0  bytes 0 (0.0 B)
-          RX errors 0  dropped 0  overruns 0  frame 0
-          TX packets 0  bytes 0 (0.0 B)
-          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
 - 更改网络名称空间内网卡名称
   - ```ip netns exec r1 ip link set veth1.1 name eth0```
+  - ```ip netns exec r2 ip link set veth1.2 name eth0```
   ```
   [root@server162 ~]# ip netns exec r1 ip link set veth1.1 name eth0
   [root@server162 ~]# ip netns exec r1 ifconfig -a
   eth0: flags=4098<BROADCAST,MULTICAST>  mtu 1500
           ether 5a:6d:52:eb:69:d3  txqueuelen 1000  (Ethernet)
   ```
-  
+- 分别设置两个名称空间中eth0的ip进行通信
+  ```
+  [root@server162 ~]# ip netns exec r1 ifconfig eth0 10.10.10.1
+  [root@server162 ~]# ip netns exec r2 ifconfig eth0 10.10.10.2
+  [root@server162 ~]# ip netns exec r1 ping 10.10.10.2
+  PING 10.10.10.2 (10.10.10.2) 56(84) bytes of data.
+  64 bytes from 10.10.10.2: icmp_seq=1 ttl=64 time=0.738 ms
+  64 bytes from 10.10.10.2: icmp_seq=2 ttl=64 time=0.072 ms
+
+  [root@server162 ~]# ip netns exec r2 ping 10.10.10.1
+  PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+  64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.097 ms
+  64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.071 ms
+  ```
   
 ## 4.1 create bridge br-ex, br-in
 - br-ex: attach physical interface to br-ex
@@ -80,14 +88,7 @@ net.ipv4.ip_forward = 1
 ```
 #### ii. 创建一对网卡
 - ```ip link add veth1.1 type veth peer name veth1.2```
-```
-[root@server162 ~]# ip link add veth1.1 type veth peer name veth1.2
-[root@server162 ~]# ip link show
-21: veth1.2@veth1.1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 82:09:a5:60:8b:e8 brd ff:ff:ff:ff:ff:ff
-22: veth1.1@veth1.2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
-    link/ether 5a:6d:52:eb:69:d3 brd ff:ff:ff:ff:ff:ff
-```
+
 
 
 
