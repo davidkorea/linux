@@ -93,11 +93,11 @@ br-in           8000.000000000000       no
   br-in           8000.6e18297c0a83       no              vf1.0
                                                           vf2.0
   ```
-### 2. 创建虚拟路由器(netns)
+## 5.3 创建虚拟路由器(netns)
 - ```if netns add r1```
 
-### 3. 创建一对网卡，一个连接虚拟机br-in，一个连接路由器r1
-- 创建路由器内网网卡,router in ruuter, router in switch
+## 5.4 创建一对网卡，一个连接虚拟机br-in，一个连接路由器r1
+- 创建路由器内网网卡,router internal ruuter, router internal switch
   - ```ip link add rinr type veth peer name rins```
   ```
   [root@server162 ~]# ip link show
@@ -108,7 +108,7 @@ br-in           8000.000000000000       no
   ```
 - ```ip link set rinr up```
 - ```ip link set rins up```
-### 4. attach rins to br-in, rinr to r1
+### 1. attach rins to br-in, rinr to r1
 #### i. rins -> br-in
 - ```brctl addif br-in rins```, **rins no need to set ip**
   ```
@@ -140,7 +140,7 @@ br-in           8000.000000000000       no
           TX packets 16  bytes 1312 (1.2 KiB)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
-### 5. set 10.0.1.0/24 to all VMs
+### 2. set 10.0.1.0/24 to all VMs
 set ip and gateway
 #### i. VM1
 ```
@@ -175,6 +175,24 @@ PING 10.0.1.1 (10.0.1.1): 56 data bytes
 
 $ route add default gw 10.0.1.254
 ```
+## 5.4 创建一对网卡，一个连接物理机br-ex，一个连接路由器r1
+- 创建路由器外网网卡，router externel router，router externel switch
+  - ```ip link add rexr type veth peer name rexs```
+  ```
+  30: rexs@rexr: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether a2:05:41:7d:80:66 brd ff:ff:ff:ff:ff:ff
+  31: rexr@rexs: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 62:f5:c2:70:0a:5d brd ff:ff:ff:ff:ff:ff
+  ```
+
+
+
+
+
+
+
+
+
 
 
 
