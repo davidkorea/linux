@@ -141,8 +141,40 @@ br-in           8000.000000000000       no
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
 ### 5. set 10.0.1.0/24 to all VMs
+set ip and gateway
+#### i. VM1
+```
+$ ifconfig eth0 10.0.1.1/24
+$ ping 10.0.1.254
+PING 10.0.1.254 (10.0.1.254): 56 data bytes
+64 bytes from 10.0.1.254: seq=0 ttl=64 time=4.517 ms
 
+$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+10.0.0.0        0.0.0.0         255.0.0.0       U     0      0        0 eth0
 
+$ route add default gw 10.0.1.254
+
+$ route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.0.1.254      0.0.0.0         UG    0      0        0 eth0
+10.0.0.0        0.0.0.0         255.0.0.0       U     0      0        0 eth0
+```
+#### ii. VM2
+```
+$ ifconfig eth0 10.0.1.2/24
+$ ping 10.0.1.254
+PING 10.0.1.254 (10.0.1.254): 56 data bytes
+64 bytes from 10.0.1.254: seq=0 ttl=64 time=4.622 ms
+
+$ ping 10.0.1.1
+PING 10.0.1.1 (10.0.1.1): 56 data bytes
+64 bytes from 10.0.1.1: seq=0 ttl=64 time=5.478 ms
+
+$ route add default gw 10.0.1.254
+```
 
 
 
