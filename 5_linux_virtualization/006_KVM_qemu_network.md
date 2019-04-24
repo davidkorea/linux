@@ -431,10 +431,17 @@ round-trip min/avg/max = 174.459/657.872/1581.620 ms
 ```
 - 此时虚拟机可以使用物理网络中的地址与物理网络通信
 
+# 4. 复杂网路实现（net namespace）
 
-
-
-
-
-
-
+## 4.1 netns
+- ip netns add r1
+- ip netns exec r1 COMMAND
+  ```
+  [root@server162 ~]# ip netns exec r1 ifconfig -a
+  lo: flags=8<LOOPBACK>  mtu 65536
+          loop  txqueuelen 1000  (Local Loopback)
+          RX packets 0  bytes 0 (0.0 B)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 0  bytes 0 (0.0 B)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  ```
