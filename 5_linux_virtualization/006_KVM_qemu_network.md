@@ -445,3 +445,15 @@ round-trip min/avg/max = 174.459/657.872/1581.620 ms
           TX packets 0  bytes 0 (0.0 B)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
+  ```
+  [root@server162 ~]# ip netns exec r1 ifconfig lo 127.0.0.1/8 up
+  [root@server162 ~]# ip netns exec r1 ifconfig
+  lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+          inet 127.0.0.1  netmask 255.0.0.0
+          inet6 ::1  prefixlen 128  scopeid 0x10<host>
+          loop  txqueuelen 1000  (Local Loopback)
+          RX packets 0  bytes 0 (0.0 B)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 0  bytes 0 (0.0 B)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  ```
