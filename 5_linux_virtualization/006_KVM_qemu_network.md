@@ -37,10 +37,18 @@ br-ex           8000.000000000000       no
 br-in           8000.000000000000       no
 ```
 ### 2. attach phsical if to br-ex
-```
-
-```
-
+all commands here is temporary, create ifcfg can make it permanent
+- ```[root@server162 ~]# ip link set br-ex up```
+- ```ip addr del 192.168.0.162/16 dev ens33; ip addr add 192.168.0.162/16 dev br-ex; brctl addif br-ex ens33 ```
+  ```
+  br-ex: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet 192.168.0.162  netmask 255.255.0.0  broadcast 0.0.0.0
+  
+  ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet6 fe80::20c:29ff:fe5e:80e5  prefixlen 64  scopeid 0x20<link>
+          ether 00:0c:29:5e:80:e5  txqueuelen 1000  (Ethernet)
+  ```
+  
 
 
 
