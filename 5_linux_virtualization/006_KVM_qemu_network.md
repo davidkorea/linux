@@ -48,7 +48,24 @@
   64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.071 ms
   ```
 # 5. 复杂虚拟机网路实现（net namespace）
-## 5.0 Prepare
+
+## 5.1 create bridge br-ex, br-in
+- br-ex: attach physical interface to br-ex
+- br-in: attach all VM backend tap interface to br-in
+
+```
+[root@server162 ~]# brctl addbr br-ex
+[root@server162 ~]# brctl addbr br-in
+
+[root@server162 ~]# brctl show
+bridge name     bridge id               STP enabled     interfaces
+br-ex           8000.000000000000       no
+br-in           8000.000000000000       no
+```
+- ```[root@server162 ~]# ip link set br-ex up```
+- ```[root@server162 ~]# ip link set br-in up```
+
+## 5.2 create VMs
 - create /etc/qemu-ifup
   ```bash
   #!/bin/bash
@@ -65,24 +82,19 @@
 - ```chmod +x /etc/qemu-ifup```
 - ```bash -n !$```, check syntax
 - ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
-- ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=vf1.0,script=/etc/qemu-ifup --nographic```
-- ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk-copy.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:44 -net tap,ifname=vf2.0,script=/etc/qemu-ifup --nographic```
+- create VMs
+  - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=vf1.0,script=/etc/qemu-ifup --nographic```
+  - ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk-copy.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:44 -net tap,ifname=vf2.0,script=/etc/qemu-ifup --nographic```
+- brctl show
+  ```
+  [root@server162 ~]# brctl show
+  bridge name     bridge id               STP enabled     interfaces
+  br-ex           8000.000c295e80e5       no              ens33
+  br-in           8000.6e18297c0a83       no              vf1.0
+                                                          vf2.0
+  ```
 
-## 5.1 create bridge br-ex, br-in
-- br-ex: attach physical interface to br-ex
-- br-in: attach all VM backend tap interface to br-in
-### 1. create br
-```
-[root@server162 ~]# brctl addbr br-ex
-[root@server162 ~]# brctl addbr br-in
 
-[root@server162 ~]# brctl show
-bridge name     bridge id               STP enabled     interfaces
-br-ex           8000.000000000000       no
-br-in           8000.000000000000       no
-```
-- ```[root@server162 ~]# ip link set br-ex up```
-- ```[root@server162 ~]# ip link set br-in up```
 
 ### 2. attach phsical if to br-ex
 all commands here is temporary, create ifcfg can make it permanent
