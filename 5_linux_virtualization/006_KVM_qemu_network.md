@@ -93,7 +93,7 @@ br-in           8000.000000000000       no
   br-in           8000.6e18297c0a83       no              vf1.0
                                                           vf2.0
   ```
-### 2. create virtual router(netns)
+### 2. 创建虚拟路由器(netns)
 - ```if netns add r1```
 
 ### 3. 创建一对网卡，一个连接虚拟机br-in，一个连接路由器r1
@@ -108,6 +108,41 @@ br-in           8000.000000000000       no
   ```
 - ```ip link set rinr up```
 - ```ip link set rins up```
+### 4. attach rins to br-in, rinr to r1
+#### i. rins -> br-in
+- ```brctl addif br-in rins```, **rins no need to set ip**
+  ```
+  [root@server162 ~]# brctl addif br-in rins
+  [root@server162 ~]# brctl show
+  bridge name     bridge id               STP enabled     interfaces
+  br-in           8000.6a4d20b7d69a       no              rins
+                                                          vf1.0
+                                                          vf2.0
+  ```
+#### ii. rinr -> router r1(netns)
+- ```ip link set rinr netns r1```, now cannot find rinr in host, but can find in netns r1
+  ```
+  [root@server162 ~]# ip netns exec r1 ifconfig -a
+  rinr: flags=4098<BROADCAST,MULTICAST>  mtu 1500
+          ether ca:d6:74:ad:69:1e  txqueuelen 1000  (Ethernet)
+  ```
+- ```ip netns exec r1 ip link set rinr name eth0```
+- ```ip netns exec r1 ifconfig eth0 10.0.1.254/24```
+  ```
+  [root@server162 ~]# ip netns exec r1 ifconfig eth0 10.0.1.254/24
+  [root@server162 ~]# ip netns exec r1 ifconfig 
+  eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet 10.0.1.254  netmask 255.255.255.0  broadcast 10.0.1.255
+          inet6 fe80::c8d6:74ff:fead:691e  prefixlen 64  scopeid 0x20<link>
+          ether ca:d6:74:ad:69:1e  txqueuelen 1000  (Ethernet)
+          RX packets 8  bytes 656 (656.0 B)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 16  bytes 1312 (1.2 KiB)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  ```
+### 5. set 10.0.1.0/24 to all VMs
+
+
 
 
 
