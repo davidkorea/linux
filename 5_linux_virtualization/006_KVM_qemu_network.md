@@ -1,4 +1,4 @@
-# 4. 复杂网路实现（net namespace）
+# 4. net namespace basics
 - 创建网络名称空间
   - ```ip netns add r1```, ```ip netns add r2```
   - ```ip netns exec r1 COMMAND```
@@ -47,8 +47,8 @@
   64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.097 ms
   64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.071 ms
   ```
-  
-## 4.1 create bridge br-ex, br-in
+# 5. 复杂虚拟机网路实现（net namespace）
+## 5.1 create bridge br-ex, br-in
 - br-ex: attach physical interface to br-ex
 - br-in: attach all VM backend tap interface to br-in
 ### 1. create br
