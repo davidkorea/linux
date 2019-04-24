@@ -257,7 +257,7 @@ From 192.168.0.200 icmp_seq=3 Redirect Network(New nexthop: 192.168.0.1)
 From 192.168.0.200: icmp_seq=3 Redirect Network(New nexthop: 192.168.0.1)
 64 bytes from 192.168.0.1: icmp_seq=3 ttl=255 time=0.554 ms
 ```
-### 3. VM ping r1 external ip
+### 3. VM ping r1 external ip(r1 eth1 ip )
 - 因为虚拟机的网关指向了路由器r1（netns），即r1的eth0(rinr)端口
 - 而netns内部自动继承了宿主机网卡间自动转发的功能，r1的eth0（rinr）与eth1（rexr）可以直接通信
 - 所以虚拟机直接ping 路由器r1的外网地址（eth1），可以直接ping通
@@ -269,6 +269,43 @@ PING 192.168.0.111 (192.168.0.111): 56 data bytes
 64 bytes from 192.168.0.111: seq=1 ttl=64 time=1.091 ms
 64 bytes from 192.168.0.111: seq=2 ttl=64 time=1.093 ms
 ```
+### 4. VM ping external network gateway 192.168.0.1
+- open a window, ping 192.168.0.1 at VM, get no response
+```
+$ ping 192.168.0.1
+PING 192.168.0.1 (192.168.0.1): 56 data bytes
+```
+- open another window, detect on host, every net interface can go out, 
+  - VM net-backend vf1.0 on br-in
+  - rins on br-in
+  - rinr(eth0) on r1
+  - rexr(eth1) on r1
+```
+[root@server162 ~]# tcpdump -i vf1.0 -nn icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on vf1.0, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:02:36.839953 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 0, length 64
+15:02:37.842506 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 1, length 64
+
+[root@server162 ~]# tcpdump -i rins -nn icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on rins, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:12:35.958194 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 595, length 64
+15:12:36.986186 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 596, length 64
+
+[root@server162 ~]# ip netns exec r1 tcpdump -i eth0 -nn icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:13:11.191105 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 630, length 64
+15:13:12.193138 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 631, length 64
+
+[root@server162 ~]# ip netns exec r1 tcpdump -i eth1 -nn icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth1, link-type EN10MB (Ethernet), capture size 262144 bytes
+15:13:43.343271 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 662, length 64
+15:13:44.346107 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 663, length 64
+```
+- internal network can ping out, but cannot get response from outside.
 
 
 
@@ -278,6 +315,21 @@ PING 192.168.0.111 (192.168.0.111): 56 data bytes
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
 
 
 -----
