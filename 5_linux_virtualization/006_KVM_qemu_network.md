@@ -48,8 +48,10 @@
   64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.071 ms
   ```
 # 5. 复杂虚拟机网路实现（net namespace）
+all commands here is temporary, create ifcfg can make it permanent
 
-## 5.1 create bridge br-ex, br-in
+## 5.1 创建连接外网的桥br-ex, 连接虚拟机的桥br-in
+### 1.create bridge br-ex, br-in
 - br-ex: attach physical interface to br-ex
 - br-in: attach all VM backend tap interface to br-in
 
@@ -65,7 +67,26 @@ br-in           8000.000000000000       no
 - ```[root@server162 ~]# ip link set br-ex up```
 - ```[root@server162 ~]# ip link set br-in up```
 
-## 5.2 create VMs
+### 2. attach physical if to br-ex
+- ```ip addr del 192.168.0.162/16 dev ens33; ip addr add 192.168.0.162/16 dev br-ex; brctl addif br-ex ens33 ```
+  ```
+  br-ex: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet 192.168.0.162  netmask 255.255.0.0  broadcast 0.0.0.0
+  
+  ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+          inet6 fe80::20c:29ff:fe5e:80e5  prefixlen 64  scopeid 0x20<link>
+          ether 00:0c:29:5e:80:e5  txqueuelen 1000  (Ethernet)
+  ```
+### 3. 打开网络转发功能
+```
+[root@server162 ~]# vim /etc/sysctl.conf 
+net.ipv4.ip_forward = 1
+
+[root@server162 ~]# sysctl -p
+net.ipv4.ip_forward = 1
+```
+
+## 5.2 创建虚拟机
 - create /etc/qemu-ifup
   ```bash
   #!/bin/bash
@@ -184,46 +205,56 @@ $ route add default gw 10.0.1.254
   31: rexr@rexs: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
     link/ether 62:f5:c2:70:0a:5d brd ff:ff:ff:ff:ff:ff
   ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### 2. attach phsical if to br-ex
-all commands here is temporary, create ifcfg can make it permanent
-- ```ip addr del 192.168.0.162/16 dev ens33; ip addr add 192.168.0.162/16 dev br-ex; brctl addif br-ex ens33 ```
-  ```
-  br-ex: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-          inet 192.168.0.162  netmask 255.255.0.0  broadcast 0.0.0.0
-  
-  ens33: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
-          inet6 fe80::20c:29ff:fe5e:80e5  prefixlen 64  scopeid 0x20<link>
-          ether 00:0c:29:5e:80:e5  txqueuelen 1000  (Ethernet)
-  ```
-  
-### 3. create peer interfaces, one attach to br-in, one attach to router(netns)
-
-#### i. 打开网络转发功能
+- ```ip link set rexr up```
+- ```ip link set rexs up```
+### 1. attach rexs to br-ex
 ```
-[root@server162 ~]# vim /etc/sysctl.conf 
-net.ipv4.ip_forward = 1
+[root@server162 ~]# brctl addif br-ex rexs
 
-[root@server162 ~]# sysctl -p
-net.ipv4.ip_forward = 1
+[root@server162 ~]# brctl show
+bridge name     bridge id               STP enabled     interfaces
+br-ex           8000.000c295e80e5       no              ens33
+                                                        rexs
 ```
-#### ii. 创建一对网卡
-- ```ip link add veth1.1 type veth peer name veth1.2```
+### 2. attach rexr to r1
+```
+[root@server162 ~]# ip link set rexr netns r1
+[root@server162 ~]# ip netns exec r1 ifconfig -a
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.1.254  netmask 255.255.255.0  broadcast 10.0.1.255
+
+lo: flags=8<LOOPBACK>  mtu 65536
+        loop  txqueuelen 1000  (Local Loopback)
+
+rexr: flags=4098<BROADCAST,MULTICAST>  mtu 1500
+        ether 62:f5:c2:70:0a:5d  txqueuelen 1000  (Ethernet)
+```
+- rename and set external ip 
+```
+[root@server162 ~]# ip netns exec r1 ip link set rexr name eth1
+
+[root@server162 ~]# ip netns exec r1 ifconfig eth1 192.168.0.111/16 up
+[root@server162 ~]# ip netns exec r1 ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.1.254  netmask 255.255.255.0  broadcast 10.0.1.255
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.0.111  netmask 255.255.0.0  broadcast 192.168.255.255
+```
+- ping external ip
+```
+[root@server162 ~]# ip netns exec r1 ping 192.168.0.1
+PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+From 192.168.0.200 icmp_seq=1 Redirect Network(New nexthop: 192.168.0.1)
+64 bytes from 192.168.0.1: icmp_seq=1 ttl=255 time=2.15 ms
+From 192.168.0.200: icmp_seq=1 Redirect Network(New nexthop: 192.168.0.1)
+From 192.168.0.200 icmp_seq=2 Redirect Network(New nexthop: 192.168.0.1)
+From 192.168.0.200: icmp_seq=2 Redirect Network(New nexthop: 192.168.0.1)
+64 bytes from 192.168.0.1: icmp_seq=2 ttl=255 time=0.619 ms
+From 192.168.0.200 icmp_seq=3 Redirect Network(New nexthop: 192.168.0.1)
+From 192.168.0.200: icmp_seq=3 Redirect Network(New nexthop: 192.168.0.1)
+64 bytes from 192.168.0.1: icmp_seq=3 ttl=255 time=0.554 ms
+```
 
 
 
@@ -235,49 +266,6 @@ net.ipv4.ip_forward = 1
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------
 
 -----
 
