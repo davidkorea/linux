@@ -36,9 +36,11 @@ bridge name     bridge id               STP enabled     interfaces
 br-ex           8000.000000000000       no
 br-in           8000.000000000000       no
 ```
+- ```[root@server162 ~]# ip link set br-ex up```
+- ```[root@server162 ~]# ip link set br-in up```
+
 ### 2. attach phsical if to br-ex
 all commands here is temporary, create ifcfg can make it permanent
-- ```[root@server162 ~]# ip link set br-ex up```
 - ```ip addr del 192.168.0.162/16 dev ens33; ip addr add 192.168.0.162/16 dev br-ex; brctl addif br-ex ens33 ```
   ```
   br-ex: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
@@ -49,10 +51,26 @@ all commands here is temporary, create ifcfg can make it permanent
           ether 00:0c:29:5e:80:e5  txqueuelen 1000  (Ethernet)
   ```
   
+### 3. create peer interfaces, one attach to br-in, one attach to router(netns)
 
+#### i. 打开网络转发功能
+```
+[root@server162 ~]# vim /etc/sysctl.conf 
+net.ipv4.ip_forward = 1
 
-
-
+[root@server162 ~]# sysctl -p
+net.ipv4.ip_forward = 1
+```
+#### ii. 创建一对网卡
+- ```ip link add veth1.1 type veth peer name veth1.2```
+```
+[root@server162 ~]# ip link add veth1.1 type veth peer name veth1.2
+[root@server162 ~]# ip link show
+21: veth1.2@veth1.1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 82:09:a5:60:8b:e8 brd ff:ff:ff:ff:ff:ff
+22: veth1.1@veth1.2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 5a:6d:52:eb:69:d3 brd ff:ff:ff:ff:ff:ff
+```
 
 
 
