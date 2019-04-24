@@ -1,3 +1,4 @@
+
 - 使用网络安装boot order=n，因为没有pxe网络或者cobbler，所以安装会失败，需要指定安装镜像iso
   ```
   qemu-kvm -m 512 -smp 2 -name centos6 -drive file=/images/centos/centos6.qcow2,media=disk -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=centos6.0,script=/etc/qemu-ifup -boot order=nc,once=n -nographic
@@ -9,10 +10,12 @@
   ```
   qemu-kvm -m 512 -smp 2 -name xp -drive file=/images/win/xp.qcow2,format=qcow2,media=disk,if=virtio -drive file=/windowsshare/WindowsXPSP3.iso,media=cdrom  -net nic,model=virtio,macaddr=52:54:00:12:12:12  -net tap,ifname=xp1.0 -boot order=dc,once=d
   ```
+-----
 
-
-
-
+1. 虚拟机网络类型
+2. KVM虚拟机网络基础
+3. 实现各网络模型的KVM虚拟机
+4. 复杂网络实现（netns网络名称空间）
 
 
 
