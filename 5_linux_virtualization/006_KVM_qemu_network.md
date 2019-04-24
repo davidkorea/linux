@@ -78,6 +78,7 @@ br-in           8000.000000000000       no
           ether 00:0c:29:5e:80:e5  txqueuelen 1000  (Ethernet)
   ```
 ### 3. 打开网络转发功能
+需要在创建netns（虚拟路由器）之前打开 网卡间自动转发功能，这样netns才可以继承这个设定，netns内部也可以实现网卡间转发
 ```
 [root@server162 ~]# vim /etc/sysctl.conf 
 net.ipv4.ip_forward = 1
@@ -116,6 +117,7 @@ net.ipv4.ip_forward = 1
   ```
 ## 5.3 创建虚拟路由器(netns)
 - ```if netns add r1```
+- **需要宿主机先打开网络妆发功能，这样netns里面各个网卡之前才会默认直接打开，否则netns里面没有设置打开网络转发的功能**
 
 ## 5.4 创建一对网卡，一个连接虚拟机br-in，一个连接路由器r1
 - 创建路由器内网网卡,router internal ruuter, router internal switch
@@ -255,7 +257,18 @@ From 192.168.0.200 icmp_seq=3 Redirect Network(New nexthop: 192.168.0.1)
 From 192.168.0.200: icmp_seq=3 Redirect Network(New nexthop: 192.168.0.1)
 64 bytes from 192.168.0.1: icmp_seq=3 ttl=255 time=0.554 ms
 ```
+### 3. VM ping r1 external ip
+- 因为虚拟机的网关指向了路由器r1（netns），即r1的eth0(rinr)端口
+- 而netns内部自动继承了宿主机网卡间自动转发的功能，r1的eth0（rinr）与eth1（rexr）可以直接通信
+- 所以虚拟机直接ping 路由器r1的外网地址（eth1），可以直接ping通
 
+```
+$ ping 192.168.0.111
+PING 192.168.0.111 (192.168.0.111): 56 data bytes
+64 bytes from 192.168.0.111: seq=0 ttl=64 time=2.602 ms
+64 bytes from 192.168.0.111: seq=1 ttl=64 time=1.091 ms
+64 bytes from 192.168.0.111: seq=2 ttl=64 time=1.093 ms
+```
 
 
 
