@@ -48,6 +48,24 @@
   64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.071 ms
   ```
 # 5. 复杂虚拟机网路实现（net namespace）
+## 5.0 Prepare
+- create /etc/qemu-ifup
+  ```bash
+  #!/bin/bash
+  bridge=br-in
+  if [ -n '$1' ]; then
+          ip link set $1 up
+          brctl addif $bridge $1
+          [ $? -eq 0 ] && exit 0 || exit 1
+  else
+          echo "Error: no interface specified."
+          exit 1
+  fi
+  ```
+- ```chmod +x /etc/qemu-ifup```
+- ```bash -n !$```, check syntax
+- ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
+
 ## 5.1 create bridge br-ex, br-in
 - br-ex: attach physical interface to br-ex
 - br-in: attach all VM backend tap interface to br-in
