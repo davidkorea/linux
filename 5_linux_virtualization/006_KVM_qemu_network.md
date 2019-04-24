@@ -1,7 +1,7 @@
 # 4. 复杂网路实现（net namespace）
-
-- ip netns add r1
-- ip netns exec r1 COMMAND
+- 创建网络名称空间
+  - ```ip netns add r1```
+  - ```ip netns exec r1 COMMAND```
   ```
   [root@server162 ~]# ip netns exec r1 ifconfig -a
   lo: flags=8<LOOPBACK>  mtu 65536
@@ -11,18 +11,28 @@
           TX packets 0  bytes 0 (0.0 B)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
+- 将网卡添加至网络名称空间
+  - ```ip link set veth1.1 netns r1```
   ```
-  [root@server162 ~]# ip netns exec r1 ifconfig lo 127.0.0.1/8 up
-  [root@server162 ~]# ip netns exec r1 ifconfig
-  lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-          inet 127.0.0.1  netmask 255.0.0.0
-          inet6 ::1  prefixlen 128  scopeid 0x10<host>
+  [root@server162 ~]# ip link set veth1.1 netns r1
+  [root@server162 ~]# ip netns exec r1 ifconfig -a
+  lo: flags=8<LOOPBACK>  mtu 65536
           loop  txqueuelen 1000  (Local Loopback)
           RX packets 0  bytes 0 (0.0 B)
           RX errors 0  dropped 0  overruns 0  frame 0
           TX packets 0  bytes 0 (0.0 B)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  
+  veth1.1: flags=4098<BROADCAST,MULTICAST>  mtu 1500
+          ether 5a:6d:52:eb:69:d3  txqueuelen 1000  (Ethernet)
+          RX packets 0  bytes 0 (0.0 B)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 0  bytes 0 (0.0 B)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
+  
+  
+  
 ## 4.1 create bridge br-ex, br-in
 - br-ex: attach physical interface to br-ex
 - br-in: attach all VM backend tap interface to br-in
