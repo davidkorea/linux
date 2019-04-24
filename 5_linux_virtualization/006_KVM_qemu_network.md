@@ -305,10 +305,27 @@ listening on eth1, link-type EN10MB (Ethernet), capture size 262144 bytes
 15:13:43.343271 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 662, length 64
 15:13:44.346107 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 663, length 64
 ```
-- internal network can ping out, but cannot get response from outside.
+- internal network can ping out, but cannot get response from outside. 
+- To solve this, create SNAT on router(netns)
+### 5. 在路由器 r1 上创建SNAT规则
+- ```ip netns exec r1 iptables -t nat -A POSTROUTING -s 10.0.1.0/24 ! -d 10.0.1.0/24 -j SNAT --to-source 192.168.0.111```
+- 来自于10.0.1.0/24，目标地址不是自己的的流量，转到路由器的外网网卡地址
+```
+[root@server162 ~]# ip netns exec r1 iptables -t nat -A POSTROUTING -s 10.0.1.0/24 ! -d 10.0.1.0/24 -j SNAT --to-source 192.168.0.111
+[root@server162 ~]# ip netns exec r1 iptables -t nat -L -n
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
 
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
 
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
 
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+SNAT       all  --  10.0.1.0/24         !10.0.1.0/24          to:192.168.0.111
+```
 
 
 
