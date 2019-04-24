@@ -433,7 +433,6 @@ round-trip min/avg/max = 174.459/657.872/1581.620 ms
 
 # 4. 复杂网路实现（net namespace）
 
-## 4.1 netns
 - ip netns add r1
 - ip netns exec r1 COMMAND
   ```
@@ -457,3 +456,39 @@ round-trip min/avg/max = 174.459/657.872/1581.620 ms
           TX packets 0  bytes 0 (0.0 B)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
+## 4.1 create bridge br-ex, br-in
+- br-ex: attach physical interface to br-ex
+- br-in: attach all VM backend tap interface to br-in
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
