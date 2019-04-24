@@ -93,6 +93,18 @@ br-in           8000.000000000000       no
   br-in           8000.6e18297c0a83       no              vf1.0
                                                           vf2.0
   ```
+### 2. create virtual router(netns)
+- ```if netns add r1```
+
+### 3. 创建一对网卡，一个连接虚拟机br-in，一个连接路由器r1
+- 创建路由器内网网卡,router in
+  - ```ip link add rin1.1 type veth peer name rin1.2```
+
+
+
+
+
+
 
 
 
