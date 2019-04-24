@@ -327,7 +327,18 @@ target     prot opt source               destination
 SNAT       all  --  10.0.1.0/24         !10.0.1.0/24          to:192.168.0.111
 ```
 
-
+- 此时虚拟机可以ping通物理机所在网络
+  - VM ping 192.168.0.1
+  - Host detect
+  ```
+  [root@server162 ~]# tcpdump -i rins -nn icmp
+  tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+  listening on rins, link-type EN10MB (Ethernet), capture size 262144 bytes
+  15:36:38.933600 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 28161, seq 0, length 64
+  15:36:38.935314 IP 192.168.0.1 > 10.0.1.1: ICMP echo reply, id 28161, seq 0, length 64
+  15:36:39.938260 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 28161, seq 1, length 64
+  15:36:39.938852 IP 192.168.0.1 > 10.0.1.1: ICMP echo reply, id 28161, seq 1, length 64
+  ```
 
 
 
