@@ -1,3 +1,105 @@
+# 4. 复杂网路实现（net namespace）
+
+- ip netns add r1
+- ip netns exec r1 COMMAND
+  ```
+  [root@server162 ~]# ip netns exec r1 ifconfig -a
+  lo: flags=8<LOOPBACK>  mtu 65536
+          loop  txqueuelen 1000  (Local Loopback)
+          RX packets 0  bytes 0 (0.0 B)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 0  bytes 0 (0.0 B)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  ```
+  ```
+  [root@server162 ~]# ip netns exec r1 ifconfig lo 127.0.0.1/8 up
+  [root@server162 ~]# ip netns exec r1 ifconfig
+  lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+          inet 127.0.0.1  netmask 255.0.0.0
+          inet6 ::1  prefixlen 128  scopeid 0x10<host>
+          loop  txqueuelen 1000  (Local Loopback)
+          RX packets 0  bytes 0 (0.0 B)
+          RX errors 0  dropped 0  overruns 0  frame 0
+          TX packets 0  bytes 0 (0.0 B)
+          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+  ```
+## 4.1 create bridge br-ex, br-in
+- br-ex: attach physical interface to br-ex
+- br-in: attach all VM backend tap interface to br-in
+### 1. create br
+```
+[root@server162 ~]# brctl addbr br-ex
+[root@server162 ~]# brctl addbr br-in
+
+[root@server162 ~]# brctl show
+bridge name     bridge id               STP enabled     interfaces
+br-ex           8000.000000000000       no
+br-in           8000.000000000000       no
+```
+### 2. attach phsical if to br-ex
+```
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
+
+-----
 
 - 使用网络安装boot order=n，因为没有pxe网络或者cobbler，所以安装会失败，需要指定安装镜像iso
   ```
@@ -431,34 +533,6 @@ round-trip min/avg/max = 174.459/657.872/1581.620 ms
 ```
 - 此时虚拟机可以使用物理网络中的地址与物理网络通信
 
-# 4. 复杂网路实现（net namespace）
-
-- ip netns add r1
-- ip netns exec r1 COMMAND
-  ```
-  [root@server162 ~]# ip netns exec r1 ifconfig -a
-  lo: flags=8<LOOPBACK>  mtu 65536
-          loop  txqueuelen 1000  (Local Loopback)
-          RX packets 0  bytes 0 (0.0 B)
-          RX errors 0  dropped 0  overruns 0  frame 0
-          TX packets 0  bytes 0 (0.0 B)
-          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-  ```
-  ```
-  [root@server162 ~]# ip netns exec r1 ifconfig lo 127.0.0.1/8 up
-  [root@server162 ~]# ip netns exec r1 ifconfig
-  lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
-          inet 127.0.0.1  netmask 255.0.0.0
-          inet6 ::1  prefixlen 128  scopeid 0x10<host>
-          loop  txqueuelen 1000  (Local Loopback)
-          RX packets 0  bytes 0 (0.0 B)
-          RX errors 0  dropped 0  overruns 0  frame 0
-          TX packets 0  bytes 0 (0.0 B)
-          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
-  ```
-## 4.1 create bridge br-ex, br-in
-- br-ex: attach physical interface to br-ex
-- br-in: attach all VM backend tap interface to br-in
 
 
 
