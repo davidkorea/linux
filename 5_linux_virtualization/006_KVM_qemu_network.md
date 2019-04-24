@@ -65,6 +65,8 @@
 - ```chmod +x /etc/qemu-ifup```
 - ```bash -n !$```, check syntax
 - ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
+- ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=vf1.0,script=/etc/qemu-ifup --nographic```
+- ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk-copy.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:44 -net tap,ifname=vf2.0,script=/etc/qemu-ifup --nographic```
 
 ## 5.1 create bridge br-ex, br-in
 - br-ex: attach physical interface to br-ex
