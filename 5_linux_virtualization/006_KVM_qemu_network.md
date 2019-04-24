@@ -97,10 +97,17 @@ br-in           8000.000000000000       no
 - ```if netns add r1```
 
 ### 3. 创建一对网卡，一个连接虚拟机br-in，一个连接路由器r1
-- 创建路由器内网网卡,router in
-  - ```ip link add rin1.1 type veth peer name rin1.2```
-
-
+- 创建路由器内网网卡,router in ruuter, router in switch
+  - ```ip link add rinr type veth peer name rins```
+  ```
+  [root@server162 ~]# ip link show
+  28: rins@rinr: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether 6a:4d:20:b7:d6:9a brd ff:ff:ff:ff:ff:ff
+  29: rinr@rins: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether ca:d6:74:ad:69:1e brd ff:ff:ff:ff:ff:ff
+  ```
+- ```ip link set rinr up```
+- ```ip link set rins up```
 
 
 
