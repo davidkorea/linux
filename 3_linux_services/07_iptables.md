@@ -25,7 +25,7 @@
 
 ```
 --> PREROUTING  -->  [ROUTE]  -->  FORWARD  -->  POSTROUTING  -->
-      mangle            |          mangle  	          ^  mangle
+      mangle            |          mangle             ^  mangle
        nat              |          filter             |  nat
                         |                             |
                         |                             |
