@@ -155,12 +155,6 @@ net.ipv4.ip_forward = 1
   [root@server162 ~]# ip netns exec r1 ifconfig 
   eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
           inet 10.0.1.254  netmask 255.255.255.0  broadcast 10.0.1.255
-          inet6 fe80::c8d6:74ff:fead:691e  prefixlen 64  scopeid 0x20<link>
-          ether ca:d6:74:ad:69:1e  txqueuelen 1000  (Ethernet)
-          RX packets 8  bytes 656 (656.0 B)
-          RX errors 0  dropped 0  overruns 0  frame 0
-          TX packets 16  bytes 1312 (1.2 KiB)
-          TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
 ### 3. set 10.0.1.0/24 to all VMs
 set ip and gateway
