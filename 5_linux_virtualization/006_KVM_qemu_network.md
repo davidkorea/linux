@@ -119,7 +119,7 @@ net.ipv4.ip_forward = 1
 - ```if netns add r1```
 - **需要宿主机先打开网络妆发功能，这样netns里面各个网卡之前才会默认直接打开，否则netns里面没有设置打开网络转发的功能**
 
-## 5.4 创建一对网卡，一个连接虚拟机br-in，一个连接路由器r1
+## 5.4 创建一对网卡，一个连接虚拟机桥br-in，一个连接路由器r1
 - 创建路由器内网网卡,router internal ruuter, router internal switch
   - ```ip link add rinr type veth peer name rins```
   ```
