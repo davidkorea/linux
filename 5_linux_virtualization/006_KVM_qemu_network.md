@@ -191,7 +191,7 @@ PING 10.0.1.1 (10.0.1.1): 56 data bytes
 
 $ route add default gw 10.0.1.254
 ```
-## 5.4 创建一对网卡，一个连接物理机br-ex，一个连接路由器r1
+## 5.5 创建一对网卡，一个连接物理机桥br-ex，一个连接路由器r1
 - 创建路由器外网网卡，router externel router，router externel switch
   - ```ip link add rexr type veth peer name rexs```
   ```
