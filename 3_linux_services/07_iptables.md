@@ -22,3 +22,16 @@
   -A FORWARD -j REJECT --reject-with icmp-host-prohibited
   COMMIT
   ```
+
+```
+--> PREROUTING  -->  [ROUTE]  -->  FORWARD  -->  POSTROUTING  -->
+      mangle            |          mangle  	          ^  mangle
+       nat              |          filter             |  nat
+                        |                             |
+                        |                             |
+                        v                             |
+                      INPUT                         OUTPUT
+                        |  mangle                     ^  mangle
+                        |  filter                     |  nat
+                        v ----------->local---------->|  filter
+```
