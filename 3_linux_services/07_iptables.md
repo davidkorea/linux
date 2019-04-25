@@ -1,2 +1,6 @@
 - 安装主核心包
   - ```yum install -y iptables-services```
+- 启动服务，安装后默认不启动
+  - ```systemctl start iptables.service```
+  - ```systemctl enable iptables.service```
+  - ```systemctl status iptables.service```
