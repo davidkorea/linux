@@ -131,8 +131,7 @@ net.ipv4.ip_forward = 1
   ```
 - ```ip link set rinr up```
 - ```ip link set rins up```
-### 1. attach rins to br-in, rinr to r1
-#### i. rins -> br-in
+### 1. attach rins -> br-in
 - ```brctl addif br-in rins```, **rins no need to set ip**
   ```
   [root@server162 ~]# brctl addif br-in rins
@@ -142,7 +141,7 @@ net.ipv4.ip_forward = 1
                                                           vf1.0
                                                           vf2.0
   ```
-#### ii. rinr -> router r1(netns)
+### 2. attach rinr -> router r1(netns)
 - ```ip link set rinr netns r1```, now cannot find rinr in host, but can find in netns r1
   ```
   [root@server162 ~]# ip netns exec r1 ifconfig -a
@@ -163,7 +162,7 @@ net.ipv4.ip_forward = 1
           TX packets 16  bytes 1312 (1.2 KiB)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
-### 2. set 10.0.1.0/24 to all VMs
+### 3. set 10.0.1.0/24 to all VMs
 set ip and gateway
 #### i. VM1
 ```
