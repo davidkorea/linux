@@ -1,0 +1,2 @@
+- 安装主核心包
+  - ```yum install -y iptables-services```
