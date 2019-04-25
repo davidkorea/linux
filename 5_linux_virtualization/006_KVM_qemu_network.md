@@ -105,15 +105,15 @@ net.ipv4.ip_forward = 1
 - ```bash -n !$```, check syntax
 - ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
 - create VMs
-  - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=vf1.0,script=/etc/qemu-ifup --nographic```
-  - ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk-copy.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:44 -net tap,ifname=vf2.0,script=/etc/qemu-ifup --nographic```
+  - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=vif1.0,script=/etc/qemu-ifup --nographic```
+  - ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-x86_64-disk-copy.img,media=disk,if=virtio -net nic,macaddr=52:54:00:11:22:44 -net tap,ifname=vif2.0,script=/etc/qemu-ifup --nographic```
 - brctl show
   ```
   [root@server162 ~]# brctl show
   bridge name     bridge id               STP enabled     interfaces
   br-ex           8000.000c295e80e5       no              ens33
-  br-in           8000.6e18297c0a83       no              vf1.0
-                                                          vf2.0
+  br-in           8000.6e18297c0a83       no              vif1.0
+                                                          vif2.0
   ```
 ## 5.3 创建虚拟路由器(netns)
 - ```if netns add r1```
@@ -138,8 +138,8 @@ net.ipv4.ip_forward = 1
   [root@server162 ~]# brctl show
   bridge name     bridge id               STP enabled     interfaces
   br-in           8000.6a4d20b7d69a       no              rins
-                                                          vf1.0
-                                                          vf2.0
+                                                          vif1.0
+                                                          vif2.0
   ```
 ### 2. attach rinr -> router r1(netns)
 - ```ip link set rinr netns r1```, now cannot find rinr in host, but can find in netns r1
@@ -269,14 +269,14 @@ $ ping 192.168.0.1
 PING 192.168.0.1 (192.168.0.1): 56 data bytes
 ```
 - open another window, detect on host, every net interface can go out, 
-  - VM net-backend vf1.0 on br-in
+  - VM net-backend vif1.0 on br-in
   - rins on br-in
   - rinr(eth0) on r1
   - rexr(eth1) on r1
 ```
-[root@server162 ~]# tcpdump -i vf1.0 -nn icmp
+[root@server162 ~]# tcpdump -i vif1.0 -nn icmp
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
-listening on vf1.0, link-type EN10MB (Ethernet), capture size 262144 bytes
+listening on vif1.0, link-type EN10MB (Ethernet), capture size 262144 bytes
 15:02:36.839953 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 0, length 64
 15:02:37.842506 IP 10.0.1.1 > 192.168.0.1: ICMP echo request, id 27649, seq 1, length 64
 
