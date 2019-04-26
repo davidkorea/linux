@@ -51,11 +51,58 @@
 ## 4.2 网络名称空间实现访问外网 netns + iptables NAT 
 使用网络名称空间来模拟虚拟机
 ### 1. 创建网络名称空间
-
+```
+[root@server162 ~]# ip netns add vm-netns
+[root@server162 ~]# ip netns show
+vm-netns
+```
 ### 2. 创建一对网卡，一个放在物理机，一个放在网络名称空间
+- 创建一对网卡
+```
+[root@server162 ~]# ip link add vm-netns1.1 type veth peer name vm-netns1.2
+[root@server162 ~]# ip link show
+15: vm-netns1.2@vm-netns1.1: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether c2:86:55:2a:29:35 brd ff:ff:ff:ff:ff:ff
+16: vm-netns1.1@vm-netns1.2: <BROADCAST,MULTICAST,M-DOWN> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+    link/ether c2:f2:f9:35:4c:5d brd ff:ff:ff:ff:ff:ff
+```
+- 将其中一个放置vm-netns
+```
+[root@server162 ~]# ip link set vm-netns1.1 netns vm-netns
+[root@server162 ~]# ip netns exec vm-netns ifconfig -a
+lo: flags=8<LOOPBACK>  mtu 65536
+        loop  txqueuelen 1000  (Local Loopback)
 
+vm-netns1.1: flags=4098<BROADCAST,MULTICAST>  mtu 1500
+        ether c2:f2:f9:35:4c:5d  txqueuelen 1000  (Ethernet)
+```
 ### 3. 配置一对网卡的ip
+- 物理机vn-netns1.2
+```
+[root@server162 ~]# ifconfig vm-netns1.2 10.10.10.1/24 up
+[root@server162 ~]# ifconfig 
+vm-netns1.2: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 10.10.10.1  netmask 255.255.255.0  broadcast 10.10.10.255
+        ether c2:86:55:2a:29:35  txqueuelen 1000  (Ethernet)
+```
+- 虚拟机vm-netns1.1，网关指向vm-netns1.2的ip
+```
+[root@server162 ~]# ip netns exec vm-netns ifconfig vm-netns1.1 10.10.10.10/24
+[root@server162 ~]# ip netns exec vm-netns ifconfig 
+vm-netns1.1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.10  netmask 255.255.255.0  broadcast 10.10.10.255
 
+[root@server162 ~]# ip netns exec vm-netns route add default gw 10.10.10.1
+[root@server162 ~]# ip netns exec vm-netns route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         10.10.10.1      0.0.0.0         UG    0      0        0 vm-netns1.1
+10.10.10.0      0.0.0.0         255.255.255.0   U     0      0        0 vm-netns1.1
+[root@server162 ~]# ip netns exec vm-netns ping 10.10.10.1
+PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
+64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.340 ms
+64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.068 ms
+```
 ### 4. iptables
 
 
