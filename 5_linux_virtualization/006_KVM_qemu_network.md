@@ -103,8 +103,23 @@ PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.340 ms
 64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.068 ms
 ```
-### 4. iptables
-
+### 4. iptables SNAT，虚拟机与外网通信
+- ```iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -j SNAT --to 192.168.0.172```
+- ping物理网络成功
+```
+[root@server162 ~]# iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -j SNAT --to 192.168.0.172
+[root@server162 ~]# ip netns exec vm-netns ping 192.168.0.1
+PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+64 bytes from 192.168.0.1: icmp_seq=1 ttl=254 time=0.996 ms
+64 bytes from 192.168.0.1: icmp_seq=2 ttl=254 time=1.22 ms
+```
+- ping百度成功
+```
+[root@server162 ~]# ip netns exec vm-netns ping 123.125.114.144
+PING 123.125.114.144 (123.125.114.144) 56(84) bytes of data.
+64 bytes from 123.125.114.144: icmp_seq=1 ttl=47 time=47.1 ms
+64 bytes from 123.125.114.144: icmp_seq=2 ttl=47 time=46.9 ms
+```
 
 # 5. 复杂虚拟机网路实现（net namespace）
 all commands here is temporary, create ifcfg can make it permanent
