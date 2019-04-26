@@ -390,7 +390,7 @@ all the same with routed network, excpet the last step. select "any physical dev
 ## 4.2 Bridged network using a physical NIC, VLAN interface, bond interface, and bonded VLAN interface (aka shared physical interface)
 
 - In most of the production environment, you will be using a bridge confguration that directly connects a physical NIC to the bridge. 
-- The primary reason for using this confguration is that your virtual machine will act as a system that is in the same network as the physical NIC. 物理网卡直接连到虚拟网桥，是的虚拟机和物理机使用同一个网络
+- The primary reason for using this confguration is that your virtual machine will act as a system that is in the same network as the physical NIC. 物理网卡直接连到虚拟网桥，使得虚拟机和物理机使用同一个网络
 - Unlike the NATed mode, virtual machines can be accessed directly using their IP address, which is essential when you host a service
 on your virtual machines.
 
