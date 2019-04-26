@@ -1,4 +1,5 @@
-# 4. net namespace basics
+# 4. 网络名称空间ip netns
+## 4.1 net namespace basics
 - 创建网络名称空间
   - ```ip netns add r1```, ```ip netns add r2```
   - ```ip netns exec r1 COMMAND```
@@ -47,6 +48,17 @@
   64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.097 ms
   64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.071 ms
   ```
+## 4.2 网络名称空间实现访问外网 netns + iptables NAT 
+使用网络名称空间来模拟虚拟机
+### 1. 创建网络名称空间
+
+### 2. 创建一对网卡，一个放在物理机，一个放在网络名称空间
+
+### 3. 配置一对网卡的ip
+
+### 4. iptables
+
+
 # 5. 复杂虚拟机网路实现（net namespace）
 all commands here is temporary, create ifcfg can make it permanent
 
