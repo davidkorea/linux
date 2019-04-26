@@ -618,17 +618,16 @@ qemu-kvm -m 128 -cpu host -smp 2 -name test -drive file=cirros-0.3.4-x86_64-disk
 >   - 执行上面创建命令，我发启动ipxe，找不到问题所在。还原快照，重新安装qemu-kvm，解决
 > - Issue: qemu-kvm: -drive file=cirros-0.3.4-x86_64-disk.img,: drive with bus=0, unit=0 (index=0) exists”
 >   - 多数原因是参数前面少了 -，还是复制到同一行来执行命令
-
-
-```
-$ sudo su
-$ poweroff
-The system is going down NOW!
-Sent SIGTERM to all processes
-Requesting system poweroff
-[  343.310066] Power down.
-/etc/qemu-ifdown: could not launch network script
-```
+> - /etc/qemu-ifdown: could not launch network script
+>   ```
+>   $ sudo su
+>   $ poweroff
+>   The system is going down NOW!
+>   Sent SIGTERM to all processes
+>   Requesting system poweroff
+>   [  343.310066] Power down.
+>   /etc/qemu-ifdown: could not launch network script
+>   ```
 
 - 查看网卡后半段已经被添加到网桥br0
   ```
