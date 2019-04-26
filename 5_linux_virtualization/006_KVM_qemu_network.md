@@ -104,6 +104,14 @@ PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.068 ms
 ```
 ### 4. iptables SNAT，虚拟机与外网通信
+- 打开网络（网卡间）转发
+  ```
+  vim /etc/sysctl.conf 
+  net.ipv4.ip_forward = 1
+  
+  [root@server162 ~]# sysctl -p
+  net.ipv4.ip_forward = 1
+  ```
 - ```iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -j SNAT --to 192.168.0.172```
 - ping物理网络成功
 ```
