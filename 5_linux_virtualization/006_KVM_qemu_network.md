@@ -50,6 +50,14 @@
   ```
 ## 4.2 网络名称空间实现访问外网 netns + iptables NAT 
 使用网络名称空间来模拟虚拟机
+### 0. 打开网络（网卡间）转发
+```
+vim /etc/sysctl.conf 
+net.ipv4.ip_forward = 1
+
+[root@server162 ~]# sysctl -p
+net.ipv4.ip_forward = 1
+```
 ### 1. 创建网络名称空间
 ```
 [root@server162 ~]# ip netns add vm-netns
@@ -103,15 +111,24 @@ PING 10.10.10.1 (10.10.10.1) 56(84) bytes of data.
 64 bytes from 10.10.10.1: icmp_seq=1 ttl=64 time=0.340 ms
 64 bytes from 10.10.10.1: icmp_seq=2 ttl=64 time=0.068 ms
 ```
+- 由于网关指向来物理机的某一个网卡ip，还因为开启来网卡间转发，所以虚拟机可以ping通所有物理机网卡ip地址
+  - ping通所有物理机网卡ip，不代表可以ping通物理机所在网络，比如物理机网络的网关和其他ip都ping不同
+```
+[root@server162 ~]# ip netns exec vm-netns ping 192.168.0.162
+PING 192.168.0.162 (192.168.0.162) 56(84) bytes of data.
+64 bytes from 192.168.0.162: icmp_seq=1 ttl=64 time=0.096 ms
+
+[root@server162 ~]# ip netns exec vm-netns ping 192.168.0.172
+PING 192.168.0.172 (192.168.0.172) 56(84) bytes of data.
+64 bytes from 192.168.0.172: icmp_seq=1 ttl=64 time=0.551 ms
+
+[root@server162 ~]# ip netns exec vm-netns ping 192.168.0.1
+PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.		  # ping不通物理网络网关
+^C
+```
+
 ### 4. iptables SNAT，虚拟机与外网通信
-- 打开网络（网卡间）转发
-  ```
-  vim /etc/sysctl.conf 
-  net.ipv4.ip_forward = 1
-  
-  [root@server162 ~]# sysctl -p
-  net.ipv4.ip_forward = 1
-  ```
+
 - ```iptables -t nat -A POSTROUTING -s 10.10.10.0/24 -j SNAT --to 192.168.0.172```
 - ping物理网络成功
 ```
