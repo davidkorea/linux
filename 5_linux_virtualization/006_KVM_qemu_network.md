@@ -829,7 +829,7 @@ br0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
           TX packets 324  bytes 40104 (39.1 KiB)
           TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
   ```
-  **物理机外网ping不通！！！？？？ping百度失败。通过配置文件的方式，完全复制物理网卡的设定给br0试一下？估计是16，24这样的位数的原因**
+  **物理机外网ping不通！！！？？？ping百度域名失败，可ping通百度ip地址。通过配置文件的方式，完全复制物理网卡的设定给br0试一下？~~估计是16，24这样的位数的原因~~**
   > [把 ens33 绑到 br0 桥设备上](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/01_KVM_build.md#2-%E6%8A%8A-ens33-%E7%BB%91%E5%88%B0-br0-%E6%A1%A5%E8%AE%BE%E5%A4%87%E4%B8%8A)，使用配置文件的方式，完整配置桥接网络
   
 #### 2. 虚拟机网络设置
