@@ -458,6 +458,7 @@ SNAT       all  --  10.0.1.0/24         !10.0.1.0/24          to:192.168.0.111
   ```
   qemu-kvm -m 512 -smp 2 -name centos6 -drive file=/images/centos/centos6.qcow2,media=disk -net nic,macaddr=52:54:00:11:22:33 -net tap,ifname=centos6.0,script=/etc/qemu-ifup -boot order=nc,once=n -nographic
   ```
+  - nographic，当前界面下直接进入虚拟机，退出后，虚拟机自动关闭
 - 写了两个drive file，指定虚拟硬盘qcow2，指定安装镜像iso。
   ```
   qemu-kvm -m 512 -smp 2 -name centos -drive file=/images/centos/centos6.qcow2,format=qcow2,media=disk,if=virtio -drive file=/windowsshare/CentOS-7-x86_64-DVD-1810.iso,media=cdrom  -net nic,model=virtio -net tap,ifname=centos6.0 -boot order=dc,once=d
