@@ -1,3 +1,6 @@
-1. ovs
-2. GRE 通用路由封装，实现多个物理机商的虚拟机通信
-  - 是一种隧道技术，可以利用一种报文来承载和传输另一种报文
+# 1. Open vSwitch
+1. download atr.gz：http://www.openvswitch.org//download/
+2. tar xf 
+3. ```./configure```
+4. ```make -j 4```
+5. ```make install```
