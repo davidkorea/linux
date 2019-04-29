@@ -40,20 +40,29 @@
 
 
 - 启用内核路由转发功能：临时生效
+  ```
   [root@xuegod63 ~]#echo "1" > /proc/sys/net/ipv4/ip_forward
+  ```
 - 永久生效：
+  ```
   [root@xuegod63 ~]# vim /etc/sysctl.conf
   改：#net.ipv4.ip_forward = 0
   为： net.ipv4.ip_forward = 1
+  ```
   改完使配置生效：
+  ```
   [root@xuegod63 ~]# sysctl -p
-
+  ```
 
 - 配置之前，把前面的规则去除了，否认会达不到一定的效果
+  ```
   iptables -P INPUT ACCEPT
   iptables -F
+  ```
 - 配置SNAT：
+  ```
   [root@xuegod63 ~]#iptables -t nat -A POSTROUTING -s 192.168.2.0/24   -j  SNAT  --to 192.168.1.63
   或：
   [root@xuegod63 ~]#iptables -t nat -A POSTROUTING -s 192.168.2.0/24  -o eth0  -j MASQUERADE 
+  ```
 
