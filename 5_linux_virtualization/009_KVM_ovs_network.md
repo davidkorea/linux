@@ -1,6 +1,7 @@
 # KVM comprehensive network based on Open vSwitch
 
 # 1. Isolated Network
+## 1.1 Prepare
 - ```yum install -y qemu-kvm```
 - ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
 - ```mkdir -p /images/cirros```
@@ -36,17 +37,80 @@
   fi
   ```
   - ```chmod +x /etc/qemu-ifdown```
-
+## 1.2 Create VM
 - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown --nographic```，使用-nographic测试一下，然后退出，该虚拟机会自动被删除，检查网口是否会自动被删除
-- ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
+- VM1 ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
 
-- ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-2.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:02 -net tap,ifname=vif1.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
+- VM2 ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-2.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:02 -net tap,ifname=vif1.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
 
 - ```vncviewer :5900```
   - ```ifconfig eth0 10.0.10.1 netmask 255.255.255.0```
 - ```vncviewer :5901```
   - ```ifconfig eth0 10.0.10.2 netmask 255.255.255.0```
 - ping each other ok
+## 1.3 VLAN based on OVS
+- ```ovs-vsctl set port vif0.0 tag=10```
+  ```json
+  [root@node2 ~]# ovs-vsctl list port
+  _uuid               : 7e1bf174-3bcc-4ab1-b2b5-6837215a396c
+  bond_downdelay      : 0
+  bond_fake_iface     : false
+  bond_mode           : []
+  bond_updelay        : 0
+  external_ids        : {}
+  fake_bridge         : false
+  interfaces          : [42e743b2-9410-4c74-8f05-21943c28ab3f]
+  lacp                : []
+  mac                 : []
+  name                : "vif1.0"
+  other_config        : {}
+  qos                 : []
+  statistics          : {}
+  status              : {}
+  tag                 : []
+  trunks              : []
+  vlan_mode           : []
+
+  _uuid               : 6b248af5-a47e-4848-bd40-39a123b73d91
+  bond_downdelay      : 0
+  bond_fake_iface     : false
+  bond_mode           : []
+  bond_updelay        : 0
+  external_ids        : {}
+  fake_bridge         : false
+  interfaces          : [1cb0bba2-78bb-4838-ad7f-623c42822c08]
+  lacp                : []
+  mac                 : []
+  name                : br-in
+  other_config        : {}
+  qos                 : []
+  statistics          : {}
+  status              : {}
+  tag                 : []
+  trunks              : []
+  vlan_mode           : []
+
+  _uuid               : a5d43441-d4bf-4e87-a780-a6cc4243e10c
+  bond_downdelay      : 0
+  bond_fake_iface     : false
+  bond_mode           : []
+  bond_updelay        : 0
+  external_ids        : {}
+  fake_bridge         : false
+  interfaces          : [071debbf-7695-45d1-813e-46d5c5e572fe]
+  lacp                : []
+  mac                 : []
+  name                : "vif0.0"
+  other_config        : {}
+  qos                 : []
+  statistics          : {}
+  status              : {}
+  tag                 : 10
+  trunks              : []
+  vlan_mode           : []
+  ```
+
+
 
 
 # 0. Basic
