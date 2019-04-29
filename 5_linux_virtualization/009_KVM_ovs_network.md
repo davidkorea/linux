@@ -1,7 +1,8 @@
 # KVM comprehensive network based on Open vSwitch
 
 # 1. Isolated Network
-
+- ```yum install -y qemu-kvm```
+- ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
 
 
 
