@@ -175,10 +175,18 @@
   - ping 10.0.10.1 and 10.0.10.2 failed，because in different VLAN
   
 ## 1.5 Connect 2 vSwitch br-in and br-in-2
-
-
-
-
+- create a pair of if
+  - ```ip link add ifovs1 type veth peer name ifovs2```
+  - ```ip link set ifovs1 up```
+  - ```ip link set ifovs2 up```
+- add ifovs1 to br-in
+  - ```ovs-vsctl add-port br-in ifovs1```
+- add ifovs2 to br-in-2
+  - ```ovs-vsctl add-port br-in-2 ifovs2```
+- set VM on br-in-2 VLAN tag=10
+  - ```ovs-vsctl set port vif2.0 tag=10```
+  - ping VMs on br-in VLAN tag=10 success.
+  
 
 
 
