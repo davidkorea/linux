@@ -187,6 +187,7 @@
   - ```ovs-vsctl set port vif2.0 tag=10```
   - ping VMs on br-in VLAN tag=10 success.
   
+- **ifovs1和ifovs2 虽然没有设置为trunk模式，默认已经可以转发各个VLAN的信息**
 
 
 
