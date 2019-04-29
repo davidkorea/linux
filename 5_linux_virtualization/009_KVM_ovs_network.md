@@ -15,7 +15,15 @@ systemctl start  openvswitch
 - ovs vsctl list-br
 - ovs vsctl del-br br0
 - ovs vsctl add-port br0 eth0
+- ovs-vsctl del-port ens37
 - ovs vsctl list-ports br0
+- ovs-vsctl list-ifaces br0
+- database
+  - ovs-vsctl list br [不指定显示全部br，也可制定显示某一br]
+  - ovs-vsctl list port []
+  - ovs-vsctl list interface []
+
+
 
 
 
