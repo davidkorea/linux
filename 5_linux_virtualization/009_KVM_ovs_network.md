@@ -25,7 +25,7 @@
 
 
 
-
+- ```qemu-kvm -name cirros1 -m 128 -smp 1 -drive path=/images/cirros/cirros-0.3.4-1.img,if=virtio,media=disk -net nic,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/if-up,downscript=no -nographic```
 
 
 
