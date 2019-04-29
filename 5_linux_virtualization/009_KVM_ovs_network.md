@@ -18,10 +18,13 @@ systemctl start  openvswitch
 - ovs-vsctl del-port ens37
 - ovs vsctl list-ports br0
 - ovs-vsctl list-ifaces br0
-- database
+- database list
   - ovs-vsctl list br [不指定显示全部br，也可制定显示某一br]
-  - ovs-vsctl list port []
-  - ovs-vsctl list interface []
+  - ovs-vsctl list port [ens38]
+  - ovs-vsctl list interface [ens38]
+- database find
+  - ovs-vsctl find br name=br-in
+  - ovs-vsctl find port name=ens38
 
 
 
