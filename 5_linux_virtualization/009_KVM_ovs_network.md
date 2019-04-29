@@ -1,5 +1,26 @@
 # KVM comprehensive network based on Open vSwitch
 
+# 1. Isolated Network
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 0. Basic
 ## 1. Open vSwitch
 - 使用yum安装
 ```yum install -y openvswitch openvswitch-devel openvswitch-test openvswitch-debuginfor```
@@ -27,10 +48,6 @@ systemctl start  openvswitch
   - ovs-vsctl find port name=ens38
 - database set,add,remove,clear,destroy
     - ovs-vsctl set,add,remove,clear,destroy
-
-
-
-
 
 ## 2. 创建2个计算节点
 - 网卡1：仅主机，用于传送控制命令
