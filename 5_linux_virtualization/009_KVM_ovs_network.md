@@ -3,6 +3,9 @@
 # 1. Isolated Network
 - ```yum install -y qemu-kvm```
 - ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
+- ```mkdir -p /images/cirros```
+- ```cp cirros-0.3.4-x86_64-disk.img cirros-0.3.4-1.img```
+- ```cp cirros-0.3.4-x86_64-disk.img cirros-0.3.4-2.img```
 
 
 
