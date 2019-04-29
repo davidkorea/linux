@@ -42,9 +42,11 @@
 
 - ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-2.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:02 -net tap,ifname=vif1.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
 
-
-
-
+- ```vncviewer :5900```
+  - ```ifconfig eth0 10.0.10.1 netmask 255.255.255.0```
+- ```vncviewer :5901```
+  - ```ifconfig eth0 10.0.10.2 netmask 255.255.255.0```
+- ping each other ok
 
 
 # 0. Basic
