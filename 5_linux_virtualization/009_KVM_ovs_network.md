@@ -7,8 +7,21 @@
 - ```cp cirros-0.3.4-x86_64-disk.img cirros-0.3.4-1.img```
 - ```cp cirros-0.3.4-x86_64-disk.img cirros-0.3.4-2.img```
 
+- qemu-ifup script
+  ```bash
+  #!/bin/bash
+  bridge='br-in'
 
-
+  if [ -n '$1' ]; then
+          ip link set $1 up
+          ovs-vsctl add-port $bridge $1
+          [ $? -eq 0 ] && exit 0 || exit 1
+  else
+          echo "Error: no interface specified."
+          exit 1
+  fi
+  ```
+  - ```chmod +x /etc/qemu-ifup ```
 
 
 
