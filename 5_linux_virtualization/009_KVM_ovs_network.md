@@ -25,6 +25,8 @@ systemctl start  openvswitch
 - database find
   - ovs-vsctl find br name=br-in
   - ovs-vsctl find port name=ens38
+- database set,add,remove,clear,destroy
+    - ovs-vsctl set,add,remove,clear,destroy
 
 
 
