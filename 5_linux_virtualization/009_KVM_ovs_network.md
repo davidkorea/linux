@@ -12,6 +12,7 @@ systemctl start  openvswitch
 
 - ovs vsctl add-br br0
 - ovs vsctl list-br
+- ovs vsctl del-br br0
 - ovs vsctl add-port br0 eth0
 - ovs vsctl list-ports br0
 
