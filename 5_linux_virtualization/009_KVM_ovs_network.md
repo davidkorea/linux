@@ -50,7 +50,7 @@
 - ping each other ok
 ## 1.3 VLAN based on OVS
 - ```ovs-vsctl set port vif0.0 tag=10```
-  ```json
+  ```js
   [root@node2 ~]# ovs-vsctl list port
   _uuid               : 7e1bf174-3bcc-4ab1-b2b5-6837215a396c
   bond_downdelay      : 0
