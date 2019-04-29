@@ -109,6 +109,9 @@
   trunks              : []
   vlan_mode           : []
   ```
+  
+- ```ovs-vsctl set port vif1.0 tag=10```，all port in tag=10 VLAN，ping ok
+
 ## 1.4 create a new open vSwitch 
 - ```ovs-vsctl add-br br-in-2```
 - qemu-ifup/down script
@@ -164,7 +167,9 @@
             Interface "vif0.0"
     ovs_version: "2.0.0"
 ```
-
+- ```vncviewer :5902```
+  - ```ifconfig eth0 10.0.10.3 netmask 255.255.255.0```
+  - ping 10.0.10.1 and 10.0.10.2 failed，because in different VLAN
 
 # 0. Basic
 ## 1. Open vSwitch
