@@ -139,10 +139,31 @@
           exit 2
   fi
   ```
-- disk img
-  - ```cp /images/cirros/cirros-0.3.4-1.img /images/cirros/cirros-0.3.4-3.img```
-- ```qemu-kvm -m 128 -smp 1 -name cirros3 -drive file=/images/cirros/cirros-0.3.4-3.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:03 -net tap,ifname=vif2.0,script=/etc/qemu-ifup-2,downscript=/etc/qemu-ifdown-2 -daemonize```
+- ```cp /images/cirros/cirros-0.3.4-1.img /images/cirros/cirros-0.3.4-3.img```
+  
+- VM3```qemu-kvm -m 128 -smp 1 -name cirros3 -drive file=/images/cirros/cirros-0.3.4-3.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:03 -net tap,ifname=vif2.0,script=/etc/qemu-ifup-2,downscript=/etc/qemu-ifdown-2 -daemonize```
 
+- ```[root@node2 cirros]# ovs-vsctl show```
+  ```
+  df20662b-d6a9-46dd-99c8-198b637319f9
+    Bridge "br-in-2"
+        Port "vif2.0"
+            Interface "vif2.0"
+        Port "br-in-2"
+            Interface "br-in-2"
+                type: internal
+    Bridge br-in
+        Port br-in
+            Interface br-in
+                type: internal
+        Port "vif1.0"
+            tag: 10
+            Interface "vif1.0"
+        Port "vif0.0"
+            tag: 10
+            Interface "vif0.0"
+    ovs_version: "2.0.0"
+```
 
 
 # 0. Basic
