@@ -22,13 +22,22 @@
   fi
   ```
   - ```chmod +x /etc/qemu-ifup ```
+- qemu-ifdown script
+  ```bash
+  #!/bin/bash
+  bridge=br-in
+  if [ -n "$1" ]; then
+          ip link set $1 down
+          ovs-vsctl del-port $bridge $1
+          [ $? -q 0 ] && exit 0 || exit 1
+  else
+          echo "Error: no port specified"
+          exit 2
+  fi
+  ```
 
 
-
-- ```qemu-kvm -name cirros1 -m 128 -smp 1 -drive path=/images/cirros/cirros-0.3.4-1.img,if=virtio,media=disk -net nic,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/if-up,downscript=no -nographic```
-
-
-
+- ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown --nographic```
 
 
 
