@@ -1,6 +1,6 @@
 # KVM comprehensive network based on Open vSwitch
 
-# 1. Isolated Network
+# 1. Isolated Network with tagged VLAN
 ## 1.1 Prepare
 - ```yum install -y qemu-kvm```
 - ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
@@ -26,7 +26,7 @@
 - qemu-ifdown script
   ```bash
   #!/bin/bash
-  bridge=br-in
+  bridge='br-in'
   if [ -n "$1" ]; then
           ip link set $1 down
           ovs-vsctl del-port $bridge $1
@@ -109,7 +109,39 @@
   trunks              : []
   vlan_mode           : []
   ```
+## 1.4 create a new open vSwitch 
+- ```ovs-vsctl add-br br-in-2```
+- qemu-ifup/down script
+  - ```cp /etc/qemu-ifup /etc/qemu-ifup-2```
+  ```bash
+  #!/bin/bash
+  bridge='br-in-2'
 
+  if [ -n '$1' ]; then
+          ip link set $1 up
+          ovs-vsctl add-port $bridge $1
+          [ $? -eq 0 ] && exit 0 || exit 1
+  else
+          echo "Error: no interface specified."
+          exit 1
+  fi
+  ```
+  - ```cp /etc/qemu-ifup /etc/qemu-ifdown-2```
+  ```bash
+  #!/bin/bash
+  bridge='br-in-2'
+  if [ -n "$1" ]; then
+          ip link set $1 down
+          ovs-vsctl del-port $bridge $1
+          [ $? -q 0 ] && exit 0 || exit 1
+  else
+          echo "Error: no port specified"
+          exit 2
+  fi
+  ```
+- disk img
+  - ```cp /images/cirros/cirros-0.3.4-1.img /images/cirros/cirros-0.3.4-3.img```
+- ```qemu-kvm -m 128 -smp 1 -name cirros3 -drive file=/images/cirros/cirros-0.3.4-3.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:03 -net tap,ifname=vif2.0,script=/etc/qemu-ifup-2,downscript=/etc/qemu-ifdown-2 -daemonize```
 
 
 
