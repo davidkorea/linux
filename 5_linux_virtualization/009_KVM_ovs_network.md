@@ -11,6 +11,7 @@ systemctl start  openvswitch
 参考：[虚拟化云计算-centos7上安装测试Open vSwitch](https://blog.51cto.com/11555417/2163495)
 
 - ovs vsctl add-br br0
+- ovs vsctl show
 - ovs vsctl list-br
 - ovs vsctl del-br br0
 - ovs vsctl add-port br0 eth0
