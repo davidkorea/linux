@@ -169,7 +169,7 @@
             tag: 10
             Interface "vif0.0"
     ovs_version: "2.0.0"
-```
+  ```
 - ```vncviewer :5902```
   - ```ifconfig eth0 10.0.10.3 netmask 255.255.255.0```
   - ping 10.0.10.1 and 10.0.10.2 failed，because in different VLAN
