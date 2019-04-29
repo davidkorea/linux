@@ -7,7 +7,8 @@
 - ```mkdir -p /images/cirros```
 - ```cp cirros-0.3.4-x86_64-disk.img cirros-0.3.4-1.img```
 - ```cp cirros-0.3.4-x86_64-disk.img cirros-0.3.4-2.img```
-
+- ```cp cirros-0.3.4-x86_64-disk.img cirros-0.3.4-3.img```
+## 1.2 Isolated Network - 1 （br-in）
 - qemu-ifup script
   ```bash
   #!/bin/bash
@@ -37,7 +38,7 @@
   fi
   ```
   - ```chmod +x /etc/qemu-ifdown```
-## 1.2 Create VM
+  
 - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown --nographic```，使用-nographic测试一下，然后退出，该虚拟机会自动被删除，检查网口是否会自动被删除
 - VM1 ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
 
@@ -48,7 +49,8 @@
 - ```vncviewer :5901```
   - ```ifconfig eth0 10.0.10.2 netmask 255.255.255.0```
 - ping each other ok
-## 1.3 VLAN based on OVS
+
+## 1.3 VLAN in same switch
 - ```ovs-vsctl set port vif0.0 tag=10```, ping failed even 2 VMs on the same switch and in same subnet.
   ```
   [root@node2 ~]# ovs-vsctl list port
@@ -112,7 +114,8 @@
   
 - ```ovs-vsctl set port vif1.0 tag=10```，all port in tag=10 VLAN，ping ok
 
-## 1.4 create a new open vSwitch 
+## 1.4 Isolated Network - 2 （br-in-2）
+
 - ```ovs-vsctl add-br br-in-2```
 - qemu-ifup/down script
   - ```cp /etc/qemu-ifup /etc/qemu-ifup-2```
@@ -170,6 +173,14 @@
 - ```vncviewer :5902```
   - ```ifconfig eth0 10.0.10.3 netmask 255.255.255.0```
   - ping 10.0.10.1 and 10.0.10.2 failed，because in different VLAN
+  
+## 1.5 Connect 2 vSwitch br-in and br-in-2
+
+
+
+
+
+
 
 # 0. Basic
 ## 1. Open vSwitch
