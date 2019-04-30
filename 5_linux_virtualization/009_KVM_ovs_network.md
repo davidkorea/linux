@@ -16,9 +16,16 @@
 - ```ovs-vsctl add-port br-in sif0```
 - ```ip netns exec r0 ifconfig rif0 up```
 - ```ip netns exec r0 ip addr add 10.0.10.254/24 dev rif0```
-- ```yum install -y dnsmsq```
-
-
+- ```yum install -y dnsmasq```
+- ```ip netns exec r0 dnsmasq -F 10.0.10.200,10.0.10.220,86400 -i rif0```
+- ```ip netns exec r0 ss -unl```, listen on port 67
+  ```
+  [root@node2 ~]# ip netns exec r0 ss -unl
+  State      Recv-Q Send-Q   Local Address:Port                  Peer Address:Port              
+  UNCONN     0      0                    *:53                               *:*                  
+  UNCONN     0      0                    *:67                               *:*                  
+  UNCONN     0      0                   :::53                              :::*    
+  ```
 
 
 
