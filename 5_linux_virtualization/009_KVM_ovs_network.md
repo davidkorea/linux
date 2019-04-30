@@ -2,7 +2,7 @@
 # 2. GRE (2 Hosts)
 - 2 physical node different network
 - VMs on that 2 nodes can communicate
-- GRE in OSI layer3
+- GRE in OSI layer3，是一种隧道技术
 
 
 
