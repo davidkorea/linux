@@ -1,8 +1,8 @@
 # KVM comprehensive network based on Open vSwitch
-# 2. (2 Hosts)
-
-
-
+# 2. GRE (2 Hosts)
+- 2 physical node different network
+- VMs on that 2 nodes can communicate
+- GRE in OSI layer3
 
 
 
