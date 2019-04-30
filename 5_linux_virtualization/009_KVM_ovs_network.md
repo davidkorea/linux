@@ -7,6 +7,7 @@
 
 
 # 1. Isolated Network with tagged VLAN (1 Host)
+![](https://i.loli.net/2019/04/30/5cc7bce026936.png)
 ## 1.1 Prepare
 - ```yum install -y qemu-kvm```
 - ```ln -sv /usr/libexec/qemu-kvm /usr/bin/```
