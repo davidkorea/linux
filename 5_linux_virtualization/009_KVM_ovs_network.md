@@ -90,7 +90,15 @@
   - ping 物理节点Node1上的虚拟机 10.0.10.209 成功
 
 
-
+## 3. tcpdump
+- Node1 的ens38上抓包
+  ```
+  [root@node2 ~]# tcpdump -i ens38 -nn
+  tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+  listening on ens38, link-type EN10MB (Ethernet), capture size 262144 bytes
+  17:14:30.805701 IP 192.168.100.2 > 192.168.100.1: GREv0, length 102: IP 10.0.10.204 > 10.0.10.209: ICMP echo request, id 24577, seq 0, length 64
+  17:14:30.806629 IP 192.168.100.1 > 192.168.100.2: GREv0, length 102: IP 10.0.10.209 > 10.0.10.204: ICMP echo reply, id 24577, seq 0, length 64
+  ```
 
 
 
