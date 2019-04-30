@@ -1,19 +1,21 @@
 # KVM comprehensive network based on Open vSwitch
 
-# 5. VXLAN虚拟机与外网通信
+# 5. VLAN(GRE)虚拟机与外网通信
+> 之所以使用GRE，而不使用VXLAN，是因为使用GRE更容易抓包，看到具体封装信息。而VXLAN的封装内容看不到
+
 - 物理节点Node3，实现其他物理节点上的虚拟机与外网通信。此思路与openstack一致
 - delete the vx0 port created last STEP in both node1 and node2
   - ```ovs-vsctl del-port vx0```
-
-## 5.1 Network Adapter
+## 5.1 Node3
+### 1 Network Adapter
 - Network Adapter1 - bridge     -> ens33  - 外网通信
 - Network Adapter1 - Host Only  -> ens37  - 内部管理用
   - 192.168.10.12
 - Network Adapter1 - VMnet2     -> ens38  - 虚拟机之间通信
   - 192.168.100.3
 
-## 5.2 创建br-ex
-- create ifcfg-br-ex
+### 2 创建br-ex
+- create ifcfg-br-ex, 配置文件方式创建桥，相当于brctl命令创建，可以使用brctl show查看到
   ```diff
     TYPE="Bridge"
     BOOTPROTO="none"
@@ -37,7 +39,68 @@
   + BRIDGE="br-ex"
   ```
 - ```service network restart```
-## 5.3 
+### 3. 使用ovs创建br-in
+- ```ovs-vsctl add-br br-in```
+
+### 4. 创建在br-in上创建gre0接口
+- ```ovs-vsctl add-port br-in gre0 -- set interface gre0 type=gre options:remote_ip=192.168.100.1```
+- 可以再此节点创建一个虚拟机进行测试gre，此处忽略测试
+
+### 5. 创建虚拟路由器r0 （netns）
+- ```ip netns add r0```
+- 创建2对网卡，一对用于r0和br-in，一对用于r0和br-ex
+  - ```ip link add rex0 type veth peer name sex0```, router external, switch external
+  - ```ip link add rin0 type veth peer name sin0```,
+  - ```ip link set sin0 up```, ```ip link set sex0 up```
+- r0 <-> br-in
+  - sin0 -> br-in ```ovs-vsctl add-port br-in sin0```
+  - rin0 -> r0 ```ip link set rin0 netns r0```
+- r0 <-> br-ex
+  - sex0 -> br-ex ```brctl addif br-ex sex0```
+  - rex0 -> r0 ```ip link set rex0 netns r0```
+
+- r0
+  ```
+  [root@node4 ~]# ip netns exec r0 ip link show
+  1: lo: <LOOPBACK> mtu 65536 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+  2: gre0@NONE: <NOARP> mtu 1476 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/gre 0.0.0.0 brd 0.0.0.0
+  3: gretap0@NONE: <BROADCAST,MULTICAST> mtu 1462 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether 00:00:00:00:00:00 brd ff:ff:ff:ff:ff:ff
+  14: rin0@if13: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether 22:ea:5a:38:fe:1a brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  16: rex0@if15: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
+      link/ether 76:10:36:ef:38:e0 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+  ```
+### 6. 配置路由器r0各接口ip
+- 网卡间转发
+```
+[root@node4 ~]# vim /etc/sysctl.conf
+net.ipv4.ip_forward = 1
+
+[root@node4 ~]# sysctl -p
+```
+- rin0
+  - 
+
+
+
+
+
+## 5.2 Node1
+### 1. 创建gre0接口
+- ```ovs-vsctl add-port br-in gre0```
+- ```ovs-vsctl set interface gre0 type=gre options:remote_ip=192.168.100.254```
+
+
+
+
+
+
+
+
+
 
 
 
