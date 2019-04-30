@@ -14,9 +14,9 @@
 - ```ip link set rif0 up```, ```ip link set sif0 up```
 - ```ip link set rif0 netns r0```
 - ```ovs-vsctl add-port br-in sif0```
-
-
-
+- ```ip netns exec r0 ifconfig rif0 up```
+- ```ip netns exec r0 ip addr add 10.0.10.254/24 dev rif0```
+- ```yum install -y dnsmsq```
 
 
 
