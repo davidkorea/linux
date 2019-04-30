@@ -12,7 +12,8 @@
 - ```ip netns add r0```
 - ```ip link add sif0 type veth peer name rif0```
 - ```ip link set rif0 up```, ```ip link set sif0 up```
-
+- ```ip link set rif0 netns r0```
+- ```ovs-vsctl add-port br-in sif0```
 
 
 
