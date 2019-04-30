@@ -4,7 +4,7 @@
 - VMs on that 2 nodes can communicate
 - GRE in OSI layer3，是一种隧道技术，使用一种报文来承载和传输另一种报文，如以太网帧
 - 为简化，将2个物理节点放在同一网络，虽然不同网络可以实现GRE，但是需要再配置路由
-
+- 删除上一步创建的所有虚拟机
 
 # 1. Isolated Network with tagged VLAN (1 Host)
 ![](https://i.loli.net/2019/04/30/5cc7bce026936.png)
