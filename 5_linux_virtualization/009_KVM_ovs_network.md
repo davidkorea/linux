@@ -1,8 +1,19 @@
 # KVM comprehensive network based on Open vSwitch
 
+# 4. 不同物理机上的VM VXLAN 通信 (2 Hosts)
+> **All the operations are based on STEP2 & STEP3，inlcuding DHCP. BUT NO need the peer net interface gre0 between 2 switches located in 2 physical nodes**
+
+- delete VLAN tag set last step in both phtsical nodes.
+
+
+
+
+
+
 # 3. 不同物理机上的VM VLAN 通信- GRE (2 Hosts)
-- GRE: Generic Routing Encapsulation 通用路由封装
-> **All the operations are based on STEP2，inlcuding DHCP and the peer net interface between 2 switches located in 2 physical nodes**
+> **All the operations are based on STEP2，inlcuding DHCP and the peer net interface gre0 between 2 switches located in 2 physical nodes**
+> 
+> - GRE: Generic Routing Encapsulation 通用路由封装
 
 - Node1
   - VM1  --- VLAN1
