@@ -2,6 +2,7 @@
 
 # 4. 不同物理机上的VM VXLAN 通信 (2 Hosts)
 > **All the operations are based on STEP2 & STEP3，inlcuding DHCP. BUT NO need the peer net interface gre0 between 2 switches located in 2 physical nodes**
+> - VLAN需要借助GRE协议的隧道来实现跨物理机通信，VXLAN无需借助GRE可以直接实现跨物理机通信
 
 - VXLAN 支持 VLAN的功能，同时还不需要gre0这个接口，其机制几乎和VLAN一模一样，但是VXLAN支持比VLAN4096多得多的分段
 
@@ -13,6 +14,46 @@
 
 - 此时，由于切断了两个物理节点交换机的连接gre0，所以每个物理节点上的虚拟机可以互相通信，但是跨物理机无法通信
 
+## 4.1 Node1
+- 创建VXLAN接口 ```ovs-vsctl add-port br-in vx0 -- set interface vx0 type=vxlan options:remote_ip=192.168.100.2```
+  ```
+  [root@node2 ~]# ovs-vsctl add-port br-in vx0 -- set interface vx0 type=vxlan options:remote_ip=192.168.100.2
+  [root@node2 ~]# ovs-vsctl show
+  df20662b-d6a9-46dd-99c8-198b637319f9
+      Bridge br-in
+          Port "vif0.0"
+              Interface "vif0.0"
+          Port "vx0"
+              Interface "vx0"
+                  type: vxlan
+                  options: {remote_ip="192.168.100.2"}
+          Port "sif0"
+              Interface "sif0"
+          Port br-in
+              Interface br-in
+                  type: internal
+          Port "vif1.0"
+              Interface "vif1.0"
+      ovs_version: "2.0.0"
+  ```
+  ```
+  [root@node2 ~]# ovs-vsctl list interface vx0
+  mac_in_use          : "3a:80:db:bc:d4:6c"
+  mtu                 : []
+  name                : "vx0"
+  ofport              : 16
+  ofport_request      : []
+  options             : {remote_ip="192.168.100.2"}
+  other_config        : {}
+  statistics          : {collisions=0, rx_bytes=0, rx_crc_err=0, rx_dropped=0, rx_errors=0, rx_frame_err=0, rx_over_err=0, rx_packets=0, tx_bytes=0, tx_dropped=0, tx_errors=0, tx_packets=0}
+  status              : {tunnel_egress_iface="ens38", tunnel_egress_iface_carrier=up}
+  type                : vxlan
+  ```
+
+## 4.2 Node2
+- ```ovs-vsctl add-port br-in vx0 -- set interface vx0 type=vxlan options:remote_ip=192.168.100.1```
+
+此时，2个物理节点上的虚拟机全部可以互相通信
 
 
 
@@ -24,10 +65,13 @@
 
 
 
-# 3. 不同物理机上的VM VLAN 通信- GRE (2 Hosts)
+
+
+# 3. 不同物理机上的VM VLAN 通信 - GRE (2 Hosts)
 > **All the operations are based on STEP2，inlcuding DHCP and the peer net interface gre0 between 2 switches located in 2 physical nodes**
 > 
 > - GRE: Generic Routing Encapsulation 通用路由封装
+> - 借助GRE协议来实现VLAN
 
 - Node1
   - VM1  --- VLAN1
