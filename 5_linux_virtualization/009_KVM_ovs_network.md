@@ -12,9 +12,32 @@
 - Network Adapter1 - VMnet2     -> ens38  - 虚拟机之间通信
   - 192.168.100.3
 
-
-
-
+## 5.2 创建br-ex
+- create ifcfg-br-ex
+  ```diff
+    TYPE="Bridge"
+    BOOTPROTO="none"
+    NAME="br-ex"
+    DEVICE="br-ex"
+    ONBOOT="yes"
+  + NM_CONTROLLED="no"
+  + IPADDR=192.168.0.113
+  + NETMASK=255.255.255.0
+  + GATEWAY=192.168.0.1
+  + DNS1=168.126.63.1
+  ```
+- modify ifcfg-ens33
+  ```diff
+    TYPE="Ethernet"
+    BOOTPROTO="none"
+    NAME="ens33"
+    DEVICE="ens33"
+    ONBOOT="yes"
+  + NM_CONTROLLED="no"
+  + BRIDGE="br-ex"
+  ```
+- ```service network restart```
+## 5.3 
 
 
 
