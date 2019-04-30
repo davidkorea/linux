@@ -26,7 +26,8 @@
   UNCONN     0      0                    *:67                               *:*                  
   UNCONN     0      0                   :::53                              :::*    
   ```
-
+### 2. 创建VM
+- ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
 
 
 
