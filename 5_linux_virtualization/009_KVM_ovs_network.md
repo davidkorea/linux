@@ -1,13 +1,12 @@
 # KVM comprehensive network based on Open vSwitch
 
 # 3. 不同物理机上的VM VLAN 通信- GRE (2 Hosts)
-- 物理节点
-  - Node1
-    - VM1  --- VLAN1
-    - VM2  -.-.-.-.-.-.-.-.-.- VLAN2
-  - Node2
-    - VM3  --- VLAN1
-    - VM4  -.-.-.-.-.-.-.-.-.-  VLAN2
+- Node1
+  - VM1  --- VLAN1
+  - VM2  -.-.-.-.-.-.-.-.-.- VLAN2
+- Node2
+  - VM3  --- VLAN1
+  - VM4  -.-.-.-.-.-.-.-.-.-  VLAN2
 
 
 
