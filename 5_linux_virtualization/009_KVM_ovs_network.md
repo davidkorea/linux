@@ -86,7 +86,8 @@
 ### 4. 再次创建VM
 - 删掉之前创建的虚拟机，再次创建，查看是否可以获取到dhcp ip地址
 - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
-
+  - 开机自动获取ip 10.0.10.204
+  - ping 物理节点Node1上的虚拟机 10.0.10.209 成功
 
 
 
