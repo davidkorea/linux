@@ -80,8 +80,28 @@ All the 4 DHCP IPs could ping each other.
 ### 2. Node2
 - ```ovs-vsctl set port vif0.0 tag=10```
 - ```ovs-vsctl set port vif1.0 tag=20```
-
-
+- 
+  ```
+  [root@node3 ~]# ovs-vsctl show
+  3892b9a9-c656-44dc-8ad1-d7e5711bd42b
+      Bridge br-in
+          Port br-in
+              Interface br-in
+                  type: internal
+          Port "vif1.0"
+              tag: 20
+              Interface "vif1.0"
+          Port "vif0.0"
+              tag: 10
+              Interface "vif0.0"
+          Port "gre0"
+              Interface "gre0"
+                  type: gre
+                  options: {remote_ip="192.168.100.1"}
+      ovs_version: "2.0.0"
+  ```
+- 10.0.10.204 ping 10.0.10.205 failed.
+- 10.0.10.205 ping 10.0.10.210 success.
 
 
 
