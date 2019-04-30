@@ -1,7 +1,7 @@
 # KVM comprehensive network based on Open vSwitch
 
 # 3. 不同物理机上的VM VLAN 通信- GRE (2 Hosts)
-**All the operations are based on STEP2，inlcuding DHCP and the peer net interface between 2 switches located in 2 physical nodes**
+> **All the operations are based on STEP2，inlcuding DHCP and the peer net interface between 2 switches located in 2 physical nodes**
 
 - Node1
   - VM1  --- VLAN1
