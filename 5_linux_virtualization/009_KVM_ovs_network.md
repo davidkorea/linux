@@ -35,6 +35,26 @@
   - 开机自动获取ip 10.0.10.209，并自动获取掩码255.255.255.0，虽然创建dnsmasq时并没有指定
 ### 3. 配置ens38（VMNET2）
 - ```ip addr add 192.168.100.1/24 dev ens38```
+### 4. 创建并配置GRE接口
+- ```ovs-vsctl add-port br-in gre0```
+- ```ovs-vsctl set interface gre0 type=gre options:remote_ip=192.168.100.2```
+- 
+  ```
+  [root@node2 ~]# ovs-vsctl list interface gre0
+  _uuid               : 440d94ea-36ee-4e18-9fd5-a75719d5694f
+  ......
+  mac                 : []
+  mac_in_use          : "b2:53:69:e6:7e:a2"
+  mtu                 : []
+  name                : "gre0"
+  ofport              : 14
+  ofport_request      : []
+  options             : {remote_ip="192.168.100.2"}
+  other_config        : {}
+  statistics          : {collisions=0, rx_bytes=0, rx_crc_err=0, rx_dropped=0, rx_errors=0, rx_frame_err=0, rx_over_err=0, rx_packets=0, tx_bytes=0, tx_dropped=0, tx_errors=0, tx_packets=0}
+  status              : {tunnel_egress_iface="ens38", tunnel_egress_iface_carrier=up}
+  type                : gre
+  ```
 
 ## 2.2 Node 2
 ### 1. 创建VM
@@ -42,7 +62,7 @@
 - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```, 注意更改mac地址
 
 ### 2. 配置ens38（VMNET2）
-- ```ip addr add 192.168.100.2/24 dev ens38```
+- ```ip addr add 192.168.100.2/24 dev ens38```，因为同在vmware的VMnet2，192.168。100.0、24已经可以通信
 
 
 
