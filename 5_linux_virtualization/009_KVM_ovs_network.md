@@ -30,10 +30,56 @@ All the 4 DHCP IPs could ping each other.
 
 ## 3.2 划分VLAN
 
+### 1. Node1
+- ```ovs-vsctl set port vif0.0 tag=10```
+- ```ovs-vsctl set port vif1.0 tag=20```
+  ```
+  [root@node2 ~]# ovs-vsctl set port vif0.0 tag=10
+  [root@node2 ~]# ovs-vsctl set port vif1.0 tag=20
+  [root@node2 ~]# ovs-vsctl list port vif0.0
+  _uuid               : 03f6b1a9-9612-4619-a698-8250dbbd68e5
+  bond_downdelay      : 0
+  bond_fake_iface     : false
+  bond_mode           : []
+  bond_updelay        : 0
+  external_ids        : {}
+  fake_bridge         : false
+  interfaces          : [39ba85c3-b33c-4f9f-8719-2ae6781e6085]
+  lacp                : []
+  mac                 : []
+  name                : "vif0.0"
+  other_config        : {}
+  qos                 : []
+  statistics          : {}
+  status              : {}
+  tag                 : 10
+  trunks              : []
+  vlan_mode           : []
+  [root@node2 ~]# ovs-vsctl list port vif1.0
+  _uuid               : 8b4e55c7-5178-40ae-96ff-5535046b1c70
+  bond_downdelay      : 0
+  bond_fake_iface     : false
+  bond_mode           : []
+  bond_updelay        : 0
+  external_ids        : {}
+  fake_bridge         : false
+  interfaces          : [da2a90df-becd-49f2-9284-018679a3de92]
+  lacp                : []
+  mac                 : []
+  name                : "vif1.0"
+  other_config        : {}
+  qos                 : []
+  statistics          : {}
+  status              : {}
+  tag                 : 20
+  trunks              : []
+  vlan_mode           : []
+  ```
+- 10.0.10.209 and 10.0.10.210 ping failed.
 
-
-
-
+### 2. Node2
+- ```ovs-vsctl set port vif0.0 tag=10```
+- ```ovs-vsctl set port vif1.0 tag=20```
 
 
 
