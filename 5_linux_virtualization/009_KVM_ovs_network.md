@@ -6,6 +6,50 @@
 - 为简化，将2个物理节点放在同一网络，虽然不同网络可以实现GRE，但是需要再配置路由
 - 删除上一步创建的所有虚拟机，只留下br-in桥，删除其他桥和接口
 
+## 2.1 Node 1
+### 1. 创建DHCP（netns）
+- ```yum update iproute -y```
+- ```ip netns add r0```
+- ```ip link add sif0 type veth peer name rif0```
+- ```ip link set rif0 up```, ```ip link set sif0 up```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
