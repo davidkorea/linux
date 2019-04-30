@@ -1,6 +1,8 @@
 # KVM comprehensive network based on Open vSwitch
 
 # 3. 不同物理机上的VM VLAN 通信- GRE (2 Hosts)
+**All the operations are based on STEP2，inlcuding DHCP and the peer net interface between 2 switches located in 2 physical nodes**
+
 - Node1
   - VM1  --- VLAN1
   - VM2  -.-.-.-.-.-.-.-.-.- VLAN2
@@ -24,9 +26,9 @@
   - ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-2.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:02 -net tap,ifname=vif1.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
   - DHCP IP 10.0.10.205
 
+All the 4 DHCP IPs could ping each other.
 
-
-
+## 3.2 划分VLAN
 
 
 
