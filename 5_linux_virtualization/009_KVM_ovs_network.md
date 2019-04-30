@@ -3,7 +3,21 @@
 # 4. 不同物理机上的VM VXLAN 通信 (2 Hosts)
 > **All the operations are based on STEP2 & STEP3，inlcuding DHCP. BUT NO need the peer net interface gre0 between 2 switches located in 2 physical nodes**
 
-- delete VLAN tag set last step in both phtsical nodes.
+- VXLAN 支持 VLAN的功能，同时还不需要gre0这个接口，其机制几乎和VLAN一模一样，但是VXLAN支持比VLAN4096多得多的分段
+
+- remove VLAN tag set last step in both phtsical nodes.
+  - ```ovs-vsctl remove port vif0.0 tag 10```
+  - ```ovs-vsctl remove port vif1.0 tag 20```
+- remove gre0 in both phtsical nodes.
+  - ```ovs-vsctl del-port gre0```
+
+- 此时，由于切断了两个物理节点交换机的连接gre0，所以每个物理节点上的虚拟机可以互相通信，但是跨物理机无法通信
+
+
+
+
+
+
 
 
 
