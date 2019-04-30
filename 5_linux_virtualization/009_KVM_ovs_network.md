@@ -1,6 +1,7 @@
 # KVM comprehensive network based on Open vSwitch
 
 # 3. 不同物理机上的VM VLAN 通信- GRE (2 Hosts)
+- GRE: Generic Routing Encapsulation 通用路由封装
 > **All the operations are based on STEP2，inlcuding DHCP and the peer net interface between 2 switches located in 2 physical nodes**
 
 - Node1
