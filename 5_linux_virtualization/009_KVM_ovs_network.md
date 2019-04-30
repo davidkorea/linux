@@ -3,18 +3,12 @@
 # 3. 不同物理机上的VM VLAN 通信- GRE (2 Hosts)
 - 物理节点
   - Node1
-    - VM1
-    - VM2
+    - VM1  --- VLAN1
+    - VM2  ---------VLAN2
   - Node2
-    - VM3
-    - VM4
-- VLAN
-  - VLAN1
-    - VM1
-    - VM3
-  - VLAN2
-    - VM2
-    - VM4  
+    - VM3  --- VLAN1
+    - VM4  ---------VLAN2
+
 
 
 # 2. 不同物理机上的VM之间通信 - GRE (2 Hosts)
