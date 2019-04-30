@@ -5,7 +5,12 @@
 - delete the vx0 port created last STEP in both node1 and node2
   - ```ovs-vsctl del-port vx0```
 
-
+## 5.1 Network Adapter
+- Network Adapter1 - bridge     -> ens33  - 外网通信
+- Network Adapter1 - Host Only  -> ens37  - 内部管理用
+  - 192.168.10.12
+- Network Adapter1 - VMnet2     -> ens38  - 虚拟机之间通信
+  - 192.168.100.3
 
 
 
@@ -538,10 +543,10 @@ systemctl start  openvswitch
     - ovs-vsctl set,add,remove,clear,destroy
 
 ## 2. 创建2个计算节点
-- 网卡1：仅主机，用于传送控制命令
-- 网卡2：VMnet，用于node之间的通信，内网
+- 网卡1：仅主机，用于传送控制命令 192.168.10.10, 192.168.10.11
+- 网卡2：VMnet，用于node之间的通信，内网 192.168.100.1, 192.168.100.2
   
 ## 3. 创建1个控制节点
 - 网卡1：桥接物理网络，连接外网
-- 网卡2：VMnet，作为node节点的网关
+- 网卡2：VMnet，作为node节点的网关 192.168.10.1
 - SNAT 网卡1和2，将所有内部网转到外网，实现节点与外网通信
