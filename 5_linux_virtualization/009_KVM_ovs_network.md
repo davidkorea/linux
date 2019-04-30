@@ -1,5 +1,20 @@
 # KVM comprehensive network based on Open vSwitch
 
+# 5. VXLAN虚拟机与外网通信
+- 物理节点Node3，实现其他物理节点上的虚拟机与外网通信。此思路与openstack一致
+- delete the vx0 port created last STEP in both node1 and node2
+  - ```ovs-vsctl del-port vx0```
+
+
+
+
+
+
+
+
+
+
+
 # 4. 不同物理机上的VM VXLAN 通信 (2 Hosts)
 > **All the operations are based on STEP2 & STEP3，inlcuding DHCP. BUT NO need the peer net interface gre0 between 2 switches located in 2 physical nodes**
 > - VLAN需要借助GRE协议的隧道来实现跨物理机通信，VXLAN无需借助GRE可以直接实现跨物理机通信
