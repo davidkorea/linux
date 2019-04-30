@@ -7,6 +7,41 @@
 - Node2
   - VM3  --- VLAN1
   - VM4  -.-.-.-.-.-.-.-.-.-  VLAN2
+## 3.1 创建虚拟机
+- use DHCP (netns) created 
+### 1. Node1
+- VM1 
+  - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
+  - DHCP IP 10.0.10.209
+- VM2
+  - ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-2.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:02 -net tap,ifname=vif1.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
+  - DHCP IP 10.0.10.210
+### 2. Node2
+- VM1 
+  - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
+  - DHCP IP 10.0.10.204
+- VM2
+  - ```qemu-kvm -m 128 -smp 1 -name cirros2 -drive file=/images/cirros/cirros-0.3.4-2.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:02 -net tap,ifname=vif1.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
+  - DHCP IP 10.0.10.205
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
