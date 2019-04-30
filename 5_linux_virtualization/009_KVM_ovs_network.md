@@ -33,6 +33,7 @@
 ### 2. 创建VM
 - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:00:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
   - 开机自动获取ip 10.0.10.209，并自动获取掩码255.255.255.0，虽然创建dnsmasq时并没有指定
+
 ### 3. 配置ens38（VMNET2）
 - ```ip addr add 192.168.100.1/24 dev ens38```
 ### 4. 创建并配置GRE接口
@@ -59,10 +60,9 @@
 ### 1. 创建VM
 - Node2不指定DHCP，连接GRE后，使用Node1的 DHCP服务器
 - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```, 注意更改mac地址
-
+  - 此时并没有获取的ip地址，因为GRE还没有建立
 ### 2. 配置ens38（VMNET2）
 - ```ip addr add 192.168.100.2/24 dev ens38```，因为同在vmware的VMnet2，192.168。100.0、24已经可以通信
-
 
 ### 3. 创建并配置GRE接口
 - ```ovs-vsctl add-port br-in gre0```
@@ -83,8 +83,9 @@
   status              : {tunnel_egress_iface="ens38", tunnel_egress_iface_carrier=up}
   type                : gre
   ```
-
-
+### 4. 再次创建VM
+- 删掉之前创建的虚拟机，再次创建，查看是否可以获取到dhcp ip地址
+- ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```
 
 
 
