@@ -1,5 +1,5 @@
 # KVM comprehensive network based on Open vSwitch
-# 2. GRE (2 Hosts)
+# 2. 不同物理机上的VM之间通信 - GRE (2 Hosts)
 - 2 physical node different network
 - VMs on that 2 nodes can communicate
 - GRE in OSI layer3，是一种隧道技术，使用一种报文来承载和传输另一种报文，如以太网帧
