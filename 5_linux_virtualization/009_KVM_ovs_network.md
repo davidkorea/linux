@@ -115,10 +115,12 @@ net.ipv4.ip_forward = 1
   - 可以平通物理网络网关
 
 ### 7. Node1上的虚拟机
-- 虚拟机网关
-### 7. Node1上的虚拟机
-
-
+- Node1上虚拟机网关指向Node3路由器r0的rin0的ip
+  - ```route add default gw 10.0.10.100```
+- 此时虚拟机可以ping通Node3路由器r0的rex0外网ip，但是ping物理网络的网关还是不可以
+  ![]()
+- 设置Node3路由器r0的SNAT规则
+  
 
 
 
