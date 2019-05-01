@@ -84,7 +84,17 @@ net.ipv4.ip_forward = 1
 [root@node4 ~]# sysctl -p
 ```
 - rin0
-  - 
+  - ```ip netns exec r0 ifconfig rin0 10.0.10.100/24 up```,此处是虚拟机的内部ip网段，而不是192.168.100.0的VMnet2网段
+  ```
+  [root@node3 ~]# ip netns exec r0 ping 10.0.10.1
+  PING 10.0.10.1 (10.0.10.1) 56(84) bytes of data.
+  64 bytes from 10.0.10.1: icmp_seq=1 ttl=64 time=1.45 ms
+  64 bytes from 10.0.10.1: icmp_seq=2 ttl=64 time=1.64 ms
+  ^C
+  --- 10.0.10.1 ping statistics ---
+  2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+  rtt min/avg/max/mdev = 1.450/1.549/1.648/0.099 ms
+  ```
 
 
 
