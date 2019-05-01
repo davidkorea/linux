@@ -114,14 +114,9 @@ net.ipv4.ip_forward = 1
   ```
   - 可以平通物理网络网关
 
-
-## 5.2 Node1
-### 1. 创建gre0接口
-- ```ovs-vsctl add-port br-in gre0```
-- ```ovs-vsctl set interface gre0 type=gre options:remote_ip=192.168.100.254```
-
-
-
+### 7. Node1上的虚拟机
+- 虚拟机网关
+### 7. Node1上的虚拟机
 
 
 
