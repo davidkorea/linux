@@ -1,5 +1,7 @@
 # KVM comprehensive network based on Open vSwitch
 
+STEP5还是测试不行
+
 # 5. VLAN(GRE)虚拟机与外网通信
 > 之所以使用GRE，而不使用VXLAN，是因为使用GRE更容易抓包，看到具体封装信息。而VXLAN的封装内容看不到
 
