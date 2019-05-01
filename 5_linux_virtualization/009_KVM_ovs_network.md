@@ -123,6 +123,8 @@ net.ipv4.ip_forward = 1
   - ```ip netns exec r0 iptables -t nat -A POSTROUTING -s 10.0.10.0/24 -j SNAT --to-source 192.168.0.100```
 
 
+### 8 外网和虚拟机内网互相通信
+- 删除上面一条SNAT规则
 
 
 
