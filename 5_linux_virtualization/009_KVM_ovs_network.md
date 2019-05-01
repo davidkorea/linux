@@ -128,7 +128,9 @@ net.ipv4.ip_forward = 1
   - ``` ip netns exec r0 iptables -t nat -L -n```
 - Node3路由器r0的rex0网卡添加第二个外网IP192.168.0.99
   - ```ip netns exec r0 ifconfig rex0:0 192.168.0.99/24```
-
+- 配置虚拟机IP10.0.10.1 与 路由器192.168.0.99 一对一绑定
+  - SNAT
+    - ```ip netns exec r0 iptables -t nat -A POSTROUTING -s 10.0.10.1/32 -j SNAT --to-source 192.168.0.99```
 
 
 
