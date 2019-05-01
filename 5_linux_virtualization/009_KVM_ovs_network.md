@@ -100,8 +100,19 @@ net.ipv4.ip_forward = 1
   rtt min/avg/max/mdev = 1.450/1.549/1.648/0.099 ms
   ```
   - 由于前面已经搭建了GRE隧道，所以可以直接ping通Node1的虚拟机
-
-
+- rex0
+  - ```ip netns exec r0 ifconfig rex0 192.168.0.100/16```
+  ```
+  [root@node3 ~]# ip netns exec r0 ping 192.168.0.1
+  PING 192.168.0.1 (192.168.0.1) 56(84) bytes of data.
+  64 bytes from 192.168.0.1: icmp_seq=1 ttl=64 time=4.92 ms
+  64 bytes from 192.168.0.1: icmp_seq=2 ttl=64 time=2.39 ms
+  ^C
+  --- 192.168.0.1 ping statistics ---
+  2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+  rtt min/avg/max/mdev = 2.396/3.658/4.920/1.262 ms
+  ```
+  - 可以平通物理网络网关
 
 
 ## 5.2 Node1
