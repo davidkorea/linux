@@ -131,7 +131,8 @@ net.ipv4.ip_forward = 1
 - 配置虚拟机IP10.0.10.1 与 路由器192.168.0.99 一对一绑定
   - SNAT
     - ```ip netns exec r0 iptables -t nat -A POSTROUTING -s 10.0.10.1/32 -j SNAT --to-source 192.168.0.99```
-
+  - DNAT
+    - ```ip netns exec r0 iptables -t nat -A PREROUTING -d 192.168.0.99 -j DNAT --to-destination 10.0.10.1```
 
 
 
