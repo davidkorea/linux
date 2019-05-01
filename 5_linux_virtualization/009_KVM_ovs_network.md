@@ -45,9 +45,13 @@ STEP5还是测试不行
 - ```ovs-vsctl add-br br-in```
 
 ### 4. 创建在br-in上创建gre0接口
-- ```ovs-vsctl add-port br-in gre0 -- set interface gre0 type=gre options:remote_ip=192.168.100.1```
-- 可以再此节点创建一个虚拟机进行测试gre，此处忽略测试
-
+- Node3
+  - ```ovs-vsctl add-port br-in gre0 -- set interface gre0 type=gre options:remote_ip=192.168.100.1```
+  - 可以再此节点创建一个虚拟机进行测试gre，此处忽略测试
+- Node1
+  - ```ovs-vsctl add-port br-in gre0```
+  - ```ovs-vsctl set interface gre0 type=gre options:remote_ip=192.168.100.254```
+  
 ### 5. 创建虚拟路由器r0 （netns）
 - ```ip netns add r0```
 - 创建2对网卡，一对用于r0和br-in，一对用于r0和br-ex
@@ -95,7 +99,7 @@ net.ipv4.ip_forward = 1
   2 packets transmitted, 2 received, 0% packet loss, time 1002ms
   rtt min/avg/max/mdev = 1.450/1.549/1.648/0.099 ms
   ```
-
+  - 由于前面已经搭建了GRE隧道，所以可以直接ping通Node1的虚拟机
 
 
 
