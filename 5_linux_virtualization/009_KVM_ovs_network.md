@@ -120,7 +120,7 @@ net.ipv4.ip_forward = 1
 - 此时虚拟机可以ping通Node3路由器r0的rex0外网ip，但是ping物理网络的网关还是不可以
   ![](https://i.loli.net/2019/05/01/5cc9afdd1f7c8.png)
 - 设置Node3路由器r0的SNAT规则
-  
+  ```ip netns exec r0 iptables -t nat -A POSTROUTING -s 10.0.10.0/24 -j SNAT --to-source 192.168.0.100```
 
 
 
