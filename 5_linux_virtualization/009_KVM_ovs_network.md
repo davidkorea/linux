@@ -123,7 +123,7 @@ net.ipv4.ip_forward = 1
   - ```ip netns exec r0 iptables -t nat -A POSTROUTING -s 10.0.10.0/24 -j SNAT --to-source 192.168.0.100```
 
 
-### 8 外网和虚拟机内网互相通信
+### 8 外网和虚拟机内网互相通信 - float ip
 - 删除上面一条SNAT规则
   - ``` ip netns exec r0 iptables -t nat -L -n```
 - Node3路由器r0的rex0网卡添加第二个外网IP192.168.0.99
