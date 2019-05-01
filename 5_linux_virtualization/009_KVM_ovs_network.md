@@ -127,7 +127,7 @@ net.ipv4.ip_forward = 1
 - 删除上面一条SNAT规则
   - ``` ip netns exec r0 iptables -t nat -L -n```
 - Node3路由器r0的rex0网卡添加第二个外网IP192.168.0.99
-
+  - ```ip netns exec r0 ifconfig rex0:0 192.168.0.99/24```
 
 
 
