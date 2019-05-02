@@ -21,7 +21,8 @@ Network Adapter1 - Host Only    -> ens37  - 内部管理用
 Network Adapter1 - VMnet2       -> ens38  - 虚拟机之间通信
   - 192.168.100.3
 ```
-### 2 创建br-ex
+## 5.3 网络节点Node3创建网桥 br-ex, br-in
+### 1. br-ex
 - create ifcfg-br-ex, 配置文件方式创建桥，相当于brctl命令创建，可以使用brctl show查看到
   ```diff
     TYPE="Bridge"
@@ -46,10 +47,10 @@ Network Adapter1 - VMnet2       -> ens38  - 虚拟机之间通信
   + BRIDGE="br-ex"
   ```
 - ```service network restart```
-### 3. 使用ovs创建br-in
+### 2. 使用ovs创建br-in
 - ```ovs-vsctl add-br br-in```
 
-### 4. 创建在br-in上创建gre0接口
+### 3. 创建在br-in上创建gre0接口
 - Node3
   - ```ovs-vsctl add-port br-in gre0 -- set interface gre0 type=gre options:remote_ip=192.168.100.1```
   - 可以再此节点创建一个虚拟机进行测试gre，此处忽略测试
@@ -57,7 +58,7 @@ Network Adapter1 - VMnet2       -> ens38  - 虚拟机之间通信
   - ```ovs-vsctl add-port br-in gre0```
   - ```ovs-vsctl set interface gre0 type=gre options:remote_ip=192.168.100.254```
   
-### 5. 创建虚拟路由器r0 （netns）
+## 5.4 网络节点Node3创建虚拟路由器r0 （netns）
 - ```ip netns add r0```
 - 创建2对网卡，一对用于r0和br-in，一对用于r0和br-ex
   - ```ip link add rex0 type veth peer name sex0```, router external, switch external
@@ -84,14 +85,14 @@ Network Adapter1 - VMnet2       -> ens38  - 虚拟机之间通信
   16: rex0@if15: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state DOWN mode DEFAULT group default qlen 1000
       link/ether 76:10:36:ef:38:e0 brd ff:ff:ff:ff:ff:ff link-netnsid 0
   ```
-### 6. 配置路由器r0各接口ip
+## 5.5 网络节点Node3配置路由器r0各接口ip
 - 网卡间转发
-```
-[root@node4 ~]# vim /etc/sysctl.conf
-net.ipv4.ip_forward = 1
+  ```
+  [root@node3 ~]# vim /etc/sysctl.conf
+  net.ipv4.ip_forward = 1
 
-[root@node4 ~]# sysctl -p
-```
+  [root@node4 ~]# sysctl -p
+  ```
 - rin0
   - ```ip netns exec r0 ifconfig rin0 10.0.10.100/24 up```,此处是虚拟机的内部ip网段，而不是192.168.100.0的VMnet2网段
   ```
@@ -104,7 +105,7 @@ net.ipv4.ip_forward = 1
   2 packets transmitted, 2 received, 0% packet loss, time 1002ms
   rtt min/avg/max/mdev = 1.450/1.549/1.648/0.099 ms
   ```
-  - 由于前面已经搭建了GRE隧道，所以可以直接ping通Node1的虚拟机
+  - 由于前面已经搭建了GRE隧道，所以可以直接ping通Node1的虚拟机10.0.10.1
 - rex0
   - ```ip netns exec r0 ifconfig rex0 192.168.0.100/16```
   ```
@@ -117,10 +118,10 @@ net.ipv4.ip_forward = 1
   2 packets transmitted, 2 received, 0% packet loss, time 1002ms
   rtt min/avg/max/mdev = 2.396/3.658/4.920/1.262 ms
   ```
-  - 可以平通物理网络网关
+  - 可以ping通物理网络网关
 
-### 7. Node1上的虚拟机
-- Node1上虚拟机网关指向Node3路由器r0的rin0的ip
+## 5.6 Node1上的虚拟机网络配置
+- Node1上虚拟机网关指向Node3路由器r0的rin0的ip 10.0.10.100
   - ```route add default gw 10.0.10.100```
 - 此时虚拟机可以ping通Node3路由器r0的rex0外网ip，但是ping物理网络的网关还是不可以
   ![](https://i.loli.net/2019/05/01/5cc9afdd1f7c8.png)
@@ -128,9 +129,9 @@ net.ipv4.ip_forward = 1
   - ```ip netns exec r0 iptables -t nat -A POSTROUTING -s 10.0.10.0/24 -j SNAT --to-source 192.168.0.100```
 
 
-### 8 外网和虚拟机内网互相通信 - float ip
+## 5.7 外网和虚拟机内网互相通信 - openstack绑定浮动IP float ip
 - 删除上面一条SNAT规则
-  - ``` ip netns exec r0 iptables -t nat -L -n```
+  - ``` ip netns exec r0 iptables -t nat -F```
 - Node3路由器r0的rex0网卡添加第二个外网IP192.168.0.99
   - ```ip netns exec r0 ifconfig rex0:0 192.168.0.99/24```
 - 配置虚拟机IP10.0.10.1 与 路由器192.168.0.99 一对一绑定。所有虚拟机10.0.10.1的流量通过192.168.0.99来对外发出，所有回到99的流量，再转发到10.0.10.1来执行
@@ -139,7 +140,8 @@ net.ipv4.ip_forward = 1
   - DNAT
     - ```ip netns exec r0 iptables -t nat -A PREROUTING -d 192.168.0.99 -j DNAT --to-destination 10.0.10.1```
 
-
+- 此时，可以直接平通192.168.0.99这个分配给虚拟机10.0.10.1的浮动ip，抓包可以显示10.0.10.1
+- 可以尝试ssh连一下？挥着虚拟机安装一个httpd试一下
 
 
 
