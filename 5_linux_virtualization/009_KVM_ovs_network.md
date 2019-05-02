@@ -395,7 +395,7 @@ All the 4 DHCP IPs could ping each other.
 - ```qemu-kvm -m 128 -smp 1 -name cirros1 -drive file=/images/cirros/cirros-0.3.4-1.img,media=disk,if=virtio -net nic,model=virtio,macaddr=52:54:00:00:01:01 -net tap,ifname=vif0.0,script=/etc/qemu-ifup,downscript=/etc/qemu-ifdown -daemonize```, 注意更改mac地址
   - 此时并没有获取的ip地址，因为GRE还没有建立
 ### 2. 配置ens38（VMNET2）
-- ```ip addr add 192.168.100.2/24 dev ens38```，因为同在vmware的VMnet2，192.168。100.0、24已经可以通信
+- ```ip addr add 192.168.100.2/24 dev ens38```，因为同在vmware的VMnet2，192.168.100.0/24已经可以通信
 
 ### 3. 创建并配置GRE接口
 - ```ovs-vsctl add-port br-in gre0```
