@@ -8,14 +8,19 @@ STEP5还是测试不行
 - 物理节点Node3，实现其他物理节点上的虚拟机与外网通信。此思路与openstack一致
 - delete the vx0 port created last STEP in both node1 and node2
   - ```ovs-vsctl del-port vx0```
-## 5.1 Node3
-### 1 Network Adapter
-- Network Adapter1 - bridge     -> ens33  - 外网通信
-- Network Adapter1 - Host Only  -> ens37  - 内部管理用
-  - 192.168.10.12
-- Network Adapter1 - VMnet2     -> ens38  - 虚拟机之间通信
-  - 192.168.100.3
 
+
+## 5.1 配置思路
+- 首先，虚拟机网段10.0.10.0/24 可以跨主机通信，GRE
+- 再次，将网络节点主机上的 虚拟机网段 与 物理网络网段进行SNAT DNAT转发，实现虚拟机与外网的通信
+## 5.2 配置网络节点Node3网卡
+```
+Network Adapter1 - bridge       -> ens33  - 外网通信
+Network Adapter1 - Host Only    -> ens37  - 内部管理用
+  - 192.168.10.12
+Network Adapter1 - VMnet2       -> ens38  - 虚拟机之间通信
+  - 192.168.100.3
+```
 ### 2 创建br-ex
 - create ifcfg-br-ex, 配置文件方式创建桥，相当于brctl命令创建，可以使用brctl show查看到
   ```diff
