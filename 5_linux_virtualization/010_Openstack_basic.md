@@ -16,6 +16,11 @@
   - ```iptables -F```
   - ``` iptables -t nat -A POSTROUTING -s 172.16.251.0/24 -j SNAT --to 192.168.0.11```
   
+- Mysql ```yum install -y mariadb-server mariadb```
+  - ```systemctl start mariadb```
+  - ```systemctl enable mariadb```
+  - ```mysql```
+  
 ## 1.2 compute1
 - ~~ens33 bridge 192.168.0.12 (openstack中用不到，只是用来联网yum安装使用)~~
 - ens37 host only 172.16.251.12 **gw 172.16.251.11**（manage）
