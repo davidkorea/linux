@@ -7,7 +7,11 @@
   - ping 172.16.251.1 ok!
 - ```crontab -e```
   - ```*/3 * * * * /usr/sbin/ntpdate 192.168.0.1 &> /dev/null```
-
+- hosts
+  ```
+  172.16.251.11 controller.openstack.com controller
+  172.16.251.12 compute1.openstack.com compute1
+  ```
 ## 1.2 compute1
 - ens33 bridge 192.168.0.12 (openstack中用不到，只是用来联网yum安装使用)
 - ens37 host only 172.16.251.12 （manage）
@@ -17,7 +21,10 @@
   - ping 172.16.251.1 ok!
 - ```crontab -e```
   - ```*/3 * * * * /usr/sbin/ntpdate 192.168.0.1 &> /dev/null```
-
+- hosts
+  ```
+  172.16.251.11 controller.openstack.com controller
+  172.1
 
 
 
