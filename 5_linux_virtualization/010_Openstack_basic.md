@@ -5,7 +5,10 @@
 - ```chkconfig NetworkManager off```, or conflict with brctl
   - ping 192.168.0.1 ok!
   - ping 172.16.251.1 ok!
-
+- ntp
+  - ```yum install -y ntp```
+  - ```systemctl enable ntpd.service```
+  - ```systemctl start ntpd.service```
 
 
 
