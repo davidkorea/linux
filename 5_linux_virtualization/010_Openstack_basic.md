@@ -1,3 +1,30 @@
+# 2. controller - keystone
+- ```yum install openstack-keystone```, 包含来python-openstackclient
+- ```yum install -y openstack-utils```
+
+- db
+  ```
+  MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'keystone';
+  Query OK, 0 rows affected (0.00 sec)
+
+  MariaDB [(none)]> GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'keystone';
+  Query OK, 0 rows affected (0.00 sec)
+  
+  MariaDB [(none)]> FLUSH PRIVILEGES;
+  ```
+  - IDENTIFIED 'keystone'是密码
+
+
+
+
+
+
+
+
+
+
+
+
 # 1. 搭建环境
 ## 1.1 controller
 - ens33 bridge 192.168.0.11
