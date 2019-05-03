@@ -1,7 +1,17 @@
 # 1. 搭建环境
 ## 1.1 controller
 - ens33 bridge 192.168.0.11
-- ens37 host only 172.16.251.11
+- ens37 host only 172.16.251.11 （manage）
+- ```chkconfig NetworkManager off```, or conflict with brctl
+  - ping 192.168.0.1 ok!
+  - ping 172.16.251.1 ok!
+- ```crontab -e```
+  - ```*/3 * * * * /usr/sbin/ntpdate 192.168.0.1 &> /dev/null```
+
+## 1.2 compute1
+- ens33 bridge 192.168.0.12 (openstack中用不到，只是用来联网yum安装使用)
+- ens37 host only 172.16.251.12 （manage）
+- ens38 VMnet2 192.168.100.12 （VM）
 - ```chkconfig NetworkManager off```, or conflict with brctl
   - ping 192.168.0.1 ok!
   - ping 172.16.251.1 ok!
