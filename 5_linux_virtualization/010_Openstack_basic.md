@@ -3,6 +3,8 @@
 - ens33 bridge 192.168.0.11
 - ens37 host only 172.16.251.11
 - ```chkconfig NetworkManager off```, or conflict with brctl
+  - ping 192.168.0.1 ok!
+  - ping 172.16.251.1 ok!
 
 
 
