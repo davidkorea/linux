@@ -1,3 +1,13 @@
+# 1. 搭建环境
+## 1.1 controller
+- ens33 bridge 192.168.0.11
+- ens37 host only 172.16.251.11
+
+
+
+
+
+
 # 0. Basic
 
 - 30-50 servers no need to implement openstack, need technical supports for openstack, devops chanllege
