@@ -63,7 +63,9 @@
   172.16.251.11 controller.openstack.com controller
   172.16.251.12 compute1.openstack.com compute1
   ```
-
+- ping 物理网络网关192.168.0.1 icmp_seq=1 Destination Host Prohibited
+  - [icmp_seq=1 Destination Host Prohibited #5](https://github.com/davidkorea/linux_study/issues/5)
+  - 清空iptables 即可
 
 # 0. Basic
 
