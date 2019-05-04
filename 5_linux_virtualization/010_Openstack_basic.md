@@ -42,7 +42,8 @@
 - SNAT 管理网络连接到外网
   - ```iptables -F```
   - ``` iptables -t nat -A POSTROUTING -s 172.16.251.0/24 -j SNAT --to 192.168.0.11```
-  
+  - **保存SNAT规则 service iptables save**
+    - 
 - Mysql ```yum install -y mariadb-server mariadb```
   - ```systemctl start mariadb```
   - ```systemctl enable mariadb```
