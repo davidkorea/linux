@@ -1,7 +1,7 @@
 # 3. controller - glance
 https://www.cnblogs.com/jsonhc/p/7698502.html
 
-
+https://docs.openstack.org/glance/pike/index.html
 
 # 2. controller - keystone
 - ```yum install openstack-keystone```, 包含来python-openstackclient
