@@ -1,3 +1,10 @@
+> https://docs.openstack.org/install-guide/openstack-services.html
+
+
+
+
+
+
 # 3. controller - glance
 https://www.cnblogs.com/jsonhc/p/7698502.html
 
