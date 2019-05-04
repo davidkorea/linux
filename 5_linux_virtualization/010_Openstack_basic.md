@@ -66,6 +66,7 @@
 - ping 物理网络网关192.168.0.1 icmp_seq=1 Destination Host Prohibited
   - [icmp_seq=1 Destination Host Prohibited #5](https://github.com/davidkorea/linux_study/issues/5)
   - 清空iptables 即可
+  - ping baidu ip 220.181.57.216 ok
 
 # 0. Basic
 
