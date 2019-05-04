@@ -1,3 +1,8 @@
+# 3. controller - glance
+https://www.cnblogs.com/jsonhc/p/7698502.html
+
+
+
 # 2. controller - keystone
 - ```yum install openstack-keystone```, 包含来python-openstackclient
 - ```yum install -y openstack-utils```
