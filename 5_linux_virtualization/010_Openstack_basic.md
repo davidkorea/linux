@@ -43,7 +43,7 @@
   - ```iptables -F```
   - ``` iptables -t nat -A POSTROUTING -s 172.16.251.0/24 -j SNAT --to 192.168.0.11```
   - **保存SNAT规则 service iptables save**
-    - [https://github.com/davidkorea/linux_study/issues/4](centos7中service iptables save指令使用失败的解决方案 #4)
+    - [centos7中service iptables save指令使用失败的解决方案 #4](https://github.com/davidkorea/linux_study/issues/4)
 - Mysql ```yum install -y mariadb-server mariadb```
   - ```systemctl start mariadb```
   - ```systemctl enable mariadb```
@@ -61,8 +61,8 @@
 - hosts
   ```
   172.16.251.11 controller.openstack.com controller
-  172.1
-
+  172.16.251.12 compute1.openstack.com compute1
+  ```
 
 
 # 0. Basic
