@@ -34,8 +34,39 @@ Before you install and configure the Image service, you must create a database, 
   - ```openstack endpoint create --region RegionOne image internal http://controller:9292```
   - ```openstack endpoint create --region RegionOne image admin http://controller:9292```
   
+## 4.2 Install and configure components
+- Install the packages
+  - ```yum install openstack-glance -y```
+- Edit the /etc/glance/glance-api.conf file
+  ```diff
+    1805 [database]
+  - 1823 #connection = <None>
+  + 1823 connection = mysql+pymysql://glance:glance@controller/glance
+  
+    3283 [keystone_authtoken]
+  + auth_uri = http://controller:5000
+  + auth_url = http://controller:35357
+  + memcached_servers = controller:11211
+  + auth_type = password
+  + project_domain_name = default
+  + user_domain_name = default
+  + project_name = service
+  + username = glance
+  + password = 11111                           # GLANCE_PASS=11111
+  
+    4210 [paste_deploy]
+  - 4235 #flavor = keystone
+  + 4235 flavor = keystone
   
   
+    1916 [glance_store]  
+  - 1943 #stores = file,http
+  - 1975 #default_store = file
+  - 2294 #filesystem_store_datadir = /var/lib/glance/images  
+  + 1943 stores = file,http
+  + 1975 default_store = file
+  + 2294 filesystem_store_datadir = /var/lib/glance/images
+  ```
   
   
   
