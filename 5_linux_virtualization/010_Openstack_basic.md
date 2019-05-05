@@ -83,6 +83,44 @@ Before you install and configure the Identity service, you must create a databas
   - Add the user role to the demo project and user
     - ```openstack role add --project demo --user demo user```
 
+```
+[root@controller ~]# openstack project list
++----------------------------------+---------+
+| ID                               | Name    |
++----------------------------------+---------+
+| 0cce4a6f06a4426ebc087b9b7a2a73da | service |
+| 878c23c7907c49d6b8c1d68c6f5efb28 | admin   |
+| a515aa3ada5f4288846f3f37b2a66f6f | demo    |
++----------------------------------+---------+
+```
+```
+[root@controller ~]# openstack role list
++----------------------------------+----------+
+| ID                               | Name     |
++----------------------------------+----------+
+| 7b115ac04b8442e6aeb8ec0cb15097c0 | admin    |
+| 8c38030b6aab41ad871cf0a11f50fda5 | user     |
+| 9fe2ff9ee4384b1894a90878d3e92bab | _member_ |
++----------------------------------+----------+
+```
+```
+[root@controller ~]# openstack user list
++----------------------------------+-------+
+| ID                               | Name  |
++----------------------------------+-------+
+| 70abfb797cfb4ba5b72ce7f4ce42c193 | demo  |
+| b074d5b5ebe24c458c95623299776a6c | admin |
++----------------------------------+-------+
+```
+
+
+
+
+
+
+
+
+
 # 2. Openstack环境搭建 - controller
 Offical manual: https://docs.openstack.org/install-guide/environment-packages-rdo.html
 ## 1.1 OpenStack packages
