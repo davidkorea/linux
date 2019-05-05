@@ -4,19 +4,50 @@
 
 
 # 4. controller - glance
-https://www.cnblogs.com/jsonhc/p/7698502.html
+- https://www.cnblogs.com/jsonhc/p/7698502.html
+- https://docs.openstack.org/glance/pike/index.html
 
-https://docs.openstack.org/glance/pike/index.html
-
+## 4.1 Prerequisites
+Before you install and configure the Image service, you must create a database, service credentials, and API endpoints
+- ```mysql -u root -p11111```
+  - MariaDB [(none)]> ```CREATE DATABASE glance;```
+  - MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'glance';```
+  - MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'glance';```
+    - GLANCE_DBPASS: glance
+  
+- Source the admin credentials to gain access to admin-only CLI commands
+  - ```. admin-openrc```
+- To create the service credentials, complete these steps
+  - Create the glance user
+    - ```openstack user create --domain default --password-prompt glance```
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 # 3. controller - keystone
 Offical manual: [Keystone Installation Tutorial for Red Hat and CentOS](https://docs.openstack.org/keystone/pike/install/index-rdo.html)
 ## 3.1 Prerequisites
 Before you install and configure the Identity service, you must create a database.
 - ```mysql -u root -p11111```
-- MariaDB [(none)]> ```CREATE DATABASE keystone;```
-- MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'keystone';```
-- MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'keystone';```
-
+  - MariaDB [(none)]> ```CREATE DATABASE keystone;```
+  - MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'keystone';```
+  - MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'keystone';```
+    - KEYSTONE_DBPASS: keystone
 ## 3.2 Install and configure components
 - ```yum install openstack-keystone httpd mod_wsgi -y```
 - Edit the /etc/keystone/keystone.conf
