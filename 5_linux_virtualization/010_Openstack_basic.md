@@ -44,6 +44,7 @@ Before you install and configure the Identity service, you must create a databas
   --bootstrap-region-id RegionOne
   ```
   - ADMIN_PASS: 11111
+  - Replace ADMIN_PASS with the password used in the keystone-manage bootstrap command in ```keystone-install-configure-rdo```
 ## 3.3 Configure the Apache HTTP server
 - Edit the /etc/httpd/conf/httpd.conf
   ```diff
@@ -58,16 +59,29 @@ Before you install and configure the Identity service, you must create a databas
   systemctl start httpd.service
   ```
 - Configure the administrative account
-- ```export OS_USERNAME=admin```
-- ```export OS_PASSWORD=11111```, ADMIN_PASS=11111
-- ```export OS_PROJECT_NAME=admin```
-- ```export OS_USER_DOMAIN_NAME=Default```
-- ```export OS_PROJECT_DOMAIN_NAME=Default```
-- ```export OS_AUTH_URL=http://controller:35357/v3```
-- ```export OS_IDENTITY_API_VERSION=3```
+  - ```export OS_USERNAME=admin```
+  - ```export OS_PASSWORD=11111```, ADMIN_PASS=11111
+  - ```export OS_PROJECT_NAME=admin```
+  - ```export OS_USER_DOMAIN_NAME=Default```
+  - ```export OS_PROJECT_DOMAIN_NAME=Default```
+  - ```export OS_AUTH_URL=http://controller:35357/v3```
+  - ```export OS_IDENTITY_API_VERSION=3```
 
-
-
+## 3.5 Create a domain, projects, users, and roles
+- service project
+  ```openstack project create --domain default --description "Service Project" service```
+- Regular (non-admin) demo project
+  ```openstack project create --domain default --description "Demo Project" demo```
+  - Create the demo user
+    - ```openstack user create --domain default --password-prompt demo```
+      ```
+      User Password:11111
+      Repeat User Password:11111
+      ```
+  - Create the user role
+    - ```openstack role create user```
+  - Add the user role to the demo project and user
+    - ```openstack role add --project demo --user demo user```
 
 # 2. Openstack环境搭建 - controller
 Offical manual: https://docs.openstack.org/install-guide/environment-packages-rdo.html
