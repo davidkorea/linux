@@ -20,12 +20,14 @@ Before you install and configure the Identity service, you must create a databas
 - ```yum install openstack-keystone httpd mod_wsgi -y```
 - Edit the /etc/keystone/keystone.conf
   ```diff
-  - 661 connection = <None>
-  + 661 connection = mysql+pymysql://keystone:keystone@controller/keystone
+    643  [database]
+  - 661  connection = <None>
+  + 661  connection = mysql+pymysql://keystone:keystone@controller/keystone
 
-
-
-
+    2730 [token]
+  - 2774 #provider = fernet
+  + 2774 provider = fernet
+  ```
 
 
 
