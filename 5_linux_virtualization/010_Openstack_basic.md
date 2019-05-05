@@ -154,11 +154,60 @@ Before you install and configure the Image service, you must create a database, 
 ## 4.3 Finalize installation
 - ```systemctl enable openstack-glance-api.service openstack-glance-registry.service```
 - ```systemctl start openstack-glance-api.service openstack-glance-registry.service```
-  
-  
-  
-  
-  
+## 4.4 Verify operation
+- ```. admin-openrc```
+- Download the source image:
+  - ```wget http://download.cirros-cloud.net/0.3.5/cirros-0.3.5-x86_64-disk.img```
+- Upload the image to the Image service using the QCOW2 disk format, bare container format, and public visibility so all projects can access it
+  - ```openstack image create "cirros"  --file cirros-0.3.5-x86_64-disk.img  --disk-format qcow2 --container-format bare  --public```
+    ```
+    +------------------+------------------------------------------------------+
+    | Field            | Value                                                |
+    +------------------+------------------------------------------------------+
+    | checksum         | f8ab98ff5e73ebab884d80c9dc9c7290                     |
+    | container_format | bare                                                 |
+    | created_at       | 2019-05-05T06:26:17Z                                 |
+    | disk_format      | qcow2                                                |
+    | file             | /v2/images/5ba3c1f6-82dd-446d-801d-aa5716897de7/file |
+    | id               | 5ba3c1f6-82dd-446d-801d-aa5716897de7                 |
+    | min_disk         | 0                                                    |
+    | min_ram          | 0                                                    |
+    | name             | cirros                                               |
+    | owner            | 878c23c7907c49d6b8c1d68c6f5efb28                     |
+    | protected        | False                                                |
+    | schema           | /v2/schemas/image                                    |
+    | size             | 13267968                                             |
+    | status           | active                                               |
+    | tags             |                                                      |
+    | updated_at       | 2019-05-05T06:26:17Z                                 |
+    | virtual_size     | None                                                 |
+    | visibility       | public                                               |
+    +------------------+------------------------------------------------------+
+```
+
+- ```openstack image list```
+  ```
+  [root@controller ~]# openstack image list
+  +--------------------------------------+--------+--------+
+  | ID                                   | Name   | Status |
+  +--------------------------------------+--------+--------+
+  | 5ba3c1f6-82dd-446d-801d-aa5716897de7 | cirros | active |
+  +--------------------------------------+--------+--------+
+  ```
+  ```
+  [root@controller ~]# cd /var/lib/glance/images/
+  [root@controller images]# ls
+  5ba3c1f6-82dd-446d-801d-aa5716897de7
+  [root@controller images]# qemu-img info 5ba3c1f6-82dd-446d-801d-aa5716897de7
+  image: 5ba3c1f6-82dd-446d-801d-aa5716897de7
+  file format: qcow2
+  virtual size: 39M (41126400 bytes)
+  disk size: 13M
+  cluster_size: 65536
+  Format specific information:
+      compat: 0.10
+      refcount bits: 16
+  ```
   
 # 3. controller - keystone
 Offical manual: [Keystone Installation Tutorial for Red Hat and CentOS](https://docs.openstack.org/keystone/pike/install/index-rdo.html)
