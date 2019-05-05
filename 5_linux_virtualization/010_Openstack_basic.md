@@ -1,5 +1,24 @@
 > https://docs.openstack.org/install-guide/openstack-services.html
 
+```
+[root@controller ~]# openstack compute service list --service nova-compute
+The server is currently unavailable. Please try again at a later time.<br /><br />
+
+ (HTTP 503) (Request-ID: req-9690c866-7f05-4e93-ba82-8f8c3ffca872)
+ 
+```
+```
+2019-05-05 18:27:44.811 12002 CRITICAL keystonemiddleware.auth_token [-] Unable to validate token: Identity server rejected authorization necessary to fetch token data: ServiceError: Identity server rejected authorization necessary to fetch token data
+```
+
+
+
+
+
+
+
+
+
 # 5. nova
 - controller node: https://docs.openstack.org/nova/pike/install/controller-install-rdo.html
 - compute node: https://docs.openstack.org/nova/pike/install/compute-install-rdo.html
