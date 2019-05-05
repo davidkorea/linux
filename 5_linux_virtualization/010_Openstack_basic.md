@@ -34,10 +34,21 @@ Offical manual: https://docs.openstack.org/install-guide/environment-packages-rd
 - ```yum upgrade```
 - ```yum install python-openstackclient```
 - ```yum install openstack-selinux```
+## 1.2 SQL database
+- ```yum install mariadb mariadb-server python2-PyMySQL```
+- Create and edit the /etc/my.cnf.d/openstack.cnf
+  ```
+  [mysqld]
+  bind-address = 172.16.251.111
 
-
-
-
+  default-storage-engine = innodb
+  innodb_file_per_table = on
+  max_connections = 4096
+  collation-server = utf8_general_ci
+  character-set-server = utf8
+  ```
+  - bind-address: management IP address of the controller node 
+  - character-set-server: 提前设置好字符集，否则创建数据库时，需要手动制定 SET uft8
 
 # 1. 系统环境搭建
 ## 1.1 controller
