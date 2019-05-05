@@ -112,13 +112,19 @@ Before you install and configure the Identity service, you must create a databas
 | b074d5b5ebe24c458c95623299776a6c | admin |
 +----------------------------------+-------+
 ```
+## 3.6 Verify operation
 
+- Unset the temporary OS_AUTH_URL and OS_PASSWORD environment variable
+  - ```unset OS_AUTH_URL OS_PASSWORD```
 
-
-
-
-
-
+- As the admin user, request an authentication token
+  - ```openstack --os-auth-url http://controller:35357/v3 --os-project-domain-name Default --os-user-domain-name Default --os-project-name admin --os-username admin token issue```
+    - password: 11111
+    - This command uses the password for the admin user
+- As the demo user, request an authentication token
+  - ```openstack --os-auth-url http://controller:5000/v3 --os-project-domain-name Default --os-user-domain-name Default --os-project-name demo --os-username demo token issue```
+    - password: 11111
+    - This command uses the password for the demo user and API port 5000 which only allows regular (non-admin) access to the Identity service AP
 
 
 # 2. Openstack环境搭建 - controller
