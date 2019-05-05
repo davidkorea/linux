@@ -9,6 +9,7 @@ https://www.cnblogs.com/jsonhc/p/7698502.html
 https://docs.openstack.org/glance/pike/index.html
 
 # 3. controller - keystone
+Offical manual: [Keystone Installation Tutorial for Red Hat and CentOS](https://docs.openstack.org/keystone/pike/install/index-rdo.html)
 ## 3.1 Prerequisites
 Before you install and configure the Identity service, you must create a database.
 - ```mysql -u root -p11111```
