@@ -1,6 +1,8 @@
 > https://docs.openstack.org/install-guide/openstack-services.html
 
 # 5. nova
+- controller node: https://docs.openstack.org/nova/pike/install/controller-install-rdo.html
+- compute node: https://docs.openstack.org/nova/pike/install/compute-install-rdo.html
 ## 5.1 controller node
 ```
 MariaDB [(none)]> CREATE DATABASE nova_api;
