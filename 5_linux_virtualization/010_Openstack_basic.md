@@ -364,14 +364,16 @@ Before you install and configure the Identity service, you must create a databas
 
 
 
-# 2. Openstack环境搭建 - controller
+# 2. Openstack环境搭建
+## 1.1 OpenStack packages - all nodes
+> **The set up of OpenStack packages described here needs to be done on all nodes: controller, compute, and Block Storage nodes.**
 Offical manual: https://docs.openstack.org/install-guide/environment-packages-rdo.html
-## 1.1 OpenStack packages
+
 - ```yum install centos-release-openstack-pike```
 - ```yum upgrade```
 - ```yum install python-openstackclient -y```
 - ```yum install openstack-selinux -y```
-## 1.2 SQL database
+## 1.2 SQL database - controller
 - ```yum install mariadb mariadb-server python2-PyMySQL -y```
 - Create and edit the /etc/my.cnf.d/openstack.cnf
   ```
