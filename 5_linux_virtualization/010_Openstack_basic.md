@@ -147,6 +147,9 @@ Before you install and configure the Image service, you must create a database, 
     INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
     Upgraded database to: pike01, current revision(s): pike01
     ```
+    - check log files, no error
+      - /var/log/glance/api.log, /var/log/glance/registry.log
+      
   
 ## 4.3 Finalize installation
 - ```systemctl enable openstack-glance-api.service openstack-glance-registry.service```
