@@ -104,32 +104,32 @@ Before you install and configure the Image service, you must create a database, 
   [taskflow_executor]
   ```
 - Edit the /etc/glance/glance-registry.conf file 
-  ```
+  ```diff
   [root@controller ~]# grep -v ^# !$ | grep -v ^$
   grep -v ^# /etc/glance/glance-registry.conf | grep -v ^$
-  [DEFAULT]
-  [database]
-  connection = mysql+pymysql://glance:glance@controller/glance
-  [keystone_authtoken]
-  auth_uri = http://controller:5000
-  auth_url = http://controller:35357
-  memcached_servers = controller:11211
-  auth_type = password
-  project_domain_name = default
-  user_domain_name = default
-  project_name = service
-  username = glance
-  password = 11111
-  [matchmaker_redis]
-  [oslo_messaging_amqp]
-  [oslo_messaging_kafka]
-  [oslo_messaging_notifications]
-  [oslo_messaging_rabbit]
-  [oslo_messaging_zmq]
-  [oslo_policy]
-  [paste_deploy]
-  flavor = keystone
-  [profiler]
+    [DEFAULT]
+    [database]
+  + connection = mysql+pymysql://glance:glance@controller/glance
+    [keystone_authtoken]
+  + auth_uri = http://controller:5000
+  + auth_url = http://controller:35357
+  + memcached_servers = controller:11211
+  + auth_type = password
+  + project_domain_name = default
+  + user_domain_name = default
+  + project_name = service
+  + username = glance
+  + password = 11111
+    [matchmaker_redis]
+    [oslo_messaging_amqp]
+    [oslo_messaging_kafka]
+    [oslo_messaging_notifications]
+    [oslo_messaging_rabbit]
+    [oslo_messaging_zmq]
+    [oslo_policy]
+    [paste_deploy]
+  + flavor = keystone
+    [profiler]
   ```
 - Populate the Image service database
   - ```su -s /bin/sh -c "glance-manage db_sync" glance```
