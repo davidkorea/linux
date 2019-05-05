@@ -412,6 +412,25 @@ Offical manual: https://docs.openstack.org/install-guide/environment-packages-rd
 - ```systemctl enable mariadb.service```, ```systemctl start mariadb.service```
 - ```mysql_secure_installation```
   - set root password: 11111
+## 1.3 Message queue - controller
+The message queue service typically runs on the controller node
+
+- ```yum install rabbitmq-server```
+- Start the message queue service 
+ - ```systemctl enable rabbitmq-server.service```
+ - ```systemctl start rabbitmq-server.service```
+- Add the openstack user
+ - ```rabbitmqctl add_user openstack openstack```
+  ```
+  Creating user "openstack" ...
+  ```
+  - RABBIT_PASS: openstack
+
+- Permit configuration, write, and read access for the openstack user:
+ - ```rabbitmqctl set_permissions openstack ".*" ".*" ".*"```
+  ```
+  Setting permissions for user "openstack" in vhost "/" ...
+  ```
 
 
 
