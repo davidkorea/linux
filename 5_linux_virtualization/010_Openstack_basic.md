@@ -32,8 +32,8 @@ Offical manual: https://docs.openstack.org/install-guide/environment-packages-rd
 ## 1.1 OpenStack packages
 - ```yum install centos-release-openstack-pike```
 - ```yum upgrade```
-
-
+- ```yum install python-openstackclient```
+- ```yum install openstack-selinux```
 
 
 
