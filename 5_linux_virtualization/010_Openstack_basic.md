@@ -44,7 +44,18 @@ Before you install and configure the Identity service, you must create a databas
   --bootstrap-region-id RegionOne
   ```
   - ADMIN_PASS: 11111
-  
+## 3.3 Configure the Apache HTTP server
+- Edit the /etc/httpd/conf/httpd.conf
+  ```diff
+  -  95 ServerName www.example.com:80
+  +  95 ServerName controller
+  ```
+
+
+
+
+
+
 # 2. Openstack环境搭建 - controller
 Offical manual: https://docs.openstack.org/install-guide/environment-packages-rdo.html
 ## 1.1 OpenStack packages
