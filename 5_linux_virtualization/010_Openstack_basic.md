@@ -183,17 +183,16 @@ Before you install and configure the Image service, you must create a database, 
     | virtual_size     | None                                                 |
     | visibility       | public                                               |
     +------------------+------------------------------------------------------+
-```
+    ```
 
 - ```openstack image list```
   ```
-  [root@controller ~]# openstack image list
   +--------------------------------------+--------+--------+
   | ID                                   | Name   | Status |
   +--------------------------------------+--------+--------+
   | 5ba3c1f6-82dd-446d-801d-aa5716897de7 | cirros | active |
   +--------------------------------------+--------+--------+
-  ```
+  ```  
   ```
   [root@controller ~]# cd /var/lib/glance/images/
   [root@controller images]# ls
