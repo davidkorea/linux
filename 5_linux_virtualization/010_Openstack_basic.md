@@ -67,7 +67,42 @@ Before you install and configure the Image service, you must create a database, 
   + 1975 default_store = file
   + 2294 filesystem_store_datadir = /var/lib/glance/images
   ```
-  
+  ```
+  [root@controller ~]# grep -v "^#" /etc/glance/glance-api.conf | grep -v "^$"
+  [DEFAULT]
+  [cors]
+  [database]
+  connection = mysql+pymysql://glance:glance@controller/glance
+  [glance_store]
+  stores = file,http
+  default_store = file
+  [image_format]
+  [keystone_authtoken]
+  auth_uri = http://controller:5000
+  auth_url = http://controller:35357
+  memcached_servers = controller:11211
+  auth_type = password
+  project_domain_name = default
+  user_domain_name = default
+  project_name = service
+  username = glance
+  password = 11111
+  [matchmaker_redis]
+  [oslo_concurrency]
+  [oslo_messaging_amqp]
+  [oslo_messaging_kafka]
+  [oslo_messaging_notifications]
+  [oslo_messaging_rabbit]
+  [oslo_messaging_zmq]
+  [oslo_middleware]
+  [oslo_policy]
+  [paste_deploy]
+  flavor = keystone
+  [profiler]
+  [store_type_location_strategy]
+  [task]
+  [taskflow_executor]
+  ```
   
   
   
