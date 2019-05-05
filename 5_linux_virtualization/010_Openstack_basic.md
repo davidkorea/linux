@@ -83,35 +83,6 @@ Before you install and configure the Identity service, you must create a databas
   - Add the user role to the demo project and user
     - ```openstack role add --project demo --user demo user```
 
-```
-[root@controller ~]# openstack project list
-+----------------------------------+---------+
-| ID                               | Name    |
-+----------------------------------+---------+
-| 0cce4a6f06a4426ebc087b9b7a2a73da | service |
-| 878c23c7907c49d6b8c1d68c6f5efb28 | admin   |
-| a515aa3ada5f4288846f3f37b2a66f6f | demo    |
-+----------------------------------+---------+
-```
-```
-[root@controller ~]# openstack role list
-+----------------------------------+----------+
-| ID                               | Name     |
-+----------------------------------+----------+
-| 7b115ac04b8442e6aeb8ec0cb15097c0 | admin    |
-| 8c38030b6aab41ad871cf0a11f50fda5 | user     |
-| 9fe2ff9ee4384b1894a90878d3e92bab | _member_ |
-+----------------------------------+----------+
-```
-```
-[root@controller ~]# openstack user list
-+----------------------------------+-------+
-| ID                               | Name  |
-+----------------------------------+-------+
-| 70abfb797cfb4ba5b72ce7f4ce42c193 | demo  |
-| b074d5b5ebe24c458c95623299776a6c | admin |
-+----------------------------------+-------+
-```
 ## 3.6 Verify operation
 
 - Unset the temporary OS_AUTH_URL and OS_PASSWORD environment variable
@@ -125,6 +96,35 @@ Before you install and configure the Identity service, you must create a databas
   - ```openstack --os-auth-url http://controller:5000/v3 --os-project-domain-name Default --os-user-domain-name Default --os-project-name demo --os-username demo token issue```
     - password: 11111
     - This command uses the password for the demo user and API port 5000 which only allows regular (non-admin) access to the Identity service AP
+## 3.7 Create OpenStack client environment scripts
+> The paths of the client environment scripts are unrestricted. For convenience, you can place the scripts in any location
+- reate and edit the admin-openrc file located in /root
+  ```bash
+  [root@controller ~]# vim admin-openrc
+  export OS_PROJECT_DOMAIN_NAME=Default
+  export OS_USER_DOMAIN_NAME=Default
+  export OS_PROJECT_NAME=admin
+  export OS_USERNAME=admin
+  export OS_PASSWORD=11111                        # ADMIN_PASS=11111
+  export OS_AUTH_URL=http://controller:35357/v3
+  export OS_IDENTITY_API_VERSION=3
+  export OS_IMAGE_API_VERSION=2
+  ```
+- Create and edit the demo-openrc file located in /root
+  ```bash
+  [root@controller ~]# vim demo-openrc
+  export OS_PROJECT_DOMAIN_NAME=Default
+  export OS_USER_DOMAIN_NAME=Default
+  export OS_PROJECT_NAME=demo
+  export OS_USERNAME=demo
+  export OS_PASSWORD=11111                        # DEMO_PASS=11111
+  export OS_AUTH_URL=http://controller:5000/v3
+  export OS_IDENTITY_API_VERSION=3
+  export OS_IMAGE_API_VERSION=2
+  ```
+- ```. admin-openrc```
+  - ```openstack token issue```
+
 
 
 # 2. Openstack环境搭建 - controller
