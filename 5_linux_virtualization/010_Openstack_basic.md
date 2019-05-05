@@ -35,7 +35,7 @@ Offical manual: https://docs.openstack.org/install-guide/environment-packages-rd
 - ```yum install python-openstackclient -y```
 - ```yum install openstack-selinux -y```
 ## 1.2 SQL database
-- ```yum install mariadb mariadb-server python2-PyMySQL```
+- ```yum install mariadb mariadb-server python2-PyMySQL -y```
 - Create and edit the /etc/my.cnf.d/openstack.cnf
   ```
   [mysqld]
@@ -49,6 +49,9 @@ Offical manual: https://docs.openstack.org/install-guide/environment-packages-rd
   ```
   - bind-address: management IP address of the controller node 
   - character-set-server: 提前设置好字符集，否则创建数据库时，需要手动制定 SET uft8
+- ```systemctl enable mariadb.service```, ```systemctl start mariadb.service```
+- ```mysql_secure_installation```
+  - set root password: 11111
 
 # 1. 系统环境搭建
 ## 1.1 controller
