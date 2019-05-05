@@ -68,7 +68,8 @@ Before you install and configure the Image service, you must create a database, 
   + 2294 filesystem_store_datadir = /var/lib/glance/images
   ```
   ```
-  [root@controller ~]# grep -v ^# /etc/glance/glance-api.conf | grep -v ^$[DEFAULT]
+  [root@controller ~]# grep -v ^# /etc/glance/glance-api.conf | grep -v ^$
+  [DEFAULT]
   [cors]
   [database]
   connection = mysql+pymysql://glance:glance@controller/glance
@@ -105,8 +106,7 @@ Before you install and configure the Image service, you must create a database, 
   ```
 - Edit the /etc/glance/glance-registry.conf file 
   ```diff
-  [root@controller ~]# grep -v ^# !$ | grep -v ^$
-  grep -v ^# /etc/glance/glance-registry.conf | grep -v ^$
+  [root@controller ~]# grep -v ^# /etc/glance/glance-registry.conf | grep -v ^$
     [DEFAULT]
     [database]
   + connection = mysql+pymysql://glance:glance@controller/glance
