@@ -50,8 +50,21 @@ Before you install and configure the Identity service, you must create a databas
   -  95 ServerName www.example.com:80
   +  95 ServerName controller
   ```
-
-
+- ```ln -s /usr/share/keystone/wsgi-keystone.conf /etc/httpd/conf.d/```
+## 3.4 Finalize the installation
+- Start the Apache HTTP service
+  ```
+  systemctl enable httpd.service
+  systemctl start httpd.service
+  ```
+- Configure the administrative account
+- ```export OS_USERNAME=admin```
+- ```export OS_PASSWORD=11111```, ADMIN_PASS=11111
+- ```export OS_PROJECT_NAME=admin```
+- ```export OS_USER_DOMAIN_NAME=Default```
+- ```export OS_PROJECT_DOMAIN_NAME=Default```
+- ```export OS_AUTH_URL=http://controller:35357/v3```
+- ```export OS_IDENTITY_API_VERSION=3```
 
 
 
