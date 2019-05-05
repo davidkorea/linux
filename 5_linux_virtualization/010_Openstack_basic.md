@@ -16,8 +16,12 @@ Before you install and configure the Identity service, you must create a databas
 - MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'keystone';```
 - MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'keystone';```
 
-
-
+## 3.2 Install and configure components
+- ```yum install openstack-keystone httpd mod_wsgi -y```
+- Edit the /etc/keystone/keystone.conf
+  ```diff
+  - 661 connection = <None>
+  + 661 connection = mysql+pymysql://keystone:keystone@controller/keystone
 
 
 
