@@ -1,5 +1,41 @@
 > https://docs.openstack.org/install-guide/openstack-services.html
 
+# 5. nova
+## 5.1 controller node
+```
+MariaDB [(none)]> CREATE DATABASE nova_api;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> CREATE DATABASE nova;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> CREATE DATABASE nova_cell0;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' \
+    ->   IDENTIFIED BY 'nova';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' \
+    ->   IDENTIFIED BY 'nova';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' \
+    ->   IDENTIFIED BY 'nova';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' \
+    ->   IDENTIFIED BY 'nova';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'localhost' \
+    ->   IDENTIFIED BY 'nova';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'%' \
+    ->   IDENTIFIED BY 'nova';
+Query OK, 0 rows affected (0.00 sec)
+```
 
 
 
