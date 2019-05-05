@@ -148,7 +148,9 @@ Before you install and configure the Image service, you must create a database, 
     Upgraded database to: pike01, current revision(s): pike01
     ```
   
-  
+## 4.3 Finalize installation
+- ```systemctl enable openstack-glance-api.service openstack-glance-registry.service```
+- ```systemctl start openstack-glance-api.service openstack-glance-registry.service```
   
   
   
