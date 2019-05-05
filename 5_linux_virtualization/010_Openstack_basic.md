@@ -3,31 +3,29 @@
 
 
 
-
-
 # 4. controller - glance
 https://www.cnblogs.com/jsonhc/p/7698502.html
 
 https://docs.openstack.org/glance/pike/index.html
 
 # 3. controller - keystone
-- ```yum install openstack-keystone```, 包含来python-openstackclient
-- ```yum install -y openstack-utils```
-
-- db
-  ```
-  MariaDB [(none)]> GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'keystone';
-  Query OK, 0 rows affected (0.00 sec)
-
-  MariaDB [(none)]> GRANT ALL ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'keystone';
-  Query OK, 0 rows affected (0.00 sec)
-  
-  MariaDB [(none)]> FLUSH PRIVILEGES;
-  ```
-  - IDENTIFIED 'keystone'是密码
+## 3.1 Prerequisites
+Before you install and configure the Identity service, you must create a database.
+- ```mysql -u root -p11111```
+- MariaDB [(none)]> ```CREATE DATABASE keystone;```
+- MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'keystone';```
+- MariaDB [(none)]> ```GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY 'keystone';```
 
 
-# 1. Openstack环境搭建 - controller
+
+
+
+
+
+
+
+
+# 2. Openstack环境搭建 - controller
 Offical manual: https://docs.openstack.org/install-guide/environment-packages-rdo.html
 ## 1.1 OpenStack packages
 - ```yum install centos-release-openstack-pike```
@@ -52,6 +50,8 @@ Offical manual: https://docs.openstack.org/install-guide/environment-packages-rd
 - ```systemctl enable mariadb.service```, ```systemctl start mariadb.service```
 - ```mysql_secure_installation```
   - set root password: 11111
+
+
 
 # 1. 系统环境搭建
 ## 1.1 controller
@@ -96,8 +96,10 @@ Offical manual: https://docs.openstack.org/install-guide/environment-packages-rd
   - 清空iptables 即可
   - ping baidu ip 220.181.57.216 ok
 
-# 0. Basic
 
+
+
+# 0. Basic
 - 30-50 servers no need to implement openstack, need technical supports for openstack, devops chanllege
 - over 200 servers ok
 #### 1. 卷存储，各个硬盘中的存储信息，block存储，持久存储（Cinder）
