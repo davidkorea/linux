@@ -68,14 +68,14 @@ Before you install and configure the Image service, you must create a database, 
   + 2294 filesystem_store_datadir = /var/lib/glance/images
   ```
   ```
-  [root@controller ~]# grep -v "^#" /etc/glance/glance-api.conf | grep -v "^$"
-  [DEFAULT]
+  [root@controller ~]# grep -v ^# /etc/glance/glance-api.conf | grep -v ^$[DEFAULT]
   [cors]
   [database]
   connection = mysql+pymysql://glance:glance@controller/glance
   [glance_store]
   stores = file,http
   default_store = file
+  filesystem_store_datadir = /var/lib/glance/images
   [image_format]
   [keystone_authtoken]
   auth_uri = http://controller:5000
@@ -103,9 +103,50 @@ Before you install and configure the Image service, you must create a database, 
   [task]
   [taskflow_executor]
   ```
-  
-  
-  
+- Edit the /etc/glance/glance-registry.conf file 
+  ```
+  [root@controller ~]# grep -v ^# !$ | grep -v ^$
+  grep -v ^# /etc/glance/glance-registry.conf | grep -v ^$
+  [DEFAULT]
+  [database]
+  connection = mysql+pymysql://glance:glance@controller/glance
+  [keystone_authtoken]
+  auth_uri = http://controller:5000
+  auth_url = http://controller:35357
+  memcached_servers = controller:11211
+  auth_type = password
+  project_domain_name = default
+  user_domain_name = default
+  project_name = service
+  username = glance
+  password = 11111
+  [matchmaker_redis]
+  [oslo_messaging_amqp]
+  [oslo_messaging_kafka]
+  [oslo_messaging_notifications]
+  [oslo_messaging_rabbit]
+  [oslo_messaging_zmq]
+  [oslo_policy]
+  [paste_deploy]
+  flavor = keystone
+  [profiler]
+  ```
+- Populate the Image service database
+  - ```su -s /bin/sh -c "glance-manage db_sync" glance```
+    ```
+    /usr/lib/python2.7/site-packages/oslo_db/sqlalchemy/enginefacade.py:1330: OsloDBDeprecationWarning: EngineFacade is deprecated; please use oslo_db.sqlalchemy.enginefacade
+      expire_on_commit=expire_on_commit, _conf=conf)
+    INFO  [alembic.runtime.migration] Context impl MySQLImpl.
+    INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+    INFO  [alembic.runtime.migration] Running upgrade  -> liberty, liberty initial
+    INFO  [alembic.runtime.migration] Running upgrade liberty -> mitaka01, add index on created_at and updated_at columns of 'images' table
+    INFO  [alembic.runtime.migration] Running upgrade mitaka01 -> mitaka02, update metadef os_nova_server
+    INFO  [alembic.runtime.migration] Running upgrade mitaka02 -> ocata01, add visibility to and remove is_public from images
+    INFO  [alembic.runtime.migration] Running upgrade ocata01 -> pike01, drop glare artifacts tables
+    INFO  [alembic.runtime.migration] Context impl MySQLImpl.
+    INFO  [alembic.runtime.migration] Will assume non-transactional DDL.
+    Upgraded database to: pike01, current revision(s): pike01
+    ```
   
   
   
