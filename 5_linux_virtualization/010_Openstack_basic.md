@@ -34,11 +34,18 @@ Before you install and configure the Identity service, you must create a databas
   - ```keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone```
   - ```keystone-manage credential_setup --keystone-user keystone --keystone-group keystone```
 - Bootstrap the Identity service
-  ```keystone-manage bootstrap --bootstrap-password ADMIN_PASS \
+  - ```  keystone-manage bootstrap --bootstrap-password 11111 
+  --bootstrap-admin-url http://controller:35357/v3/ 
+  --bootstrap-internal-url http://controller:5000/v3/ 
+  --bootstrap-public-url http://controller:5000/v3/ 
+  --bootstrap-region-id RegionOne```
+  ```
+  keystone-manage bootstrap --bootstrap-password 11111 \
   --bootstrap-admin-url http://controller:35357/v3/ \
   --bootstrap-internal-url http://controller:5000/v3/ \
   --bootstrap-public-url http://controller:5000/v3/ \
-  --bootstrap-region-id RegionOne```
+  --bootstrap-region-id RegionOne
+  ```
   - ADMIN_PASS: 11111
   
 # 2. Openstack环境搭建 - controller
