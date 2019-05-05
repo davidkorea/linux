@@ -28,9 +28,19 @@ Before you install and configure the Identity service, you must create a databas
   - 2774 #provider = fernet
   + 2774 provider = fernet
   ```
-
-
-
+- Populate the Identity service database
+  - ```su -s /bin/sh -c "keystone-manage db_sync" keystone```
+- Initialize Fernet key repositories
+  - ```keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone```
+  - ```keystone-manage credential_setup --keystone-user keystone --keystone-group keystone```
+- Bootstrap the Identity service
+  ```keystone-manage bootstrap --bootstrap-password ADMIN_PASS \
+  --bootstrap-admin-url http://controller:35357/v3/ \
+  --bootstrap-internal-url http://controller:5000/v3/ \
+  --bootstrap-public-url http://controller:5000/v3/ \
+  --bootstrap-region-id RegionOne```
+  - ADMIN_PASS: 11111
+  
 # 2. Openstack环境搭建 - controller
 Offical manual: https://docs.openstack.org/install-guide/environment-packages-rdo.html
 ## 1.1 OpenStack packages
