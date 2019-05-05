@@ -5,12 +5,12 @@
 
 
 
-# 3. controller - glance
+# 4. controller - glance
 https://www.cnblogs.com/jsonhc/p/7698502.html
 
 https://docs.openstack.org/glance/pike/index.html
 
-# 2. controller - keystone
+# 3. controller - keystone
 - ```yum install openstack-keystone```, 包含来python-openstackclient
 - ```yum install -y openstack-utils```
 
@@ -27,6 +27,11 @@ https://docs.openstack.org/glance/pike/index.html
   - IDENTIFIED 'keystone'是密码
 
 
+# 1. Openstack环境搭建 - controller
+Offical manual: https://docs.openstack.org/install-guide/environment-packages-rdo.html
+## 1.1 OpenStack packages
+- ```yum install centos-release-openstack-pike```
+- ```yum upgrade```
 
 
 
@@ -34,10 +39,7 @@ https://docs.openstack.org/glance/pike/index.html
 
 
 
-
-
-
-# 1. 搭建环境
+# 1. 系统环境搭建
 ## 1.1 controller
 - ens33 bridge 192.168.0.11
 - ens37 host only 172.16.251.11 （manage）
