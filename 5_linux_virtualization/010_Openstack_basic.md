@@ -20,10 +20,19 @@ Before you install and configure the Image service, you must create a database, 
 - To create the service credentials, complete these steps
   - Create the glance user
     - ```openstack user create --domain default --password-prompt glance```
+      ```
+      User Password: 11111
+      Repeat User Password: 11111
+      ```
+  - Add the admin role to the glance user and service project
+    - ```openstack role add --project service --user glance admin```
+  - Create the glance service entity
+    - ```openstack service create --name glance --description "OpenStack Image" image```
   
-  
-  
-  
+- Create the Image service API endpoints
+  - ```openstack endpoint create --region RegionOne image public http://controller:9292```
+  - ```openstack endpoint create --region RegionOne image internal http://controller:9292```
+  - ```openstack endpoint create --region RegionOne image admin http://controller:9292```
   
   
   
@@ -107,8 +116,8 @@ Before you install and configure the Identity service, you must create a databas
   - Create the demo user
     - ```openstack user create --domain default --password-prompt demo```
       ```
-      User Password:11111
-      Repeat User Password:11111
+      User Password: 11111
+      Repeat User Password: 11111
       ```
   - Create the user role
     - ```openstack role create user```
