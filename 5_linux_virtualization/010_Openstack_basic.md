@@ -1,5 +1,11 @@
 > https://docs.openstack.org/install-guide/openstack-services.html
 
+```diff
+- OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
++ OPENSTACK_KEYSTONE_URL = "http://%s:5000/v2.0" % OPENSTACK_HOST
+```
+
+
 ```
 [root@controller ~]# openstack compute service list --service nova-compute
 The server is currently unavailable. Please try again at a later time.<br /><br />
