@@ -8,6 +8,13 @@
 tail /var/log/httpd/error_log 
 
 [core:error] [pid 13265] [client 192.168.0.11:44536] Script timed out before returning headers: django.wsgi
+
+"""
+编辑：/etc/httpd/conf.d/openstack-dashboard.conf 
+在WSGISocketPrefix run/wsgi下面加一行代码： 
+WSGIApplicationGroup %{GLOBAL} 
+保存，重启httpd服务
+"""
 ```
 
 ```
