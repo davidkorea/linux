@@ -4,7 +4,11 @@
 - OPENSTACK_KEYSTONE_URL = "http://%s:5000/v3" % OPENSTACK_HOST
 + OPENSTACK_KEYSTONE_URL = "http://%s:5000/v2.0" % OPENSTACK_HOST
 ```
+```
+tail /var/log/httpd/error_log 
 
+[core:error] [pid 13265] [client 192.168.0.11:44536] Script timed out before returning headers: django.wsgi
+```
 
 ```
 [root@controller ~]# openstack compute service list --service nova-compute
