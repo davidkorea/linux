@@ -5,7 +5,8 @@
 - provider = fernet
   - 当集群运行较长一段时间后，访问其 API 会变得奇慢无比，究其原因在于 Keystone 数据库存储了大量的 token 导致性能太差，解决的办法是经常清理 token。为了避免上述问题，社区提出了Fernet token，fernet 是当前主流推荐的token格式，它采用 cryptography 对称加密库(symmetric cryptography，加密密钥和解密密钥相同) 加密 token，具体由 AES-CBC 加密和散列函数 SHA256 签名。Fernet 是专为 API token 设计的一种轻量级安全消息格式，不需要存储于数据库，减少了磁盘的 IO，带来了一定的性能提升。为了提高安全性，需要采用 Key Rotation 更换密钥。
 
-
+- provider = keystone.token.providers.uuid.Provider
+  - UUID认证原理：当用户需要进行操作时（比如访问nova创建虚拟机），用户拿着有效的用户名/密码先去keystone认证，keystone返回给用户一个token(即UUID)。之后用户进行其他操作（如访问nova），先出示这个token给nova-api,nova收到请求后，就用这个token去向keystone进行请求验证。keystone通过比对token，以及检查token的有效期，判断token的有效性，最后返回给nova结果。缺陷：每次请求都要经过keystone进行验证，造成性能瓶颈。
 
 
 
