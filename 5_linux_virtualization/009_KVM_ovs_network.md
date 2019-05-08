@@ -358,12 +358,12 @@ All the 4 DHCP IPs could ping each other.
 - 2 physical node different network
 - VMs on that 2 nodes can communicate
 - GRE in OSI layer3，是一种隧道技术，使用一种报文来承载和传输另一种报文，如以太网帧
-- 为简化，将2个物理节点放在同一网络，虽然不同网络可以实现GRE，但是需要再配置路由
+- 为简化，将2个物理节点放在同一网络VMnet2，虽然不同网络可以实现GRE，但是需要再配置路由
   - 当然，因为是再同一个网段，可以直接将物理网卡绑定至br-in桥上面，实现通信
   - 这里，演示GRE的方式进行连接
-  - 如果两个物理节点不在同一个网段，就只能使用GRE才能实现通信（也需要路由器使得两个网段可以通信）
+    - 
 - 删除上一步创建的所有虚拟机，只留下br-in桥，删除其他桥和接口
-- 物理节点上面的虚拟交换机br-in借助物理网卡ens38来完成隧道协议封装，但是不能将物理网卡ens38绑定至br-in上
+- 物理节点上面的虚拟交换机br-in借助VMnet网卡ens37来完成隧道协议封装，但是不能将物理网卡ens37绑定至br-in上
 
 ## 2.1 Node 1
 ### 1. 创建DHCP（netns）
