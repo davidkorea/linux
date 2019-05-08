@@ -3,7 +3,9 @@
 - VLAN 
   - VLAN is a networking technology that enables a single switch to act as if it was multiple independent switches. Specifically, two hosts that are connected to the same switch but on different VLANs do not see each other’s traffic. 
   - OpenStack is able to take advantage of VLANs to isolate the traffic of different tenants, even if the **tenants happen to have instances running on the same compute host**. Each VLAN has an associated numerical ID, between 1 and 4095. We say “VLAN 15” to refer to the VLAN with numerical ID of 15.
-
+- two syntaxes for expressing a netmask
+  - dotted quad, 192.168.1.5, 255.255.255.0
+  - classless inter-domain routing (CIDR), 192.168.1.5/24
 
 
 
