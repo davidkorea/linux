@@ -243,6 +243,8 @@ Network Adapter1 - VMnet2       -> ens38  - 虚拟机之间通信
 > 
 > - GRE: Generic Routing Encapsulation 通用路由封装
 > - 借助GRE协议来实现VLAN
+>   - GRE是一种隧道技术，现将跨主机的两个虚拟机网络打通
+>   - 再使用VLAN技术，进行划分子网
 
 - Node1
   - VM1  --- VLAN1
