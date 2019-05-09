@@ -310,6 +310,8 @@
   firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
   enable_security_group = True
   ```
+- ```ovs-vsctl add-br br-int``` ???????mageedu
+
 - vim /etc/nova/nova.conf 
   ```
   [neutron]
