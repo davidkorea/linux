@@ -94,6 +94,42 @@
     enable_ipset = True
     ```
   - Start the following services: Server
+- vim /etc/neutron/metadata_agent.ini
+  ```
+  [DEFAULT]
+  nova_metadata_host = controller
+  metadata_proxy_shared_secret = METADATA_SECRET(11111)
+  ```
+- vim /etc/nova/nova.conf
+  ```
+  [neutron]
+  url = http://controller:9696
+  auth_url = http://controller:35357
+  auth_type = password
+  project_domain_name = default
+  user_domain_name = default
+  region_name = RegionOne
+  project_name = service
+  username = neutron
+  password = NEUTRON_PASS
+  service_metadata_proxy = true
+  metadata_proxy_shared_secret = METADATA_SECRET
+  ```
+- ```ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini```
+- ```su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf \
+  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron```
+- ```systemctl restart openstack-nova-api.service```
+- ```systemctl enable neutron-server.service \
+  neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
+  neutron-metadata-agent.service```
+- ```systemctl start neutron-server.service \
+  neutron-linuxbridge-agent.service neutron-dhcp-agent.service \
+  neutron-metadata-agent.service```
+- ```systemctl enable neutron-l3-agent.service```
+- ```systemctl start neutron-l3-agent.service```
+  
+  
+  
 ## Network node
 - vim /etc/neutron/neutron.conf
   ```
