@@ -26,7 +26,7 @@
   - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
   - Operational OpenStack Compute controller/management service with appropriate configuration to use neutron in the nova.conf file.
   - **Open vSwitch service, Open vSwitch agent, and any dependencies.**
-## Controller 
+## Controller - node
 **Operational SQL server with neutron database and appropriate configuration in the neutron.conf file.**
 - [Install and configure controller node](https://docs.openstack.org/neutron/pike/install/controller-install-rdo.html)
 - Configure networking options
@@ -93,7 +93,54 @@
     [securitygroup]
     enable_ipset = True
     ```
+  - Start the following services: Server
+## Network node
+- vim /etc/neutron/neutron.conf
+  ```
+  [DEFAULT]
+  verbose = True
+  ...??
+  ```
+- vim /etc/neutron/plugins/ml2/openvswitch_agent.ini
+  ```
+  [ovs]
+  local_ip = TUNNEL_INTERFACE_IP_ADDRESS(172.16.251.10)
+  bridge_mappings = vlan:br-vlan,external:br-ex
 
+  [agent]
+  tunnel_types = gre,vxlan
+  l2_population = True
+  prevent_arp_spoofing = True
+
+  [securitygroup]
+  firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+  enable_security_group = True
+  ```
+  - Replace ```TUNNEL_INTERFACE_IP_ADDRESS``` with the IP address of the interface that handles GRE/VXLAN project networks.
+
+- vim /etc/neutron/l3_agent.ini
+  ```
+  [DEFAULT]
+  verbose = True
+  interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+  use_namespaces = True
+  external_network_bridge =
+  ```
+- vim /etc/neutron/dhcp_agent.ini
+  ```
+  [DEFAULT]
+  verbose = True
+  interface_driver = neutron.agent.linux.interface.OVSInterfaceDriver
+  dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
+  enable_isolated_metadata = True
+  ```
+- vim /etc/neutron/metadata_agent.ini
+  ```
+  [DEFAULT]
+  verbose = True
+  nova_metadata_ip = controller
+  metadata_proxy_shared_secret = METADATA_SECRET(11111)
+  ```
 
 
 
