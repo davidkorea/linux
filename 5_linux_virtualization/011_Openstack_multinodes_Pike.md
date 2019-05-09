@@ -307,7 +307,7 @@ sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/syst
   ```
 - ```neutron agent-list```
 
-
+- [Create initial networks](https://docs.openstack.org/liberty/networking-guide/scenario-classic-ovs.html#create-initial-networks)
 
 
 
