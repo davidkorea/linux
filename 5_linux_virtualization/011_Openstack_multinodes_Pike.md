@@ -295,6 +295,8 @@
   [securitygroup]
   enable_ipset = True
   ```
+- ```ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini```
+
 - vim /etc/neutron/plugins/ml2/openvswitch_agent.ini
   ```
   [ovs]
@@ -314,6 +316,12 @@
 
 - vim /etc/nova/nova.conf 
   ```
+  [DEFAULT]
+  network_api_class = nova.network.neutronv2.api.API
+  security_group_api = neutron
+  linuxnet_interface_driver = nova.network.linux_net.LinuxOVSInterfaceDriver
+  firewall_driver = nova.virt.firewall.NoopFirewallDriver
+
   [neutron]
   url = http://controller:9696
   auth_url = http://controller:35357
@@ -329,8 +337,10 @@
   ```
   cp /usr/lib/systemd/system/neutron-openvswitch-agent.service \
   /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig
+  
   sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' \
   /usr/lib/systemd/system/neutron-openvswitch-agent.service
+  
   systemctl enable openvswitch.service
   systemctl start openvswitch.service
   systemctl restart openstack-nova-compute.service
