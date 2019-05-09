@@ -14,14 +14,14 @@
   - Operational message queue service with appropriate configuration in the neutron.conf file.
   - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
   - Operational OpenStack Compute controller/management service with appropriate configuration to use neutron in the nova.conf file.
-  - Neutron server service, ML2 plug-in, and any dependencies.
+  - **Neutron server service, ML2 plug-in, and any dependencies.**
 - OpenStack services - network node
   - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
-  - Open vSwitch service, Open vSwitch agent, L3 agent, DHCP agent, metadata agent, and any dependencies.
+  - **Open vSwitch service, Open vSwitch agent, L3 agent, DHCP agent, metadata agent, and any dependencies.**
 - OpenStack services - compute nodes
   - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
   - Operational OpenStack Compute controller/management service with appropriate configuration to use neutron in the nova.conf file.
-  - Open vSwitch service, Open vSwitch agent, and any dependencies.
+  - **Open vSwitch service, Open vSwitch agent, and any dependencies.**
   
 
 
