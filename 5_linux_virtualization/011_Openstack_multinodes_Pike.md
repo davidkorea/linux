@@ -28,7 +28,7 @@
   - **Open vSwitch service, Open vSwitch agent, and any dependencies.**
 ## Controller - node
 **Operational SQL server with neutron database and appropriate configuration in the neutron.conf file.**
-- [Install and configure controller node](https://docs.openstack.org/neutron/pike/install/controller-install-rdo.html)
+- [create a database, service credentials, and API endpoints](https://docs.openstack.org/neutron/pike/install/controller-install-rdo.html)
 - Configure networking options
   - ```yum install openstack-neutron openstack-neutron-ml2 python-neutronclientwhich -y```
   - vim /etc/neutron/neutron.conf
