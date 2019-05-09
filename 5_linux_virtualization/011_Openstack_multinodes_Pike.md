@@ -11,6 +11,7 @@
 
 - OpenStack services - controller node
   - **Operational SQL server with neutron database and appropriate configuration in the neutron.conf file.**
+    - [Install and configure controller node](https://docs.openstack.org/neutron/pike/install/controller-install-rdo.html)
   - Operational message queue service with appropriate configuration in the neutron.conf file.
   - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
   - Operational OpenStack Compute controller/management service with appropriate configuration to use neutron in the nova.conf file.
