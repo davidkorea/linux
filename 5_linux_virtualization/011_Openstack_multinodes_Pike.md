@@ -131,12 +131,28 @@
   net.ipv4.conf.default.rp_filter=0
   ```
   ```sysctl -p```
+- ```yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-openvswitch -y```
 
 - vim /etc/neutron/neutron.conf
   ```
   [DEFAULT]
   verbose = True
-  ...??
+  transport_url = rabbit://openstack:RABBIT_PASS@controller
+  auth_strategy = keystone
+  core_plugin = ml2
+  service_plugins = router
+  allow_overlapping_ips = True
+
+  [keystone_authtoken]
+  auth_uri = http://controller:5000
+  auth_url = http://controller:35357
+  memcached_servers = controller:11211
+  auth_type = password
+  project_domain_name = default
+  user_domain_name = default
+  project_name = service
+  username = neutron
+  password = NEUTRON_PASS
   ```
 - vim /etc/neutron/plugins/ml2/openvswitch_agent.ini
   ```
