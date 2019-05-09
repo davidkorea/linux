@@ -178,7 +178,7 @@
 - vim /etc/neutron/plugins/ml2/openvswitch_agent.ini
   ```
   [ovs]
-  local_ip = TUNNEL_INTERFACE_IP_ADDRESS(ens38's VMnet2 ip )
+  local_ip = TUNNEL_INTERFACE_IP_ADDRESS(ens38's VMnet2 ip 192.168.100.1)
   bridge_mappings = vlan:br-vlan,external:br-ex
 
   [agent]
@@ -298,7 +298,7 @@
 - vim /etc/neutron/plugins/ml2/openvswitch_agent.ini
   ```
   [ovs]
-  local_ip = TUNNEL_INTERFACE_IP_ADDRESS
+  local_ip = TUNNEL_INTERFACE_IP_ADDRESS(ens38's VMnet2 ip 192.168.100.12)
   bridge_mappings = vlan:br-vlan
 
   [agent]
