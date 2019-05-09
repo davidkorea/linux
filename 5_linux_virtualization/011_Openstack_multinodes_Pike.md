@@ -216,18 +216,24 @@
   nova_metadata_ip = controller
   metadata_proxy_shared_secret = METADATA_SECRET(11111)
   ```
-
+- create bridge
+  - ```ovs-vsctl add-br br-int```
+  - ```ovs-vsctl add-br br-ex```
+  - ```ovs-vsctl add-port br-ex ens33```
+  - ```ethtool -K ens33 gro off```
+  - 将ens33的ip地址设置到br-ex上，而ens33清空IP地址
+  
 - Start the following services:
   - Open vSwitch
   - Open vSwitch agent
   - L3 agent
   - DHCP agent
   - Metadata agent
-  - ```cp /usr/lib/systemd/system/neutron-openvswitch-agent.service /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig
-sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/systemd/system/neutron-openvswitch-agent.service```
+  - ```cp /usr/lib/systemd/system/neutron-openvswitch-agent.service /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig```
+  - ```sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/systemd/system/neutron-openvswitch-agent.service```
 
   -```systemctl enable neutron-openvswitch-agent.service neutron-l3-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service neutron-ovs-cleanup.service```
-  ```systemctl start neutron-openvswitch-agent.service neutron-l3-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service```
+  - ```systemctl start neutron-openvswitch-agent.service neutron-l3-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service```
 - ```. admin-openrc```, ```neutron agent-list```
 
 ## Compute Node
