@@ -115,11 +115,7 @@
 - ```systemctl restart openstack-nova-api.service```
 - ```systemctl enable neutron-server.service```
 - ```systemctl start neutron-server.service```
-- 验证
-  ```
-  . admin-openrc
-  neutron ext-list
-  ```
+- ```  . admin-openrc```, ```neutron ext-list```
   
   
   
@@ -195,7 +191,8 @@
   enable_security_group = True
   ```
   - Replace ```TUNNEL_INTERFACE_IP_ADDRESS``` with the IP address of the interface that handles GRE/VXLAN project networks.
-
+  
+- ```ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini```
 - vim /etc/neutron/l3_agent.ini
   ```
   [DEFAULT]
@@ -220,9 +217,20 @@
   metadata_proxy_shared_secret = METADATA_SECRET(11111)
   ```
 
+- Start the following services:
+  - Open vSwitch
+  - Open vSwitch agent
+  - L3 agent
+  - DHCP agent
+  - Metadata agent
+  - ```cp /usr/lib/systemd/system/neutron-openvswitch-agent.service /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig
+sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/systemd/system/neutron-openvswitch-agent.service```
 
+  -```systemctl enable neutron-openvswitch-agent.service neutron-l3-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service neutron-ovs-cleanup.service```
+  ```systemctl start neutron-openvswitch-agent.service neutron-l3-agent.service neutron-dhcp-agent.service neutron-metadata-agent.service```
+- ```. admin-openrc```, ```neutron agent-list```
 
-
+## Compute Node
 
 
 
