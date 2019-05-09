@@ -232,14 +232,80 @@ sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/syst
 
 ## Compute Node
 
+- vim /etc/sysctl.conf
+  ```
+  net.ipv4.conf.all.rp_filter=0
+  net.ipv4.conf.default.rp_filter=0
+  net.bridge.bridge-nf-call-iptables=1
+  net.bridge.bridge-nf-call-ip6tables=1
+  ```
+  ```sysctl -p```
+  ```modprobe bridge```
 
+- ```yum install openstack-neutron openstack-neutron-ml2 openstack-neutron-openvswitch -y```
+- vim /etc/neutron/neutron.conf 
+  ```
+  [DEFAULT]
+  verbose = True
+  transport_url = rabbit://openstack:RABBIT_PASS@controller
+  auth_strategy = keystone
 
+  [keystone_authtoken]
+  auth_uri = http://controller:5000
+  auth_url = http://controller:35357
+  memcached_servers = controller:11211
+  auth_type = password
+  project_domain_name = default
+  user_domain_name = default
+  project_name = service
+  username = neutron
+  password = NEUTRON_PASS
 
+  [oslo_concurrency]
+  lock_path = /var/lib/neutron/tmp
+  ```
 
+- vim /etc/neutron/plugins/ml2/openvswitch_agent.ini
+  ```
+  [ovs]
+  local_ip = TUNNEL_INTERFACE_IP_ADDRESS
+  bridge_mappings = vlan:br-vlan
 
+  [agent]
+  tunnel_types = gre,vxlan
+  l2_population = True
+  prevent_arp_spoofing = True
 
-
-
+  [securitygroup]
+  firewall_driver = neutron.agent.linux.iptables_firewall.OVSHybridIptablesFirewallDriver
+  enable_security_group = True
+  ```
+- vim /etc/nova/nova.conf 
+  ```
+  [neutron]
+  url = http://controller:9696
+  auth_url = http://controller:35357
+  auth_type = password
+  project_domain_name = default
+  user_domain_name = default
+  region_name = RegionOne
+  project_name = service
+  username = neutron
+  password = NEUTRON_PASS
+  ```
+- start services
+  ```
+  cp /usr/lib/systemd/system/neutron-openvswitch-agent.service \
+  /usr/lib/systemd/system/neutron-openvswitch-agent.service.orig
+  sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' \
+  /usr/lib/systemd/system/neutron-openvswitch-agent.service
+  systemctl enable openvswitch.service
+  systemctl start openvswitch.service
+  systemctl restart openstack-nova-compute.service
+  systemctl enable neutron-openvswitch-agent.service
+  systemctl start neutron-openvswitch-agent.service
+  ```
+- ```neutron agent-list```
 
 
 
