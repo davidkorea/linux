@@ -272,7 +272,29 @@
   [oslo_concurrency]
   lock_path = /var/lib/neutron/tmp
   ```
+- vim /etc/neutron/plugins/ml2/ml2_conf.ini 
+  ```
+  [ml2]
+  type_drivers = flat,vlan,gre,vxlan
+  tenant_network_types = vlan,gre,vxlan
+  mechanism_drivers = openvswitch,l2population
+  extension_drivers = port_security
 
+  [ml2_type_flat]
+  flat_networks = external
+
+  [ml2_type_vlan]
+  network_vlan_ranges = external,vlan:1:1000
+
+  [ml2_type_gre]
+  tunnel_id_ranges = 1:1000
+
+  [ml2_type_vxlan]
+  vni_ranges = 1:1000
+
+  [securitygroup]
+  enable_ipset = True
+  ```
 - vim /etc/neutron/plugins/ml2/openvswitch_agent.ini
   ```
   [ovs]
