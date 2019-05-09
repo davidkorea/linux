@@ -305,9 +305,19 @@ sed -i 's,plugins/openvswitch/ovs_neutron_plugin.ini,plugin.ini,g' /usr/lib/syst
   systemctl enable neutron-openvswitch-agent.service
   systemctl start neutron-openvswitch-agent.service
   ```
-- ```neutron agent-list```
+- ```neutron agent-list```, on controller node
 
-## Controller Node  [Create initial networks](https://docs.openstack.org/liberty/networking-guide/scenario-classic-ovs.html#create-initial-networks)
+## Controller Node - [Create initial networks](https://docs.openstack.org/liberty/networking-guide/scenario-classic-ovs.html#create-initial-networks)
+
+
+
+
+
+
+
+
+
+
 
 
 
