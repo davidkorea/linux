@@ -254,6 +254,9 @@
   verbose = True
   transport_url = rabbit://openstack:RABBIT_PASS@controller
   auth_strategy = keystone
+  core_plugin = ml2
+  service_plugins = router
+  allow_overlapping_ips = True
 
   [keystone_authtoken]
   auth_uri = http://controller:5000
