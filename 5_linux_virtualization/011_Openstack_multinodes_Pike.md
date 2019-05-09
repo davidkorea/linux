@@ -26,9 +26,50 @@
   - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
   - Operational OpenStack Compute controller/management service with appropriate configuration to use neutron in the nova.conf file.
   - **Open vSwitch service, Open vSwitch agent, and any dependencies.**
-  
-
-
+## Controller 
+**Operational SQL server with neutron database and appropriate configuration in the neutron.conf file.**
+- [Install and configure controller node](https://docs.openstack.org/neutron/pike/install/controller-install-rdo.html)
+- Configure networking options
+  - ```yum install openstack-neutron openstack-neutron-ml2 python-neutronclientwhich -y```
+  - vim /etc/neutron/neutron.conf
+    ```
+    [DEFAULT]
+    verbose = True
+    core_plugin = ml2
+    service_plugins = router
+    allow_overlapping_ips = true
+    transport_url = rabbit://openstack:RABBIT_PASS@controller
+    auth_strategy = keystone
+    notify_nova_on_port_status_changes = true
+    notify_nova_on_port_data_changes = true
+    
+    [database]
+    connection = mysql+pymysql://neutron:NEUTRON_DBPASS@controller/neutron
+    
+    [keystone_authtoken]
+    auth_uri = http://controller:5000
+    auth_url = http://controller:35357
+    memcached_servers = controller:11211
+    auth_type = password
+    project_domain_name = default
+    user_domain_name = default
+    project_name = service
+    username = neutron
+    password = NEUTRON_PASS
+    
+    [nova]
+    auth_url = http://controller:35357
+    auth_type = password
+    project_domain_name = default
+    user_domain_name = default
+    region_name = RegionOne
+    project_name = service
+    username = nova
+    password = NOVA_PASS
+    
+    [oslo_concurrency]
+    lock_path = /var/lib/neutron/tmp
+    ```
 
 
 
