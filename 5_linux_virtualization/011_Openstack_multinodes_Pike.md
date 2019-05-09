@@ -94,12 +94,7 @@
     enable_ipset = True
     ```
   - Start the following services: Server
-- vim /etc/neutron/metadata_agent.ini
-  ```
-  [DEFAULT]
-  nova_metadata_host = controller
-  metadata_proxy_shared_secret = METADATA_SECRET(11111)
-  ```
+
 - vim /etc/nova/nova.conf
   ```
   [neutron]
