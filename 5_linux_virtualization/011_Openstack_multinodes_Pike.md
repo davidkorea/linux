@@ -7,10 +7,22 @@
   - dotted quad, 192.168.1.5, 255.255.255.0
   - classless inter-domain routing (CIDR), 192.168.1.5/24
 
+## Classic with Open vSwitch
 
-
-
-
+- OpenStack services - controller node
+  - Operational SQL server with neutron database and appropriate configuration in the neutron.conf file.
+  - Operational message queue service with appropriate configuration in the neutron.conf file.
+  - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
+  - Operational OpenStack Compute controller/management service with appropriate configuration to use neutron in the nova.conf file.
+  - Neutron server service, ML2 plug-in, and any dependencies.
+- OpenStack services - network node
+  - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
+  - Open vSwitch service, Open vSwitch agent, L3 agent, DHCP agent, metadata agent, and any dependencies.
+- OpenStack services - compute nodes
+  - Operational OpenStack Identity service with appropriate configuration in the neutron.conf file.
+  - Operational OpenStack Compute controller/management service with appropriate configuration to use neutron in the nova.conf file.
+  - Open vSwitch service, Open vSwitch agent, and any dependencies.
+  
 
 
 
