@@ -30,7 +30,7 @@
 **Operational SQL server with neutron database and appropriate configuration in the neutron.conf file.**
 - [create a database, service credentials, and API endpoints](https://docs.openstack.org/neutron/pike/install/controller-install-rdo.html)
 - Configure networking options
-  - ```yum install openstack-neutron openstack-neutron-ml2 python-neutronclientwhich -y```
+  - ```yum install openstack-neutron openstack-neutron-ml2 python-neutronclient which -y```
   - vim /etc/neutron/neutron.conf
     ```
     [DEFAULT]
@@ -113,10 +113,13 @@
 - ```ln -s /etc/neutron/plugins/ml2/ml2_conf.ini /etc/neutron/plugin.ini```
 - ```su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf  --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron```初始化数据库
 - ```systemctl restart openstack-nova-api.service```
-- ```systemctl enable neutron-server.service   neutron-linuxbridge-agent.service neutron-dhcp-agent.service   neutron-metadata-agent.service```
-- ```systemctl start neutron-server.service   neutron-linuxbridge-agent.service neutron-dhcp-agent.service   neutron-metadata-agent.service```
-- ```systemctl enable neutron-l3-agent.service```
-- ```systemctl start neutron-l3-agent.service```
+- ```systemctl enable neutron-server.service```
+- ```systemctl start neutron-server.service```
+- 验证
+  ```
+  . admin-openrc
+  neutron ext-list
+  ```
   
   
   
