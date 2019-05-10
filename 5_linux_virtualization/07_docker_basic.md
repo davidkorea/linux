@@ -366,7 +366,7 @@ docker.io/centos    httpd               675757eae28c        28 seconds ago      
 docker.io/centos    apache              fb5cf00cfd4c        17 minutes ago      318 MB
 docker.io/centos    latest              9f38484d220f        12 days ago 
 ```
-启动该镜像为container测试httpd -> [Container容器端口映射](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/7_docker.md#5-container%E5%AE%B9%E5%99%A8%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84)
+启动该镜像为container测试httpd -> [Container容器端口映射](https://github.com/davidkorea/linux_study/blob/master/5_linux_virtualization/07_docker_basic#5-container%E5%AE%B9%E5%99%A8%E7%AB%AF%E5%8F%A3%E6%98%A0%E5%B0%84)
 
 ## 4.3 Docker Image 的发布
 
