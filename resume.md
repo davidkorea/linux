@@ -1,3 +1,12 @@
+## Seoul Tourism Ognization
+
+1. 
+
+
+
+
+## Fuji Xerox Korea
+
 1. Helped business partners with establising enterprise electronic document architecture on premise and Azure with HA and SLB cluster, including on-demand cloud printing, image log collecting and paperless fax.
 
 
