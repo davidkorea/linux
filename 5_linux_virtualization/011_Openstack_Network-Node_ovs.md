@@ -8,7 +8,7 @@
   - classless inter-domain routing (CIDR), 192.168.1.5/24
 
 ## Classic with Open vSwitch
-
+https://docs.openstack.org/liberty/networking-guide/scenario-classic-ovs.html
 - OpenStack services - controller node
   - **Operational SQL server with neutron database and appropriate configuration in the neutron.conf file.**
     - [Install and configure controller node](https://docs.openstack.org/neutron/pike/install/controller-install-rdo.html)
