@@ -1,7 +1,7 @@
 
 
 
-
+2. Provided customizing solutions of document workflow for premium clients, including reporting templates webpage development, account usage data analysis and visulization.
 
 
 
