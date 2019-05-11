@@ -1,6 +1,8 @@
-1. Help business partners identifying and establising enterprise electronic document architecture on premise and Azure, including on-demand cloud printing, image log collecting and paperless fax.
-
-2. Customizing document workflow solutions for premium customers. Relevant workloads include data analyse and visulization coding by Python.
+1. Helped business partners with identifying and establising enterprise electronic document architecture on premise and Azure with HA and SLB cluster, including on-demand cloud printing, image log collecting and paperless fax.
+  - demo on aws or azure
+  - in practicing
+  - customization
+2. Customized document workflow solutions for premium customers, including reporting templates webpage development, account usage data analyse and visulization.
 
 
 
