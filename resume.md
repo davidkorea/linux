@@ -27,7 +27,11 @@
     - customization
 2. Provided comtomization for document workflow solutions for premium customers, including reporting templates webpage development, account usage data analysis and visulization.
 
-3. Plays a key role in deep natrual language processing algorithm researching such as RNN and transformer and implemented by tensorflow in a customer Question-answering system project. 
+3. Deployed test environment of Openstack private cloud by using 1 controller node, 1 network node and 3 compute nodes. 
+network scope implemented by Open vSwitch as l2 plug-in agent. 
+And transfered exsisted vmdk to qcow2 format
+
+4. Plays a key role in deep natrual language processing algorithm researching such as RNN and transformer and implemented by tensorflow in a customer Question-answering system project. 
 
 
 -----
