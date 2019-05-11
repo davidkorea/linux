@@ -1,16 +1,9 @@
 # Skills
-1. Hands-on experience in building Openstack and Kubernetes.
-2. Good understanding of cloud computing and virtualization technology
-
-
-
-
-
-
-
-
-
-
+1. Good understanding of cloud computing and linux virtualization technology
+2. Hands-on experience in building Openstack and Kubernetes.
+3. Familiar with sentiment analysis algorithm imbedded in game chat system.
+4. Deep AWS product knowledge and understanding of product features
+5. Work experience in machine learning and big data analysis, especially NLP application developing.
 
 
 
