@@ -14,7 +14,9 @@
 
 2. Provided customizing solutions of document workflow for premium clients, including reporting templates webpage development, account usage data analysis and visulization.
 
-3. Contributed as a key role in the research of deep natrual language processing algorithm and implemented by tensorflow in a customer Question-answering system project. 
+3. Deployed Openstack private cloud test environment for team by using 1 controller node, 1 network node, 1 cinder node and 3 compute nodes. Visualization based on KVM hypervisor and networking scope implemented by Open vSwitch as a l2 plug-in. Instances run on qcow2 format disk which is migrated from vmdk format.
+
+4. Contributed as a key role in the research of deep natrual language processing algorithm and implemented by tensorflow in a customer Question-answering system project. 
 
 
 
@@ -27,9 +29,7 @@
     - customization
 2. Provided comtomization for document workflow solutions for premium customers, including reporting templates webpage development, account usage data analysis and visulization.
 
-3. Deployed test environment of Openstack private cloud by using 1 controller node, 1 network node and 3 compute nodes. 
-network scope implemented by Open vSwitch as a l2 plug-in. 
-And transfered exsisted vmdk to qcow2 format
+3. Deployed Openstack private cloud test environment for team by using 1 controller node, 1 network node, 1 cinder node and 3 compute nodes. Visualization based on KVM hypervisor and networking scope implemented by Open vSwitch as a l2 plug-in. Instances run on qcow2 format disk which is migrated from vmdk format.
 
 4. Plays a key role in deep natrual language processing algorithm researching such as RNN and transformer and implemented by tensorflow in a customer Question-answering system project. 
 
