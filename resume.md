@@ -1,9 +1,9 @@
-
+1. Helped business partners with establising enterprise electronic document architecture on premise and Azure with HA and SLB cluster, including on-demand cloud printing, image log collecting and paperless fax.
 
 
 2. Provided customizing solutions of document workflow for premium clients, including reporting templates webpage development, account usage data analysis and visulization.
 
-
+3. Contributed as a key role in the research of deep natrual language processing algorithm and implemented by tensorflow in a customer Question-answering system project. 
 
 
 
