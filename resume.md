@@ -1,3 +1,18 @@
+# Skills
+1. Hands-on experience in building Openstack and Kubernetes.
+2. Good understanding of cloud computing and virtualization technology
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Work Experience
 
