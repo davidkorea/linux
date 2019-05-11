@@ -1,7 +1,7 @@
 ## Seoul Tourism Ognization
 
-1. 
-
+1. Build webpages for Seoul tourism resources such as festivals and events for all kinds of end devices. 
+2. Develop and lead content strategy to build audience and increase engagement across site, social and newsletters.
 
 
 
