@@ -13,7 +13,7 @@ Hands-on experience in machine learning and implementing deep natural language p
 # Skills
 1. Good understanding of cloud computing and linux virtualization technology.
 클라우드 컴퓨팅 및 리눅스 가상화 기술에 대한 올바른 이해
-2. Hands-on experience in building Openstack and Kubernetes.
+2. Hands-on experience in building Openstack and Kubernetes as well as linux server setup/administration.
 Openstack 및 Kubernetes 구축에 대한 실무 경험
 3. Familiar with sentiment analysis algorithm imbedded in game chat system.
 게임 채팅 시스템에 내장 된 정서 분석 알고리즘에 익숙하다.
