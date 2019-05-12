@@ -12,7 +12,11 @@
 ### Seoul Tourism Oganization
 
 1. Build webpages for Seoul tourism resources such as festivals and events for all kinds of end devices. 
-2. Took leadership in developing content strategy that attracts Chinese-speaking tourists, and increased tourists' engagement in cultrual avtivities.
+축제 및 이벤트와 같은 서울 관광 자원을위한 웹 페이지 개발.
+
+2. Took leadership in developing content strategy to attracts Chinese-speaking tourists, and increased tourists' engagement in cultural activities.
+중국어권 관광객을 유치하기위한 콘텐츠 전략 개발하고 관광객의 문화활동 참여도가 증가했습니다.
+
 
 
 ### Fuji Xerox Korea
