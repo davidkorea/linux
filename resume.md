@@ -28,7 +28,7 @@ Hands-on experience in machine learning and implementing deep natural language p
 2. Hands-on experience in building Openstack and Kubernetes as well as linux server setup/administration.
 Openstack 및 Kubernetes 구축에 대한 실무 경험
 3. Familiar with sentiment analysis algorithm imbedded in game chat system.
-게임 채팅 시스템에 내장 된 정서 분석 알고리즘에 익숙하다.
+게임 채팅 시스템에 내장 된 감성분석 알고리즘에 익숙하다.
 4. Deep AWS product knowledge and understanding of product features.
 AWS 제품 지식 및 기능에 대한 깊은 이해
 5. Work experience in machine learning and big data analysis, especially NLP application developing.
