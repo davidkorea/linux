@@ -1,3 +1,15 @@
+# Summary
+
+Commenced work in IT field while completing Electronics and Semiconductor major at graduate school. Have a comprehensive knowledge of underlying hardware of computer as well as cloud and virtualization based architectures.  An experienced solutions architect of consaulting, deploying and supporting e-document management platforms in a cloud and on-premise.  
+Hands-on experience in implementing deep natural language processing algorithms by tensorflow. Experience with machine learning, big data analysis and visualization with python.
+
+
+- graduate from engineering and familiar with hardware architecture and principle of computer
+- He has a comprehensive knowledge of applications development as well as cloud and virtualization based architectures having full development lifecycle and cutting edge hi availability cloud solutions. 
+- He is an experienced solutions architect object-oriented software designer and an experienced technical lead. 
+-  Python, DJango, Ruby on Rails
+-  building and supporting
+- based on Linux/Unix platform in a cloud (AWS) and on-premise, experience on server infrastructure migration, monitoring and securing, LAMP, and Linux Server setup/administration.
 # Skills
 1. Good understanding of cloud computing and linux virtualization technology.
 클라우드 컴퓨팅 및 리눅스 가상화 기술에 대한 올바른 이해
@@ -34,7 +46,7 @@ on-demand 클라우드 프린팅, 이미지 로그 수집 및 페이퍼리스 �
 3. Deployed Openstack private cloud test environment for team by using 1 controller node, 1 network node, 1 cinder node and 3 compute nodes. Visualization based on KVM hypervisor and networking scope implemented by Open vSwitch as a l2 plug-in. Instances run on qcow2 format disk which is migrated from vmdk format.
 Openstack 사설 클라우드 테스트 환경을 팀에 배치했습니다. KVM 하이퍼바이저를 기반으로 Open vSwitch를 l2 플러그인으로 구현했습니다. 인스턴스는 vmdk 형식에서 마이그레이션 된 qcow2 형식 디스크에서 실행됩니다.
 
-4. Contributed as a key role in the research of deep natrual language processing algorithm and implemented by tensorflow in a customer Question-answering system project. 
+4. Contributed as a key role in the research of deep natural language processing algorithm and implemented by tensorflow in a customer Question-answering system project. 
 고객 질문 응답 시스템 프로젝트에서 심층 자연 언어 처리 알고리즘 연구 및 텐서플로우로 구현에 핵심 역할을 담당합니다.
 
 
