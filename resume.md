@@ -1,5 +1,13 @@
 # Summary
 
+
+
+대학원 전자 및 반도체 전공 IT 분야 졸업하고 IT 분야에서 일하기 시작했습니다.
+
+
+
+
+
 Commenced work in IT field while completing Electronics and Semiconductor major at graduate school. Have a comprehensive knowledge of underlying hardware of computer as well as cloud and virtualization based architectures.  An experienced solutions architect of consaulting, deploying and supporting e-document management platforms in a cloud and on-premise.  
 Hands-on experience in machine learning and implementing deep natural language processing algorithms by tensorflow as well as  data analysis and visualization with python.
 
