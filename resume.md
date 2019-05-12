@@ -1,10 +1,14 @@
 # Skills
 1. Good understanding of cloud computing and linux virtualization technology.
+클라우드 컴퓨팅 및 리눅스 가상화 기술에 대한 올바른 이해
 2. Hands-on experience in building Openstack and Kubernetes.
+Openstack 및 Kubernetes 구축에 대한 실무 경험
 3. Familiar with sentiment analysis algorithm imbedded in game chat system.
-4. Deep AWS product knowledge and understanding of product features
+게임 채팅 시스템에 내장 된 정서 분석 알고리즘에 익숙하다.
+4. Deep AWS product knowledge and understanding of product features.
+AWS 제품 지식 및 기능에 대한 깊은 이해
 5. Work experience in machine learning and big data analysis, especially NLP application developing.
-
+기계 학습 및 빅데이터 분석, 특히 NLP 애플리케이션 개발 경험 소유.
 
 
 # Work Experience
