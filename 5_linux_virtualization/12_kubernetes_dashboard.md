@@ -76,6 +76,8 @@ spec:
 > ```
 > 2019/04/02 05:51:27 Metric client health check failed: the server could not find the requested resource (get services heapster). Retrying in 30 seconds.
 > ```
+> docker.io/bestwu/kubernetes-dashboard-amd64:v1.6.3    # 一定要使用这个image，否则报错heapster
+>
 > - 参考[在k8s-dashboard中集成heapster](https://andrewpqc.github.io/2018/04/25/heapster-in-kubernetes/)
 > - 参考[github:kubernetes-retired/heapster](https://github.com/kubernetes-retired/heapster)
 
