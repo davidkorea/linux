@@ -22,10 +22,10 @@ replicationController，我仧可以指定一个应用需要几份复制，Kuber
 个 pod，并且保证实际运行 pod 数量总是不该复制数量相等(例如，当前某个 pod 宕机时，自劢创
 建新的 pod 来替换)。
 
-总结：service 和 replicationController 只是建立在 pod 乊上的抽象，最终是要作用于 pod 的，
-那么它仧如何跟 pod 联系起来呢？这就要引入 label 的概念：label 其实很好理解，就是为 pod 加
+总结：service 和 replicationController 只是建立在 pod 之上的抽象，最终是要作用于 pod 的，
+那么它是如何跟 pod 联系起来呢？这就要引入 label 的概念：label 其实很好理解，就是为 pod 加
 上可用于搜索戒关联的一组 key/value 标签，而 service 和 replicationController 正是通过 label
-来不 pod 关联的。如下图所示，有三个 pod 都有 label 为"app=backend"，创建 service 和
+来和 pod 关联的。如下图所示，有三个 pod 都有 label 为"app=backend"，创建 service 和
 replicationController 时可以指定同样的 label:"app=backend"，再通过 label selector 机制，
 就将它仧不这三个 pod 关联起来了。例如，当有其他 frontend pod 访问该 service 时，自劢会转
 发到其中的一个 backend pod。
