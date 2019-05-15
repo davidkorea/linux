@@ -42,7 +42,7 @@ etcd 存储 kubernetes 的配置信息， 可以理解为是 k8s 的数据库，
 Services 是 Kubernetes 最外围的单元，通过虚拟一个访问 IP 及服务端口，可以 访问我们定义好的 Pod 资源，目前的版本是通过 iptables 的 nat 转发来实现，转发的目标端口为 Kube_proxy 生成的随机端口。
 - 因为pod的创建和销毁死经常的，所以其ip和主机名都会变化。
 - 在相同label的pod之上，通过service将其绑定，而service的ip是固定的
-- 所以不论pod如何变化，其之上的service是稳定的，可以对外提供服务。而service是通过iptables的NAT规则实现的
+- 所以不论pod如何变化，其之上的service是稳定的，可以对外提供服务。而service是通过iptables的DNAT规则实现的
 
 #### 2. Labels 标签
 Labels 是用于区分 Pod、Service、Replication Controller 的 key/value 键值对，仅使用在Pod、Service、 Replication Controller 之间的关系识别，但对这些单元本身迚行操作时得使用 name 标签。
