@@ -43,7 +43,7 @@ Services 是 Kubernetes 最外围的单元，通过虚拟一个访问 IP 及服�
 - 因为pod的创建和销毁死经常的，所以其ip和主机名都会变化。
 - 在相同label的pod之上，通过service将其绑定，而service的ip是固定的
 - 所以不论pod如何变化，其之上的service是稳定的，可以对外提供服务。而service是通过iptables的DNAT规则实现的
-
+- 客户端直接访问服务的名称，由集群中专用的DNS服务（pod）进行解析service的地址
 #### 2. Labels 标签
 Labels 是用于区分 Pod、Service、Replication Controller 的 key/value 键值对，仅使用在Pod、Service、 Replication Controller 之间的关系识别，但对这些单元本身迚行操作时得使用 name 标签。
 #### 3. Deployment
