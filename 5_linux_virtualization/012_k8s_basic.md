@@ -17,23 +17,23 @@ The Scheduler which schedules your apps (assigns a worker node to each deployabl
 ### 4. Controller Manager
 The Controller Manager which performs cluster-level functions, such as replicating components, keeping track of worker nodes, handling node failures, and so on. The single Controller Manager process currently combines a multitude of controllers performing various reconciliation tasks. Eventually those controllers will be split
 up into separate processes, enabling you to replace each one with a custom implementation if necessary. The list of these controllers includes the
-- Replication Manager (a controller for ReplicationController resources)
+- **Replication Manager** (a controller for ReplicationController resources)
   - ReplicationController could be thought of as an **infinite loop**无限循环, where in each iteration, the controller finds the number of pods matching its pod selector and compares the number to the desired replica count.
     ![](https://i.loli.net/2019/05/16/5cdd11a1f073128616.png)
-- ReplicaSet, DaemonSet, and Job controllers
-- Deployment controller
+- **ReplicaSet**, **DaemonSe**t, and **Job controllers**
+- **Deployment controller
   - The Deployment controller takes care of keeping the actual state of a deployment in sync with the desired state specified in the corresponding Deployment API object.
-- StatefulSet controller
-- Node controller
-- Service controller
+- **StatefulSet controller**
+- **Node controller**
+- **Service controller**
   -  a few different types exist. One of them was the 'LoadBalancer' service, which requests a load balancer from the infrastructure to make the service available externally. The Service controller is the one requesting and releasing a load balancer from the infrastructure, when a LoadBalancer-type Service is created or deleted.
-- Endpoints controller
+- **Endpoints controller**
   - Services aren’t linked directly to pods, but instead contain a list of endpoints (IPs and ports), which is created and updated either manually or automatically according to the pod selector defined on the Service. 
   - The Endpoints controller is the active component that keeps the endpoint list constantly updated with the IPs and ports of pods matching the label selector.
     ![](https://i.loli.net/2019/05/16/5cdd11a5d413987461.png)
-- Namespace controller
-- PersistentVolume controller
-- Others
+- **Namespace controller**
+- **PersistentVolume controller**
+- **Others**
 
 Controllers never talk to each other directly. They don’t even know any other controllers exist. Each controller connects to the API server and, through the watch mechanism asks to be notified when a change occurs in the list of resources of any type the controller is responsible for.
 
