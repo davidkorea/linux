@@ -165,5 +165,7 @@ The figure shows what the kube-proxy does and how a packet **sent by a client po
 From here on, it’s exactly as if the client pod had sent the packet to pod B directly instead of through the service.
 
 
-
-
+# 5. Running highly available clusters
+![](https://i.loli.net/2019/05/16/5cdd26309075b65512.png)
+-----
+![](https://i.loli.net/2019/05/16/5cdd26919d00826520.png)
