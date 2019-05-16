@@ -135,3 +135,27 @@ Requests are hitting different pods randomly. This is what services in Kubernete
 - This makes it easy for clients to connect to the pods, regardless of how many exist and how often they change location.
 
 ![](https://i.loli.net/2019/05/16/5cdcfcc5712d825144.png)
+
+
+# 3. Inter-pod networking
+
+![](https://i.loli.net/2019/05/16/5cdd20d4b846915768.png)
+-----
+![](https://i.loli.net/2019/05/16/5cdd20d84a68a36986.png)
+-----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
