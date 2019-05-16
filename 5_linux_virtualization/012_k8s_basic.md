@@ -15,8 +15,7 @@ The Kubernetes API Server which you and the other Control Plane components commu
 ### 3. Scheduler
 The Scheduler which schedules your apps (assigns a worker node to each deployable component of your application)
 ### 4. Controller Manager
-The Controller Manager which performs cluster-level functions, such as replicating components, keeping track of worker nodes, handling node failures, and so on. The single Controller Manager process currently combines a multitude of controllers performing various reconciliation tasks. Eventually those controllers will be split
-up into separate processes, enabling you to replace each one with a custom implementation if necessary. The list of these controllers includes the
+The Controller Manager which performs cluster-level functions, such as replicating components, keeping track of worker nodes, handling node failures, and so on. The single Controller Manager process currently combines a multitude of controllers performing various reconciliation tasks. Eventually those controllers will be split up into separate processes, enabling you to replace each one with a custom implementation if necessary. The list of these controllers includes:
 - **Replication Manager** (a controller for ReplicationController resources)
   - ReplicationController could be thought of as an **infinite loop**无限循环, where in each iteration, the controller finds the number of pods matching its pod selector and compares the number to the desired replica count.
     ![](https://i.loli.net/2019/05/16/5cdd11a1f073128616.png)
@@ -25,6 +24,7 @@ up into separate processes, enabling you to replace each one with a custom imple
   - The Deployment controller takes care of keeping the actual state of a deployment in sync with the desired state specified in the corresponding Deployment API object.
 - **StatefulSet controller**
 - **Node controller**
+  - Most resources belong to a specific namespace. When a Namespace resource is deleted, all the resources in that namespace must also be deleted. This is what the Namespace controller does. When it’s notified of the deletion of a Namespace object, it deletes all the resources belonging to the namespace through the API server
 - **Service controller**
   -  a few different types exist. One of them was the 'LoadBalancer' service, which requests a load balancer from the infrastructure to make the service available externally. The Service controller is the one requesting and releasing a load balancer from the infrastructure, when a LoadBalancer-type Service is created or deleted.
 - **Endpoints controller**
@@ -39,9 +39,18 @@ Controllers never talk to each other directly. They don’t even know any other 
 
 ## 1.2 THE NODES - WORKER
 The worker nodes are the machines that run your containerized applications. The task of running, monitoring, and providing services to your applications is done by the following components: 
-1. Docker, rkt, or another container runtime, which runs your containers
-2. The **Kubelet**, which talks to the API server and manages containers on its node
-3. The **Kubernetes Service Proxy (kube-proxy)**, which load-balances network traffic between application components
+### 1. Docker, rkt, or another container runtime, which runs your containers
+### 2. Kubelet
+The Kubelet, which talks to the API server and manages containers on its node. Kubelet is the component responsible for everything running on a worker node.
+- Its initial job is to register the node it’s running on by creating a Node resource in the API server. 
+- Then it needs to continuously monitor the API server for Pods that have been scheduled to the node, and start the pod’s containers. It does this by telling the configured container runtime (which is Docker, CoreOS’ rkt, or something else) to run a container from a specific container image. 
+- The Kubelet then constantly monitors running containers and reports their status, events, and resource consumption to the API server.
+- RUNNING STATIC PODS WITHOUT THE API SERVER
+  - Kubelet can also run pods based on pod manifest files in a specific local directory as shown in figure
+  - This feature is used to run the containerized versions of the Control Plane components as pods. Instead of running Kubernetes system components natively, you can put their pod manifests into the Kubelet’s manifest directory and have the Kubelet run and manage them. You can also use the same method to run your custom system containers, but doing it through a DaemonSet is the recommended method.
+  ![](https://i.loli.net/2019/05/16/5cdd1606a1fd960354.png)
+### 3. Kubernetes Service Proxy (kube-proxy)
+The Kubernetes Service Proxy (kube-proxy), which load-balances network traffic between application components.
 
 
 
