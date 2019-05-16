@@ -144,8 +144,12 @@ Requests are hitting different pods randomly. This is what services in Kubernete
 ![](https://i.loli.net/2019/05/16/5cdd20d84a68a36986.png)
 -----
 
+# 4. How services are implemented
+We’ve learned that each Service gets its own stable IP address and port. Clients (usually pods) use the service by connecting to this IP address and port. 
 
+The **IP address is virtual**. it’s not assigned to any network interfaces and is never listed as either the source or the destination IP address in a network packet when the packet leaves the node. 
 
+A key detail of Services is that they consist of an IP and port pair (or multiple IP and port pairs in the case of multi-port Services), so the service IP by itself doesn’t represent anything. **That’s why you can’t ping them**.
 
 
 
