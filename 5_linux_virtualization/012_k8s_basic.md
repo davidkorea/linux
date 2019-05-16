@@ -23,8 +23,8 @@ The worker nodes are the machines that run your containerized applications. The 
 # 2. UNDERSTANDING WHAT HAPPENED BEHIND THE SCENES
 
 ![](https://i.loli.net/2019/05/16/5cdcf28883a4b99093.png)
-
-  ![](https://i.loli.net/2019/05/16/5cdcf39d00c5783414.png)
+-----
+ ![](https://i.loli.net/2019/05/16/5cdcf39d00c5783414.png)
 
 To help you visualize what transpired, look at figure. It shows both steps you had toperform to get a container image running inside Kubernetes. 
 - First, you built the image and pushed it to Docker Hub. This was necessary because building the image on your local machine only makes it available on your local machine, but you needed to make it accessible to the Docker daemons running on your worker nodes.
