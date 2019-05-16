@@ -50,8 +50,8 @@ The Kubelet, which talks to the API server and manages containers on its node. K
   - This feature is used to run the containerized versions of the Control Plane components as pods. Instead of running Kubernetes system components natively, you can put their pod manifests into the Kubelet’s manifest directory and have the Kubelet run and manage them. You can also use the same method to run your custom system containers, but doing it through a DaemonSet is the recommended method.
   ![](https://i.loli.net/2019/05/16/5cdd1606a1fd960354.png)
 ### 3. Kubernetes Service Proxy (kube-proxy)
-The Kubernetes Service Proxy (kube-proxy), which load-balances network traffic between application components.
-
+The Kubernetes Service Proxy (kube-proxy), which load-balances network traffic between application components. The kube-proxy makes sure connections to the service IP and port end up at one of the pods backing that service (or other, non-pod service endpoints). When a service is backed by more than one pod, the proxy performs load balancing across those pods.
+![](https://i.loli.net/2019/05/16/5cdd17606587771511.png)
 
 
 # 2. UNDERSTANDING WHAT HAPPENED BEHIND THE SCENES
