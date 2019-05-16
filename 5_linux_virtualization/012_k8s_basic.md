@@ -32,3 +32,25 @@ To help you visualize what transpired, look at figure. It shows both steps you h
 - The Kubelet on that node saw that the pod was scheduled to it and instructed Docker to pull the specified image from the registry
 because the image wasn’t available locally. After downloading the image, Docker created and ran the container.
 - The other two nodes are displayed to show context. They didn’t play any role in the process, because the pod wasn’t scheduled to them.
+
+### With your pod running, how do you access it? 
+We mentioned that each pod gets itsown IP address, but this address is internal to the cluster and isn’t accessible from outside of it. To make the pod accessible from the outside, you’ll expose it through a Service object. 
+- You’ll create a **special service** of type LoadBalancer, because if you create a **regular service** (a ClusterIP service), like the pod, it would also only be accessible from inside the cluster. 
+- By creating a LoadBalancer-type service, an external load balancer will be created and you can connect to the pod through the load balancer’s public IP.
+![](https://i.loli.net/2019/05/16/5cdcf50b7616568882.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
