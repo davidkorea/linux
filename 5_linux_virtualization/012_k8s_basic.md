@@ -155,10 +155,14 @@ Besides watching the API server for changes to Services, kube-proxy also watches
 
 The figure shows what the kube-proxy does and how a packet **sent by a client pod** reaches one of the pods backing the Service. Let’s examine what happens to the packet when it’s sent by the client pod (pod A in the figure).
 
+![](https://i.loli.net/2019/05/16/5cdd25139f26972057.png)
 
+- The packet’s destination is initially set to the IP and port of the Service (in theexample, the Service is at 172.30.0.1:80). 
+- Before being sent to the network the packet is first handled by node A’s kernel according to the iptables rules set up on the node.
+- The kernel checks if the packet matches any of those iptables rules. One of them says that if any packet has the destination IP equal to 172.30.0.1 and destination port equal to 80, the packet’s destination IP and port should be replaced with the IP and port of a randomly selected pod.
+- The packet in the example matches that rule and so its destination IP/port is changed. In the example, pod B2 was randomly selected, so the packet’s destination IP is changed to 10.1.2.1 (pod B2’s IP) and the port to 8080 (the target port specified in the Service spec). 
 
-
-
+From here on, it’s exactly as if the client pod had sent the packet to pod B directly instead of through the service.
 
 
 
