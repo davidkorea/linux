@@ -39,7 +39,7 @@ We mentioned that each pod gets itsown IP address, but this address is internal 
 - You’ll create a **special service** of type LoadBalancer, because if you create a **regular service** (a ClusterIP service), like the pod, it would also only be accessible from inside the cluster. 
 - By creating a LoadBalancer-type service, an external load balancer will be created and you can connect to the pod through the load balancer’s public IP.
 
-## UNDERSTANDING HOW THE REPLICATIONCONTROLLER, THE POD, AND THE SERVICE FIT TOGETHER
+## 2.1 UNDERSTANDING HOW THE REPLICATIONCONTROLLER, THE POD, AND THE SERVICE FIT TOGETHER
 ![](https://i.loli.net/2019/05/16/5cdcf50b7616568882.png)
 
 As already explained, you’re not creating and working with containers directly. Instead, the basic building block in Kubernetes is the pod. But, you didn’t really create any pods either, at least not directly. 
@@ -65,10 +65,34 @@ This is where services come in—to solve the problem of ever-changing pod IP ad
 
 Services represent a static location for a group of one or more pods that all provide the same service. Requests coming to the IP and port of the service will be forwarded to the IP and port of one of the pods belonging to the service at that moment.
 
+## 2.2 Horizontally scaling the application
+```
+$ kubectl scale rc kubia --replicas=3
+replicationcontroller "kubia" scaled
+```
+- Notice that you didn’t instruct Kubernetes what action to take. You didn’t tell it to add two more pods. 
+- You only set the new desired number of instances and let Kubernetes determine what actions it needs to take to achieve the requested state.
+```
+$ kubectl get pods
+NAME READY STATUS RESTARTS AGE
+kubia-hczji 1/1 Running 0 7s
+kubia-iq9y6 0/1 Pending 0 7s
+kubia-4jfyf 1/1 Running 0 18m
+```
+Because you now have multiple instances of your app running, let’s see what happens if you hit the service URL again. Will you always hit the same app instance or not?
+```
+$ curl 104.155.74.57:8080
+You’ve hit kubia-hczji
+$ curl 104.155.74.57:8080
+You’ve hit kubia-iq9y6
+$ curl 104.155.74.57:8080
+You’ve hit kubia-iq9y6
+$ curl 104.155.74.57:8080
+You’ve hit kubia-4jfyf
+```
+Requests are hitting different pods randomly. This is what services in Kubernetes do when more than one pod instance backs them. They act as a **load balancer** standing in front of multiple pods. 
+- When there’s only one pod, services provide a static address for the single pod. 
+- Whether a service is backed by a single pod or a group of pods, those pods come and go as they’re moved around the cluster, which means their IP addresses change, but the service is always there at the same address. 
+- This makes it easy for clients to connect to the pods, regardless of how many exist and how often they change location.
 
-
-
-
-
-
-
+![](https://i.loli.net/2019/05/16/5cdcfcc5712d825144.png)
