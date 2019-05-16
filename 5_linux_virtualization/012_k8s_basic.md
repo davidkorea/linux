@@ -33,24 +33,37 @@ To help you visualize what transpired, look at figure. It shows both steps you h
 because the image wasn’t available locally. After downloading the image, Docker created and ran the container.
 - The other two nodes are displayed to show context. They didn’t play any role in the process, because the pod wasn’t scheduled to them.
 
-### With your pod running, how do you access it? 
+**With your pod running, how do you access it?**
+
 We mentioned that each pod gets itsown IP address, but this address is internal to the cluster and isn’t accessible from outside of it. To make the pod accessible from the outside, you’ll expose it through a Service object. 
 - You’ll create a **special service** of type LoadBalancer, because if you create a **regular service** (a ClusterIP service), like the pod, it would also only be accessible from inside the cluster. 
 - By creating a LoadBalancer-type service, an external load balancer will be created and you can connect to the pod through the load balancer’s public IP.
 
-### UNDERSTANDING HOW THE REPLICATIONCONTROLLER, THE POD, AND THE SERVICE FIT TOGETHER
+## UNDERSTANDING HOW THE REPLICATIONCONTROLLER, THE POD, AND THE SERVICE FIT TOGETHER
 ![](https://i.loli.net/2019/05/16/5cdcf50b7616568882.png)
 
 As already explained, you’re not creating and working with containers directly. Instead, the basic building block in Kubernetes is the pod. But, you didn’t really create any pods either, at least not directly. 
 - By running the `kubectl run` command you created a ReplicationController, and this ReplicationController is what created the actual Pod object. 
 - To make that pod accessible from outside the cluster, you told Kubernetes to expose all the pods managed by that ReplicationController as a single Service. 
+
 A rough picture of all three elements is presented in figure
 
-- **POD AND ITS CONTAINER** The main and most important component in your system is the pod. It contains only a single container, but generally a pod can contain as many containers as you want.
+### POD AND ITS CONTAINER
+The main and most important component in your system is the pod. It contains only a single container, but generally a pod can contain as many containers as you want.
 
-- **REPLICATIONCONTROLLER** The next component is the kubia ReplicationController. It makes sure there’s always exactly one instance of your pod running. Generally, ReplicationControllers are used to replicate pods (that is, create multiple copies of a pod) and keep them running. If your pod were to disappear for any reason, the ReplicationController would create a new pod to replace the missing one.
+### REPLICATIONCONTROLLER
+The next component is the ReplicationController. It makes sure there’s always exactly one instance of your pod running. Generally, ReplicationControllers are used to replicate pods (that is, create multiple copies of a pod) and keep them running. If your pod were to disappear for any reason, the ReplicationController would create a new pod to replace the missing one.
 
+### SERVICE
+The third component of your system is the kubia-http service. To understand why you need services, you need to learn a key detail about pods. They’re ephemeral短暂的. Apod may disappear at any time—because the node it’s running on has failed, because someone deleted the pod, or because the pod was evicted from an otherwise healthy node. When any of those occurs, 
+  - a missing pod is replaced with a new one by the ReplicationController, as described previously. 
+  - This new pod gets a different IP address from the pod it’s replacing. 
 
+This is where services come in—to solve the problem of ever-changing pod IP addresses, as well as exposing multiple pods at a single constant IP and port pair. When a service is created, it gets a static IP, which never changes during the lifetime of the service.
+- Instead of connecting to pods directly, clients should connect to the service through its constant IP address. 
+- The service makes sure one of the pods receives the connection, regardless of where the pod is currently running (and what its IP address is).
+
+Services represent a static location for a group of one or more pods that all provide the same service. Requests coming to the IP and port of the service will be forwarded to the IP and port of one of the pods belonging to the service at that moment.
 
 
 
