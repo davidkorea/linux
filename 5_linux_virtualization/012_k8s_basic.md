@@ -6,25 +6,29 @@
 
   ![](https://i.loli.net/2019/05/16/5cdcc7c71a8c343699.png)
 
-### THE CONTROL PLANE - MASTER
+## 1.1 THE CONTROL PLANE - MASTER
 The Control Plane is what controls the cluster and makes it function. It consists of multiple components that can run on a single master node or be split across multiple nodes and replicated to ensure high availability. These components are
-1. **etcd**, a reliable distributed data store that persistently stores the cluster configuration.
-2. The Kubernetes **API Server**, which you and the other Control Plane components communicate with
-3. The **Scheduler**, which schedules your apps (assigns a worker node to each deployable component of your application)
-4. The **Controller Manager**, which performs cluster-level functions, such as replicating components, keeping track of worker nodes, handling node failures, and so on. The single Controller Manager process currently combines a multitude of controllers performing various reconciliation tasks. Eventually those controllers will be split
+### 1. etcd
+a reliable distributed data store that persistently stores the cluster configuration.
+### 2. Kubernetes API Server
+The Kubernetes API Server which you and the other Control Plane components communicate with
+### 3. Scheduler
+The Scheduler which schedules your apps (assigns a worker node to each deployable component of your application)
+### 4. Controller Manager
+The Controller Manager which performs cluster-level functions, such as replicating components, keeping track of worker nodes, handling node failures, and so on. The single Controller Manager process currently combines a multitude of controllers performing various reconciliation tasks. Eventually those controllers will be split
 up into separate processes, enabling you to replace each one with a custom implementation if necessary. The list of these controllers includes the
-    - Replication Manager (a controller for ReplicationController resources)
-    - ReplicaSet, DaemonSet, and Job controllers
-    - Deployment controller
-    - StatefulSet controller
-    - Node controller
-    - Service controller
-    - Endpoints controller
-    - Namespace controller
-    - PersistentVolume controller
-    - Others
+- Replication Manager (a controller for ReplicationController resources)
+- ReplicaSet, DaemonSet, and Job controllers
+- Deployment controller
+- StatefulSet controller
+- Node controller
+- Service controller
+- Endpoints controller
+- Namespace controller
+- PersistentVolume controller
+- Others
 
-### THE NODES - WORKER
+## 1.2 THE NODES - WORKER
 The worker nodes are the machines that run your containerized applications. The task of running, monitoring, and providing services to your applications is done by the following components: 
 1. Docker, rkt, or another container runtime, which runs your containers
 2. The **Kubelet**, which talks to the API server and manages containers on its node
