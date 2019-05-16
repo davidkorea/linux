@@ -21,7 +21,7 @@ The Controller Manager which performs cluster-level functions, such as replicati
     ![](https://i.loli.net/2019/05/16/5cdd11a1f073128616.png)
 - **ReplicaSet**, **DaemonSe**t, and **Job controllers**
 - **Deployment controller
-  - The Deployment controller takes care of keeping the actual state of a deployment in sync with the desired state specified in the corresponding Deployment API object.
+  - The Deployment controller takes care of keeping the actual state of a deployment in sync with the desired state specified in the corresponding Deployment API object. a Deployment is backed by one or more ReplicaSets, which then create the actual pods.
 - **StatefulSet controller**
 - **Node controller**
   - Most resources belong to a specific namespace. When a Namespace resource is deleted, all the resources in that namespace must also be deleted. This is what the Namespace controller does. When it’s notified of the deletion of a Namespace object, it deletes all the resources belonging to the namespace through the API server
@@ -52,6 +52,11 @@ The Kubelet, which talks to the API server and manages containers on its node. K
 ### 3. Kubernetes Service Proxy (kube-proxy)
 The Kubernetes Service Proxy (kube-proxy), which load-balances network traffic between application components. The kube-proxy makes sure connections to the service IP and port end up at one of the pods backing that service (or other, non-pod service endpoints). When a service is backed by more than one pod, the proxy performs load balancing across those pods.
 ![](https://i.loli.net/2019/05/16/5cdd17606587771511.png)
+
+## 1.3 Overall
+
+![](https://i.loli.net/2019/05/16/5cdd197653d6f24451.png)
+
 
 
 # 2. UNDERSTANDING WHAT HAPPENED BEHIND THE SCENES
