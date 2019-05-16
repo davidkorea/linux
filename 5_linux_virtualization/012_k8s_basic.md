@@ -4,6 +4,8 @@
 - The master node, which hosts the Kubernetes Control Plane that controls and manages the whole Kubernetes system
 - Worker nodes that run the actual applications you deploy
 
+  ![](https://i.loli.net/2019/05/16/5cdcc7c71a8c343699.png)
+
 ## THE CONTROL PLANE
 The Control Plane is what controls the cluster and makes it function. It consists of multiple components that can run on a single master node or be split across multiple nodes and replicated to ensure high availability. These components are
 1. The Kubernetes **API Server**, which you and the other Control Plane components communicate with
