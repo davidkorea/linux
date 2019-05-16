@@ -151,9 +151,9 @@ The **IP address is virtual**. it’s not assigned to any network interfaces and
 
 A key detail of Services is that they consist of an IP and port pair (or multiple IP and port pairs in the case of multi-port Services), so the service IP by itself doesn’t represent anything. **That’s why you can’t ping them**.
 
+Besides watching the API server for changes to Services, kube-proxy also watches for changes to **Endpoints objects**.  An Endpoints object holds the IP/port pairs of all the pods that back the service (an IP/port pair can also point to something other than a pod). That’s why the kube-proxy must also watch all Endpoints objects. After all, an Endpoints object changes every time a new backing pod is created or deleted
 
-
-
+The figure shows what the kube-proxy does and how a packet **sent by a client pod** reaches one of the pods backing the Service. Let’s examine what happens to the packet when it’s sent by the client pod (pod A in the figure).
 
 
 
