@@ -39,7 +39,7 @@
     - Openstack 클라우드 플랫폼 및 Kubernetes 클러스터 구축에 대한 실무 경험을 보유하고 있습니다.
 
 - Work experience in machine learning and big data analysis. Familiar with sentiment analysis algorithms embedded in game chat system.
-    - 머신 러닝 및 빅데이터 분석, NLP 애플리케이션 개발 경험을 소유합니다. 게임 채팅 시스템에 내장 된 감성 분석 알고리즘에 익숙합니다.
+    - 빅데이터 분석, 머신 러닝 및 NLP 애플리케이션 개발 경험을 소유합니다. 게임 채팅 시스템에 내장 된 감성 분석 알고리즘에 익숙합니다.
 
 - Deep AWS product knowledge as well as proven experience in architecting and deploying project on AWS.
     - AWS 서비스에 대한 지식 및 AWS상 프로젝트 배포 경험을 보유하고 있습니다.
