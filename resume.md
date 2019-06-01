@@ -35,8 +35,8 @@
 - Good understanding of cloud computing architecture and Linux virtualization technology such as KVM, Xen and container.
     - 클라우드 컴퓨팅 구조 및 KVM, Xen과 컨테이너 등 리눅스 가상화 기술에 대한 올바른 이해.
 
-- Hands-on experience in building OpenStack project and Kubernetes clusters.
-    - Openstack 및 Kubernetes 구축에 대한 실무 경험을 보유하고 있습니다.
+- Hands-on experience in building OpenStack cloud platform and Kubernetes clusters.
+    - Openstack 클라우드 플랫폼 및 Kubernetes 클러스터 구축에 대한 실무 경험을 보유하고 있습니다.
 
 - Familiar with sentiment analysis algorithms embedded in game chat system.
     - 게임 채팅 시스템에 내장 된 감성분석 알고리즘에 익숙합니다.
