@@ -21,14 +21,14 @@
 - Provided customizing solutions of document workflow for premium clients, including reporting templates webpage development, account usage data analysis and visualization produced by pandas, matplotlib and seaborn.
     - 리포트 템플릿 등 웹 관련 개발 및 Matplotlib과 Seaborn 등을 통한 유저 데이터 분석과 시각화를 포함하여 프리미엄 고객을 위한 문서 워크플로우의 맞춤형 솔루션을 제공.
 
-- Deployed OpenStack private cloud test environment for the team by using 1 controller node, 1 network node, 1 cinder node and 3 compute nodes. Visualization based on KVM hypervisor and networking scope implemented by Open vSwitch as an l2 plug-in. Instances run on qcow2 format disk which is migrated from vmdk format.
-    - Openstack 사설 클라우드 테스트 환경을 팀에 배치했습니다. KVM 하이퍼바이저를 기반으로 Open vSwitch를 l2 플러그인으로 구현했습니다. 인스턴스는 vmdk 형식에서 마이그레이션 된 qcow2 형식 디스크에서 실행됩니다.
+- Deployed OpenStack private cloud test environment for the team by using 1 controller node, 1 network node, 1 cinder node and 2 compute nodes. Visualization based on KVM hypervisor and networking scope implemented by Open vSwitch as an l2 plug-in. Instances run on qcow2 format disk which is migrated from vmdk format.
+    - Openstack 사설 클라우드 테스트 환경을 구축할 수 있도록 컨트롤러 노드, 네트워킹 노드, 이미지 노드를 하나 씩과 컴퓨트 노드 2개를 배포했습니다. KVM 하이퍼바이저를 기반으로 Open vSwitch를 l2 플러그인으로 구현했습니다. 인스턴스는 vmdk 형식에서 마이그레이션 된 qcow2 디스크 형식으로 실행됩니다.
 
-- Deployed JupyterHub project on AWS which is based on Kubernetes to provide a friendly and portable machine learning developing environment for the team. This project contains 1 master node and 3 work nodes that are built with t2.medium EC2 instance type. A registered domain name in Route53 witch bind with all web services such as kubernetes dashboard and Jupyter notebook.
-
+- Deployed JupyterHub project on AWS which is based on Kubernetes to provide a friendly and portable machine learning developing environment for the team. This project contains 1 master node and 3 work nodes that are built with t2.medium EC2 instance type. A registered domain name in Route53 which bind with all web services such as kubernetes dashboard and Jupyter notebook.
+    - AWS에 쿠버네티스를 기반으로 JupyterHub 프로젝트를 배포했습니다. 이 프로젝트는 t2.medium EC2 인스턴스 유형으로 구축 된 마스터 노드 1개와 워크 노드 2개를 포함합니다. 쿠버네티스 대시보드 및 Jupyter 노트북과 같은 모든 웹 서비스는 Route53에 등록 된 도메인 이름을 연결하여 사용합니다.
 
 - Contributed as a key role in the research of deep natural language processing algorithms and implemented by tensorflow in a customer Question-answering system project.
-
+    - 고객 질문 응답 시스템 프로젝트에서 심층 자연 언어 처리 알고리즘 연구 및 텐서플로우로 구현에 핵심 역할을 담당합니다.
 
 
 
