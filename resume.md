@@ -1,9 +1,31 @@
+# ----------------------- 2019-06-01 -----------------------
+## Summary
+- I commenced work in the IT field while completing Electronics and Semiconductor major at graduate school. Have a comprehensive knowledge of underlying hardware of computers as well as cloud and Linux virtualization based architectures.
+    - 대학원 전자 및 반도체 전공을 졸업하고 IT 분야에서 일하기 시작했습니다. 클라우드 및 가상화 아키텍처를 포함하여 컴퓨터의 하드웨어 원리를 다루는 것에 익숙합니다.
+
+An experienced solutions architect of architecting, developing and maintaining high availability e-document management platforms in cloud and on-premise.
+
+Familiar with AWS ecosystem and deployed JupyterHub project with kubernetes as well as deployed a website based on S3, CloudFront and Route53.
+
+Hands-on experience in machine learning and implementing deep natural language processing algorithms such as seq2seq, attention mechanism and transformer by tensorflow as well as data analysis and visualization with python.
 
 
 
 
 
------
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # ----------------------- 2019-05-09 -----------------------
 
