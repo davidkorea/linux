@@ -31,6 +31,30 @@
     - 고객 질문 응답 시스템 프로젝트에서 심층 자연 언어 처리 알고리즘 연구 및 텐서플로우로 구현에 핵심 역할을 담당합니다.
 
 
+## Skills
+- Good understanding of cloud computing architecture and Linux virtualization technology such as KVM, Xen and container.
+    - 클라우드 컴퓨팅 구조 및 KVM, Xen과 컨테이너 등 리눅스 가상화 기술에 대한 올바른 이해.
+
+- Hands-on experience in building OpenStack project and Kubernetes clusters.
+    - Openstack 및 Kubernetes 구축에 대한 실무 경험.
+
+- Familiar with sentiment analysis algorithms embedded in game chat system.
+    - 게임 채팅 시스템에 내장 된 감성분석 알고리즘에 익숙하다.
+
+- Deep AWS product knowledge as well as proven experience in architecting and deploying project on AWS.
+    - AWS 서비스에 대한 지식 및 AWS상 프로젝트 배포 경험.
+
+- Work experience in machine learning and big data analysis, especially NLP application developing.
+
+
+- Knowledge of Hadoop, MapReduce and Redis technology.
+
+
+- Experience with programming languages like Python, Django, Ruby on Rails, SQL.
+
+
+- Chinese native speaker with fluent Korean and English skills.
+
 
 
 
@@ -61,10 +85,6 @@
 Tensorflow 등을 활용하여 기계 학습 및 자연 언어 처리 알고리즘을 실현 및 파이썬으로 데이터 분석 및 시각화 경험을 가지고 있습니다.
 
 
-
-
-
-
 Commenced work in IT field while completing Electronics and Semiconductor major at graduate school. Have a comprehensive knowledge of underlying hardware of computer as well as cloud and virtualization based architectures.  An experienced solutions architect of consaulting, deploying and supporting e-document management platforms in a cloud and on-premise.  
 Hands-on experience in machine learning and implementing deep natural language processing algorithms by tensorflow as well as  data analysis and visualization with python.
 
@@ -75,6 +95,7 @@ Hands-on experience in machine learning and implementing deep natural language p
 -  Python, DJango, Ruby on Rails
 -  building and supporting
 - based on Linux/Unix platform in a cloud (AWS) and on-premise, experience on server infrastructure migration, monitoring and securing, LAMP, and Linux Server setup/administration.
+
 # Skills
 1. Good understanding of cloud computing and linux virtualization technology.
 클라우드 컴퓨팅 및 리눅스 가상화 기술에 대한 올바른 이해
