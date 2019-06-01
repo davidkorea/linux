@@ -36,22 +36,22 @@
     - 클라우드 컴퓨팅 구조 및 KVM, Xen과 컨테이너 등 리눅스 가상화 기술에 대한 올바른 이해.
 
 - Hands-on experience in building OpenStack project and Kubernetes clusters.
-    - Openstack 및 Kubernetes 구축에 대한 실무 경험.
+    - Openstack 및 Kubernetes 구축에 대한 실무 경험을 보유하고 있습니다.
 
 - Familiar with sentiment analysis algorithms embedded in game chat system.
-    - 게임 채팅 시스템에 내장 된 감성분석 알고리즘에 익숙하다.
+    - 게임 채팅 시스템에 내장 된 감성분석 알고리즘에 익숙합니다.
 
 - Deep AWS product knowledge as well as proven experience in architecting and deploying project on AWS.
-    - AWS 서비스에 대한 지식 및 AWS상 프로젝트 배포 경험.
+    - AWS 서비스에 대한 지식 및 AWS상 프로젝트 배포 경험을 보유하고 있습니다.
 
 - Work experience in machine learning and big data analysis, especially NLP application developing.
-    - 기계 학습 및 빅데이터 분석, 특히 NLP 애플리케이션 개발 경험 소유.
+    - 기계 학습 및 빅데이터 분석, 특히 NLP 애플리케이션 개발 경험 소유합니다.
 
 - Knowledge of Hadoop, MapReduce and Redis technology.
-    - Hadoop, MapReduce 및 Redis 등 빅 데이터 기술에 대한 지식.
+    - Hadoop, MapReduce 및 Redis 등 빅데이터 기술에 대한 지식.
 
-- Experience with programming languages like Python, Django, Ruby on Rails, SQL.
-    - Python, Django, Ruby on Rails, SQL 프로그래밍 언어 개발 경험.
+- Experience with programming languages like Python, Django, Ruby on Rails, SQL, Tensorflow.
+    - Python, Django, Ruby on Rails, SQL, Tensorflow 등 프로그래밍 언어 개발 경험을 가지고 있습니다.
 
 - Chinese native speaker with fluent Korean and English skills.
     - 한국어, 영어 및 중국어에 능통합니다.
