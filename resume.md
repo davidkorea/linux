@@ -45,16 +45,16 @@
     - AWS 서비스에 대한 지식 및 AWS상 프로젝트 배포 경험.
 
 - Work experience in machine learning and big data analysis, especially NLP application developing.
-
+    - 기계 학습 및 빅데이터 분석, 특히 NLP 애플리케이션 개발 경험 소유.
 
 - Knowledge of Hadoop, MapReduce and Redis technology.
-
+    - Hadoop, MapReduce 및 Redis 등 빅 데이터 기술에 대한 지식.
 
 - Experience with programming languages like Python, Django, Ruby on Rails, SQL.
-
+    - Python, Django, Ruby on Rails, SQL 프로그래밍 언어 개발 경험.
 
 - Chinese native speaker with fluent Korean and English skills.
-
+    - 한국어, 영어 및 중국어에 능통합니다.
 
 
 
