@@ -14,6 +14,24 @@
     - Tensorflow를 활용하여 기계 학습 및 seq2seq, attention mechanism and transformer 등 자연 언어 처리 알고리즘을 구현 및 파이썬으로 데이터 분석 시각화 경험을 가지고 있습니다.
 
 
+## FX
+- Helped business partners with establishing enterprise electronic document platforms on-premise and on the cloud with HA and NLB cluster, including on-demand cloud printing, image log collecting and paperless fax.
+    - 온디맨드 클라우드 프린팅, 이미지 로그 수집 및 페이퍼리스 팩스 등을 포함한 고가용성 엔터프라이즈 전자 문서 아키텍처 구축 및 지원.
+
+- Provided customizing solutions of document workflow for premium clients, including reporting templates webpage development, account usage data analysis and visualization produced by pandas, matplotlib and seaborn.
+    - 리포트 템플릿 등 웹 관련 개발 및 Matplotlib과 Seaborn 등을 통한 유저 데이터 분석과 시각화를 포함하여 프리미엄 고객을 위한 문서 워크플로우의 맞춤형 솔루션을 제공.
+
+- Deployed OpenStack private cloud test environment for the team by using 1 controller node, 1 network node, 1 cinder node and 3 compute nodes. Visualization based on KVM hypervisor and networking scope implemented by Open vSwitch as an l2 plug-in. Instances run on qcow2 format disk which is migrated from vmdk format.
+
+
+- Deployed JupyterHub project on AWS which is based on Kubernetes to provide a friendly and portable machine learning developing environment for the team. This project contains 1 master node and 3 work nodes that are built with t2.medium EC2 instance type. A registered domain name in Route53 witch bind with all web services such as kubernetes dashboard and Jupyter notebook.
+
+
+- Contributed as a key role in the research of deep natural language processing algorithms and implemented by tensorflow in a customer Question-answering system project.
+
+
+
+
 
 
 
