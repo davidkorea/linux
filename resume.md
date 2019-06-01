@@ -7,10 +7,10 @@
     - 솔루션 아키텍처로써 3년 이상의 고가용성 기업 전자문저 플랫폼을 개발, 클라우드 및 온 프레미스에서 구축 및 지원 경험을 보유하고 있습니다.
     
     
-Familiar with AWS ecosystem and deployed JupyterHub project with kubernetes as well as deployed a website based on S3, CloudFront and Route53.
+- Familiar with AWS ecosystem and deployed JupyterHub project with kubernetes as well as deployed a website based on S3, CloudFront and Route53.
     - AWS 생태계에 익숙하며 쿠버네티스와 컨테이너 기술을 이용하여 JupyterHub 프로젝트를 AWS에 배포하고 S3, CloudFront 및 Route53을 기반으로 웹 사이트를 배포했습니다.
     
-Hands-on experience in machine learning and implementing deep natural language processing algorithms such as seq2seq, attention mechanism and transformer by tensorflow as well as data analysis and visualization with python.
+- Hands-on experience in machine learning and implementing deep natural language processing algorithms such as seq2seq, attention mechanism and transformer by tensorflow as well as data analysis and visualization with python.
     - Tensorflow를 활용하여 기계 학습 및 seq2seq, attention mechanism and transformer 등 자연 언어 처리 알고리즘을 구현 및 파이썬으로 데이터 분석 시각화 경험을 가지고 있습니다.
 
 
