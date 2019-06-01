@@ -48,7 +48,7 @@
     - Hadoop, MapReduce 및 Redis 등 빅데이터 기술에 대한 지식.
 
 - Experience with programming languages like Python, Django, Ruby on Rails, SQL, Tensorflow.
-    - Python, Django, Ruby on Rails, SQL, Tensorflow 등 프로그래밍 언어 개발 경험을 가지고 있습니다.
+    - Python, Django, Ruby on Rails, SQL, Tensorflow 등 프로그래밍 언어를 활용하여 개발 경험을 가지고 있습니다.
 
 - Chinese native speaker with fluent Korean and English skills.
     - 한국어, 영어 및 중국어에 능통합니다.
