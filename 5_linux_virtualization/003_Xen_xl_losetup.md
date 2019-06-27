@@ -150,7 +150,7 @@
 - 关联到本地回环设备losetup，/dev目录下的loop1-loop7都可以当作本地回环设备
   - 其实 mount -o loop 命令就会自动将loop0-7关联至本地回环设备，比如/images/xen/busybox.img
   - 也可以通过losetup来手动实现
-  - losetup -a 显示所有医用loop设备
+  - losetup -a 显示所有已用loop设备
   - losetup -f 显示第一个可用loop设备
   
 #### 1. 关联loop设备和磁盘镜像文件
