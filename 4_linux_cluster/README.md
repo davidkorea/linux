@@ -1,4 +1,4 @@
 linux cluster
 
-- `ulimit -a`, 1024 by default同时打开文件数
+- `ulimit -a`, open files 1024 by default 同时打开文件数1024
   - `ulimit -n 10240`, 改为10240
