@@ -12,6 +12,10 @@
 
 AWS Nitro based on KVM without QEMU, with Nitro cards family(net, block)
 
+[Amazon EC2 虚拟化技术演进：从 Xen 到 Nitro](https://mp.weixin.qq.com/s?__biz=MzU5NTY5NDk4MA==&mid=2247484096&idx=1&sn=5aa784fc2a7ead472184db09df8fb483&chksm=fe6f462bc918cf3d628c1c5f481f88423d3a43114740666e64535f4b329565720ec38ef82a7d&mpshare=1&scene=1&srcid=07053Lo1qYeGYepfHAAMsh5U&key=947199dc4f7503b16354b0d31c5308b33ff7d1be3cd20138f716cfd58b82831ffcaff7bd267a6e8669618a2941f360e03e12c397d2081b5dd2261dda5a8fea0be1128bf4b3ebecce95ae1a1cfd827f66&ascene=1&uin=MTkxMTg4MTU%3D&devicetype=Windows-QQBrowser&version=6103000b&lang=zh_CN&pass_ticket=%2FnA5jVDxtZpZD6jJo5J2lvbIylg%2By18CEWbDP8y5i5Y%3D)
+
+[淘宝从几百到千万级并发的十四次架构演进之路](https://mp.weixin.qq.com/s?__biz=MzI4OTA3NDQ0Nw==&mid=2455546396&idx=1&sn=46f4f44c220dbfc370303b5324522ff0&chksm=fb9cb67ccceb3f6a5bfd7e6466f5753791c6b7b997ea4fee932ea5eed5a5c054ad70a6618f3e&mpshare=1&scene=1&srcid=0705LclEWS8icAlI8FhHqvuI&key=311d683e94e8e0569d66e573d5f4cdbb7ab0b0f45c0ba044f33c7d785ab020117df9b80663c03d435ef368a0d60060a7b63689379543ff85c8c54b3e29991fda1e0f7d1ea90f1090342ef990eac01e5b&ascene=1&uin=MTkxMTg4MTU%3D&devicetype=Windows-QQBrowser&version=6103000b&lang=zh_CN&pass_ticket=%2FnA5jVDxtZpZD6jJo5J2lvbIylg%2By18CEWbDP8y5i5Y%3D)
+
 
 -----
 
