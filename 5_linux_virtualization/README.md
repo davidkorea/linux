@@ -1,3 +1,20 @@
+
+
+
+
+
+
+
+
+
+
+
+
+AWS Nitro based on KVM without QEMU, with Nitro cards family(net, block)
+
+
+-----
+
 传统的虚拟化技术在虚拟机（VM）和硬件之间加了一个软件层Hypervisor，或者叫做虚拟机管理程序。Hypervisor的运行方式分为两类：
 
 - 直接运行在物理硬件之上。如基于内核的KVM虚拟机，这种虚拟化需要CPU支持虚拟化技术；
