@@ -1,5 +1,36 @@
 # linux - centos7
 
+
+由于笔记本电脑加入了非常多的省电机制或者是其他硬件的管理机制，包括显示适配器常常是整合型
+的， 因此在笔记本电脑上面的硬件常常与一般桌面计算机不怎么相同。
+
+使用 DVD 开机时，选择『』然后按下 [tab] 按键后，加入底下这些选项：
+`nofb apm=off acpi=off pci=noacpi`
+
+- apm(Advanced Power Management)是早期的电源管理模块
+- acpi(Advanced Configuration and Power Interface)则是近期的电源管理模块。
+这两者都是硬件本身就有支持的，但是笔记本电脑可能不是使用这些机制， 因此，当安装时启动这些机制将会造成一些错误，导致无法顺利安装。
+- nofb 则是取消显示适配器上面的缓冲存储器侦测。因为笔记本电脑的显示适配器常常是整合型的，Linux 安装程序本身可能就不是很能够侦测到该显示适配器模块。此时加入 nofb 将可能使得你的安装过程顺利一些
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----
+
 # 1. linux basics
 
 1. ```systemctl status NetworkManager```, #查看networkmanager服务是是否启动
