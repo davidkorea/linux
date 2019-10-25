@@ -54,6 +54,11 @@
 BIOS 的界面上，你会看到一个启动盘的选项。启动盘有什么特点呢？ 它一般在第一个扇区，占 512 字节，而且以 0xAA55 结束。这是一个约定，当满足这个条件的时候，就说明这是一个启动盘，在 512 字节以内会启动相关的代码。
  
 - 硬盘第一个扇区（sector）内的一个区块，也叫做MBR master boot record 主引导记录/扇区，共512字节（446字节）
+    - 第一个扇区 512bytes 会有这两个数据：
+        - 主要启动记录区(Master Boot Record, MBR)：可以安装开机管理程序的地方，有 446 bytes
+        - 分区表(partition table)：记录整颗硬盘分区的状态，有 64 bytes
+
+
 - **MBR里面有启动相关的代码**，这些代码是在安装Linux系统时，由Grub2，全称 Grand Unified Bootloader Version 2这个程序写到硬盘第一个扇区的
     - 可以通过 `grub2-mkconfig -o /boot/grub2/grub.cfg` 来配置系统启动的选项
         ```bash        
