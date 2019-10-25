@@ -27,8 +27,14 @@
 >   - 换算成20位 = 起始地址左移4位 + offset= 0xFFFF0 + 0x0000 = 0xFFFF0
 
 
-## 2. MBR中的bootloader程序
-
+## 2. MBR中的bootloader程序grub2 
+- grub2
+    - Boot.img
+    - core.img
+        - diskboot.img
+        - lzma_decompress.img
+        - kernel.img
+    
 ## 2.1 MBR
 BIOS 的界面上，你会看到一个启动盘的选项。启动盘有什么特点呢？ 它一般在第一个扇区，占 512 字节，而且以 0xAA55 结束。这是一个约定，当满足这个条件的时候，就说明这是一个启动盘，在 512 字节以内会启动相关的代码。
  
@@ -49,13 +55,16 @@ core.img 由 lzma_decompress.img、diskboot.img、kernel.img 和一系列的模�
 ### 2.3.1 core.img - diskboot.img
 boot.img先加载的是 core.img的第一个扇区。如果从硬盘启动的话，第一个扇区里面是 diskboot.img，对应的代码是 diskboot.S。
 
-boot.img将控制权交给diskboot.img 后，diskboot.img 的任务就是将 core.img 的其他部分加载进来。
-- 先是解压缩程序 lzma_decompress.img
-- 再往下是 kernel.img，它不是Linux 的内核，而是 grub 的内核
+boot.img将控制权交给diskboot.img后，diskboot.img 的任务就是将 core.img 的其他部分加载进来。
+- 先是 lzma_decompress.img，对应代码startup_raw.S，这是一个解压缩程序 
+- 再往下是 kernel.img，是压缩过的，需要上面的程序将其解压
+    - 它不是Linux 的内核，而是grub的内核
+    - 加压kernel之前，先将real pattern的1M内存转换为proctect pattern的4G内存
 - 最后是各个模块 module 对应的映像
 
-![](http://tvax3.sinaimg.cn/large/006gDTsUgy1g8a9ylzhywj31x51680vs.jpg)
+解压grub2的kernel，数据量就很大了，real pttern的1M内存就不够了，所以grub2的kernel解压之前，lzma_decompress.img调用real_to_prot将实模式转换为保护模式。
 
+![](http://tvax3.sinaimg.cn/large/006gDTsUgy1g8a9ylzhywj31x51680vs.jpg)
 
 
 
