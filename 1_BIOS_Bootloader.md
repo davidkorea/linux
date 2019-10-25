@@ -62,6 +62,8 @@ BIOS 的界面上，你会看到一个启动盘的选项。启动盘有什么特
 ## 2.2 grub2 - boot.img
 grub2 第一个要安装的就是**boot.img**，它由 boot.S 编译而成，一**共512字节**，正式安装到启动盘的第一个扇区，这个扇区通常称为MBR。 
 
+其实，硬盘512字节的第一扇区MBR里面，存的就是正好512字节大小的boot.img
+
 BIOS找到MBR后，会将boot.img从硬盘加载到内存中的 0x7c00 来运行。
 
 ## 2.3 grub2 - core.img（diskboot.img，lzma_decompress.img，kernel.img ）
