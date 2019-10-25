@@ -101,12 +101,17 @@ boot.img将控制权交给diskboot.img后，diskboot.img 的任务就是将 core
 
 ### 2.3.4 kernel.img
 - **kernel.img** 对应的代码是startup.S 以及一堆 c 文件，在startup.S中会调用grub kernel 的**主函数 grub_main**
+- 主函数里面，**grub_load_config()** 开始解析上面写的那个 **grub.conf** 文件里的配置信息
+- 若解析grub.conf正常
+    - grub_main 会调用 **grub_command_execute (“normal”, 0, 0)**
+    - 最终会调用 **grub_normal_execute()** ，在这个函数里面的 **grub_show_menu()** 会显示出让你选择的那个操作系统的列表
+- 从上述列表中选择要启动某个操作系统，就要开始调用 **grub_menu_execute_entry()** ，开始解析并执行你选择的那一项
 
-- 主函数里面，grub_load_config() 开始解析，我们上面写的那个 grub.conf 文件里的配置信息。
-
-
-
-
+若选择启动linux
+- grub_cmd_linux() 函数会被调用，它会首先读取 Linux 内核镜像头部的一些数据结构，放到内存中的数据结构来，进行检查。
+- 如果检查通过，则会读取整个 Linux 内核镜像到内存
+- 如果配置文件里面还有 initrd 命令，用于为即将启动的内核传递 init ramdisk 路径。于是 grub_cmd_initrd() 函数会被调用，将 initramfs 加载到内存中来。
+- 当这些事情做完之后，grub_command_execute (“boot”, 0, 0) 才开始真正地启动内核。
 
 
 
