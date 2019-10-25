@@ -1,3 +1,10 @@
+- ROM(BIOS)
+- MBR(grub2 - boot.img)
+- grub2 - core.img - diskboot.img
+- grub2 - core.img - lzma_decompress.img, real to proc pattern
+- grub2 - core.img - kernel.img 
+
+
 # 从BIOS到bootloader
 
 按下计算机的启动按钮时，你的主板就加上电，这时候你的 CPU 应该开始执行指令了。这个时候没有操作系统，内存也是空的，一穷二白。CPU 该怎么办呢？
@@ -119,7 +126,7 @@ boot.img将控制权交给diskboot.img后，diskboot.img 的任务就是将 core
 
 
 
-
+![](http://tvax3.sinaimg.cn/large/006gDTsUgy1g8ab6irs0yj31ej3bp4ac.jpg)
 
 
 
