@@ -1,5 +1,5 @@
-- ROM(BIOS)
-- MBR(grub2 - boot.img)
+- ROM(BIOS) - set ist boot device(ex: hdd-MBR)
+- HDD-MBR(grub2 - boot.img)
 - grub2 - core.img - diskboot.img
 - grub2 - core.img - lzma_decompress.img, real to proc pattern
 - grub2 - core.img - kernel.img 
