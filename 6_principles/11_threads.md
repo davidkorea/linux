@@ -9,4 +9,4 @@
 
 **进程**的执行是需要项目执行计划书的，那**线程**是一个项目小组，这个小组**也应该**有自己的**项目执行计划书**，也就是一个**函数**。我们将要执行的子任务放在这个函数里面
 
-![](http://tvax2.sinaimg.cn/large/006gDTsUgy1g8o5bshi60j31u71mlan3.jpg)
+<img src="http://tvax1.sinaimg.cn/large/006gDTsUgy1g8o5bshi60j31u71mlan3.jpg" alt="e38c28b0972581d009ef16f1ebdee2bd" width="2383" data-width="2383" data-height="2109">
