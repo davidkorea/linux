@@ -1,5 +1,5 @@
 # Install `docker` and `docker-compose`
-### Install Docker Engine - Community
+## 1 Install Docker Engine - Community
 [Get Docker Engine - Community for CentOS](https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce)
 
 1. Install required packages. yum-utils provides the yum-config-manager utility, and device-mapper-persistent-data and lvm2 are required by the devicemapper storage driver.
@@ -30,9 +30,13 @@
     docker ps
     ```
     
-### Install Docker Compose
+## 2 Install Docker Compose
+On Linux systems, first install the Docker for your OS.
 
-    
+1. Run this command to download the current stable release of Docker Compose:
+    ```
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    ```
     
     
     
