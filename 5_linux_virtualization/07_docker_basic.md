@@ -35,7 +35,20 @@ On Linux systems, first install the Docker for your OS.
 
 1. Run this command to download the current stable release of Docker Compose:
     ```
-    sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    ```
+2. Apply executable permissions to the binary:
+    ```
+    chmod +x /usr/local/bin/docker-compose
+    ```
+    
+3. If the command docker-compose fails after installation, check your path. You can also create a symbolic link to /usr/bin or any other directory in your path.
+    ```
+    ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+    ```
+4. Test the installation.
+    ```
+    docker-compose --version
     ```
     
     
