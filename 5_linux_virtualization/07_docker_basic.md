@@ -1,9 +1,31 @@
 # Install `docker` and `docker-compose`
+### Install Docker Engine - Community
+[Get Docker Engine - Community for CentOS](https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce)
 
-
-
-
-
+1. Install required packages. yum-utils provides the yum-config-manager utility, and device-mapper-persistent-data and lvm2 are required by the devicemapper storage driver.
+    ```
+    yum install -y yum-utils \
+    device-mapper-persistent-data \
+    lvm2
+    ```
+2. Use the following command to set up the stable repository.
+    ```
+    yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+    ```
+    
+3. install docker
+    ```
+    yum install docker-ce docker-ce-cli containerd.io    
+    ```
+    - add `--nobest` at the end of the above command if needed
+    
+    
+    
+    
+    
+    
 -----
 
 # 部署 docker 容器虚拟化平台
