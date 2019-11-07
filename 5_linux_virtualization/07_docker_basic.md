@@ -1,4 +1,4 @@
-# Install `docker` and `docker-compose`
+# Install `docker` and `docker-compose` the official way
 ## 1 Install Docker Engine - Community
 [Get Docker Engine - Community for CentOS](https://docs.docker.com/install/linux/docker-ce/centos/#install-docker-ce)
 
