@@ -8,10 +8,10 @@
 
 5. edd env path to the tail of `/etc/profile`
     ```
-    79 export JAVA_HOME=/usr/local/java
-    80 export PATH=$PATH:$JAVA_HOME/bin
-    81 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-    82 export JRE_HOME=$JAVA_HOME/jre
+    export JAVA_HOME=/usr/local/java
+    export PATH=$PATH:$JAVA_HOME/bin
+    export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+    export JRE_HOME=$JAVA_HOME/jre
     ```
 6. `source /etc/profile`
 
