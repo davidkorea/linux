@@ -22,6 +22,16 @@
     - add `--nobest` at the end of the above command if needed
     
     
+4. start service
+    ```
+    systemctl start docker
+    ```
+    ```
+    docker ps
+    ```
+    
+### Install Docker Compose
+
     
     
     
