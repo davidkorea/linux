@@ -7,12 +7,18 @@
 4. `mv jdk-13.0.1/ java`, rename the unpacked folder name to `java` for easy env path
 
 5. edd env path to the tail of `/etc/profile`
-  ```
-  79 export JAVA_HOME=/usr/local/java
-  80 export PATH=$PATH:$JAVA_HOME/bin
-  81 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-  82 export JRE_HOME=$JAVA_HOME/jre
-  ```
+    ```
+    79 export JAVA_HOME=/usr/local/java
+    80 export PATH=$PATH:$JAVA_HOME/bin
+    81 export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+    82 export JRE_HOME=$JAVA_HOME/jre
+    ```
 6. `source /etc/profile`
 
 7. `java -version`
+    ```
+    [root@aws ~]# java --version
+    openjdk 13.0.1 2019-10-15
+    OpenJDK Runtime Environment (build 13.0.1+9)
+    OpenJDK 64-Bit Server VM (build 13.0.1+9, mixed mode, sharing)
+    ```
