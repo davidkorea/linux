@@ -37,6 +37,21 @@ On Linux systems, first install the Docker for your OS.
     ```
     curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
     ```
+    - Error **`curl: (6) Could not resolve host`**
+        ```
+        [root@localhost ~]# curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                         Dload  Upload   Total   Spent    Left  Speed
+        100   617    0   617    0     0   1272      0 --:--:-- --:--:-- --:--:--  1272
+          0     0    0     0    0     0      0      0 --:--:--  0:00:40 --:--:--     0
+        curl: (6) Could not resolve host: github-production-release-asset-2e65be.s3.amazonaws.com
+        ```
+        - you should modify your DNS, even you can resolve other domains like google and baidu
+        - modify nameserver in /etc/resolv.conf
+            ```
+            
+            ```
+            
 2. Apply executable permissions to the binary:
     ```
     chmod +x /usr/local/bin/docker-compose
