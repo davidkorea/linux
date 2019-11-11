@@ -15,12 +15,25 @@
 #define PI 3.1415926
 
 #if enable
+int cube(float x);          // 由于c从上往下编译，需要将下面定义的函数提前放在上面声明一下
+
 int main(void)
 {
-  float a=1;
-  printf("the number is %.2f",a);
+  float x;
+  float V;
+  printf("please input a number(float) \n");
+  scanf("%f",&x);
+  V = cube(x);
+  printf("The V is %.2f",V);
   system("pause");
   return 0
+}
+
+float cube(float x)
+{
+  float V;
+  V = x * x * x;
+  return V
 }
 #endif
 ```
