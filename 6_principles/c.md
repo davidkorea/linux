@@ -15,7 +15,7 @@
 #define PI 3.1415926
 
 #if enable
-int cube(float x);          // 由于c从上往下编译，需要将下面定义的函数提前放在上面声明一下
+float cube(float x);          // 由于c从上往下编译，需要将下面定义的函数提前放在上面声明一下
 
 int main(void)
 {
