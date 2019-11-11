@@ -22,7 +22,7 @@ int main(void)
   float x;
   float V;
   printf("please input a number(float) \n");
-  scanf("%f",&x);
+  scanf("%f",&x);           // 通过 &，将键盘输入赋值给变量
   V = cube(x);
   printf("The V is %.2f",V);
   system("pause");
