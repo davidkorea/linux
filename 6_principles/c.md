@@ -3,19 +3,26 @@
 
 1. 结构介绍
 ```c
+//<my_header_file.h>
+
+#define enable 1
+```
+```c
 #include <stdio.h>
 #include <stdlib.h>
 #include <my_header_file.h>
 
 #define PI 3.1415926
 
+#if enable
 int main(void)
 {
   float a=1;
-  printf("the number is %.2f",a)
-  system("pause")
+  printf("the number is %.2f",a);
+  system("pause");
   return 0
 }
+#endif
 ```
 - `#include`引用头文件
 - `#define`定义宏，下面函数中可以直接调用
