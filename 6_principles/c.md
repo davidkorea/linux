@@ -59,9 +59,77 @@ float cube(float x)
 > - 50<=用水量<100, 价格 = 0.6 x 用水量 + 10
 > - 用水量>=100, 价格 = 0.7 x 用水量 + 20
 
+### if...else
+```c
 
+int main(void)
+{
+  float consume;
+  float price;
+  
+  printf("please input water consuption: ")
+  scanf("%f",&consume)
+    
+  if (consume<50)
+  {
+    price = 0.5 * consume;
+  }
+  else if (consume<100)
+  {
+    price = 0.6 * consume + 10;
+  }
+  else
+  {
+    price = 0.7 * consume +20
+  }
+  printf("the price is %.2f",price);
+  system("pause");
+  return 0
+}
+```
 
-
+### switch...case
+```c
+switch (表达式)        // 此处表达式不使用浮点型，使用整型，字符型或枚举型
+{
+  case 常量表达式1:
+    语句1；
+   break；
+   case 常量表达式2:
+    语句2；
+   break；
+   default 常量表达式:
+    语句；
+   break；
+}
+```
+```c
+int main(void)
+{
+  float consume;
+  float price;
+  int level;
+  
+  printf("please input water consuption: ");
+  scanf("%f",&consume);
+  
+  level = consume/50;   //取整，小于50=0，50～100=1
+  
+  switch (level)
+  {
+    case 0:                           // if level=0
+      price = 0.5 * consume;
+      break;    
+    case 1:
+      price = 0.6 * consume + 10;
+      break;
+    default:                          // if level!=0, !=1, others
+      price = 0.7 * consume + 20;
+      break;
+  }
+  system("pause");
+}
+```
 
 
 
