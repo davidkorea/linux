@@ -260,7 +260,7 @@ int main(void)
 }
 ```
 ### `break`, `continue`
-- break, 结束整个循环操作，不在执行循环体内其他代码，执行循环体之后的代码
+- break, 结束整个循环操作，不再执行循环体内其他代码，执行循环体之后的代码
 
 ```c
 for (int i = 0; i < 10; i ++)
@@ -275,7 +275,7 @@ ok. this is the 0 print.
 ok. this is the 1 print.
 ok. this is the 2 print.	// i ==3 结束整个循环操作，执行循环体下面的代码
 ```
-- continue，结束本次循环，继续下一次循环，运行循环体内代码
+- continue，跳过本次循环体中未执行的内容，直接进行下一次循环，继续运行循环体内代码
 
 ```c
 for (int i = 0; i < 10; i ++)
