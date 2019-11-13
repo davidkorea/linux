@@ -206,7 +206,59 @@ while( i<10 )
 ### do while
 先执行一次程序，如果满足条件，则继续执行
 
+```c
 
+# include <stdio.h>
+# include <math.h>
+int main(void)
+{
+    float a, b, c;  
+    char k;  
+    double delta, x1, x2; 
+    do
+    {
+        
+        printf(pls input a, b, c:\n");
+        printf("a = ");
+        scanf("%f", &a);
+        
+        while(getchar() != '\n');  
+        printf("b = ");
+        scanf("%f", &b);
+        
+        while(getchar() != '\n');
+        printf("c = ");
+        scanf("%f", &c);
+        
+        while(getchar() != '\n');
+        delta = b*b - 4*a*c;
+
+        if (delta > 0)
+        {
+            x1 = (-b +sqrt(delta)) / (2*a);
+            x2 = (-b -sqrt(delta)) / (2*a);
+            printf("x1 = %f, x2 = %f\n", x1, x2);
+        }
+        else if (0 == delta)
+        {
+            x1 = x2 = (-b) / (2*a);
+            printf("x1 = x2 = %f\n", x1);
+        }
+        else
+        {
+            printf("no R result. \n");
+        }
+
+        printf("if continue?  Y, else N: ");
+        scanf("%c", &k); 
+        while(getchar() != '\n');
+    }
+    while ('Y' == k);                             // 先执行上面的do，计算出结果，想继续，输入Y
+    
+	  system("pause");
+    return 0;
+}
+```
 
 
 
