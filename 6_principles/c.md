@@ -263,19 +263,39 @@ int main(void)
 - break, 结束整个循环操作，不在执行循环体内其他代码，执行循环体之后的代码
 
 ```c
-for (i = 0; i < 10; i ++)
+for (int i = 0; i < 10; i ++)
 {
-	if (i == 3)
-		break;
-	printf("ok.\n");
+    if (i == 3)
+	break;
+    printf("ok. this is the %d print. \n", i);
 }
+```
+```
+ok. this is the 0 print.
+ok. this is the 1 print.
+ok. this is the 2 print.	// i ==3 结束整个循环操作，执行循环体下面的代码
 ```
 - continue，结束本次循环，继续下一次循环，运行循环体内代码
 
 ```c
-
+for (int i = 0; i < 10; i ++)
+{
+    if (i == 3)
+	continue;
+    printf("ok.\n");
+}
 ```
-
+```
+ok. this is the 0 print.
+ok. this is the 1 print.
+ok. this is the 2 print.	// i == 3, 结束本次循环，继续下一次循环
+ok. this is the 4 print.
+ok. this is the 5 print.
+ok. this is the 6 print.
+ok. this is the 7 print.
+ok. this is the 8 print.
+ok. this is the 9 print.
+```
 
 
 
