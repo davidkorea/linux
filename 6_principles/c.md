@@ -259,9 +259,22 @@ int main(void)
     return 0;
 }
 ```
+### `break`, `continue`
+- break, 结束整个循环操作，不在执行循环体内其他代码，执行循环体之后的代码
 
+```c
+for (i = 0; i < 10; i ++)
+{
+	if (i == 3)
+		break;
+	printf("ok.\n");
+}
+```
+- continue，结束本次循环，继续下一次循环，运行循环体内代码
 
+```c
 
+```
 
 
 
