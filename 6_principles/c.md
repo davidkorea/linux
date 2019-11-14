@@ -208,6 +208,11 @@ void main()
     system("pause");
 }
 ```
+```python
+[chr(i) for i in range(ord('a'), ord('z')+1)]
+
+list(map(chr, range(ord('a'), ord('z')+1)))
+```
 ### while
 
 判断条件成立，执行循环
