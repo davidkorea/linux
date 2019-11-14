@@ -26,7 +26,7 @@ int main(void)
   float x;
   float V;
   printf("please input a number(float) \n");
-  scanf("%f",&x);           // 通过 &，将键盘输入赋值给变量
+  scanf("%f",&x);           // 取地址符&，将键盘输入存到变量x所在的内存地址
   V = cube(x);
   printf("The V is %.2f",V);
   system("pause");
