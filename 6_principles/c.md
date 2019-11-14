@@ -238,13 +238,16 @@ while( i<10 )
 void main()
 {
 	char ch;
-	while( (ch = getchar() != 'y') )	// 从键盘获取单个字符，scanf()获取字符串
+	while( (ch = getchar() != 'y') )	// 从键盘获取单个字符，scanf("%s", )获取字符串
 	{
 		printf('press 'y' to continue')
 	}
 	prinf("skip the while()")
 }
 ```
+- `getchar(),` `putchar()` 单个字符
+- `gets()`, `puts()` 字符串
+- `scanf()`, `printf()` 各种各样
 ### do while
 先执行一次程序，如果满足条件，则继续执行
 
