@@ -208,6 +208,16 @@ void main()
     system("pause");
 }
 ```
+- python
+	1. chr() 返回单字符的unicode		
+	2. ord() 返回unicode对应的单字符
+	3. map(func, *iterables) 可循环/迭代结构中的每个元素，执行hanshufunc操作
+		```python
+		def fun(x):
+			return x+1
+		list(map(fun, [1,2,3]))
+		// [2, 3, 4]		
+		```
 ```python
 [chr(i) for i in range(ord('a'), ord('z')+1)]
 
