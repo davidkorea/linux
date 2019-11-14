@@ -198,6 +198,16 @@ for (int i=0; i<10; i++)    // 条件变量此处 ++1
   func();
 }
 ```
+```c
+void main()
+{
+    for (char ch='A', ch<='Z', ch++)
+    {
+    	printf(ch);
+    }
+    system("pause");
+}
+```
 ### while
 
 判断条件成立，执行循环
