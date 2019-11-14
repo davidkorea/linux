@@ -209,9 +209,9 @@ void main()
 }
 ```
 - python
-	1. chr() 返回单字符的unicode		
-	2. ord() 返回unicode对应的单字符
-	3. map(func, *iterables) 可循环/迭代结构中的每个元素，执行hanshufunc操作
+	1. `chr()` 返回单字符的unicode		
+	2. `ord()` 返回unicode对应的单字符
+	3. `map(func, *iterables)` 可循环/迭代结构中的每个元素，执行函数func操作
 		```python
 		def fun(x):
 			return x+1
