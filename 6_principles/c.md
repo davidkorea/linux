@@ -26,7 +26,7 @@ int main(void)
   float x;
   float V;
   printf("please input a number(float) \n");
-  scanf("%f",&x);           // 取地址符&，将键盘输入存到变量x所在的内存地址
+  scanf("%f",&x);           // 取地址符&，将键盘输入存到变量x所在的内存地址；若x是指针变量，则直接使用x，无需&
   V = cube(x);
   printf("The V is %.2f",V);
   system("pause");
@@ -54,7 +54,9 @@ float cube(float x)
   - `int main(void)`中的int：返回值类型，即return的0为整型
   - 如果定一个没有返回值的函数，则可以使用void来定义，即`void my_func(int a, int b)`
 - `main`函数不能被其他函数调用，也不能被自己调用
-
+- `scanf("%c", &a)`，取地址符&
+  - 若a为变元变量时，将键盘输入存到变量x所在的内存地址
+  - 若a为指针变量，则直接使用x，无需&
 
 # 2. 条件判断
 
