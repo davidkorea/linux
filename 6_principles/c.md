@@ -234,6 +234,17 @@ while( i<10 )
   i++;                      // 条件变量在循环体内 ++1
 }
 ```
+```c
+void main()
+{
+	char ch;
+	while( (ch = getchar() != 'y') )	// 从键盘获取单个字符，scanf()获取字符串
+	{
+		printf('press 'y' to continue')
+	}
+	prinf("skip the while()")
+}
+```
 ### do while
 先执行一次程序，如果满足条件，则继续执行
 
