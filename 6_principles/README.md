@@ -29,3 +29,5 @@ C++
 快速上手，get started
 
 趋势https://www.gartner.com/en
+
+https://www.reddit.com/r/AWSCertifications/comments/axfo7k/how_i_passed_the_aws_certified_solutions/
