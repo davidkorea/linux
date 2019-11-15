@@ -27,3 +27,5 @@ C++
 问题
 
 快速上手，get started
+
+趋势https://www.gartner.com/en
