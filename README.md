@@ -9,6 +9,7 @@
 使用 DVD 开机时，选择『』然后按下 [tab] 按键后，加入底下这些选项：
 `nofb apm=off acpi=off pci=noacpi`
 
+
 - apm(Advanced Power Management)是早期的电源管理模块
 - acpi(Advanced Configuration and Power Interface)则是近期的电源管理模块。
 这两者都是硬件本身就有支持的，但是笔记本电脑可能不是使用这些机制， 因此，当安装时启动这些机制将会造成一些错误，导致无法顺利安装。
