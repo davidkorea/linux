@@ -125,3 +125,6 @@ dom0中的管理其他虚拟机的工具： xm， xl， xe，libvirt
 
 
 
+
+
+
