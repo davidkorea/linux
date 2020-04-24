@@ -2,14 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
 AWS Nitro based on KVM without QEMU, with Nitro cards family(net, block)
 
 [Amazon EC2 虚拟化技术演进：从 Xen 到 Nitro](https://mp.weixin.qq.com/s?__biz=MzU5NTY5NDk4MA==&mid=2247484096&idx=1&sn=5aa784fc2a7ead472184db09df8fb483&chksm=fe6f462bc918cf3d628c1c5f481f88423d3a43114740666e64535f4b329565720ec38ef82a7d&mpshare=1&scene=1&srcid=07053Lo1qYeGYepfHAAMsh5U&key=947199dc4f7503b16354b0d31c5308b33ff7d1be3cd20138f716cfd58b82831ffcaff7bd267a6e8669618a2941f360e03e12c397d2081b5dd2261dda5a8fea0be1128bf4b3ebecce95ae1a1cfd827f66&ascene=1&uin=MTkxMTg4MTU%3D&devicetype=Windows-QQBrowser&version=6103000b&lang=zh_CN&pass_ticket=%2FnA5jVDxtZpZD6jJo5J2lvbIylg%2By18CEWbDP8y5i5Y%3D)
